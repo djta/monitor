@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		
+	</summary>
+	
+	<log>false</log>
+
+	<colname>filter_field,filter_is_mandatory,filter_show_order,filter_show_type,filter_width,filter_type</colname>
+	<sql-template>insert-filters.sql</sql-template>
+
+	<transaction>
+		<classname>com.ccms.InsertMaster</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<query>delete-filters.sql</query>
+	<query>insert-chart.sql</query>
+	
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

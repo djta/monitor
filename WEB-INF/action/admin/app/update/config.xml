@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		Actualizar registro
+	</summary>
+	
+	<log>false</log>
+
+	<set-request-attribute id="help.msg" value="Ayuda en l韓ea para la p醙ina ACTUALIZAR..." />
+
+	<!--soporte de auditoria-->
+	<audit>
+		<!--de donde saca los datos, por defecto es "_request"-->
+		<recordset></recordset>
+		<!--que campos extrae para el registro descriptivo-->
+		<cols>	
+			<colname>app_alias</colname>		
+			<colname>description</colname>
+		</cols>
+		<table>s_application</table>
+		<oper>更新</oper>
+		<area>应用系统</area>
+		<!--
+			query para obtener el ID generado o nombre de 
+			la columna que contiene el pkey, si es query, 
+			el alias del campo debe ser "id"
+		-->
+		<pkey>tuid</pkey>
+	</audit>
+	
+    <request-encoding>UTF-8</request-encoding>
+	<transaction>
+		<classname>dinamica.audit.AuditableTransaction</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<query>update.sql</query>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

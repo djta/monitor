@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+	  权限实体
+	</summary>
+	
+	<log>false</log>
+
+	<set-request-attribute id="header.title" value="权限实体" />
+	<set-request-attribute id="formTitleAddNew" value='新增 权限实体'/>
+    <set-request-attribute id="formTitleEdit" value='修改 权限实体'/>
+    <set-request-attribute id="formTitleFilter" value='查询 权限实体'/>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-authority.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<print mode="form" recordset="query-authority.sql" />
+	</output>
+
+</config>

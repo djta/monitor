@@ -1,0 +1,19 @@
+<div class="col-xs-${fld:colspan} col-sm-${fld:colspan} col-md-${fld:colspan} col-lg-${fld:colspan}">
+	<label class="col-xs-5 col-sm-5 col-md-5 col-lg-5 control-label ${fld:is_required_alias}" style="${fld:show_color}" for="${fld:field_code}_${fld:form_item_id}">${fld:field_name}</label>
+	<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">					
+		<div class="col-xs-8 col-sm-9 col-md-10 col-lg-10 clearlr">						
+			<input name="_${fld:field_code}_${fld:form_item_id}_" id="_${fld:field_code}_${fld:form_item_id}_" type="hidden" value="">
+			<input class="form-control" id="${fld:field_code}_${fld:form_item_id}" name="${fld:field_code}_${fld:form_item_id}" type="text" size="${fld:show_width}" maxlength="${fld:maxlength}" value="${fld:default_value}" default="${fld:default_value}" ${fld:plugin_code} ${fld:is_readonly_alias}>
+			${fld:plugin_control}
+		</div>
+		<div class="col-xs-4 col-sm-3 col-md-2 col-lg-2" style="display:${fld:is_attachment_alias}">
+			<img src="${DEF:context}/images/attachment.png"
+				data-type="attachment-img"
+				title="附件" 
+				style="cursor: pointer;"
+				field_value = "${fld:field_code}_${fld:form_item_id}"
+				field_code = "${fld:field_code}"
+			/>
+		</div>
+	</div>
+</div>

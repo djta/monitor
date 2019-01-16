@@ -1,0 +1,83 @@
+<html>
+<head>
+<title>跑马灯</title>
+<style>
+#m{
+	margin-left: 90%;
+	display: none;
+	height: 30px; 
+	overflow: hidden;
+}
+.out_div_container{
+	font-size: 16px;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    margin-right: 10px;
+}
+.out_div_container a{
+	color: white;
+}
+</style>
+</head>
+<body>
+<div id="m" name="m">
+<rows>
+<div class="out_div_container">·<a href="javascript:void(0);" onclick="viewDetailMsg(${fld:tuid},'${fld:toflag}','${fld:pk_value}', this);$(this).parent().remove();">${fld:msg_title}(${fld:send_date@yyyy-MM-dd})</a></div>
+</rows>
+</div>
+<input type="button" addtabs="" title="" url="" istabreplace="" id="showCustomTab" style="display:none;"></input>
+</body>
+</html>
+
+<SCRIPT LANGUAGE="JavaScript">
+function reflushMy(){
+	document.location.reload();
+}
+function moveFun(){
+	$("#m").show().animate({"marginLeft":"-20%"},0.5*60*1000,"linear",function(){
+		$("#m").hide().css({"margin-left": "90%"});
+		moveFun();
+	});
+}
+moveFun();
+
+$("#m").find("a").hover(function(){
+	$("#m").stop();
+},function(){
+	moveFun();
+});
+
+function viewDetailMsg(id,toflag,pkvalue,obj){
+	if('true' == toflag){
+		ajaxCall("/action/ccms/msg/readmsg?id="+id,{
+			method:"get",
+			progress:false,
+			dataType:"script",
+			success:function(){	
+				//$("#menunav").find('li[title="我的客户"]').click();
+				showMsgTab(pkvalue);
+			}
+		});
+	}else{
+		var msgUrl = "${def:context}/action/ccms/msg/view?id="+id;	
+		ccms.dialog.open({"url":msgUrl,"id":"paomadengWin"});
+		//$("#paomadeng").load("${def:context}/action/ccms/msg/show");
+	}
+	$(obj).parent().remove();
+}
+function showMsgTab(pkvalue){
+	var uri = "/action/project/houze/wfmgen/owner/crud?leads_code="+pkvalue;
+	var tabsid = "msgmycustomer_tabs";
+	var msgtabobj = $("#showCustomTab");
+	msgtabobj.attr('url', $Base64.encode(uri));
+	msgtabobj.attr("addtabs", tabsid);
+	msgtabobj.attr("title", "我的客户");
+	msgtabobj.attr("istabreplace", "true");
+	msgtabobj.click();
+}
+$(document).ready(function() {
+});
+
+</script>
+    

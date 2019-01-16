@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		报表配置管理
+	</summary>
+	
+	<log>false</log>
+
+	<set-request-attribute id="help.msg" value="Online help for VIEW page..." />
+	<set-request-attribute id="header.title" value="报表配置管理" />
+	<set-request-attribute id="header.url" value=''/>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>		
+		<recordset id="query-table-field.sql" source="sql" scope="transaction"/>
+		<recordset id="query-chart.sql" source="sql" scope="transaction"/>
+		<recordset id="query-filter-field.sql" source="sql" scope="transaction"/>
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<print mode="table" recordset="query-table-field.sql" tag="table-field"/>
+		<print mode="table" recordset="query-table-field.sql" tag="table-fields"/>
+		<print mode="table" recordset="query-filter-field.sql" tag="filter-field" null-value=""/>
+		<print mode="form" recordset="_request" />
+		<print mode="form" recordset="query-chart.sql" />
+	</output>
+
+</config>

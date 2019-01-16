@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="table_id" type="integer" required="true" label="table_id"/>
+	<parameter id="schema" type="varchar" required="true" label="schema" maxlen="30"/>
+	<parameter id="table" type="varchar" required="true" label="table" maxlen="128"/>
+</validator>

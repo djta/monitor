@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="table_name" type="varchar" required="false" label="业务表名" />
+	<parameter id="history_id_filter" type="integer" required="true" label="导入历史ID" />
+	
+	<custom-validator 
+		classname="dinamica.validators.SQLPatternTransformer" 
+		parameter="table_name" 
+		rule="contains" 
+		/>
+</validator>
+

@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>岗位</title>
+	<script language="JavaScript" type="text/javascript" src="${def:context}/action/pub/dtree"></script>
+</head>
+
+<body>
+<!-- 右侧人员信息 -->
+
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">查询人员信息</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 column">
+					<form name="treeForm" id="searchForm1" class="form-horizontal" role="form" method="post" >
+					<input name="org_id" type="hidden" size="19" maxlength="100" value="${fld:org_id}" />
+					</form>
+				</div>
+				<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 column">
+				<form class="form-horizontal" role="form" method="post" id="searchForm">
+				<input name="sort" type="hidden" value="userlogin" preserve="true"/>
+				<input name="order" type="hidden" value="desc" preserve="true" /> 
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+				<div class="form-group">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input name="tuid" type="hidden" size="19" maxlength="100" value="" />
+						<input preserve="true" id="entity_id" name="entity_id" type="hidden" value="${fld:entity_id}"/>
+						<input id="name" name="name" class="form-control" placeholder="请输入名称" type="text" size="20" value="" maxlength="35"/>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>操作</th>
+						<th class="sortable" code="userlogin">登录代码</th>
+						<th>名称</th>
+						<th>组织机构</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td align="center">
+							<button class="btn btn-primary btn-md delete_btn" type="button" code="#tuid#">删除</button>
+						</td>
+						<td align="center">
+							#userlogin#
+						</td>
+						<td align="center">
+							#name#
+						</td>
+						<td align="center">
+							#org_name#
+						</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid"></tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+		<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+	</div>
+</div>
+<script>
+function EntityClass(){
+	//查询左侧组织架构
+	this.init = function(){
+		var obthis = this;
+		
+		obthis.searchMember();
+	},
+	//查询右侧人员信息
+	this.searchMember = function(){
+		$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+			$(".delete_btn").unbind().on("click",function(){
+				var obthis = $(this);
+				$Dialog().confirm("确定要删除吗?", function(){
+					var url = "/action/ccms/module/hr/authority/entity/list/personal/delete?id="+obthis.attr("code");
+					ajaxCall(url,{
+				        method: "post",
+				        progress: true,
+				        dataType: "script"
+				    });
+				});
+			});
+		}}).initSearchBtn().searchData(1);
+	},
+	//打开人员选择界面
+	this.openStsff = function(org_id){
+		ccms.dialog.open({url:"${def:context}${def:actionroot}/list/crud?org_id="+org_id+"&entity_id=${fld:entity_id}&random="+Math.random(),id:"a",width:800,height:500});
+	};
+}
+
+var entityClass = null;
+var d = null;
+$(document).ready(function() {
+	//初始化树
+	d = new dTree('d');
+	d.add(0,-1,"&nbsp;</a>&nbsp;<a href='javascript: d.openAll();'>展开</a> | <a href='javascript: d.closeAll();'>合并</a>");
+	
+	var org_name = "";
+	<combo-orgs>
+       	org_name = "<a href='javascript:void(0);' onclick='javascript:entityClass.openStsff(\"${fld:org_id}\")';>${fld:org_name@js}</a>";
+		d.add("${fld:org_id}","${fld:pid}",org_name);
+	</combo-orgs>
+
+	$("#searchForm1").append(d.toString());
+	
+	entityClass = new EntityClass();
+	entityClass.init();
+});
+
+</script>
+</body>
+</html>

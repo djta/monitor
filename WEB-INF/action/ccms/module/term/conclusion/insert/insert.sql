@@ -1,0 +1,19 @@
+INSERT	INTO
+	t_term_conclusion
+(
+	tuid
+	,term_id
+	,from_score
+	,remark
+	,show_order
+	,to_score
+)
+VALUES
+(
+	${seq:nextval@${schema}seq_default}
+	,${fld:term_id}
+	,${fld:from_score}
+	,${fld:remark} 
+	,${fld:show_order}
+	,${fld:to_score}
+)

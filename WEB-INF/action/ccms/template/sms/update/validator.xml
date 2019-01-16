@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="tuid" type="integer" required="true" label="tuid" maxlen="10"/>
+	
+	<parameter id="template_name" type="varchar" required="true" label="template_name" maxlen="32"/>
+	<parameter id="account_id" type="varchar" required="true" label="account_id" maxlen="32"/>
+	<parameter id="template_content" type="varchar" required="true" label="template_content" maxlen="500"/>
+</validator>
+
+

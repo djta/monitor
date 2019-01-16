@@ -1,0 +1,923 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+    This file stores the translations
+    for all the dynamic labels used by
+    the application in all its templates,
+    for each language supported
+-->
+
+<labels>
+    <label id="eshop_name">
+        <value language="en">
+            物联地
+        </value>
+        <value language="cn">
+            物联地
+        </value>
+    </label>
+
+    <label id="company_name">
+        <value language="en">
+            公司名称
+        </value>
+        <value language="cn">
+            公司名称
+        </value>
+    </label>
+
+    <label id="company_address">
+        <value language="en">
+            公司地址
+        </value>
+        <value language="cn">
+            公司地址
+        </value>
+    </label>
+
+    <label id="company_telephone">
+        <value language="en">
+            公司电话
+        </value>
+        <value language="cn">
+            公司电话
+        </value>
+    </label>
+
+    <label id="icp_code">
+        <value language="en">
+            ICP代码
+        </value>
+        <value language="cn">
+            ICP代码
+        </value>
+    </label>
+
+<!--about menu title-->
+    <label id="tit_app_title">
+        <value language="en">
+            呼叫中心业务应用系统
+        </value>
+        <value language="cn">
+            呼叫中心业务应用系统
+        </value>
+    </label>
+
+    <label id="tit_welcome_page">
+        <value language="en">
+            Welcome Page
+        </value>
+        <value language="cn">
+            欢迎页面
+        </value>
+    </label>
+
+    <!-- default labels -->
+    <label id="wait">
+        <value language="es">
+            Por favor espere...
+        </value>
+        <value language="en">
+            Please wait...
+        </value>
+        <value language="cn">
+            请稍候...
+        </value>
+    </label>
+    
+    <label id="system_error_title">
+        <value language="es">
+            Error en la aplicaci髇
+        </value>
+        <value language="en">
+            System Error
+        </value>
+        <value language="cn">
+            系统出错
+        </value>
+    </label>
+    
+    <label id="system_error_msg">
+        <value language="es">
+            Lamentamos informarle que ocurri?un error en el sistema.
+        </value>
+        <value language="en">
+            Sorry, an unexpected error has occured in this application.
+        </value>
+        <value language="cn">
+            抱歉, 系统发生一个未知的错误.
+        </value>
+    </label>
+
+    <label id="button_back">
+        <value language="es">
+        Regresar
+        </value>
+        <value language="en">
+        Continue
+        </value>
+        <value language="cn">
+        继续
+        </value>
+    </label>
+
+    <label id="invalid_form_title">
+        <value language="es">
+            El formulario necesita las siguientes correcciones:
+        </value>
+        <value language="en">
+            Form data needs to be fixed:
+        </value>
+        <value language="cn">
+            界面数据需要更正:
+        </value>
+    </label>
+
+    <label id="parameter_required">
+        <value language="es">
+            Este valor DEBE ser ingresado.
+        </value>
+        <value language="en">
+            This value cannot be empty.
+        </value>
+        <value language="cn">
+           必填
+        </value>
+    </label>
+    
+    <label id="invalid_integer">
+        <value language="es">
+            El dato ingresado no representa un n鷐ero entero. Tipee un n鷐ero sin decimales ni letras por favor.
+        </value>
+        <value language="en">
+            Invalid number format. Please type an Integer number.
+        </value>
+        <value language="cn">
+            数字格式不正确. 请输入一个整数.
+        </value>
+    </label>
+
+    <label id="invalid_double">
+        <value language="es">
+            El dato ingresado no representa un n鷐ero. Tipee un n鷐ero y use el punto (.) como separador de decimales.
+        </value>
+        <value language="en">
+            Invalid number format. Please type a number, may use decimals too.
+        </value>
+        <value language="cn">
+            数字格式不正确. 请输入一个数值, 可以包括小数.
+        </value>
+    </label>
+
+    <label id="invalid_date">
+        <value language="es">
+            El dato ingresado no representa una fecha.
+        </value>
+        <value language="en">
+            Invalid date format.
+        </value>
+        <value language="cn">
+            日期格式不正确.
+        </value>
+    </label>
+
+    <label id="data_too_long">
+        <value language="es">
+            Demasiado texto. El dato ingresado excede el tama駉 permitido:
+        </value>
+        <value language="en">
+            Text too long, please delete some text. Text size in characters can't be larger than:
+        </value>
+        <value language="cn">
+            文本过长,请删除一些文本.文本长度不能超过:
+        </value>
+    </label>
+
+    <label id="min_value_violation">
+        <value language="es">
+            El valor ingresado est?por debajo del m韓imo permitido:
+        </value>
+        <value language="en">
+            Value can't be less than:
+        </value>
+        <value language="cn">
+            数值不能小于:
+        </value>
+    </label>
+
+    <label id="max_value_violation">
+        <value language="es">
+            El valor ingresado est?por encima del m醲imo permitido:
+        </value>
+        <value language="en">
+            Value can't be greater than:
+        </value>
+        <value language="cn">
+            数值不能大于:
+        </value>
+    </label>
+
+
+    <!-- security related labels -->
+
+    <label id="s_session_terminated">
+        <value language="es">
+            Su sesi髇 ha finalizado.
+        </value>
+        <value language="en">
+            Your session has terminated.
+        </value>
+        <value language="cn">
+            您已经成功退出系统。
+        </value>
+    </label>
+
+    <label id="s_login_again">
+        <value language="es">
+            Ingresar nuevamente
+        </value>
+        <value language="en">
+            Login again
+        </value>
+        <value language="cn">
+            重新登录
+        </value>
+    </label>
+
+    <label id="s_newpass_alert">
+        <value language="es"><![CDATA[
+        Estimado Usuario:<br>
+        <br>
+        Por <span style="color:red"><b>motivos de seguridad</b></span> se le solicita
+        que cambie su contrase馻 en este momento.
+        ]]>
+        </value>
+        <value language="en"><![CDATA[
+        Dear Sir/Madam:<br>
+        <br>
+        For <span style="color:red"><b>security reasons</b></span> you will have to change 
+        your password. This is a security policy enforced
+        by the application to protect your valuable 
+        information resources. If you have questions 
+        please consult with the system administrator.
+        <br>
+        ]]>
+        </value>
+        <value language="cn"><![CDATA[
+        亲爱的 先生/女士:<br>
+        <br>
+        基于 <span style="color:red"><b>安全原因</b></span> 您必须更改您的密码. 
+        这是由系统的安全策略所要求的,以利于保护您的信息安全.
+        如果您有任何疑问,请咨询系统管理人员.
+        <br>
+        ]]>
+        </value>
+    </label>
+
+    <label id="s_form_title">
+        <value language="es">
+            Cambio de Contrase馻
+        </value>
+        <value language="en">
+            Change your Password
+        </value>
+        <value language="cn">
+            更改您的密码
+        </value>
+    </label>
+
+    <label id="s_fld_password">
+        <value language="es">
+            Contrase馻
+        </value>
+        <value language="en">
+            Password
+        </value>
+        <value language="cn">
+            密码
+        </value>
+    </label>
+
+    <label id="s_fld_newpassword">
+        <value language="es">
+            Nueva Contrase馻
+        </value>
+        <value language="en">
+            New Password
+        </value>
+        <value language="cn">
+            新密码
+        </value>
+    </label>
+
+    <label id="s_fld_confirm">
+        <value language="es">
+            Repita contrase馻
+        </value>
+        <value language="en">
+            Confirm password
+        </value>
+        <value language="cn">
+            确认密码
+        </value>
+    </label>
+
+    <label id="s_required">
+        <value language="es">
+            Los campos con "*" deben ser llenados.
+        </value>
+        <value language="en">
+            Fields marked with "*" are mandatory
+        </value>
+        <value language="cn">
+            标识为"*"的内容必须填写
+        </value>
+    </label>
+
+    <label id="s_save">
+        <value language="es">
+            Grabar
+        </value>
+        <value language="en">
+            Save
+        </value>
+        <value language="cn">
+            保存
+        </value>
+    </label>
+
+    <label id="s_password_changed">
+        <value language="es">
+            Su nueva contrase馻 ha sido registrada.
+        </value>
+        <value language="en">
+            Your password was sucessfully changed.
+        </value>
+        <value language="cn">
+            您的密码变更完成.
+        </value>
+    </label>
+
+    <label id="s_invalid_password">
+        <value language="es">
+            Utilice letras y n鷐eros solamente, sin espacios (m韓imo 6 caracteres).
+        </value>
+        <value language="en">
+            Use letters and numbers, without spaces (6-15 characters).
+        </value>
+        <value language="cn">
+           为了保证密码安全，请设置6-15位数字与字母的组合。
+        </value>
+    </label>
+
+    <label id="s_password_nomatch">
+        <value language="es">
+            La contrase馻 no coincide con la repetici髇 de la misma.
+        </value>
+        <value language="en">
+            The password does not match its confirmation.
+        </value>
+        <value language="cn">
+            两次密码输入不匹配.
+        </value>
+    </label>
+
+    <label id="s_password_used">
+        <value language="es">
+            Esta contrase馻 ya fue utilizada por usted en el pasado, por razones de seguridad se requiere que ingrese una nueva contrase馻.
+        </value>
+        <value language="en">
+            You already used this password in the past. For security reasons you MUST choose a new password.
+        </value>
+        <value language="cn">
+            您以前使用过这个密码.基于安全原因,您必须使用其它新密码.
+        </value>
+    </label>
+            
+    <label id="s_fld_login">
+        <value language="es">
+            Identificador
+        </value>
+        <value language="en">
+            Login
+        </value>
+        <value language="cn">
+            登录
+        </value>
+    </label>
+
+    <label id="s_login_failed">
+        <value language="es">
+            Las credenciales indicadas no son v醠idas!
+        </value>
+        <value language="en">
+            Login failed!
+        </value>
+        <value language="cn"><![CDATA[
+            登录失败,请重新检查您的用户名和密码。<br/><br/>
+			Invalid login or password, please check your user name or password again. <br/>
+			]]>
+        </value>
+    </label>
+
+    <label id="s_login_retry">
+        <value language="es">
+            Intente de nuevo
+        </value>
+        <value language="en">
+            Try again
+        </value>
+        <value language="cn">
+            请重试
+        </value>
+    </label>
+
+    <label id="s_loginhist_title">
+        <value language="es">Mis registros de ingreso</value>
+        <value language="en">My login records</value>
+        <value language="cn">我的登录记录</value>
+    </label>
+
+    <label id="s_loginhist_col1">
+        <value language="es">Fecha</value>
+        <value language="en">Date</value>
+        <value language="cn">日期</value>
+    </label>
+    <label id="s_loginhist_col2">
+        <value language="es">Hora</value>
+        <value language="en">Time</value>
+        <value language="cn">时间</value>
+    </label>
+    <label id="s_loginhist_col3">
+        <value language="es">IP remota</value>
+        <value language="en">Remote IP</value>
+        <value language="cn">远端IP地址</value>
+    </label>
+    <label id="s_loginhist_col4">
+        <value language="es">Aplicaci髇</value>
+        <value language="en">Application</value>
+        <value language="cn">应用</value>
+    </label>
+		<label id="s_loginhist_col5">
+        <value language="es"></value>
+        <value language="en">Exit Time</value>
+        <value language="cn">登出时间</value>
+    </label>
+    <label id="s_loginlock_title">
+        <value language="es">CUENTA BLOQUEADA:</value>
+        <value language="en">ACCOUNT LOCKED:</value>
+        <value language="cn">帐号锁定:</value>
+    </label>
+    <label id="s_loginlock_msg1">
+        <value language="es">Su cuenta ha sido desactivada.</value>
+        <value language="en">Your account has been disabled.</value>
+        <value language="cn">您的帐户已经被禁止了.</value>
+    </label>
+    <label id="s_loginlock_msg2">
+        <value language="es">Por favor contacte al Administrador del Sistema.</value>
+        <value language="en">Please contact the System Administrator.</value>
+        <value language="cn">请联系系统管理人员.</value>
+    </label>
+
+    <label id="s_login_ok">
+        <value language="es">Usuario identificado correctamente - Por favor espere...</value>
+        <value language="en">Login OK - Please wait...</value>
+        <value language="cn">登录成功 - 请稍候...</value>
+    </label>
+
+    <label id="s_exit">
+        <value language="es">Salir</value>
+        <value language="en">Logout</value>
+        <value language="cn">退出登录</value>
+    </label>
+
+    <label id="s_profile_formtitle">
+        <value language="es">Editar preferencias</value>
+        <value language="en">Edit profile</value>
+        <value language="cn">修改设置</value>
+    </label>
+    <label id="s_profile_login">
+        <value language="es">Identificador</value>
+        <value language="en">Login</value>
+        <value language="cn">登录</value>
+    </label>
+    <label id="s_profile_lname">
+        <value language="es">Apellidos</value>
+        <value language="en">Last Name</value>
+        <value language="cn">名</value>
+    </label>
+    <label id="s_profile_fname">
+        <value language="es">Nombres</value>
+        <value language="en">First Name</value>
+        <value language="cn">姓</value>
+    </label>
+    <label id="s_profile_email">
+        <value language="es">Email</value>
+        <value language="en">Email</value>
+        <value language="cn">邮件地址</value>
+    </label>
+    <label id="s_profile_prefs">
+        <value language="es">Preferencias personales</value>
+        <value language="en">Personal preferences</value>
+        <value language="cn">个性设置</value>
+    </label>
+    <label id="s_profile_lang">
+        <value language="es">Idioma</value>
+        <value language="en">Language</value>
+        <value language="cn">语言</value>
+    </label>
+    <label id="s_profile_msg1">
+        <value language="es">
+        Los cambios a su perfil han sido registrados.
+        </value>
+        <value language="en">
+        Your profile has been successfully updated.
+        </value>
+        <value language="cn">
+        您的设置已经成功修改.
+        </value>
+    </label>
+
+	<label id="report_search">
+        <value language="es">
+			Search  
+        </value>
+        <value language="en">
+			Search 
+        </value>
+        <value language="cn">
+			查询
+        </value>
+    </label> 
+	<label id="report_search_filter">
+        <value language="es">
+			Query Filter  
+        </value>
+        <value language="en">
+			Query Filter 
+        </value>
+        <value language="cn">
+			查询条件
+        </value>
+    </label>
+	<label id="report_search_commit">
+        <value language="es">
+			Generate Report  
+        </value>
+        <value language="en">
+			Generate Report 
+        </value>
+        <value language="cn">
+			查询报表
+        </value>
+    </label>
+	<label id="report_search_clear">
+        <value language="es">
+			Clear Input  
+        </value>
+        <value language="en">
+			Clear Input 
+        </value>
+        <value language="cn">
+			清空条件
+        </value>
+    </label>
+	<label id="report_search_result">
+        <value language="es">
+			Report Result  
+        </value>
+        <value language="en">
+			Report Result 
+        </value>
+        <value language="cn">
+			报表结果
+        </value>
+    </label>
+	<label id="report_creating_chart">
+        <value language="es">
+			create chart ...  
+        </value>
+        <value language="en">
+			create chart ... 
+        </value>
+        <value language="cn">
+			正在生成图表 ...
+        </value>
+    </label>
+	<label id="error_validation">
+        <value language="es">
+			The data can not be processed, please review the following tips. 
+        </value>
+        <value language="en">
+			The data can not be processed, please review the following tips. 
+        </value>
+        <value language="cn">
+			数据验证错误,请查看下面的提示信息！
+        </value>
+    </label>
+	<label id="error_validation_ajax">
+        <value language="es">
+			The data can not be processed, please review the red word content. 
+        </value>
+        <value language="en">
+			The data can not be processed, please review the red word content. 
+        </value>
+        <value language="cn">
+			数据验证错误,请查看界面中的红色提示信息！
+        </value>
+    </label>
+	<label id="notfound_msg">
+        <value language="es">
+			Did not meet the conditions of data. 
+        </value>
+        <value language="en">
+			Did not meet the conditions of data. 
+        </value>
+        <value language="cn">
+			没有找到符合搜索条件的数据。
+        </value>
+    </label>
+    <label id="error_form_not_cache">
+        <value language="es">
+			Form is not published ,or Form not exists,please contact the administrator!
+        </value>
+        <value language="en">
+		 	Form is not published ,or Form not exists,please contact the administrator!
+        </value>
+        <value language="cn">
+			表单未发布或者表单不存在，请联系管理员！
+        </value>
+    </label>
+	<label id="error_no_permision">
+        <value language="es">
+			No permissions, you can't do this, please contact the administrator to assign permissions for you.
+        </value>
+        <value language="en">
+		 	No permissions, you can't do this, please contact the administrator to assign permissions for you.
+        </value>
+        <value language="cn">
+			您没有所需的权限，不能执行此操作，请联系管理员为您分配权限。
+        </value>
+    </label>
+
+	<label id="calendar_january">
+		<value language="es">
+			Jan.
+		</value>
+		<value language="en">
+			Jan.
+		</value>
+		<value language="cn">
+			一月
+		</value>
+	</label>
+	<label id="calendar_february">
+		<value language="es">
+			Feb.
+		</value>
+		<value language="en">
+			Feb.
+		</value>
+		<value language="cn">
+			二月
+		</value>
+	</label>
+	<label id="calendar_march">
+		<value language="es">
+			Mar.
+		</value>
+		<value language="en">
+			Mar.
+		</value>
+		<value language="cn">
+			三月
+		</value>
+	</label>
+	<label id="calendar_april">
+		<value language="es">
+			Apr.
+		</value>
+		<value language="en">
+			Apr.
+		</value>
+		<value language="cn">
+			四月
+		</value>
+	</label>
+	<label id="calendar_may">
+		<value language="es">
+			May.
+		</value>
+		<value language="en">
+			May.
+		</value>
+		<value language="cn">
+			五月
+		</value>
+	</label>
+	<label id="calendar_june">
+		<value language="es">
+			Jun.
+		</value>
+		<value language="en">
+			Jun.
+		</value>
+		<value language="cn">
+			六月
+		</value>
+	</label>
+	<label id="calendar_july">
+		<value language="es">
+			Jul.
+		</value>
+		<value language="en">
+			Jul.
+		</value>
+		<value language="cn">
+			七月
+		</value>
+	</label>
+	<label id="calendar_august">
+		<value language="es">
+			Aug.
+		</value>
+		<value language="en">
+			Aug.
+		</value>
+		<value language="cn">
+			八月
+		</value>
+	</label>
+	<label id="calendar_september">
+		<value language="es">
+			Sep.
+		</value>
+		<value language="en">
+			Sep.
+		</value>
+		<value language="cn">
+			九月
+		</value>
+	</label>
+	<label id="calendar_october">
+		<value language="es">
+			Oct.
+		</value>
+		<value language="en">
+			Oct.
+		</value>
+		<value language="cn">
+			十月
+		</value>
+	</label>
+	<label id="calendar_november">
+		<value language="es">
+			Nov.
+		</value>
+		<value language="en">
+			Nov.
+		</value>
+		<value language="cn">
+			十一月
+		</value>
+	</label>
+	<label id="calendar_december">
+		<value language="es">
+			Dec.
+		</value>
+		<value language="en">
+			Dec.
+		</value>
+		<value language="cn">
+			十二月
+		</value>
+	</label>
+	
+	<label id="calendar_sunday">
+		<value language="es">
+			Sun.
+		</value>
+		<value language="en">
+			Sun.
+		</value>
+		<value language="cn">
+			日
+		</value>
+	</label>
+	
+	<label id="calendar_monday">
+		<value language="es">
+			Mon.
+		</value>
+		<value language="en">
+			Mon.
+		</value>
+		<value language="cn">
+			一
+		</value>
+	</label>
+	<label id="calendar_tuesday">
+		<value language="es">
+			Tues.
+		</value>
+		<value language="en">
+			Tues.
+		</value>
+		<value language="cn">
+			二
+		</value>
+	</label>
+	<label id="calendar_wednesday">
+		<value language="es">
+			Wed.
+		</value>
+		<value language="en">
+			Wed.
+		</value>
+		<value language="cn">
+			三
+		</value>
+	</label>
+	<label id="calendar_thursday">
+		<value language="es">
+			Thurs.
+		</value>
+		<value language="en">
+			Thurs.
+		</value>
+		<value language="cn">
+			四
+		</value>
+	</label>
+	<label id="calendar_friday">
+		<value language="es">
+			Fri.
+		</value>
+		<value language="en">
+			Fri.
+		</value>
+		<value language="cn">
+			五
+		</value>
+	</label>
+	
+	<label id="calendar_saturday">
+		<value language="es">
+			Sat.
+		</value>
+		<value language="en">
+			Sat.
+		</value>
+		<value language="cn">
+			六
+		</value>
+	</label>
+	
+	
+	<!-- 报表用到的东西 -->
+	<label id="portal_go_back">
+        <value language="es">
+			 Go back
+        </value>
+        <value language="en">
+			 Go back     
+        </value>
+        <value language="cn">
+        	  返回
+        </value>
+    </label>
+    <label id="portal_export_to_report">
+        <value language="es">
+			 Export
+        </value>
+        <value language="en">
+			 Export 
+        </value>
+        <value language="cn">
+       		导出
+        </value>
+    </label> 
+	
+	<!-- xcll 西城老龄 -->
+	<label id="web_title">
+        <value language="cn">
+       		北京市西城区老龄网
+        </value>
+	</label>
+	<label id="web_description">
+        <value language="cn">
+       		
+        </value>
+	</label>
+	<label id="web_keywords">
+        <value language="cn">
+       		
+        </value>
+	</label>
+	<label id="head_js">
+        <value language="cn">
+       		<script type="text/javascript\" charset="utf-8" src="http://gate.looyu.com/42604/91947111111.js"></script>
+        </value>
+	</label>
+	
+</labels> 

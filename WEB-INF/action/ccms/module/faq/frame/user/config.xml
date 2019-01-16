@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		
+	</summary>
+	
+	<log>false</log>
+
+    <transaction>
+        <classname>dinamica.GenericTransaction</classname>
+        <validator>false</validator>
+        <transaction>false</transaction>
+        <jdbc-log>false</jdbc-log>
+        <recordset id="query.sql" source="sql" scope="transaction" />
+        <recordset id="query_category.sql" source="sql" scope="transaction" />
+        <recordset id="query_favorite.sql" source="sql" scope="transaction" />
+        <recordset id="query_today.sql" source="sql" scope="transaction" max-rows="20"/>
+        <recordset id="query_3day.sql" source="sql" scope="transaction" max-rows="20"/>
+        <recordset id="query_7day.sql" source="sql" scope="transaction" max-rows="20"/>
+        <recordset id="query_30day.sql" source="sql" scope="transaction" max-rows="20"/>
+    </transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<expiration>0</expiration>
+		<print mode="table" recordset="query_category.sql" tag="combo-category" />
+        <print mode="table" recordset="query_favorite.sql" tag="combo-favorite" />
+        <print mode="table" recordset="query_today.sql" tag="combo-today" />
+        <print mode="table" recordset="query_3day.sql" tag="combo-3day" />
+        <print mode="table" recordset="query_7day.sql" tag="combo-7day" />
+        <print mode="table" recordset="query_30day.sql" tag="combo-30day" />
+        <print mode="table" recordset="query.sql" tag="combo-faqs" />
+    </output>
+		
+</config>

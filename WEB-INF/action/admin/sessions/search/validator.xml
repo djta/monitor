@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="userlogin" type="varchar" required="false" label="登录名" />
+	<parameter id="context_alias" type="varchar" required="false" label="应用系统" /> 
+	<parameter id="remote_addr" type="varchar" required="false" label="远端IP地址" /> 
+	
+	<custom-validator 
+		classname="dinamica.validators.SQLPatternTransformer" 
+		parameter="userlogin" 
+		rule="contains" 
+		/>
+
+	<custom-validator 
+		classname="dinamica.validators.SQLPatternTransformer" 
+		parameter="context_alias" 
+		rule="contains" 
+		/>
+	<custom-validator 
+		classname="dinamica.validators.SQLPatternTransformer" 
+		parameter="remote_addr" 
+		rule="contains" 
+		/>
+</validator>

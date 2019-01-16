@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-wfm.sql" source="sql" scope="transaction" />
+		<recordset id="query-wfm_node.sql" source="sql" scope="transaction" />
+		<recordset id="query-wfm_node_to.sql" source="sql" scope="transaction" />
+		<recordset id="query-wfm_node_rule.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>com.ccms.core.engine.ExportFormConfig</classname>
+	</output>
+	
+	<request-ppk>wfm_id</request-ppk>
+	<xml-category>workflows</xml-category>
+	<sequences></sequences>
+
+	<export-tables>
+		<table name="os_wfm" recordset="query-wfm.sql"/>
+		<table name="os_wfm_node_rule" recordset="query-wfm_node_rule.sql"/>
+		<table name="os_wfm_node_to" recordset="query-wfm_node_to.sql"/>
+		<table name="os_wfm_node" recordset="query-wfm_node.sql"/>
+	</export-tables>
+
+</config>

@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<script language="JavaScript" type="text/javascript" src="${def:context}/action/pub/dtree"></script>
+<title>选取组织架构</title>
+</head>
+<body>
+
+<div class="pop_title">
+<h2>选取组织架构&nbsp;&nbsp;&nbsp;(<a href="javascript: d.openAll();">展开</a> | <a href="javascript: d.closeAll();">合并</a>)
+<input name="submitBtn" id="submitBtn" type="button" value="确定" class="btn_blue" onclick="selectItems()"/>
+<span class="close"><a href="#"><img src="${def:context}/images/ccms/close.jpg" onclick="parent.pickClose()" title="关闭"/></a></span></h2>
+</div>
+<div class="pop_content" style="overflow-y:auto;height:440px;">
+	<div class="dtree">
+		<script type="text/javascript">
+			//判断是多选还是单选
+			var selectType = "${fld:select_type}";
+			if(selectType == "0"){
+				document.getElementById("submitBtn").style.display = "none";
+			}
+
+			function closePickList()
+			{
+				parent.pickClose();
+			}	
+
+			function orgClick(id,name){
+				parent.pickSelect(id, name);
+				closePickList();
+			}
+
+			function selectItems()
+			{
+				var org_ids = document.getElementsByName("org_id");
+				if(org_ids && org_ids.length > 0){
+					var orgIds = "";
+					var orgStr = "";
+					for(var i=0;i<org_ids.length;i++){
+						if(org_ids[i].checked == true){
+							orgIds += org_ids[i].value+",";
+							orgStr += document.getElementById("org"+org_ids[i].value).innerHTML+",";
+						}
+					}
+					parent.pickSelect(orgIds, orgStr);
+				}
+				
+				closePickList();
+			}	
+
+			var d = new dTree('d');
+
+			d.add(0,-1, "组织架构");
+
+			var pid = 0;
+			var btn = "";
+
+			<rows>
+				if("${fld:pid}" != ""){
+					pid = "${fld:pid}";
+				}else{
+					pid = 0;
+				}
+				if(selectType == "1"){//多选
+					btn = "<a href='javascript:void(0)'><input type='checkbox' value='${fld:org_id}' name='org_id'><span id='org${fld:org_id}'>${fld:org_name@js}</span></a>";
+				}else{
+					btn = "<a href='javascript:orgClick(${fld:org_id},\"${fld:org_name@js}\")'>${fld:org_name@js}</a>";
+				}
+				d.add("${fld:org_id}",pid,btn);
+			</rows>
+			
+			document.write(d);
+		</script>
+	</div>
+</div>
+</body>
+</html>

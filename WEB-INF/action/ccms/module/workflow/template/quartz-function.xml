@@ -1,0 +1,11 @@
+<post-functions>
+	<function type="class">
+		<arg name="class.name">com.ccms.workflow.quartz.ScheduleJob</arg>
+		<arg name="triggerId">${action_id}</arg>
+		<arg name="jobName">job</arg>
+		<arg name="triggerName">trigger</arg>
+		<arg name="groupName">os-quartz</arg>
+		<arg name="quartzDelay">${quartz_delay}</arg>
+		<arg name="cronExpression">${quartz_cron}</arg>
+	</function>
+</post-functions>

@@ -1,0 +1,26 @@
+<!--data grid-->
+<table class="grid" style="width: 95%;">
+	<!--encabezados-->
+	<tr>
+		<th >
+			<a href="javascript:onclick=sortBy('namespace')" title="选择"> 命名空间 </a>
+		</th>
+		<th >
+			<a href="javascript:onclick=sortBy('description')" title="选择"> 参数值 </a>
+		</th>
+	</tr>
+
+	<!--data-->
+	<rows>
+	<tr ${fld:_rowStyle} onmouseover="rowOn(this)"onmouseout="rowOff(this)" onclick="selectItem('${fld:id}','${fld:description}','${fld:namespace}')">
+		<td style="font-size: 9pt;">
+			${fld:namespace}
+		</td>
+		<td style="font-size: 9pt;">
+			${fld:description}
+		</td>
+	</tr>
+	</rows>
+
+</table>
+${inc:/action/pagecontrols}

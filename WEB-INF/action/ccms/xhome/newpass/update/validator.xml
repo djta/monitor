@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="userlogin" type="varchar" required="true" label="Login" maxlen="64"/>
+	<parameter id="passwd" type="varchar" required="true" label="${lbl:s_fld_password}" maxlen="15" regexp="\w{6,}?" regexp-error-label="${lbl:s_invalid_password}" />
+	<parameter id="oldPasswd" type="varchar" required="true" label="oldPasswd" maxlen="15" />
+	<parameter id="oldPasswd_mw" type="varchar" required="false" label="oldPasswd" maxlen="15" />
+	<parameter id="confirm" type="varchar" required="true" label="${lbl:s_fld_confirm}" maxlen="15" />
+	<parameter id="userid" type="integer" required="false" label="User ID (primary key)" />
+
+	<custom-validator 	
+	classname="dinamica.validators.MatchEqualValidator" 
+	on-error-label="${lbl:s_password_nomatch}" id="passwd"
+	value1="passwd" value2="confirm" />
+
+	<custom-validator 	
+	classname="dinamica.security.PasswordEncryptor" 
+	on-error-label="Error generating the MD5 hash."/>
+	
+	<custom-validator 	
+	classname="dinamica.security.PasswordEncryptor" 
+	on-error-label="Error generating the MD5 hash." id="oldPasswd"/>
+
+	<custom-validator 	
+	classname="dinamica.security.PasswordNotUsed" 
+	sql="check-password.sql" id="passwd"
+	on-error-label="${lbl:s_password_used}"/>
+
+	<custom-validator 	
+	classname="dinamica.validators.DuplicatedKeyValidator" 
+	sql="check-oldpassword.sql" id="oldPasswd"
+	on-error-label="您输入的旧密码不正确，请重新输入"/>
+</validator>
+

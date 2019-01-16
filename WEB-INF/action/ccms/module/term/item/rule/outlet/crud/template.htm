@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>出口逻辑定义</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+    <div class="panel-heading col_main_body_title text-center">
+        <h2 class="panel-title">查询出口逻辑</h2>
+    </div>
+		<div class="panel-body col_main_body">
+        <form class="form-horizontal" role="form" method="post"
+              id="searchForm" name="searchForm">
+            <input name="sort" type="hidden" value="tuid" preserve="true"/>
+            <input name="order" type="hidden" value="desc" preserve="true"/> <input
+                name="pageNo" type="hidden" value="" preserve="true"/> <input
+                name="totalPages" type="hidden" value="" preserve="true"/>
+                <input name="item_id1" type="hidden" value="${fld:item_id}" preserve="true"/>
+            <div class="form-group">
+             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <input id="item_to" class="form-control" name="item_to" type="text" value="" placeholder="请输入跳转题目代码" size="30" maxlength="30"/>
+               </div>
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+                    <button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+                    <button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+                </div>
+            </div>
+        </form>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>修改</th>
+ 				<th class="sortable" code="item_name">题目名称</th>
+  				<th class="sortable" code="item_to">跳转题目代码</th>
+    			<th class="sortable" code="rule_code">规则代码</th>
+                <th class="sortable" code="remark">备注</th>
+            </tr>
+            </thead>
+            <tbody id="datagridTemplate" style="display:none">
+            <tr>
+                <td align="center">
+                    <button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">编辑</button>
+                    <button class="btn btn-primary btn-md delete_btn" type="button" code="#tuid#">删除</button>
+                </td>
+						<td align="center">#item_name#</td>
+						<td align="center">#item_to#</td>
+						<td align="center">#rule_code#</td>
+						<td align="center">#remark#</td>
+					</tr>
+            </tbody>
+            <tbody id="datagrid">
+            </tbody>
+        </table>
+        <div class="pageDiv">
+            <ul class="pagination">
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="formTitle">问卷题目信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+                    <input type="hidden" id="tuid" name="tuid" value=""/>
+                    <input name="item_id" type="hidden" value="${fld:item_id}"  preserve="true"/>
+                    <div class="row clearfix">
+							<div class="form-group">
+								<label
+									class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">规则代码</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<input class="form-control" id="rule_code" name="rule_code" type="text" size="35" value=""/>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" align="center">
+									(题目代码:选项代码.逗号表示AND,分号表示OR关系.)
+								</div>
+							</div>
+							<div class="form-group">
+								<label
+									class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">下一题代码</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<input class="form-control" id="item_to" name="item_to" type="text" size="35" value="" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label
+									class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">备注</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<textarea class="form-control" id="remark" type="text"
+										name="remark" cols="50" rows="2" maxlength="200"></textarea>
+								</div>
+							</div>
+						</div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+                    <button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+                    <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}">
+
+<SCRIPT LANGUAGE="JavaScript">
+$(document).ready(function () {
+	var search1=null;
+    var obj = $Crud({
+        formId: "formEditor",
+        button: "save_btn",
+        insertBack: function () {
+        	$(".error").empty();
+        	search1.searchData();
+        },
+        updateBack: function () {
+        	search1.searchData();
+        },
+        deleteBack: function () {
+        	search1.searchData();
+        },
+        addNewBack: function () {
+            $("#formTitle").html("新增信息");
+        },
+        editBack: function () {
+            $("#formTitle").html("修改信息");
+        },
+        validate: function () {
+            var flag = $("#formEditor").validate({
+                rules: {
+                	rule_code: {
+                        required: true,
+                        rangelength: [1,50]
+                    }
+            		,item_to:{
+            			required:true,
+            			rangelength: [1,50]
+            		}
+                },
+                messages: {
+                	rule_code: {
+                        required: "值不能为空。",
+                        rangelength: "请输入1到50个字符长度"
+                    }
+                	,item_to:{
+                		required:"值不能为空。",
+                		rangelength: "请输入1到50个字符长度"
+                	}
+                }
+            });
+            return flag;
+        }
+    }).init();
+    search1=$Search({datagrid: "datagrid", formId: "searchForm", 
+    	success: function () {
+        $(".edit_btn").unbind().on("click", function () {
+            if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+                obj.edit({id: $(this).attr("code")});
+            }
+        });
+        $(".delete_btn").unbind().on("click", function () {
+            var obthis = $(this);
+            $Dialog().confirm("确定要删除吗?", function () {
+                if (obthis.attr("code") != undefined && obthis.attr("code") != "") {
+                    obj.del({id: obthis.attr("code")});
+                }
+            });
+        });
+    }}).initSearchBtn().searchData(1);
+});
+</SCRIPT>
+</body>
+</html>
+

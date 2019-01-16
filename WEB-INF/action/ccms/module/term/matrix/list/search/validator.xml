@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="item_id1" type="varchar" required="false" label="item_id" />
+	<parameter id="list_name" type="varchar" required="false" label="list_name" />
+
+	<custom-validator
+		classname="dinamica.validators.SQLPatternTransformer"
+		parameter="list_name"
+		rule="contains" />
+
+</validator>
+

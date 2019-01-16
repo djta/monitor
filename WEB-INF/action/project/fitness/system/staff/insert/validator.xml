@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<!-- 这里的id是 template.htm中表单项的id值 -->
+	<parameter id="userlogin" type="varchar" required="true" label="userlogin" maxlen="64" regexp="[a-zA-Z0-9_@.]{3,64}$"
+		regexp-error-label="帐号最少3位最大64位,首位字母，可包括数字字母下划线@符及小数点."/>
+	<parameter id="passwd" type="varchar" required="true" label="Password" maxlen="15" regexp="\w{6,}?" regexp-error-label="密码最少6位." />
+	<parameter id="name" type="varchar" required="true" label="名称" maxlen="128" />
+	<parameter id="name_en" type="varchar" required="false" label="名称" maxlen="64" />
+    <parameter id="data_limit" type="integer" required="false" label="数据权限" maxlen="10" />
+    <parameter id="mobile" type="varchar" required="false" label="电话" maxlen="32" />
+    <parameter id="vc_contact" type="varchar" required="false" label="其它电话" maxlen="18" />
+    <parameter id="salary" type="double" required="false" label="工资" />
+    <parameter id="remark" type="varchar" required="false" label="备注" maxlen="128" />
+    <parameter id="entry_date" type="varchar" required="true" label="入职时间" maxlen="128" />
+    
+   <parameter id="_skill_ids" type="varchar" required="true" label="岗位" maxlen="64" /> 
+     <parameter id="sex" type="varchar" required="true" label="性别" maxlen="128" />
+     <parameter id="address" type="varchar" required="false" label="地址" maxlen="128" />
+     <parameter id="user_pinyin" type="varchar" required="false" label="岗位" maxlen="128" />
+      <parameter id="birth" type="varchar" required="false" label="生日" maxlen="128" />
+     <parameter id="wx" type="varchar" required="false" label="微信" maxlen="128" />
+      <parameter id="email" type="varchar" required="false" label="邮箱" maxlen="128" />
+      <parameter id="isclass" type="varchar" required="false" label="是否兼职团操教练：0否 1是" maxlen="128" />
+      
+     	  <parameter id="card_no" type="varchar" required="false" label="岗位" maxlen="128" />
+           <parameter id="school" type="varchar" required="false" label="岗位" maxlen="128" />
+           <parameter id="origin" type="varchar" required="false" label="岗位" maxlen="128" />
+            <parameter id="bankcard" type="varchar" required="false" label="岗位" maxlen="128" />
+           <parameter id="education" type="varchar" required="false" label="岗位" maxlen="128" />
+          <parameter id="otherperson" type="varchar" required="false" label="岗位" maxlen="128" />
+           <parameter id="bankname" type="varchar" required="false" label="岗位" maxlen="128" />
+           <parameter id="major" type="varchar" required="false" label="岗位" maxlen="128" />
+	<parameter id="org_id" type="integer" required="false" label="org_id"/>
+
+    <custom-validator classname="dinamica.validators.DuplicatedKeyValidator" 
+    	on-error-label="该名已经存在，请重新命名" id="userlogin" sql="noRep.sql" />
+    
+	<custom-validator classname="dinamica.security.PasswordEncryptor"
+		on-error-label="MD5加密失败" />
+</validator>
+

@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		Mostrar un reporte de tipo parentchild con tablas anidadas
+	</summary>
+
+	<log>false</log>
+	
+		<transaction>
+		<classname>dinamica.ParentChildReader</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="master.sql" source="sql" scope="transaction" />
+		<recordset id="app.sql" source="sql" scope="session" />
+	</transaction>
+
+	<output>
+		<classname>dinamica.ParentChildOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<expiration>0</expiration>
+		<print mode="form" recordset="app.sql" />
+	</output>
+	
+	<!-- Configuracion para mostrar un reporte de tipo Master/Detail-->
+	<!-- Ordenes -->
+	<group-master recordset="master.sql" template="group-master.htm" scope="session">
+		<!-- Productos -->
+		<group-detail recordset="detail.sql" template="group-detail.htm" tag="rows">
+		</group-detail>
+	</group-master>
+
+</config>

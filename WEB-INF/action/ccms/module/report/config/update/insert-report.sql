@@ -1,0 +1,35 @@
+INSERT INTO
+	t_report_show_field
+(
+	tuid
+	,report_id
+	,field_id
+	,show_order
+	,cal_type
+	,cal_type_show
+	,is_group_by
+	,is_row_head
+	,is_col_head
+	,is_cross_value
+	,head_name
+	,is_order_by
+	,document_id
+	,format
+)
+VALUES
+(
+	${seq:nextval@${schema}seq_default}
+	,${fld:report_id}
+	,${fld:form_field}
+	,${fld:form_show_order}
+	,${fld:cal_type}
+	,${fld:cal_type_show}
+	,${fld:is_group_by}
+	,${fld:is_row_head}
+	,${fld:is_col_head}
+	,${fld:is_cross_value}
+	,${fld:head_name}
+	,${fld:is_order_by}
+	,${fld:document_id}
+	,${fld:format}
+)

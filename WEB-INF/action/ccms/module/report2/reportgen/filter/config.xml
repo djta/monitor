@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		查询
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>false</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>		
+		<recordset id="report.filter.params" source="session" scope="transaction" />
+		<recordset id="query_field.sql" source="sql" scope="transaction" params="report.filter.params"/>
+		<recordset id="query_table.sql" source="sql" scope="transaction" params="report.filter.params"/>
+		<recordset id="query_report.sql" source="sql" scope="transaction" params="report.filter.params"/>
+		<recordset id="query-report-field.sql" source="sql" scope="transaction" params="report.filter.params"/>
+	</transaction>
+
+	<output>
+		<classname>com.ccms.report2.ReportFilterOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<expiration>0</expiration>
+		<print mode="table" recordset="query-report-field.sql" tag="report-field-list" null-value=""  alternate-colors="true" />
+		<print mode="form" recordset="query_report.sql"/>
+		<print mode="form" recordset="report.filter.params"/>
+	</output>
+
+
+	<row-template>/WEB-INF/action/ccms/module/report2/reportgen/template/row.htm</row-template>
+	
+	<checkbox-template>/WEB-INF/action/ccms/module/report2/reportgen/template/checkbox.htm</checkbox-template>
+	<radio-template>/WEB-INF/action/ccms/module/report2/reportgen/template/radio.htm</radio-template>
+	<text-template>/WEB-INF/action/ccms/module/report2/reportgen/template/text.htm</text-template>
+	<combo-template>/WEB-INF/action/ccms/module/report2/reportgen/template/combo.htm</combo-template>
+	<date-template>/WEB-INF/action/ccms/module/report2/reportgen/template/date.htm</date-template>
+	<datetime-template>/WEB-INF/action/ccms/module/report2/reportgen/template/datetime.htm</datetime-template>
+	<hidden-template>/WEB-INF/action/ccms/module/report2/reportgen/template/hidden.htm</hidden-template>
+	<textreadonly-template>/WEB-INF/action/ccms/module/report2/reportgen/template/text_readonly.htm</textreadonly-template>
+	<textarea-template>/WEB-INF/action/ccms/module/report2/reportgen/template/textarea.htm</textarea-template>
+	<pickup-template>/WEB-INF/action/ccms/module/report2/reportgen/template/pickup.htm</pickup-template>
+	<plugin-template>/WEB-INF/action/ccms/module/report2/reportgen/template/plugin.htm</plugin-template>
+	
+	<domainsql-template>/WEB-INF/action/ccms/module/report2/reportgen/template/query_domain.sql</domainsql-template>
+	<fk-field-sql-template>/WEB-INF/action/ccms/module/report2/reportgen/template/query_fk_field.sql</fk-field-sql-template>
+	<sql-template-exists-column>/WEB-INF/action/ccms/module/report2/reportgen/template/query-ifexists_column.sql</sql-template-exists-column>
+	<fk-data-sql-template>/WEB-INF/action/ccms/module/report2/reportgen/template/query_fk_data.sql</fk-data-sql-template>
+
+	<field-recordset>query_field.sql</field-recordset>
+	<table-recordset>query_table.sql</table-recordset>
+	
+</config>

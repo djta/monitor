@@ -1,0 +1,33 @@
+﻿<html>
+
+<head>
+    <title>Invalid Form</title>
+    <LINK REL="stylesheet" type="text/css" href="${def:context}/default.css" />
+</head>
+
+<body>
+
+<center>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+		<table cellspacing="1" class="grid" width="400px">
+		<rows>
+			<tr ${fld:_rowStyle}>
+				<td align="center"><img src="${def:context}/images/alert.gif"/></td>
+				<td>${fld:message}</td>
+			</tr>
+		</rows>
+		</table>
+
+</center>
+
+</body>
+
+</html>
+<script language="javascript">
+	parent.jorSearchValidator();
+</script>

@@ -1,0 +1,11 @@
+<th class="th20${fld:is_required_alias}">
+	<label class="control-label">${fld:field_name}</label>
+</th>
+<td class="td20left">
+	<input type="hidden" name="${fld:field_code_alias}_operator" value="${fld:filter_type}" preserve="true" />
+	<input id="${fld:field_code_alias}_filter" name="${fld:field_code_alias}_filter" type="hidden" value="" />
+	<span id="${fld:field_code_alias}_filter_span"></span><br/>
+	<img src="${def:context}/images/search.png" class="tool" onclick="pickListForReport('${fld:field_code_alias}_filter','${fld:field_code_alias}_filter_span','${def:context}${def:actionroot}/pick/pickMore/form','400','320','formFilter','${fld:field_id}','${fld:domain_namespace}','${fld:field_code_alias}_filter_check','','')" title="select parameters" />
+	<img src="${def:context}/images/clear.gif" onclick="pickClearForReport('${fld:field_code_alias}_filter_span');" class="tool2" title="clear selected" />
+	${fld:plugin_control}			
+</td>

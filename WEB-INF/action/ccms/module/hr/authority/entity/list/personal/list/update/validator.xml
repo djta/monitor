@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+    <parameter id="entity_id" type="integer" required="true" label="entity_id" />
+    <custom-validator classname="dinamica.validators.ArrayNotEmptyValidator"
+		on-error-label="请选择人员" id="user_id" parameter-name="user_id" />
+</validator>

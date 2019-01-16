@@ -1,0 +1,303 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>FAQ信息</title>
+<script type="text/javascript" src="${def:context}/action/pub/dtree"></script>
+<link rel="StyleSheet" href="${def:context}/js/faq/jquery.autocomplete.css" type="text/css" />
+<script type="text/javascript" src="${def:context}/js/faq/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="${def:context}/js/faq/search.autocomplete.js"></script>
+</head>
+<style>
+	.highlighter{
+		color:red;
+	}
+</style>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">FAQ查询</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 column" id="searchFaqDiv">
+			<div class="form-group">
+				<form class="form-horizontal" role="form" method="post" id="searchForm" name="searchForm">
+					<input name="sort" type="hidden" value="tuid" preserve="true" />
+					<input name="order" type="hidden" value="desc" preserve="true" />
+					<input name="pageNo" type="hidden" value="" preserve="true" />
+					<input name="totalPages" type="hidden" value="" preserve="true" />
+					<input name="shenhe_flag"  value="" type="hidden" />
+					<div class="form-group">
+						<div class="col-xs-8 col-sm-8 col-md-9 col-lg-9">
+							<input id="show_name" class="form-control" name="show_name" type="text" value="${fld:show_name}"/>
+						</div>
+						<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+							<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+							<button class="btn btn-primary btn-md" type="button" id="reset_btn">清空</button>
+						</div>
+					</div>
+					<div class="form-group">
+						<div id="showSugges" style="display: none;" align="left" ></div>
+					</div>
+				</form>
+				<div id="datagridTemplate" style="display: none">
+					<table class="table table-bordered">
+						<tbody>
+							<tr>
+								<td align="left" width="50%"  class="faqdetail" code="#tuid#" title="查看详细信息" style="cursor:pointer;">
+								<div>
+							    	<span style="display:block;">
+					            		【标题】#show_name#
+					            	</span>
+						          </div>
+								</td>
+								<td  width="50%" class="faqsnap text-center" code="#tuid#" title="FAQ 快照" style="cursor:pointer;">
+									【显示快照】#content#
+								</td>
+							</tr>
+							<tr>
+								<td align="left"  width="50%" >
+								【标签】#lable#
+								</td>
+								<td width="50%">
+								#superior#
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div id="datagrid">
+				</div>
+				<div class="pageDiv">
+					<ul class="pagination"></ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7" id="showFaqDiv">
+			<div id="faqContent">
+			</div>
+		</div>
+	</div>
+</div>	
+
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script>
+function faqClass(){
+	var thisObj = this;
+	//查看faq信息
+	this.FaqDetail = function(id){
+	    ajaxCall("/action/ccms/module/faq/faq/detail?faq_id="+id+"&random="+Math.random(),
+     			{method:"get", 
+     			response:"faqContent", 
+     			dataType:"html",
+     			success:function(){
+    				$("a[name='download']").unbind().on("click",function(){
+    					if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+    						thisObj.downloadBlob($(this).attr("code"));
+    					}
+    				});
+    				$("#favorite").unbind().on("click",function(){
+    					if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+    						thisObj.faqFavorite($(this).attr("code"));
+    					}
+    				});
+    				if($Mobile.Android() || $Mobile.BlackBerry() || $Mobile.iOS()){
+    					$("#searchFaqDiv").hide();
+    					$("#showFaqDiv").show();
+    					$("#faqContent .col_main_body_title").prepend($("<button>").addClass("btn btn-primary pull-left btn-goto-faq").html("关闭"));
+    					$("#faqContent .btn-goto-faq").css("margin-top", "-5px").unbind().on("click",function(){
+    						$("#searchFaqDiv").show();
+	    					$("#showFaqDiv").hide();
+    					});
+    				}
+    			}});
+	}
+	this.FaqSnapshot = function(id){
+		var show_name = $("#show_name").val();
+	    show_name = show_name.replace(/(^\s*)|(\s*$)/g, "");    
+	    if(show_name=='' || show_name.length ==0){
+	    	thisObj.FaqDetail(id);
+	    }else {
+	    	 ajaxCall("/action/ccms/module/faq/faq/snapshot?faq_id="+id+"&show_name="+show_name+"&random="+Math.random(),
+	     			{method:"get", 
+	     			response:"faqContent", 
+	     			dataType:"html",
+	     			success:function(){
+	    				$("a[name='download']").unbind().on("click",function(){
+	    					if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+	    						thisObj.downloadBlob($(this).attr("code"));
+	    					}
+	    				});
+	    				$("#favorite").unbind().on("click",function(){
+	    					if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+	    						thisObj.faqFavorite($(this).attr("code"));
+	    					}
+	    				});
+	    				if($Mobile.Android() || $Mobile.BlackBerry() || $Mobile.iOS()){
+	    					$("#searchFaqDiv").hide();
+	    					$("#showFaqDiv").show();
+	    					$("#faqContent .col_main_body_title").prepend($("<button>").addClass("btn btn-primary pull-left btn-goto-faq").html("关闭"));
+	    					$("#faqContent .btn-goto-faq").css("margin-top", "-5px").unbind().on("click",function(){
+	    						$("#searchFaqDiv").show();
+		    					$("#showFaqDiv").hide();
+	    					});
+	    				}
+	    			}});
+	    }
+	}
+	this.showSugges_notfound = function(){
+		document.getElementById('showSugges_notfound').style.display = 'none';
+		var show_name = $("#show_name").val();;
+		show_name = show_name.replace(/(^\s*)|(\s*$)/g, "");       
+		if(show_name=='' || show_name.length ==0){
+			return;
+		}
+		var url = "/action/ccms/module/faq/faq/recovery_notfound?show_name="+show_name+"&random="+Math.random();
+		var obj = ajaxCall(httpMethod="POST", 
+			uri=url, 
+			divResponse=null, 
+			divProgress=null, 
+			formName=null, 
+			afterResponseFn=null, 
+			onErrorFn=null,
+			ignoreShowDivStatus="true");
+	}
+	this.showSugges = function(){
+		if(document.getElementById('showSugges')!="undefined"){
+			document.getElementById('showSugges').style.display = 'none';    
+			searchAutoComplete("#show_name",'${def:context}/action/ccms/module/faq/auto?random='+Math.random(),function(){});    	
+	  	}else{
+	  		document.getElementById('showSugges_notfound').style.display = 'none'; 
+	  	}    	
+	  	var show_name = $("#show_name").val();
+	  	show_name = show_name.replace(/(^\s*)|(\s*$)/g, "");       
+	    if(show_name=='' || show_name.length ==0){
+			return;
+	    }  	
+	 	      
+	 	ajaxCall("/action/ccms/module/faq/faq/recovery?show_name="+show_name+"&random="+Math.random(),
+    			{method:"get"});
+	 				
+	 }
+	this.searchFAQ = function(show_name){
+		gotoPage("/action/ccms/module/faq/faq/crud?show_name="+show_name);
+	}
+	this.faqClick = function(id){
+		ajaxCall("/action/ccms/module/faq/click?tuid=" + id,
+    			{method:"get"});
+	}
+	this.downloadBlob = function(id){
+		window.open("${def:context}/action/ccms/attachment/download?id="+id,"附件");
+	}
+	this.faqFavorite = function(id){
+	    var url = "${def:context}/action/ccms/module/faq/favorite/category/form?id="+id;
+		var w = ccms.dialog.open({url:url,id:"favorite",width:750,height:520});
+	}
+	this.copyUrl = function(){		
+		var url = {
+				path:window.location.pathname,
+				s:window.location.search,
+				toString: function(){ 
+					//this.path= this.path.substr(this.path.indexOf('/',1),this.path.length);		
+					this.s= this.s.substring(0,this.s.lastIndexOf('&'));
+					return this.path+this.s;
+				}
+		};
+		if(document.all){
+			window.clipboardData.setData('text', ''+url);
+		}else{
+			$Dialog().alert('请手动复制:'+url);
+		}
+	}
+	this.init = function(){
+		
+	}
+}
+function treeSearchClass(){
+	//增加节点
+	this.faqOperate = function(type,id){
+        var url = "";
+        if(type == "detail"){
+            ajaxCall("/action/ccms/module/faq/faq/detail?faq_id="+id+"&random="+Math.random(),
+        			{method:"get", 
+	    			response:"faqContent", 
+	    			dataType:"html",
+	    			success:function(){
+	    				$("a[name='download']").unbind().on("click",function(){
+	    					if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+	    						faqObj.downloadBlob($(this).attr("code"));
+	    					}
+	    				});
+	    				$("#favorite").unbind().on("click",function(){
+	    					if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+	    						faqObj.faqFavorite($(this).attr("code"));
+	    					}
+	    				});
+	    				$("#copy").unbind().on("click",faqObj.copyUrl);
+	    				$("#goback").unbind().on("click",function(){
+	    					history.go(-1);
+	    				});
+	    				$("#goahead").unbind().on("click",function(){
+	    					history.go(1);
+	    				});
+	    			}});
+        }else if(type == "cancle"){
+            ajaxCall("/action/ccms/module/faq/favorite/delete?faq_id="+id+"&random="+Math.random(),
+        			{method:"get", 
+	    			dataType:"script",
+	    			success:function(){
+	    				document.location.reload();
+	    			}});
+        }
+    }
+	this.divClick = function(id,flag){
+		if(flag == 1){
+			$("#div"+id).show();
+			$("#img"+id).hide();
+		}else{
+			$("#div"+id).hide();
+			$("#img"+id).show();
+		}
+	}
+	this.faqClick = function(id){
+		ajaxCall("/action/ccms/module/faq/click?tuid=" + id,{method:"get"});
+	}
+	
+}
+var faqSearchObj = null;
+var faqObj = null;
+var d = null;
+var treeSearchObj = null;
+$(document).ready(function() {
+	$("#show_name").val(decodeURI(decodeURI("${fld:show_name}")));
+	$("#reset_btn").unbind().on("click",function(){
+		$("#show_name").val("");
+	});
+	
+	faqObj = new faqClass();
+	faqObj.init();
+	treeSearchObj = new treeSearchClass();
+	faqSearchObj = $Search({datagrid:"datagrid",formId:"searchForm",button:"search_btn",success:function(){
+			$(".faqdetail").unbind().on("click", function(){
+				if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+					//faqObj.FaqDetail($(this).attr("code"));
+					faqObj.faqClick($(this).attr("code"));
+				}
+			});
+			$(".faqsnap").unbind().on("click", function(){
+				if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+					faqObj.FaqSnapshot($(this).attr("code"));
+					//faqObj.faqClick($(this).attr("code"));
+				}
+			});
+			
+			
+		}}).initSearchBtn();
+	faqSearchObj.searchData(1);
+	setTimeout(faqObj.showSugges,300);
+});
+
+</script>
+</body>
+</html>

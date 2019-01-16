@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<config>
+
+	<summary>
+		查询报表
+	</summary>
+	
+	<log>false</log>
+
+	<on-error>${def:actionroot}/jorsearch/error</on-error>
+
+	<output>
+		<classname>com.ccms.report.JorReportOutput</classname>
+		<set-http-headers>true</set-http-headers>
+	</output>
+</config>

@@ -1,0 +1,12 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"tuid":"${fld:tuid}"
+		,"logo_path":"${fld:logo_path@js}"
+		,"wfm_name":"${fld:wfm_name@js}"
+		,"xml_release":"${fld:xml_release@js}"
+		,"document_id":"${fld:document_id}"
+	},
+	</rows>
+	{}
+]}

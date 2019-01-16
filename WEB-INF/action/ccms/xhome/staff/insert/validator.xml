@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<!-- 这里的id是 template.htm中表单项的id值 -->
+	<parameter id="userlogin" type="varchar" required="true" label="userlogin" maxlen="64" regexp="[a-zA-Z0-9_@.]{3,64}$"
+		regexp-error-label="帐号最少3位最大64位,首位字母，可包括数字字母下划线@符及小数点."/>
+	<parameter id="passwd" type="varchar" required="true" label="Password" maxlen="15" regexp="\w{6,}?" regexp-error-label="密码最少6位." />
+	<parameter id="confirm" type="varchar" required="true" label="confirm" maxlen="15" />
+	<parameter id="name" type="varchar" required="true" label="姓名" maxlen="128" />
+    <parameter id="skill_id" type="integer" required="true" label="岗位" maxlen="64" />
+    <parameter id="mobile" type="varchar" required="true" label="电话" maxlen="32" />
+    <parameter id="vc_contact" type="varchar" required="false" label="其它电话" maxlen="18" />
+	<parameter id="sex" type="varchar" required="false" label="性别" maxlen="2" />
+    <parameter id="upload_id" type="integer" required="false" label="寸照" maxlen="64" />
+    
+    <custom-validator classname="dinamica.validators.DuplicatedKeyValidator" 
+    	on-error-label="该名已经存在，请重新命名" id="userlogin" sql="noRep.sql" />
+    
+	<custom-validator classname="dinamica.validators.MatchEqualValidator"
+		on-error-label="两个密码不一致" value1="passwd" value2="confirm" id="confirm" />
+		
+	<custom-validator classname="dinamica.security.PasswordEncryptor"
+		on-error-label="MD5加密失败" />
+</validator>
+

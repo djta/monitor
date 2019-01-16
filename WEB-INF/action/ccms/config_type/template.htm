@@ -1,0 +1,44 @@
+<div class="dtree">
+	
+</div>
+<script type="text/javascript">
+var d = null;
+var defaultTypeVal = "";
+var defaultTypeName = "";
+$(document).ready(function() {
+	d = new dTree('d');
+
+	d.add(0,-1,"类型选择(ConfigMainType)");
+	
+	var type_name = "";
+	var firstVal = "";
+	var firstName = "";
+
+	<rows>
+		if ("${fld:pid}" == "0")
+		{
+			type_name = "${fld:domain_text@js}";
+		}else{
+			if(firstVal == ""){
+				firstVal = "${fld:domain_value@js}";
+				firstName = "${fld:domain_text@js}";
+			}
+			if("${fld:is_default}" == "1"){
+				defaultTypeVal = "${fld:domain_value@js}";
+				defaultTypeName = "${fld:domain_text@js}";
+			}
+			type_name = "<a href='javascript:typeOperate(\"${fld:domain_value@js}\",\"${fld:domain_text@js}\");'>${fld:domain_text@js}</a>";
+		}
+		d.add("${fld:id}","${fld:pid}",type_name);
+	</rows>
+	
+	//如果没有指定默认类型则取第一个
+	if(defaultTypeVal == ""){
+		defaultTypeVal = firstVal;
+		defaultTypeName = defaultTypeName;
+	}
+
+	$(".dtree").html(d.toString());
+	d.openAll();
+});
+</script>

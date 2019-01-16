@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>被禁止的用户</title>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">查询被禁止的用户</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm">
+				<input name="sort" type="hidden" value="userlogin" preserve="true"/>
+				<input name="order" type="hidden" value="desc" preserve="true" /> 
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+				<div class="form-group">
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<input type="text" class="form-control" id="userlogin" name="userlogin" placeholder="请输入用户登录名" />
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<input type="text" class="form-control" id="name" name="name" placeholder="请输入用户姓名" />
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>操作</th>
+						<th class="sortable" code="userlogin">登录名</th>
+						<th>姓</th>
+						<th>名</th>
+						<th>邮箱</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td align="center">
+							<button class="btn btn-primary btn-md enable_btn" type="button" code="#user_id#">启用</button>
+						</td>
+						<td align="center">#userlogin#</td>
+						<td align="center">#lname#</td>
+						<td align="center">#fname#</td>
+						<td align="center">#email#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script language="javascript">
+	$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		$(".enable_btn").unbind().on("click",function(){
+			var obthis = $(this);
+			$Dialog().confirm("确定要启用此用户吗?", function(){
+				if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+					var url = "${def:actionroot}/enable?id="+obthis.attr("code");
+					ajaxCall(url,{
+						method: "post",
+						progress: true,
+						dataType: "script",
+						success: function(){
+							$Search({datagrid:"datagrid",formId:"searchForm"}).searchData();
+						}
+					});
+				}
+			});
+		});
+	}}).initSearchBtn().searchData(1);
+</script>
+</body>
+</html>
+
+    

@@ -1,0 +1,51 @@
+
+<center>
+<!--data grid-->
+<table class="grid" width="100%" >
+
+
+	<tr>
+		<th>
+			<a href="javascript:onclick=sortBy('namespace_mapping')" >
+				命名空间
+			</a>
+		</th>
+		<th>
+			<a href="javascript:onclick=sortBy('old_data')" >
+				old_data
+			</a>
+		</th>
+		<th>
+			<a href="javascript:onclick=sortBy('mapping_text')" >
+				对应数据库值
+			</a>
+		</th>
+		<th>
+			操作
+		</th>
+	</tr>
+	
+	<rows>
+	<tr ${fld:_rowStyle}>
+
+		<td align="left">
+			${fld:namespace_mapping}
+		</td>	
+
+		<td align="left">
+			${fld:old_data}
+		</td>	
+
+		<td align="left">
+			${fld:mapping_text}
+		</td>	
+
+		<td align="center">
+			<a href="javascript:void(0)" onclick="edit(${fld:tuid})">修改</a>
+		</td>
+
+	</rows>
+
+</table>
+${inc:/action/pagecontrols?is_can_query=inline&is_can_create=inline}
+</center>

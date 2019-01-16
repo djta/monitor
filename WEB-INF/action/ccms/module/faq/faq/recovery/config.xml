@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>com.ccms.faq.RecoveryTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+		<print mode="form" recordset="_request" />
+		<print mode="table" recordset="query-revocery.sql" tag="rows" />
+	</output>
+
+</config>

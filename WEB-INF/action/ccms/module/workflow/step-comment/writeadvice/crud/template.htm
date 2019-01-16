@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/formgen/pub/common}
+<title>签署《${fld:title}》流程意见</title>
+<script type="text/javascript">
+function  addusedcommon(){
+
+	pickOpen('owenadvice','owenadvice','${def:context}${def:actionroot}/usedcommon','500','400','formEditor');
+}
+function setcommon(){
+  var owenadvice=document.getElementById("owenadvice").value;
+  var selectadvice=document.getElementById("usedadvice").value;
+  document.getElementById("owenadvice").value=owenadvice+selectadvice;	
+}
+function showAttachment(){
+	var url = "${def:context}/action/ccms/module/attachment/crud?table_code=${fld:node_id}&pk_value=${fld:entry_id}";
+	WinOpen(url,11);
+}
+function openBlob(id)
+{
+	var url = "${def:context}/action/pub/uploadfile/download?id="+id;
+	var features = "height=500,width=800,status=no,toolbar=no,menubar=no,location=no,scrollbars=yes,resizable=yes";
+	var w = window.open(url, id, features);
+}
+</script>
+</head>
+<body>
+<div id="response" style="display:none;width:100%"></div>
+<!--COMMON HEADER-->
+${inc:/action/pub/header}
+<div style="padding-left:5px;padding-right:5px;">
+<center>
+<form name="formEditor" onsubmit="return save()">
+<table class="formgrid"  width="100%">
+	<tr>
+		<td  align="center" >意见</td>
+		<td align="center" ></td>
+		<td align="center" >常用意见列表</td>
+	</tr>
+	<tr>
+		<td >
+		<textarea cols="60" rows="8" name="owenadvice" id="owenadvice"></textarea>
+		</td>
+		<td align="center" ><input type="button" name="button3" id="button3" value="《" onclick="setcommon()"></input></td>
+		<td align="center" >
+		<select id="usedadvice" name="usedadvice"  size="8" style="width: 300px">
+		<rows>
+		<option value="${fld:usedadvice}">${fld:usedadvice}</option>
+		</rows>
+		</select>
+		
+		</td>
+	</tr>
+	<tr>
+		<td align="left" colspan="3" >
+		<input type="button" value="添加常用意见" onclick="addusedcommon()" class="btn_gray"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="left" colspan="3" >
+		<font color="red">附件：</font>
+		<rowsa>
+			<a href="javascript:void(0)" onclick="openBlob('${fld:tuid}')" title="${fld:description}">${fld:file_name}</a>
+		</rowsa>
+		<input type="button" value="添加" onclick="showAttachment()" class="btn_gray"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="center" colspan="3" >
+		<input type="submit" value="提交" class="btn_blue"/>
+		<input type="button" value="取消" onclick="window.close()" class="btn_gray"/>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3" align="left">
+		<rows1>
+		<span>签署人：${fld:createdby} 时间：${fld:created@yyyy-MM-dd HH:mm:ss}</span></br>
+		<span><font color="red">${fld:comments}</font></span></br>
+		</rows1>
+		</td>
+	</tr>
+</table>
+<input type="hidden" name="entry_id" is="entry_id" value="${fld:entry_id}"></input>
+<input type="hidden" name="node_id" is="node_id" value="${fld:node_id}"></input>
+<input type="hidden" id="tuid" name="tuid"  value="" default="0"/>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}"/>
+</form>
+</center>
+</div>
+</body>
+<script type="text/javascript">
+function setadvice(){
+	<rows2>
+   document.getElementById("owenadvice").value="${fld:comments@js}";
+   document.getElementById("tuid").value="${fld:tuid}";
+    </rows2>
+}
+setadvice();
+</script>
+
+</html>

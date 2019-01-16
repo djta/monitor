@@ -1,0 +1,11 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"group_id":"${fld:group_id}"
+		,"app_id":"$(fld:app_id)"
+		,"description":"${fld:description@js}"
+		,"group_name":"${fld:group_name@js}"
+	},
+	</rows>
+	{}
+]}

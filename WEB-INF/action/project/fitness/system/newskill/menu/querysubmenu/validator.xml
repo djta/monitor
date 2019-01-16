@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+    <parameter id="skill_id" type="integer" required="false" label="skill_id"/>
+    <parameter id="rootid" type="integer" required="false" label="rootid"/>
+</validator>

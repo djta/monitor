@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>轮播图设置</title>
+${inc:/action/project/fitness/home/pub}
+</head>
+<body>
+	<form class="form-horizontal" role="form" method="post" id="searchForm">
+				<input name="sort" type="hidden" value="showorder" preserve="true" />
+				<input name="order" type="hidden" value="asc" preserve="true" /> 
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+				<input name="org_id" type="hidden" value="${fld:org_id}" preserve="true" /> 
+	<div class="dialogbg" style="height: 700px">
+		<header class="header-default">
+						轮播图设置
+		</header>
+		<div class="panel-body col_main_body">
+
+		<div class="am-tabs-bd r-tab-cont">
+					<div class="c-n-nav-2 am-tab-panel am-in am-active am-fade three-none" >
+						<div>
+							<div class="tab-cout-nav-t">
+								<nav class="tab-nav-my">
+									  <div class="r-c-btnList">
+											<button type="button" class="r-c-3-btn-1" id="search_btn" title="查询"></button>
+											<img src="${def:context}/js/project/fitness/image/SVG/nav/xinzengkecheng.svg" title="新增" alt="" data-toggle="modal" id="addnew_btn">
+										</div>									
+								</nav>
+							</div>
+							
+							
+							<div class="tab-cout-nav-b">
+								<nav class="r-c-3-t-b-l">
+								</nav>
+								<nav class="r-c-3-t-b-r">
+									 <li>
+											<img src="${def:context}/js/project/fitness/image/SVG/nav/xiugai.svg" title="修改" alt=""id="edit_btn">
+									</li>
+									<li>
+											<img src="${def:context}/js/project/fitness/image/SVG/nav/shanchu.svg" title="删除" alt=""id="delete_btn">
+									</li>	
+								</nav>
+							</div>
+							
+							</div>
+						</div>
+				<div class="r-tab-cout-3-b dialogbg" >
+							<div class="to-change-background h-43"></div>
+							<table> 
+								<thead>
+									<tr>
+										<th class="table-checkbox">
+											<label class="am-checkbox">
+												<input id="selectAll"  name="datalist"  type="checkbox" value=""  >
+											</label>
+										</th>
+										<th>轮播图名称</th>
+										<th>图片</th>
+										<th>跳转地址</th>
+										<th>显示顺序</th>
+										<th>创建人</th>
+										<th>创建时间</th>
+									</tr>
+								</thead>
+								
+								<tbody id="datagridTemplate" style="display: none">
+									<tr>
+										 <td class="table-checkbox">#application_id#</td> 
+										<td >#bannername#</td>
+										<td >#attachid#</td>
+										<td >#linkurl#</td>
+										<td >#showorder#</td>
+										<td >#createdby#</td>
+										<td >#created#</td>		
+									</tr>
+								</tbody>
+								<tbody id="datagrid">
+								</tbody>
+							</table>
+							<div class="pageDiv">
+								<ul class="pagination">
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+	</form>
+		
+		
+		<form  name="formEditor" class="form-horizontal" role="form" method="post" id="formEditor">
+						<input type="hidden" id="tuid" name="tuid" value="" />
+						<input name="org_id1" type="hidden" value="${fld:org_id}" preserve="true" /> 
+			<div class="modal fade  dialogbg" id="modalAddnew"  tabindex="-1" style='margin-left:10% ;height:600px;width: 780px'>
+			<header class="header-default">
+				<span id="formTitle">轮播图设置</span>
+				<button type="button" class="header-close" data-dismiss="modal" aria-hidden="true"></button>
+			</header>
+          		<div class="modal-body" style="margin-left: 15%">
+						<div  style="width: 500px;">
+							<label >轮播图名称：</label>
+							<input   name="bannername" id="bannername"  type="text" size="20" maxlength="15" />
+						</div>
+						
+						<div  style="width: 500px;">
+							<label >轮播图：</label>
+							<input type="hidden" id="upload_id" name="upload_id" value="" />
+							<div id="uploadDiv"></div>
+							<br/>
+							<button type="button" id="upload_btn" >上传</button>
+							<span style="color:red;">上传图片最佳尺寸：750 X 320</span>
+						</div>						
+
+						<div  style="width: 500px;">
+							<label >跳转地址：</label>
+							<input   name="linkurl" id="linkurl"  type="text" size="20" maxlength="15" />
+						</div>
+						
+						<div  style="width: 500px;">
+							<label >显示顺序：</label>
+							<input   name="showorder" id="showorder"  type="text" size="20" maxlength="15" />
+						</div>												
+				</div>
+				
+			<footer class="footer-default">
+				<button style="margin-top: 30px" type="button" id="save_btn" >保存</button>
+			</footer>
+		</div>
+			</form>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+	<script type="text/javascript">
+	$(document).ready(function() {
+		
+		$(".header-close").unbind().on("click",function(){
+			$("#modalAddnew").modal('hide');
+			ccms.util.clearForm('formEditor');
+		});
+		
+		var searchObj = null;
+		var obj = $Crud({
+			formId : "formEditor",
+			button : "save_btn",
+			insertBack : function() {
+				searchObj.searchData(1);
+			},
+			updateBack : function() {
+				searchObj.searchData(1);
+			},
+			deleteBack : function() {
+				searchObj.searchData(1);
+			},
+			addNewBack : function() {
+				$("#uploadDiv").empty();
+				$("#formTitle").html("新增轮播图");
+			},
+			editBack : function() {
+				$("#formTitle").html("修改轮播图");
+			},
+			validate : function() {
+				var flag = $("#formEditor").validate({
+					rules : {},
+					messages : {}
+				});
+				return flag;
+			},
+			check : function() {
+				return true;
+			}
+		}).init();
+
+		this.searchObj = searchObj;
+		searchObj = $Search({datagrid : "datagrid", formId : "searchForm", rowpackage : function(obj){
+			obj.attachid = '<img width="75" height="32" src="${def:context}/action/ccms/attachment/download?id='+obj.attachid+'&type=1" />';
+		}, success : function() {
+			ccms.util.renderCheckbox("datalist");
+			//全选   取消全选
+		    $("#selectAll").unbind().on("ifChecked",function(){    //点击事件未选中
+				$('input[name=datalist]').iCheck('check');  //
+		    }).on("ifUnchecked",function(){    //点击事件未选中
+				$('input[name=datalist]').iCheck('uncheck');  //
+		    });
+			
+			
+			$("#edit_btn").unbind().on("click", function(){
+				var obthis = getCheckboxValue("datalist");
+				var len=$('input[name=datalist]:checked').length
+				if(obthis!=""&&len==1){
+					obj.edit({id:obthis});
+				}else{
+					ccms.dialog.alert("请选择一张图片！")
+				}
+			});	
+			
+			$("#delete_btn").unbind().on("click", function(){
+				var obthis = getCheckboxValue("datalist");
+				if(obthis!=""){
+					$Dialog().confirm("确定要删除吗？",function(){
+						obj.del({id:obthis});
+					})
+				}else{
+					ccms.dialog.alert("请选择图片！")
+				}
+			});
+		}}).initSearchBtn().searchData(1);
+		$("#upload_btn").unbind().on("click",function(){
+			var url = '${def:context}/action/project/fitness/attachment/crud?table_code=hr_org_banner&pk_value=';
+			ccms.dialog.open({url : url, id : "uploadbanner",height:500,width:600});
+		});
+		
+	});
+	function uploadOk(id){
+		$("#upload_id").val(id);
+		$("#uploadDiv").html('<img width="375" height="160" src="${def:context}/action/ccms/attachment/download?id='+id+'&type=1" />');
+		ccms.dialog.close("uploadbanner");
+	}
+	</script>
+</body>
+</html>

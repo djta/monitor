@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/error/validation/ajax">
+
+    <parameter id="tuid" type="varchar" required="true" label="TUID"/>
+    <parameter id="item_id" type="integer" required="true" label="item_id"/>
+    <parameter id="rule_code" type="varchar" required="true" label="规则代码" maxlen="128"/>
+	<parameter id="item_to" type="varchar" required="true" label="跳转题目"/>
+    <parameter id="remark" type="varchar" required="false" label="remark" maxlen="250"/>
+
+</validator>
+
+

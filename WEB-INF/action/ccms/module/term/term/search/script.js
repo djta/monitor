@@ -1,0 +1,13 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"tuid":"${fld:tuid}",
+		"term_name":"${fld:term_name}",
+		"term_type":"${fld:term_type}",
+		"remark":"${fld:remark}",
+		"status":"${fld:status}",
+	    "question_bank_name":"${fld:question_bank_name}"
+	},
+	</rows>
+	{}
+]}

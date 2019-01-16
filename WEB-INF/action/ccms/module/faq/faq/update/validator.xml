@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+    <parameter id="tuid" type="integer" required="false" label="tuid"/>
+    <parameter id="superior_id" type="integer" required="false" label="superior id"/>
+    <parameter id="faq_code" type="varchar" required="false" label="FAQ代码" maxlen="128"/>
+    <parameter id="lable_code" type="varchar" required="false" label="标签代码" maxlen="128"/>
+    <parameter id="show_name" type="varchar" required="true" label="标题" maxlen="128"/>
+    <parameter id="lable" type="varchar" required="false" label="标签" maxlen="128"/>
+    <parameter id="content" type="varchar" required="true" label="FAQ内容"/>
+    <parameter id="is_node" type="integer" required="false" label="节点标志"/>
+    <parameter id="start_date" type="date" required="false" label="开始日期"/>
+    <parameter id="end_date" type="date" required="false" label="结束日期"/>
+    <parameter id="remark" type="varchar" required="false" label="备注" maxlen="200"/>
+	<parameter id="is_tip" type="varchar" required="false" label="是否通知" maxlen="2"/>
+	<parameter id="topic_name" type="varchar" required="false" label="广播名称" maxlen="50"/>
+	<parameter id="is_expired" type="varchar" required="false" label="是否过期" maxlen="2"/>
+	<parameter id="is_bulletin" type="varchar" required="false" label="是否发布公告" maxlen="2"/>
+    <parameter id="create_date" type="date" required="false" label="创建日期"/>
+    <parameter id="superior" type="varchar" required="false" label="上级路径"/>
+	
+<custom-validator
+    classname="dinamica.validators.DateRangeValidator"
+    on-error-label="开始日期不能大于结束日期"
+    date1="start_date" date2="end_date" />
+</validator>

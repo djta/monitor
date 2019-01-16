@@ -1,0 +1,446 @@
+@CHARSET "UTF-8";
+
+@media (max-width: 1920px) {
+	.keyboard{
+		font-size:10px;
+	}
+}
+@media (max-width: 1600px) {
+	html{
+		font-size:52%;
+	}
+	.keyboard{
+		font-size:9px;
+	}
+}
+
+@media (max-width: 1366px) {
+	html{
+		font-size:44%;
+	}
+	.keyboard{
+		font-size:8px;
+	}
+}
+
+@media (max-width: 1280px) {
+	html{
+		font-size:39%;
+	}
+	.keyboard{
+		font-size:7px;
+	}
+}
+
+@media (max-width: 992px) {
+	html{
+		font-size:36%;
+	}
+}
+@media (max-width: 768px) {
+	html{
+		font-size:30%;
+	}
+}
+@media (max-width: 300px) {
+	html{
+		font-size:22%;
+	}
+}
+html{
+	  height: 100%;
+}
+body {
+	font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu;
+	font-size: 2em;
+	 height: 100%;
+}
+.container {
+	width: 100%;
+	background-color:#EBF1F1;
+}
+
+.caret-top {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin-left: 2px;
+	vertical-align: middle;
+	border-bottom: 4px solid #000;
+	border-right: 4px solid transparent;
+	border-top: 0 dotted;
+	border-left: 4px solid transparent;
+}
+
+.btn .caret-top {
+	margin-left: 0;
+}
+
+.btn-default .caret-top {
+	border-bottom-color: #333;
+}
+
+.clearleft {
+	padding-left: 0px;
+	margin-left: 0px;
+}
+.clearright {
+	padding-right: 0px;
+	margin-right: 0px;
+}
+
+.clearlr {
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+.size30 {
+	font-size: 30px;
+}
+
+.size18 {
+	font-size: 18px;
+}
+
+.btn-m-close img {
+	width: 60px;
+	height: 60px;
+	position: absolute;
+	top: 0px;
+	left: 96%;
+}
+
+label.error {
+	margin-left: 10px;
+	width: auto;
+	display: inline;
+	color: red;
+}
+
+.marginb20{
+	margin-bottom:20px;
+}
+<!--日期样式-->
+
+.dropdown-menu th,td{
+	font-size:20px;
+}
+.datetimepicker-months{
+	
+}
+.datetimepicker .datetimepicker-months .table-condensed{
+	 min-width: 280px;
+}
+.datetimepicker .datetimepicker-days .table-condensed{
+	 min-width: 280px;
+}
+.datetimepicker .datetimepicker-hours .table-condensed{
+	 min-width: 280px;
+}
+.datetimepicker .datetimepicker-minutes .table-condensed{
+	 min-width: 280px;
+}
+
+
+table.tablecenter{
+	text-align:center;
+}
+table th,td{
+	font-size:1em;
+}
+h1, .h1 {
+    font-size: 1.8em;
+}
+h2{
+	font-size:1.5em
+}
+h3{
+	font-size:1em;
+}
+.fileupload-buttons input{
+	font-size:1em;
+}
+@media (min-width: 1600px) {
+	.btn-lg { /* 修改按钮样式大小 */
+	    font-size: 24px;
+	  /*  letter-spacing: 16px; */
+	}	
+}
+.bootbox{
+	font-size:1.5em;
+}
+.bootbox  button{
+	font-size:1.2em;
+	letter-spacing: 16px;
+	text-align:center;
+	 padding-left: 25px;
+}
+.modal-footer .btn + .btn{
+	margin-left:25px;
+}
+.nav{/** 左边菜单样式**/
+	font-size:24px;	
+}
+
+
+.keyboard{
+	background-color:white;
+	border:2px solid gray;
+	padding:5px;
+}
+.keyboard .numkey{
+	width:70px;
+	font-size:4em;
+	text-align:center;
+	float:left;
+	margin:5px;
+	border-radius: 6px;
+	background-color:#528BB7;
+	color:white;
+}
+.keyboard .numberbtn{
+	float:left;
+	margin:5px 5px;
+	text-align:center;
+}
+.keyboard button{
+	width:70px;
+}
+.keyboard button.btn-lg{
+	font-size: 2.4em;
+}
+.keyboard .active{
+	background-color:#84C1FF;
+}
+.keyboard .activemouseover{
+	cursor:pointer
+}
+img.photoalbum{
+	border: 2px solid #47BCA2;
+}
+
+.reportsearchDialog{
+	background-color:white;
+	border:2px solid gray;
+	padding:5px;
+}
+.reportsearchDialog .operatorbtn{
+	float:left;
+	margin-left:4%;
+}
+
+.iradio_square-blue2 {
+    display: inline-block;
+    *display: inline;
+    vertical-align: middle;
+    margin: 0 0 3%;
+    padding: 0;
+    width: 44px;
+    height: 44px;
+    background: url(../../js/bootstrap/js/icheck/skins/square/blue2.png) no-repeat;
+    border: none;
+    cursor: pointer;
+    background-position: -240px 0;
+}
+.iradio_square-blue2.checked{
+	 background-position: -336px 0;
+}
+
+
+.iradio_square-yellow2 {
+    display: inline-block;
+    *display: inline;
+    vertical-align: middle;
+     margin: 0 0 3%;
+    padding: 0;
+    width: 44px;
+    height: 44px;
+    background: url(../../js/bootstrap/js/icheck/skins/square/yellow2.png) no-repeat;
+    border: none;
+    cursor: pointer;
+    background-position: -240px 0;
+}
+.iradio_square-yellow2.checked{
+	 background-position: -336px 0;
+}
+
+.mainbody{
+	height:100%;
+	overflow:hidden;
+}
+.mainbody>div{
+	height:100%;
+	overflow:hidden;
+}
+.mainbody div.menuleft{
+	height:100%;
+	overflow: hidden;
+	overflow-y: auto;
+}
+.mainbody div.rbody{
+	height:100%;
+	overflow:hidden;
+}
+
+.col_main {
+	height: 100%;
+	margin: 0 auto;
+	background-color: #fff;
+	border-radius: 3px;
+	overflow:hidden;
+}
+.col_main .col_mainInner {
+	position: relative;
+	height: 100%;
+	background-color: #ebf1f1;
+}
+.col_main .col_mainInner .col_main_body_title {
+	position: relative;
+	height: 45px;
+	line-height: 44px;
+}
+.col_main .col_mainInner .col_main_body {
+	position: absolute;
+	top: 45px;
+	bottom: 0;
+	overflow-y: auto;
+	overflow-x: hidden;
+	width: 100%;
+}
+
+.dialog-close {
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	right: -13px;
+	top: -6px;
+	background: url(../../../../images/qa/close.png) no-repeat;
+	cursor: pointer;
+	opacity: 1;
+	-ms-filter: 'alpha(Opacity=100)';
+	z-index:1;
+}
+
+.sortable{
+	cursor: pointer;
+}
+
+.table-bordered th{
+	font-size:1em;
+	text-align:center;
+	background: #f2f2f2;
+}
+.modal-footer{
+	background-color:#EBF1F1;
+}
+.modal-footer div{
+	text-align: center;
+}
+
+.pageDiv {
+	padding: 0px;
+	text-align: center;
+}
+.modal-body{
+	background-color:#EBF1F1;
+}
+/* 文件上传 */
+.ccms_upload{
+	position:relative;
+}
+.ccms_upload input[type=file]{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:10vh;
+	opacity:0;
+}
+
+/** 进度条 **/
+div.progressDiv{
+	position:absolute;
+	width:100%;
+	height:100%;
+	background: url(../../img/loading_bg.png);
+	background-size:100% 100%;
+	left:0;
+	top:0;
+	z-index: 1050;
+}
+div.progressDiv .uploadtext{
+	margin-top:40vh;
+	margin-left:20%;
+}
+div.progressDiv .progress{
+	width:60%;
+	margin-left:20%;
+}
+
+.showtagdlg input{/* 标签选择框 */
+	width:97%;
+}
+.showtagdlg span.tag-select {
+    background: url("../../../../images/qa/select.png") no-repeat scroll center center #eee;
+    cursor: pointer;
+    display: inline-block;
+    height: 20px;
+    margin: 0 5px 0 -26px;
+    position: relative;
+    text-indent: -9999em;
+    vertical-align: middle;
+    width: 20px;
+    z-index: 10;
+}
+
+.showtagdlg .btn {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid #0079ff;
+    border-radius: 5px;
+    color: #0079ff;
+    font-family: Microsoft yahei;
+    font-size: 0.8vw;
+}
+.showTagDialog {
+    background: none repeat scroll 0 0 white;
+    border: 1px solid #ccc;
+}
+.showTagDialog li.taglis {
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #0079ff;
+    border-radius: 5px;
+    color: #666;
+    display: inline-block;
+    font-size: 13px;
+    height: 28px;
+    line-height: 28px;
+    margin-left: 5px;
+    max-width: 180px;
+    overflow: hidden;
+    padding: 0 8px;
+    vertical-align: middle;
+}
+.showTagDialog li {
+    margin: 1% 0;
+}
+.showtagList .tag {
+    border: 1px solid #0079ff;
+    border-radius: 5px;
+    color: #0079ff;
+    display: inline-block;
+    font-size: 15px;
+    margin: 0 14px 12px 0;
+    padding: 0 8px;
+}
+ul.showtagList{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+ul.showtagList li{
+	float:left;
+	 margin-right: 1vw;
+}
+

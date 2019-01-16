@@ -1,0 +1,56 @@
+﻿<form name="formFilter" onsubmit="return search(searchBack)">
+<TABLE class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <!--column layout-->
+        <col width="20%">
+        <col width="30%">
+		<col width="20%">
+        <col width="30%">
+        <!--form title-->
+        <tr>
+			<td class="th20">
+				起始日期
+			</td>
+			<td class="td20left">
+				<input id="fdate" name="fdate" type="text" size="15" value="" maxlength="10"  readonly  class="readonly" >
+				<img class="tool" src="${def:context}/images/calendar.gif" 
+					title="打开日历.."
+					onclick="calendarOpen('fdate')"> YYYY-MM-DD
+			</td>
+			<td class="th20">
+				结束日期
+			</td>
+			<td class="td20left">
+				<input id="tdate" name="tdate" type="text" size="15" value="" maxlength="10"  readonly  class="readonly" >
+				<img class="tool2" src="${def:context}/images/calendar.gif" 
+					title="打开日历.."
+					onclick="calendarOpen('tdate', 'fdate')"> YYYY-MM-DD
+			</td>
+		</tr>
+
+         <tr>
+			<td class="th20">
+				流程名称
+			</td>
+			<td class="td20left">
+				<input id="wfm_name" name="wfm_name" type="text" size="30" value="">
+			</td>
+			<td class="th20">
+				编号
+			</td>
+			<td class="td20left">
+				<input id="entry_id" name="entry_id" type="text" size="30" value="">
+			</td>
+		</tr>
+
+</TABLE>
+<TABLE class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <tr>
+        <!--buttons-->
+        <td align="center" colspan="2">
+            <input type="submit" class="btn_blue" value="查询" >
+            <input type="button" class="btn_gray" value="重置"  onclick="clearForm('formFilter')">
+        </td>
+        </tr>
+</TABLE>
+<input name="limitedcount"  value="1000" type="hidden" >
+</form>

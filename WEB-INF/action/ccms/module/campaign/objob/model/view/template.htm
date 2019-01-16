@@ -1,0 +1,51 @@
+<center>
+<!--data grid-->
+<table class="grid" width="100%" >	
+	<tr>
+		<th>
+		    操作
+		</th>
+
+		<th nowrap>
+			<a href="javascript:onclick=sortBy('tuid','query-model.sql')" >
+				模型代码
+			</a>
+		</th>
+
+		<th nowrap>
+			<a href="javascript:onclick=sortBy('model_name','query-model.sql')" >
+				模型名称
+			</a>
+		</th>
+		<th nowrap>
+			<a href="javascript:onclick=sortBy('is_enabled','query-model.sql')" >
+				是否启用
+			</a>
+		</th>
+	
+	<rows>
+	<tr ${fld:_rowStyle}>
+
+		<td align="center">
+				<a href="javascript:void(0);" onclick="javascript:edit(${fld:tuid});" title="编缉信息">修改</a>&nbsp;
+				${fld:url_enabled}
+		</td>
+
+		<td align="left">
+			${fld:tuid}
+		</td>	
+		
+		<td align="left">
+			${fld:model_name}
+		</td>	
+
+		<td align="left">
+			${fld:is_enabled}
+		</td>	
+
+	</tr>
+	</rows>
+
+</table>
+${inc:/action/pagecontrols?is_can_query=inline&is_can_create=inline}
+</center>

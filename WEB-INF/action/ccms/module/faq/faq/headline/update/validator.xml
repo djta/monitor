@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="tuid" type="integer" required="true" label="tuid"/>
+    <parameter id="faq_id" type="integer" required="true" label="faq_id"/>
+    <parameter id="from_date" type="date" required="false" label="开始日期"/>
+    <parameter id="t_date" type="date" required="false" label="结束日期"/>
+<custom-validator
+    classname="dinamica.validators.DateRangeValidator"
+    on-error-label="开始日期应小于结束日期"
+    date1="from_date" date2="t_date" />
+</validator>

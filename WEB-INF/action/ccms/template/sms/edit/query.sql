@@ -1,0 +1,9 @@
+select 
+    tuid
+    ,template_name
+    ,template_content
+    ,account_id
+from 
+	cc_sms_template
+where 
+	tuid=${fld:tuid}

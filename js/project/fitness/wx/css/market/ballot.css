@@ -1,0 +1,75 @@
+.desc{
+	color:#4A4A4A;
+	font-size:1.4rem;
+	line-height:2.4rem;
+	text-align:center;
+	background-color:#F5F5F5;
+	margin-top:1rem;
+}
+.header img{
+	margin-top:1.1rem;
+	border-radius:50%;
+	width:6rem;
+	height:6rem;
+}
+.user-info{
+	margin-left:2rem;
+	color:#4A4A4A;
+}
+.user-info .user-no{
+	display: inline-block;
+	margin-top:2.2rem;
+	line-height:2.4rem;
+	font-size:1.7rem;
+}
+.user-info .user-name{
+	display: inline-block;
+	font-size:1.6rem;
+	margin-top:0.4rem;
+	line-height:2.3rem;
+}
+.header .user-num{
+	display: inline-block;
+	color:#FF566B;
+	font-size:1.6rem;
+	line-height:2.3rem;
+	margin-top:3rem;
+}
+.details{
+	margin-top:1rem;
+	color:#9B9B9B;
+	font-size:1.6rem;
+	line-height:2.3rem;
+}
+.details img{
+	max-width: 100%;
+	margin:0.5rem 0;
+}
+.btn-div{
+	background-color:white;
+	position:fixed;
+	bottom:-1px;
+	left:0;
+	height:6rem;
+	width:100%;
+	padding-top:0.7rem;
+}
+
+.btn-div .btn-lp{
+	background:#419BF9;
+	color:white;
+	font-size:1.7rem;
+	line-height:4.4rem;
+	width:55%;
+	border-radius:5px;
+	margin-left:5%;
+}
+.btn-div .btn-tp{
+	margin-left:3%;
+	width:32%;
+	background:#FFC948;
+	color:white;
+	font-size:1.7rem;
+	line-height:4.4rem;
+	border-radius:5px;
+}

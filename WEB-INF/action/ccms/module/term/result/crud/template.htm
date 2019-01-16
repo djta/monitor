@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>问卷题目信息</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+    <div class="panel-heading col_main_body_title text-center">
+        <h2 class="panel-title">查询成绩</h2>
+    </div>
+	<div class="panel-body col_main_body">
+        <form class="form-horizontal" role="form" method="post" id="searchForm" name="searchForm">
+            <input name="sort" type="hidden" value="userlogin" preserve="true"/>
+            <input name="order" type="hidden" value="desc" preserve="true"/> 
+            <input name="pageNo" type="hidden" value="" preserve="true"/> 
+            <input name="totalPages" type="hidden" value="" preserve="true"/>
+			
+			<div class="form-group">
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ">
+					<input type="text" class="form-control" id="fdesde" name="fdesde" placeholder="请选择起始日期" />
+				</div>
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+					<input type="text" class="form-control" id="fhasta" name="fhasta" placeholder="请选择结束日期" />
+				</div>
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ">
+					<input name="name" id="name" type="text" size="35" value=""  placeholder="请输入登录名称" class="form-control"/>
+				</div>
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+					<input name="term_name" id="term_name" type="text" size="35" value="" readonly="readonly" placeholder="请选择问卷名称" class="form-control"/>
+				</div>
+				<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+					<img src="${def:context}/images/search.gif" style="cursor: pointer;"
+						id="pickOpenNotCenter" title="查询表名" />&nbsp;&nbsp;&nbsp;
+					<img src="${def:context}/images/clear.gif" style="cursor: pointer;"
+						id="pickClear" title="清除选择的内容" />
+				</div>
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+					<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+					<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+				</div>
+			</div>
+        </form>
+        <table class="table table-bordered">
+            <thead>
+	            <tr>
+	                <th>操作</th>
+					<th class="sortable" code="userlogin">登录名</th>
+					<th class="sortable" code="term_score">成绩</th>
+	 				<th>问卷名称</th>
+	            </tr>
+            </thead>
+            <tbody id="datagridTemplate" style="display:none">
+	            <tr>
+	                <td align="center">
+	                    <button class="btn btn-primary btn-md preViewTerm_btn" type="button" code="#tuid#" code1="#term_id#">明细</button>
+	                </td>
+					<td align="center">#name#</td>
+					<td align="center">#term_score#</td>
+					<td align="center">#term_name#</td>
+				</tr>
+            </tbody>
+            <tbody id="datagrid">
+            </tbody>
+        </table>
+        <div class="pageDiv">
+            <ul class="pagination">
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<SCRIPT LANGUAGE="JavaScript">
+$(document).ready(function () {
+	var search1=null;
+    search1=$Search({datagrid: "datagrid", formId: "searchForm",
+    	success: function () {
+        //调转到预览界面
+    		$(".preViewTerm_btn").unbind().on("click",function(){
+    			if($(this).attr("code") != undefined && $(this).attr("code") != "" && $(this).attr("code1") != undefined && $(this).attr("code1") != ""){
+    				var url = "/action/ccms/termgen?term_id="+$(this).attr("code1")+"&score_id="+$(this).attr("code");
+    				gotoPage(url);
+    			}
+    		});
+    }}).initSearchBtn().searchData(1);
+    
+    $Dialog().date($('#fdesde'));
+	$Dialog().date($('#fhasta'));
+	//选取问卷名称
+	$("#pickOpenNotCenter").unbind().on("click",function(){
+		var url = "${def:context}/action/ccms/module/term/result/termName/crud?id=term_name&pickId=pickOpen";
+		ccms.dialog.open({url:url,id:"pickOpen",width:800,height:600});
+	});
+	//清除问卷名称
+	$("#pickClear").unbind().on("click",function(){
+		document.searchForm.term_name.value='';
+	});
+});
+
+</SCRIPT>
+</body>
+</html>

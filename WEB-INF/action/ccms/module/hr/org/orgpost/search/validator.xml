@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="org_id" type="integer" required="true" label="org_id" />
+	<parameter id="post_name" type="varchar" required="false"
+		label="post_name" />
+</validator>

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="tuid" type="varchar" required="true" label="tuid" />
+	<parameter id="grant_name" type="varchar" required="true" maxlen="128" label="授权单名称" />
+	<parameter id="authuser" type="varchar" required="true" maxlen="64" label="授权对象" />
+	<parameter id="start_time" type="varchar" required="true" label="start_time" />
+	<parameter id="end_time" type="varchar" required="true" label="end_time" />
+	<parameter id="remark" type="varchar" required="false" maxlen="512" label="备注" />
+
+</validator>

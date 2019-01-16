@@ -1,0 +1,24 @@
+insert into ${schema}s_menu  
+(
+	menu_id,
+	app_id,
+	title,
+	title_cn,
+	title_en,
+	position,
+	service_id,
+	parentmenu_id,
+	logo_path
+)
+values 
+(
+	${seq:nextval@${schema}seq_menu},
+	${fld:app_id},
+	${fld:title_cn},
+	${fld:title_cn},
+	${fld:title_en},
+	${fld:position},
+	${fld:service_id},
+	${fld:parentmenu_id},
+	${fld:logo_path}
+)

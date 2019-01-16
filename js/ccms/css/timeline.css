@@ -1,0 +1,76 @@
+
+ul.timeline {
+    list-style: none outside none;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 0 10%;
+    position: relative;
+}
+ul.timeline:after {
+    background-color: rgb(210, 210, 210);
+    border-radius: 2px;
+    content: "";
+    display: block;
+    height: 100%;
+    left:  10%;
+    margin-left: -2px;
+    position: absolute;
+    top: 0;
+    width: 4px;
+}
+ul.timeline li {
+    z-index:10;
+	margin:10px 0;
+    position:relative;
+}
+ul.timeline li .timeline-icon {
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    height: 40px;
+    margin-left: -20px;
+    overflow: hidden;
+    padding: 3px;
+    position: absolute;
+    text-align: center;
+    top: 30px;
+    width: 40px;
+}
+ul.timeline li .timeline-content {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    margin-left: 40px;
+    position: relative;
+    padding:15px 15px 1px;
+}
+ul.timeline.animated li.active .timeline-content{
+	background-color:#eeeeee;
+	left:0;
+	opacity:1;
+	border-radius:10px;
+}
+ul.timeline li .timeline-icon > div{
+	border-radius: 50%;
+    font-size: 20px;
+    height: 34px;
+    padding:3px;
+}
+/* 左边箭头 */
+ul.timeline li .timeline-content:after{
+	-moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: rgba(0, 0, 0, 0) #eeeeee rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+    border-image: none;
+    border-style: solid;
+    border-width: 10px;
+    left: -20px;
+    top: 38px;
+}
+/* 左边箭头 */
+ul.timeline li .timeline-content:after, ul.timeline li .timeline-content:before{
+	content: "";
+    height: 0;
+    position: absolute;
+    width: 0;
+}

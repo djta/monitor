@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script language="JavaScript" type="text/javascript"
+	src="${def:context}/action/pub/dtree"></script>
+<title>新增报表</title>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<!--div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-md-offset-1 col-lg-offset-1"-->
+				<h2 class="panel-title">
+					新增报表<span id="typeTitleSpan"></span>
+				</h2>
+			<!--/div-->
+			<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1" style="float: right; margin-top: -25px;">
+				<button type="button" id="save_btn" class="btn btn-primary btn-md">保&nbsp;存</button>
+			</div>
+		</div>
+		<div class="panel-body col_main_body">
+			<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2">
+				${inc:/action/ccms/config_type?search_subject_id=${fld:subject_id}}
+			</div>
+			<div class="col-xs-8 col-sm-8 col-md-9 col-lg-9">
+				<form class="form-horizontal" role="form" method="post"
+					id="formEditor" name="formEditor">
+					<input type="hidden" id="tuid" name="tuid" value="" /> <input
+						id="subject_id" name="subject_id" type="hidden" value=""
+						preserve="true" /> <input name="group_type" type="hidden" value=""
+						preserve="true" />
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label required">业务</label>
+								<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+									<input id="table_id" name="table_id" type="hidden" value=""
+										id="table_id" /> <input id="table_alias" class="form-control"
+										type="text" name="table_alias" size="30" readonly
+										class="readonly" value="" />
+								</div>
+								<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" >
+								<img src="${def:context}/images/search.gif"
+									style="cursor: pointer;" id="pickOpenNotCenter" title="查询表名" />
+								<img src="${def:context}/images/clear.gif"
+									style="cursor: pointer;" id="pickClear" title="清除选择的内容" />
+								</div>
+								<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label required">查询显示列数</label>
+									<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+										<select name="col_num_filter" class="form-control" id="col_num_filter">
+												<option value=""></option>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+										</select>
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2  control-label   required">报表中文名称</label>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<input name="report_name_cn" type="text" size="35" value=""
+										id="report_name_cn" class="form-control" />
+								</div>
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3  control-label   required">报表英文名称</label>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<input name="report_name_en" type="text" size="35" value=""
+										class="form-control" />
+								</div>
+							</div>
+						<div class="form-group">
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 ">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4  control-label   required">报表引擎</label>
+								<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+									<input name="engine_type" type="radio" value="0"
+										checked="checked" />琴棋报表&nbsp; <input name="engine_type"
+										type="radio" value="1" />简表 &nbsp; <input name="engine_type"
+										type="radio" value="2" />图表 &nbsp;
+								</div>
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="jor_file_name">
+								<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label  required">简表配置文件路径</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input name="jor_file_name" type="text" size="35" value=""
+										class="form-control" />
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label required">是否显示查询条件</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input name="filter_showtype" type="radio" value="0" checked="checked" />默认显示&nbsp;
+								<input name="filter_showtype" type="radio" value="1" />默认不显示 &nbsp;
+							</div>
+						</div>
+						<div class="form-group" id="report_type">
+							<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2  control-label required">报表类型</label>
+								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+									<input name="report_type" type="radio" value="0"
+										checked="checked">平面报表&nbsp;</input> <input name="report_type"
+										type="radio" value="1">分组报表&nbsp;</input> <input
+										name="report_type" type="radio" value="2">交叉报表</input>
+								</div>
+								<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2  control-label   required">是否合并空行及零行</label>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<input name="is_merge_zero" type="radio" value="0"
+										checked="checked" />不合并&nbsp; <input name="is_merge_zero"
+										type="radio" value="1" />合并 &nbsp;
+								</div>
+						</div>
+						<div class="form-group"id="is_drill">
+								<label
+									class="col-xs-2 col-sm-2 col-md-2 col-lg-2  control-label required">是否钻取</label>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<input name="is_drill" type="radio" value="0" checked="checked" />不钻取&nbsp;
+									<input name="is_drill" type="radio" value="1" />钻取 &nbsp;
+								</div>
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3  control-label   required">是否垂直合并表头</label>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<input name="is_merge_vertical" type="radio" value="0"
+										checked="checked" />不合并 &nbsp; <input name="is_merge_vertical"
+										type="radio" value="1" />合并 &nbsp;
+								</div>
+						</div>
+						<div class="form-group" id="is_show_zero">
+								<label
+									class="col-xs-2 col-sm-2 col-md-2 col-lg-2  control-label required">零是否显示为空</label>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<input name="is_show_zero" type="radio" value="0"
+										checked="checked" />显示为空&nbsp; <input name="is_show_zero"
+										type="radio" value="1" />显示为零 &nbsp;
+								</div>
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3  control-label   required">是否显示小计汇总</label>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<input name="show_sub_total_type" type="radio" value="0"
+										checked="checked" />不汇总&nbsp; <input
+										name="show_sub_total_type" type="radio" value="1" />列汇总&nbsp;
+									<input name="show_sub_total_type" type="radio" value="2" />行汇总&nbsp;
+									<input name="show_sub_total_type" type="radio" value="3" />都汇总&nbsp;
+								</div>
+						</div>
+						<div class="form-group" id="show_total_type">
+								<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label required">是否显示汇总</label>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<input name="show_total_type" type="radio" value="0"
+										checked="checked" />不汇总&nbsp; <input name="show_total_type"
+										type="radio" value="1" />列汇总&nbsp; <input
+										name="show_total_type" type="radio" value="2" />行汇总&nbsp; <input
+										name="show_total_type" type="radio" value="3" />都汇总
+								</div>
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3  control-label required">是否显示百分比</label>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<input name="show_percent_type" type="radio" value="0"
+										checked="checked" />不显示&nbsp; <input name="show_percent_type"
+										type="radio" value="1" />列显示&nbsp; <input
+										name="show_percent_type" type="radio" value="2" />行显示 &nbsp; <input
+										name="show_percent_type" type="radio" value="3" />都显示
+								</div>
+						</div>
+						<div class="form-group"id="if_customer_design">
+									<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2  control-label required">是否客户自定义条件</label>
+									<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+										<input name="if_customer_design" type="radio" value="0"
+											checked="checked" />否&nbsp; <input name="if_customer_design"
+											type="radio" value="1" />是&nbsp;
+									</div>
+						</div>
+						<div class="form-group" id="form_js">
+									<label
+										class="col-xs-2 col-sm-2 col-md-2 col-lg-2  control-label  ">界面JS代码<br>(调用界面时执行)</label>
+									<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+										<textarea name="form_js" cols="40" rows="4"
+											class="form-control"></textarea>
+									</div>
+									<label
+										class="col-xs-3 col-sm-3 col-md-3 col-lg-3  control-label  ">加载条件界面后JS代码<br>(完成加载条件界面后执行)</label>
+									<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+										<textarea name="loadfilter_js" cols="40" rows="4"
+											class="form-control"></textarea>
+									</div>
+						</div>
+						<div class="form-group" id="searchback_js">
+									<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label  ">查询前JS代码<br>(查询前执行)</label>
+									<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+										<textarea name="searchpre_js" cols="40" rows="4"
+											class="form-control"></textarea>
+									</div>
+									<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label ">查询后JS代码<br>(完成查询后执行)</label>
+									<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+										<textarea name="searchback_js" cols="40" rows="4"
+											class="form-control"></textarea>
+									</div>
+						</div>
+						<div class="form-group" id="is_sql_phrase">
+								<label
+									class="col-xs-2 col-sm-2 col-md-3 col-lg-2  control-label  ">SQL语句</label>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<textarea name="report_sql" cols="40" rows="4"
+										class="form-control"></textarea>
+								</div>
+								<label
+									class="col-xs-3 col-sm-3 col-md-3 col-lg-3  control-label   required">SQL语句类型</label>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<input class="form-control" id="is_sql_phrase"
+										name="is_sql_phrase" type="radio" value="0" checked="checked" />存储过程
+									&nbsp; <input class="form-control" id="is_sql_phrase"
+										name="is_sql_phrase" type="radio" value="1" />SQL语句&nbsp;
+								</div>
+						</div>
+						<div class="form-group" id="remark">
+								<label
+									class="col-xs-2 col-sm-2 col-md-3 col-lg-2  control-label  ">备注</label>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<textarea name="remark" cols="40" rows="2" maxlength="200"
+										class="form-control"></textarea>
+								</div>
+						</div>
+				</form>
+			</div>
+		</div>
+		<input type="hidden" name="actionroot" id="actionroot"
+			value="${def:actionroot}" />
+	</div>
+	<script language="javascript">
+	function  InsertClass(){
+		this.init=function(){
+			var obthis=this;
+			$("#subject_id").val("${fld:subject_id}");
+			//保存按钮
+			$("#save_btn").unbind().on("click", function() {
+				$(".error").empty();
+				var url = "${def:actionroot}/insert";
+				ajaxCall(url, {
+					method: "post",
+					progress: true,
+					form: "formEditor",
+					button: "save_btn",
+					dataType: "script",
+					success : function() {
+						$Dialog().alert("保存成功！",function(){
+							gotoBack();
+						});
+					}
+				});
+			});
+    		//新增报表查询业务
+    		$("#pickOpenNotCenter").unbind().on("click",function(){
+    			var url = "${def:context}/action/ccms/pub/pick/table/crud?id=table_id&name=table_alias&pickId=pickOpen&subject_id="+"${fld:subject_id}";
+    			ccms.dialog.open({url:url,id:"pickOpen",width:800,height:600});
+    		});
+    		$("#pickClear").unbind().on("click",function(){
+    			document.formEditor.table_id.value='';
+    			document.formEditor.table_alias.value='';
+    		});
+    		$("input[type=radio][name='engine_type']").unbind().on("change",function(){
+    			var val=$(this).val();
+    			obthis.change(val);
+    		});
+    		obthis.change(0);
+		};
+		this.change=function(val){
+			if(val=='0'){
+				$("#report_sql").show();
+				$("#is_sql_phrase").show();
+				$("#jor_file_name").hide();
+				$("#report_sql").show();
+				$("#is_sql_phrase").show();
+				$("#is_merge_zero").show();
+				$("#is_merge_vertical").show();
+				$("#show_sub_total_type").show();
+				$("#report_type").show();
+				$("#is_drill").show();
+				$("#is_show_zero").show();
+				$("#show_total_type").show();
+				$("#show_percent_type").show();
+				$("#if_customer_design").show();
+			}else if(val=='1'){
+				$("#jor_file_name").show();
+				$("#is_merge_zero").hide();
+				$("#is_merge_vertical").hide();
+				$("#show_sub_total_type").hide();
+				$("#report_type").hide();
+				$("#is_drill").hide();
+				$("#is_show_zero").hide();
+				$("#show_total_type").hide();
+				$("#show_percent_type").hide();
+				$("#if_customer_design").hide();
+				$("#report_sql").hide();
+				$("#is_sql_phrase").hide();
+				
+			}else{
+				$("#report_sql").show();
+				$("#is_sql_phrase").show();
+				$("#jor_file_name").hide();
+				$("#is_merge_zero").hide();
+				$("#is_merge_vertical").hide();
+				$("#show_sub_total_type").hide();
+				
+				$("#report_type").hide();
+				$("#is_drill").hide();
+				$("#is_show_zero").hide();
+				$("#show_total_type").hide();
+				$("#show_percent_type").hide();
+				$("#if_customer_design").hide();
+				
+			}
+		};
+	}
+	var insertClass=null;
+	$(document).ready(function() {
+		insertClass=new InsertClass();
+		insertClass.init();
+		document.formEditor.group_type.value = defaultTypeVal;
+	typeOperate=function(t,n){
+		document.formEditor.group_type.value = t;
+		document.getElementById("typeTitleSpan").innerHTML = "&nbsp;&nbsp;-&nbsp;&nbsp;"+n;
+	};
+});
+    		
+	</script>
+</body>
+</html>
+

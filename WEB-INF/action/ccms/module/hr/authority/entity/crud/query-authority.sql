@@ -1,0 +1,1 @@
+select tuid as authority_id,authority_name from hr_authority where tuid = ${fld:authority_id}

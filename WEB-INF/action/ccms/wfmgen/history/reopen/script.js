@@ -1,0 +1,2 @@
+﻿	parent.search();
+	search();

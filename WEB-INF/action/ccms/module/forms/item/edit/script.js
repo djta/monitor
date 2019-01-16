@@ -1,0 +1,13 @@
+document.formEditor.tuid.value = "${fld:tuid}";
+document.formEditor.form_id.value = "${fld:form_id}";
+document.formEditor.item_name_cn.value = "${fld:item_name_cn@js}";
+document.formEditor.item_name_en.value = "${fld:item_name_en@js}";
+document.formEditor.col_num.value = "${fld:col_num}";
+document.formEditor.show_order.value = "${fld:show_order}";
+document.formEditor.remark.value = "${fld:remark@js}";
+document.formEditor.item_code.value = "${fld:item_code@js}";
+document.formEditor.linkage_document_id.value = "${fld:linkage_document_id}";
+document.formEditor.linkage_document_alias.value = "${fld:linkage_document_alias@js}";
+document.formEditor.fieldset_style.value = "${fld:fieldset_style@js}";
+document.formEditor.plugin_top.value = "${fld:plugin_top@js}";
+document.formEditor.plugin_bottom.value = "${fld:plugin_bottom@js}";

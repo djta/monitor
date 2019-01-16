@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="fdate1" type="date" required="false" label="开始日期" />
+	<parameter id="tdate1" type="date" required="false" label="结束日期" />
+	
+	<parameter id="fdate2" type="date" required="false" label="开始日期" />
+	<parameter id="tdate2" type="date" required="false" label="结束日期" />
+	
+
+	<parameter id="userlogin" type="varchar" required="false" label="授权人" />
+	<parameter id="authuser" type="varchar" required="false" label="被授权人" />
+		
+	<custom-validator
+		classname="dinamica.validators.DateRangeValidator"
+		on-error-label="[起始日期] 不能晚于 [结束日期]."
+		date1="fdate1" date2="tdate1" id="tdate1" />
+		
+	<custom-validator
+		classname="dinamica.validators.DateRangeValidator"
+		on-error-label="[起始日期] 不能晚于 [结束日期]."
+		date1="fdate2" date2="tdate2" id="tdate2"/>
+</validator>
+

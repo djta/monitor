@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<link rel="stylesheet" type="text/css" href="${def:context}/default.css" />
+<title></title>
+</head>
+
+<body>
+
+<center>
+
+<br>
+
+<div class="alert" style="width:40%">
+
+	操作成功.
+    <SCRIPT LANGUAGE="JavaScript">
+    <!--
+        var url = "${def:context}/action/cc/faq/tree/admin";
+        parent.frames["tree"].document.location.href = url;
+    //-->
+    </SCRIPT>
+
+</div>
+
+</center>
+
+</body>
+</html>

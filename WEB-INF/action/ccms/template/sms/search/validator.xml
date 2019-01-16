@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="template_name" type="varchar" required="false" label="template_name" />
+
+
+</validator>

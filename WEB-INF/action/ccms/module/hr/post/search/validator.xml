@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="post_name_filter" type="varchar" required="false" label="post_name_filter" />
+
+	<custom-validator 
+		classname="dinamica.validators.SQLPatternTransformer" 
+		parameter="post_name_filter" 
+		rule="contains" 
+		ifnull="%" />
+
+</validator>

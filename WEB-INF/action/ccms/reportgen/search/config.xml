@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		查询
+	</summary>
+	
+	<log>false</log>
+
+	<!--configura el control de paginacion-->
+	<set-request-attribute id="paging.recordset" value="query-report-result.sql" />
+	<set-request-attribute id="paging.pagesize" value="10000" />
+
+	<sql-template>query-base.sql</sql-template>
+	<paging-recordset>query-report-result.sql</paging-recordset>
+	<rowhead-recordset>query_rowhead_field.sql</rowhead-recordset>
+	<colhead-recordset>query_colhead_field.sql</colhead-recordset>
+	
+	<transaction>
+		<classname>com.ccms.report.SearchReport</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query_crossvalue_field.sql" source="sql" scope="session"/>
+		<recordset id="query_report.sql" source="sql" scope="transaction"/>
+		<recordset id="query_css.sql" source="sql" scope="transaction" />
+		<recordset id="query_rowhead_field.sql" source="session" scope="transaction"  params="report.filter.params"/>
+		<recordset id="query_colhead_field.sql" source="session" scope="transaction"  params="report.filter.params"/>
+	</transaction>
+	
+	<output>
+		<classname>com.ccms.report.ReportOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<expiration>0</expiration>
+	</output>
+	
+</config>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/ccms/pub}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Language" content="zh-CN" />
+<title>欢迎界面</title>
+<style type="text/css">
+    .panelDiv{
+        margin: 45px 0 0 0;
+        overflow-y: auto; 
+        padding:0;
+    }
+	.panelstyle {
+		cursor: pointer;
+		height:85px;
+		text-align:center;
+		margin-bottom:15px;
+	}
+	.imgDiv {
+		display: block;
+	}
+	.container-fluid{
+		height:100%;
+		padding:0px;
+	}
+ </style>
+</head>
+<body class="body">
+<div class="container-fluid">
+     <div id="panelDiv" class="col-xs-12 row clearfix panelDiv"></div>
+ </div>
+ 
+	<script language="javascript">
+	
+		$(document).ready(function() {
+			var menuArray=[
+					   <rows>
+						{title:"${fld:title}",
+						 path:"${fld:path}",
+						 iconpath:"${fld:iconpath}"
+						},	
+						</rows>
+						 {}
+					   ];
+			menuArray.pop();
+			$("#panelDiv").empty();
+			var height=parseFloat($("#panelDiv").parent().height())-45; 
+			$("#panelDiv").css({height:"100%"});
+			
+			//$("#panelDiv").css({height:height});
+            for(var i=0;i<menuArray.length;i++){
+                var obj=menuArray[i];
+                var title=obj.title;
+                var path=$Base64.encode(escape(obj.path));
+                var iconpath=obj.iconpath;
+                var html='';
+
+                html+='<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 panelstyle" data-path="'+path+'" data-title="'+title +'" data-id="'+99999+""+i+'">';
+                html+='<div class="imgDiv">';
+                html+='<img src=" ${def:context}'+iconpath+'" addtabs= "'+ 99999+""+i +'" title= "'+title + '" url="'+path+' >"></img>';
+                html+='</div>';
+                html+='<div>'+title+'</div>';
+                html+='</div>';
+                $("#panelDiv").append(html);
+            }
+            $("#panelDiv").append("<div style='clear:both;'></div>");
+
+    	    $('#panelDiv').unbind().addtabs();
+
+		});
+
+	</script>
+</body>
+</html>

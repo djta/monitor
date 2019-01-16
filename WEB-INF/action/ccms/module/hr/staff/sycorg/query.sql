@@ -1,0 +1,1 @@
+select holdid as org_id,name as org_name,parentholdid as pid ,holdtreepath as org_path From  std_HoldInfo

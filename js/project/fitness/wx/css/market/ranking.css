@@ -1,0 +1,97 @@
+.bg{
+  background: linear-gradient(0deg, #444549, #67686C); 
+}
+.bg-white{
+	background:white;
+	border-radius:0.5rem;	
+}
+.desc-time{
+	color:white;
+	line-height:3.7rem;
+	font-size:1.4rem;
+	text-align: center;
+}
+.rank-ul{
+	padding:1rem; 
+	margin:0;
+}
+.rank-ul .clearlr{
+	padding:0.5rem 0;
+}
+.rank-ul .rank-title span{
+	display:inline-block;
+	font-size:1.6rem;
+	color:#4A4A4A;
+	text-align: center;
+	line-height:2.2rem;
+}
+.rank-ul .r-t-1{
+	width:20%;
+}
+.rank-ul .r-t-2{
+	width:50%;
+}
+.rank-ul .r-t-3{
+	margin-left:5%;
+	width:20%;
+}
+.rank-ul img{
+	width:4rem;
+	height:4rem;
+	border-radius:50%;
+	margin-left:7%;
+	display: inline-block;
+}
+.rank-ul .rank-num{
+	display:inline-block;
+	margin-top:0.6rem;
+	width:20%;
+	height:2rem;
+	line-height:2rem;
+	text-align:center;
+	font-size:1.6rem;
+	color:#4A4A4A;
+}
+.rank-ul .clearlr:nth-child(2) .rank-num{
+	background:url(../../image/cx/btn-rank-1.png) no-repeat center center;
+	background-size:auto 100%;
+	line-height: 10rem;
+    overflow: hidden;
+}
+.rank-ul .clearlr:nth-child(3) .rank-num{
+	background:url(../../image/cx/btn-rank-2.png) no-repeat center center;
+	background-size:auto 100%;
+	line-height: 10rem;
+    overflow: hidden;
+}
+.rank-ul .clearlr:nth-child(4) .rank-num{
+	background:url(../../image/cx/btn-rank-3.png) no-repeat center center;
+	background-size:auto 100%;
+	line-height: 10rem;
+    overflow: hidden;
+}
+.rank-ul .user-name{
+	display: inline-block;
+	margin-left:1rem;
+	height:4rem;
+	line-height: 4rem;
+	font-size:1.6rem;
+	color:#4A4A4A;
+	text-align: center;
+}
+.ticket-num{
+	display: inline-block;
+	height:4rem;
+	line-height: 4rem;
+	text-align:right;
+	color:#FF566B;
+	font-size:1.6rem;
+	margin-right:1rem;
+}
+.desc{
+	color:#C8C8C8;
+	font-size:1.2rem;
+	height:2.6rem;
+	line-height: 2.6rem;
+	text-align: center;
+}

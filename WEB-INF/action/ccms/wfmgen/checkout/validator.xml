@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="document_id" type="integer" required="true" label="document_id" maxlen="10"/>
+	<!-- 父编号 -->
+	<parameter id="__p_pk_value__" type="varchar" required="false" label="__p_pk_value__"/>
+	<!-- 业务主键 -->
+	<parameter id="__pk_value__" type="varchar" required="false" label="__pk_value__"/>
+
+	<parameter id="__form_action__" type="varchar" required="false" label="__form_action__"/>
+	<parameter id="__search_action__" type="varchar" required="false" label="__search_action__"/>
+
+	<parameter id="current_id" type="integer" required="true" label="current_id"/>
+	<!-- 父流程实例与父流程当前节点 -->
+	<parameter id="__wfm_id__" type="integer" required="false" label="__wfm_id__"/>
+	<parameter id="__parent_wfentry_id__" type="integer" required="false" label="__parent_wfentry_id__"/>
+	<parameter id="__parent_node_id__" type="integer" required="false" label="__parent_node_id__"/>
+</validator>

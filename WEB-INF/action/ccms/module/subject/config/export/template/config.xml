@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		Download Excel Template(import field) File. 
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query_css.sql" source="sql" scope="transaction" />
+		<recordset id="query-import_field.sql" source="sql" scope="transaction" />
+	</transaction>
+	
+  
+	<output>
+		<classname>com.ccms.imp.TemplateExcelOutput</classname>
+	</output>
+	
+</config>

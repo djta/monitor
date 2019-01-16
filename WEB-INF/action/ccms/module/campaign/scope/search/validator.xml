@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator >
+	<parameter id="campaign_id" type="varchar" required="true" label="活动代码" />
+	<parameter id="scope_type" type="varchar" required="false" label="活动范围类型" />
+	<parameter id="scope_type_filter" type="varchar" required="false" label="活动范围类型" />
+</validator>
+

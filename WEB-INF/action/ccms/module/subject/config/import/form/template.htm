@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>恢复数据配置</title>
+</head>
+<body>
+<!-- 页眉 -->
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">恢复数据配置</h2>
+	</div>
+</div>
+<!-- 内容 -->
+<form name="form1" onsubmit="return uploadConfig()" action="${def:context}${def:actionroot}/upload"
+		method="post" enctype="multipart/form-data">
+	<table class="table table-bordered" style="width:70%;" align="center">
+		<tr>
+			<th colspan="2">
+				上传数据配置文件（提示：请确认配置文件为最新版本）
+			</th>
+		</tr>
+		<tr>
+			<td align="center">
+				文件名
+			</td>
+			<td align="center">
+				<input type="file" name="file" size="30" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+				<button type="submit" name="submit" class="btn btn-primary btn-md">导入配置</button>
+			</td>
+		</tr>
+	</table>
+</form>
+<script language="javascript">
+function uploadConfig(){
+	if (document.form1.file.value=="") {
+		$Dialog().notice("文件不能为空!",1500);
+		document.form1.file.focus();
+		return false;
+	}
+	document.form1.submit.disabled = true;
+	return true;
+}
+</script>
+</body>
+</html>

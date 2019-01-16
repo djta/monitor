@@ -1,0 +1,559 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<script type="text/javascript" src="${def:context}/js/ccms/term.js"></script>
+<link rel="stylesheet" type="text/css" href="${def:context}/js/ccms/css/term.css" />
+<title>问卷调查</title>
+</head>
+<body>
+<div class="">
+	<div class="panel-heading text-center col_main_body_title">
+		<div class="col-xs-6 col-sm-8 col-md-9 col-lg-9 col-md-offset-1 col-lg-offset-1 text-center">
+			<h1 class="panel-title">${fld:term_name}</h1>
+		</div>
+		<div class="col-xs-4 col-sm-2 col-md-1 col-lg-1 text-center" style="margin-top: -12px;">
+			<button type="button" id="save_btn" class="btn btn-primary btn-md" style="display:none">保&nbsp;存</button>
+		</div>
+	</div>
+	<div class="panel-body col_main_body">
+		<div class="row clearlr" style="margin-bottom:5px;">
+			<div class="col-xs-6 col-sm-5 col-md-4 col-lg-3 text-center">
+				<button type="button" id="preBtn" class="btn btn-primary btn-md" style="margin-top: -5px;display:none;">上一题</button>
+				<button type="button" id="prePageBtn" class="btn btn-primary btn-md" style="margin-top: -5px;display:none;">上一页</button>
+			</div>
+			<div class="col-xs-6 col-sm-5 col-md-4 col-lg-3 col-sm-offset-2 col-md-offset-4 col-lg-offset-6 text-center">
+				<button type="button" id="nextBtn" class="btn btn-primary btn-md" style="margin-top: -5px;display:none;">下一题</button>
+				<button type="button" id="nextPageBtn" class="btn btn-primary btn-md" style="margin-top: -5px;display:none;">下一页</button>
+			</div>
+		</div>
+		<div class="row clearlr " id="termBegin" style="display:none">
+			<div class="row clearlr zhuti">
+				${fld:introduction}
+			</div>
+			<div class="row clearlr text-center">
+				<button type="button" id="begin_btn" class="btn btn-primary btn-md">开&nbsp;始</button>
+			</div>
+		</div>
+		<div class="row clearlr " id="termEnd" style="display:none">
+			<div class="row clearlr zhuti">
+				${fld:ending}
+			</div>
+			<div class="row clearlr" id="termResult">
+				
+			</div>
+			<div class="row clearlr text-center">
+				<button type="button" id="end_btn" class="btn btn-primary btn-md">结&nbsp;束</button>
+			</div>
+		</div>
+		<div class="row clearlr zhuti" id="termMainDiv" style="display:none">
+		<div class="main_top"></div>
+			<form name="termForm">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="termMain"></div>
+			</form>
+		</div>
+	</div>
+</div>
+<form name="formEditor" id="formEditor">
+    <input type="hidden" id="term_id" name="term_id" value="${fld:term_id}"/>
+    <input type="hidden" id="pre_class" name="pre_class" value="${fld:pre_class}"/>
+    <input type="hidden" id="post_class" name="post_class" value="${fld:post_class}"/>
+	<input type="hidden" id="term_score" name="term_score" value="0"/>
+	<input type="hidden" id="start_time" name="start_time" value="${fld:start_time}"/>
+	<input type="hidden" id="types" name="types" value=""/>
+	<input type="hidden" id="items" name="items" value=""/>
+	<input type="hidden" id="list_scores" name="list_scores" value=""/>
+	<input type="hidden" id="matrix_scores" name="matrix_scores" value=""/>
+	<input type="hidden" id="score_id" name="score_id" value="${fld:score_id}"/>
+	<input type="hidden" id="relation_id" name="relation_id" value="${fld:relation_id}"/>
+</form>
+<script language="javascript">
+$(document).ready(function(){
+	//开始创建话术对象
+	var term = new Term("${fld:term_id}","${fld:term_name}","termMain");
+	${group}
+	//先判断有没有题目，没有就关闭当前页
+	if(term.items.length == 0){
+		$Dialog().alert("没有为话术配置题目！",function(){
+			gotoBack();
+		});
+		return;
+	}
+	//最后输出话术
+	term.printHTML(Binding);
+
+	if(${fld:has_begin}=="1"){
+		$("#termBegin").show();
+		$("#termMainDiv").hide();
+		$("#save_btn").hide();
+		$("#termMain [id=save_btn]").hide();
+	}else{
+		$("#termBegin").hide();
+		$("#termMainDiv").show();
+		$("#save_btn").show();
+		$("#termMain [id=save_btn]").show();
+	}
+
+	//绑定事件
+	$("#begin_btn").on("click", function(){
+		$("#termBegin").hide();
+		$("#termMainDiv").show();
+		$("#save_btn").show();
+		$("#termMain [id=save_btn]").show();
+	});
+
+	$("#end_btn").on("click", function(){
+		$("#termBegin").hide();
+		$("#termMainDiv").hide();
+		$("#termEnd").hide();
+		$("#save_btn").hide();
+	});
+
+	//格式化
+	//radio样式
+	/* $('#termMain input[type=radio]').iCheck({
+	       radioClass: 'iradio_square-blue',
+	       increaseArea: '20%'
+	}); */
+	 //checkbox样式
+	/* $('#termMain input[type=checkbox]').iCheck({
+    		checkboxClass: 'icheckbox_square-blue',
+			increaseArea: '20%'
+    }); */
+
+	$("#preBtn").unbind().on("click", function(){
+		if(term.deleteGuiji() == false){
+			$Dialog().alert("已经是第一题了！");
+			return false;
+		}
+	});
+	$("#nextBtn").unbind().on("click", function(){
+
+		var nowItem = term.getNowItem();
+		if(nowItem == null){
+			$Dialog().alert("当前问卷配置有问题，请检查！");
+			return false;
+		}else{
+			//把当前的出口逻辑查出来
+			var outRules = term.getOutItemRules(nowItem.id);
+			var to_item_code = null;
+			for(var i=0;i<outRules.length;i++){
+				var rule = outRules[i];
+				var rule_code = rule.rule_code;
+				var flag = false;//表示或的关系是否有符合条件的逻辑。满足一条就可以跳出循环
+				if(rule_code != ""){//不为空时
+					var orArray = rule_code.split(";");
+					for(var j=0;j<orArray.length;j++){
+						var orStr = orArray[j];
+						var flag2 = true;//表示and的关系，只要有一条不符合就pass掉
+						var andArray = orStr.split(",");
+						for(var n=0;n<andArray.length;n++){
+							var andStr = andArray[n];
+							var codeArray = andStr.split(":");
+							if(codeArray.length == 3){//矩阵题条件(item_code:matrix_code:list_code)
+								var maoItem = term.getItemByCode(codeArray[0]);
+								if(maoItem == null){//找不到题目，返回
+									flag2 = false;
+									break;
+								}
+								if(maoItem.is_matrix == false){
+									flag2 = false;
+									break;
+								}
+								if(maoItem.getValueByCode(codeArray[2],codeArray[1]) == false){
+									flag2 = false;
+									break;
+								}
+							}else if(codeArray.length == 2){//普通题条件(item_code:list_code)
+								var maoItem = term.getItemByCode(codeArray[0]);
+								if(maoItem == null){//找不到题目，返回
+									flag2 = false;
+									break;
+								}
+								if(maoItem.is_matrix == true){
+									flag2 = false;
+									break;
+								}
+								if(maoItem.getValueByCode(codeArray[1]) == false){
+									flag2 = false;
+									break;
+								}
+							}else{
+								flag2 = false;
+								break;
+							}
+						}
+						if(flag2 == true){//循环执行完了判断并集是否成立
+							flag = true;
+							break;
+						}
+					}
+				}else{			
+					continue;
+				}
+				if(flag == true){
+					to_item_code = rule.to_code;
+					break;
+				}
+			}
+			
+			if(to_item_code == null){
+				var _index = term.getNowItemIndex();
+				if(_index >= (term.items.length-1)){
+					$Dialog().alert("已经是最后一题了");
+					return true;
+				}else{
+					to_item_code = term.items[_index+1].code;
+				}
+			}
+
+			//准备入口跳跃逻辑
+			var itemCount = 0;
+			
+			while(true){
+				itemCount ++;
+				var skipItem = term.getItemByCode(to_item_code);
+				if(skipItem == null){
+					$Dialog().alert("出口逻辑配置有误，找不到对应的题目代码！");
+					return false;
+				}
+				var skipFlag1 = false;//判断该题是否跳过
+				var skipRules = term.getSkipItemRules(skipItem.id);
+				for(var i=0;i<skipRules.length;i++){
+					var rule = skipRules[i];
+					var rule_code = rule.rule_code;
+					var skipFlag2 = false;//判断该题是否跳过
+					if(rule_code != ""){
+						var orArray = rule_code.split(";");
+						for(var j=0;j<orArray.length;j++){
+							var orStr = orArray[j];
+							var skipFlag3 = true;
+							if(orStr != ""){
+								var andArray = orStr.split(",");
+								for(var n=0;n<andArray.length;n++){
+									var c = andArray[n];
+									if(c != ""){
+										var codeArray = c.split(":");
+										if(codeArray.length == 3){//矩阵题条件(item_code:matrix_code:list_code)
+											var maoItem = term.getItemByCode(codeArray[0]);
+											if(maoItem == null){//找不到题目，返回
+												skipFlag3 = false;
+												break;
+											}
+											if(maoItem.is_matrix == false){
+												skipFlag3 = false;
+												break;
+											}
+											if(maoItem.getValueByCode(codeArray[2],codeArray[1]) == false){
+												skipFlag3 = false;
+												break;
+											}
+										}else if(codeArray.length == 2){//普通题条件(item_code:list_code)
+											var maoItem = term.getItemByCode(codeArray[0]);
+											if(maoItem == null){//找不到题目，返回
+												skipFlag3 = false;
+												break;
+											}
+											if(maoItem.is_matrix == true){
+												skipFlag3 = false;
+												break;
+											}
+											if(maoItem.getValueByCode(codeArray[1]) == false){
+												skipFlag3 = false;
+												break;
+											}
+										}
+									}
+								}
+							}else{
+								skipFlag3 = false;
+							}
+							if(skipFlag3 == true){
+								skipFlag2 = true;
+								break;
+							}
+						}
+					}
+					if(skipFlag2 == true){
+						skipFlag1 = true;
+						break;
+					}
+				}
+				
+				if(skipFlag1 == true){//该题确定跳过，需要继续判断该题按序号排列的下一题 的入口跳跃逻辑
+					var _index = term.getItemIndexByCode(to_item_code);
+					if(_index >= (term.items.length-1)){
+						$Dialog().alert("已经是最后一题了！");
+						return true;
+					}else{
+						to_item_code = term.items[_index+1].code;
+					}
+				}else{
+					var validateGuiji = term.addGuiji(to_item_code);//不需要跳过则把该题加入到轨迹里面
+					if(validateGuiji == false){
+						$Dialog().alert("请检查您的出口逻辑和入口逻辑，题目的轨迹不能重复！");
+					}
+					break;
+				}
+
+				if(itemCount >= term.items.length){
+					$Dialog().alert("已经是最后一题了！");
+					break;
+				}
+			}
+
+		}
+	});
+	$("#prePageBtn").unbind().on("click", function(){
+		if(term._page <= 0){
+			$Dialog().alert("已经是首页了！");
+			return false;
+		}
+		term.hiddenAll();//先隐藏全部
+		term._page = term._page - 1 ;
+		for(var i=term._pageArray[term._page][0];i<=term._pageArray[term._page][1];i++){//显示上一页
+			var item = term.items[i];
+			$("#"+item.code).show();
+		}
+	});
+	$("#nextPageBtn").unbind().on("click", function(){
+		if(term._page >= (term._pageArray.length-1)){
+			$Dialog().alert("已经是最后一页了！");
+			return false;
+		}
+		term.hiddenAll();//先隐藏全部
+		term._page = term._page + 1 ;
+		for(var i=term._pageArray[term._page][0];i<=term._pageArray[term._page][1];i++){//显示下一页
+			var item = term.items[i];
+			$("#"+item.code).show();
+		}
+	});
+	
+	/*保存话术结果
+		1、根据轨迹统计出题目
+		2、先建立题目选择项，根据选择项统计题目成绩（如果为输入框则分数为0）
+		3、根据选择项的值统计题目分数
+		4、根据题目分数统计类型分数
+		5、根据类型分数统计整个话术分数
+
+	*/
+	$("#save_btn,#termMain [id=save_btn]").unbind().on("click", function(){
+		var itemArray = new Array();
+		//判断是分页显示题目，还是一题一题的显示
+		if(term.skipRules.length == 0 && term.outRules.length == 0){
+			itemArray = term.items;
+		}else{
+			for(var i=0;i<term.guiji.length;i++){
+				var code = term.guiji[i];
+				var item = term.getItemByCode(code);
+				itemArray.push(item);
+			}
+		}
+		//统计赋值
+		var term_score = 0;
+		// type_id + : + score + ;
+		var types = "";
+		// type_id + : + item_id + : + score + ;
+		var items = "";
+		// item_id + : + list_id + : + score + : + text + ; 
+		var list_scores = "";
+		// item_id + : + list_id + : + matrix_id + : + score + : + text + : + dropdown_value; 
+		var matrix_scores = "";
+		
+		var typeArray = new Array();
+		for(var i=0;i<itemArray.length;i++){
+			var score = 0;
+			var item = itemArray[i];
+			if(item.is_matrix == true){
+				var matrixItems = item.matrixs;
+				var matrixLists = item.lists;
+				for(var j=0;j<matrixItems.length;j++){
+					var matrixItem = matrixItems[j];
+					if(matrixLists.length > 0){
+						if(matrixItem.show_type == "0"){
+							for(var jj=0;jj<matrixLists.length;jj++){
+								var objText = $("#"+matrixItem.item_code+"_"+matrixLists[jj].list_code);
+								matrix_scores += (item.id+":"+matrixLists[jj].id+":"+matrixItem.id+":0:"+objText.val()+";");
+							}
+						}else{
+							for(var jj=0;jj<matrixLists.length;jj++){
+								var objRadio = $("#"+matrixItem.item_code+"_"+matrixLists[jj].list_code);
+								if(objRadio[0].checked == true){
+									var objRadioText = "";
+									if(matrixLists[jj].show_type == "2"){//如果有文本输入
+										objRadioText = $("#"+matrixItem.item_code+"_"+matrixLists[jj].list_code+"_text").val();
+									}
+									score += term.parseFloatExtend(objRadio.val());
+									matrix_scores += (item.id+":"+matrixLists[jj].id+":"+matrixItem.id+":"+objRadio.val()+":"+objRadioText+";");
+									if(matrixItem.show_type == "1"){
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+
+			}else{
+				var lists = item.lists;
+				if(lists){
+					if(lists.length > 0){
+						if(item.show_type == "0"){
+							var objText = $("#"+item.code+"_"+lists[0].list_code);
+							list_scores += (item.id+":"+lists[0].id+":0:"+(objText.val()==""?"\"\"":objText.val())+";");
+						}else{
+							for(var j=0;j<lists.length;j++){
+								var objRadio = $("#"+item.code+"_"+lists[j].list_code);
+								if(objRadio[0].checked == true){
+									var objRadioText = "";
+									if(lists[j].show_type == "2"){//如果有文本输入
+										objRadioText = $("#"+item.code+"_"+lists[j].list_code+"_text").val();
+									}
+									score += term.parseFloatExtend(objRadio.val());
+									//判断如果选项里有下拉框的话，取下拉框的值
+									var objRadioDroplist = "";
+									if(lists[j].show_type == "3"){//如果有下拉框
+										objRadioDroplist = $("#"+item.code+"_"+lists[j].list_code+"_select").val();
+									}
+
+									list_scores += (item.id+":"+lists[j].id+":"+objRadio.val()+":"+(objRadioText==""?"\"\"":objRadioText)+":"+objRadioDroplist+";");
+									if(item.show_type == "1"){
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			//给题目记总分
+			items += (item.type_id+":"+item.id+":"+score+";");
+			//分类统计分数
+			var flag = true;
+			for(var n=0;n<typeArray.length;n++){
+				var a = typeArray[n];
+				if(a[0] == item.type_id){
+					flag = false;
+					a[1] += score;
+					break;
+				}
+			}
+			if(flag == true){
+				typeArray.push(new Array(item.type_id,score));
+			}
+		}
+
+		for(var m=0;m<typeArray.length;m++){
+			var a = typeArray[m];
+			types += (a[0]+":"+a[1]+";");
+			term_score += a[1];
+		}
+		
+		document.formEditor.term_score.value = term_score;
+		document.formEditor.types.value = types;
+		document.formEditor.items.value = items;
+		document.formEditor.list_scores.value = list_scores;
+		document.formEditor.matrix_scores.value = matrix_scores;
+
+		ajaxCall("${def:actionroot}/termgen/insert",{
+					method: "post",
+					progress: true,
+					form: "formEditor",
+					button: "save_btn",
+					dataType: "script",
+					success: function() {
+						$Dialog().notice("保存成功",3000,function(){
+							//显示结论
+							//gotoBack();
+							$("#termMainDiv").hide();
+							if(${fld:has_ending}=="1"){
+								$("#termEnd").show();
+							}
+							$("#save_btn").hide();
+							try{
+								parent.close();
+							}catch(e){
+							}
+						});
+					}
+			});
+
+	  });
+
+	if("${fld:score_id}" != ""){//问卷还原
+		//$("#save_btn").hide();
+		ajaxCall("${def:actionroot}/termgen/setlistvalue?score_id=${fld:score_id}",{
+				method: "get",
+				dataType: "script"
+		});
+	}
+});
+
+function Binding() {
+	//事件
+    $(".shiTiType").unbind().on("click", function(){
+ 	   var a=$(this).attr("code");
+ 		$(".yinchang"+a).toggle();
+  	});
+  	$("#expandAndclose").unbind().on("click", function(){
+ 	 $("#daTiKa").hide();
+ 	 $(".expandDaTiKa").show();
+  	});
+  	$(".expandDaTiKa").unbind().on("click", function(){
+ 	 $("#daTiKa").show();
+ 	 $(".expandDaTiKa").hide();
+  	});
+  	
+	 $('#termMain input[type=radio]').unbind().bind("ifClicked", function(){
+	 	var name=$(this).attr("name");
+		$('#'+name+'_title').css("background-color","#68A610");
+ 	});
+	 
+}
+
+function setNamespaceVal(ctl){
+	var ctl_name=ctl.name;
+	var ctl_id=ctl.id;
+	$("#"+ctl_id+"_select").val("");
+	
+	$("input[name='"+ctl_name+"'][type='checkbox']").each(function(){
+		if($(this).is(':checked')){
+			$("#"+ctl_id+"_select").val($("#"+ctl_id+"_select").val()+$(this).val()+",");
+		}
+	});
+	$("input[name='"+ctl_name+"'][type='radio']").each(function(){
+		if($(this).is(':checked')){
+			$("#"+ctl_id+"_select").val($("#"+ctl_id+"_select").val()+$(this).val()+",");
+		}
+	});
+}
+
+function showExtLabel(idbegin, ctl){
+	var ctl_name=ctl.name;
+	var ctl_id=ctl.id;
+	var isNeedHideOther = false;
+	$("input[id='"+ctl_id+"']").each(function(){
+		if( $(this).parent().parent().hasClass("xxdm") ){
+			if($(this).is(':checked') && $("#"+ctl_id+"_span")){
+				$("#"+ctl_id+"_span").show();
+			}else{
+				$("#"+ctl_id+"_span").hide();
+			}
+		}
+		if( $(this).attr("type") == "radio" ){
+			isNeedHideOther = true;
+		}
+	});
+	if( isNeedHideOther ){
+		$("input[id^="+idbegin+"]").not("#"+ctl_id).each(function(){
+			if( $("#"+$(this).attr("id")+"_span") ){
+				$("#"+$(this).attr("id")+"_span").hide();
+			}
+		});
+	}
+}
+
+</script>
+</body>
+</html>

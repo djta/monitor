@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+    <parameter id="team_name" type="varchar" required="true" label="vc_sitename" maxlen="210" />
+     <parameter id="leader_id" type="varchar" required="true" label="vc_sitename" maxlen="210" />
+       <parameter id="skill_scope" type="varchar" required="true" label="vc_sitename" maxlen="210" />
+         <parameter id="data_limit" type="varchar" required="true" label="vc_sitename" maxlen="210" />
+              <parameter id="remark" type="varchar" required="false" label="remark" maxlen="210" />
+    <custom-validator classname="dinamica.validators.DuplicatedKeyValidator" 
+    	on-error-label="该组名已经存在，请重新输入" id="team_name" sql="noRep.sql" />
+</validator>
+

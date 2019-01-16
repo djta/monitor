@@ -1,0 +1,59 @@
+<form class="form-horizontal" role="form" method="post" name="formFilter" onsubmit="return reportSearch();" target="detail">
+	<!-- 最多显示记录个数 -->
+	<input name="limitedcount"  value="1000" type="hidden" />
+	<input name="report_id"  value="${fld:report_id}" type="hidden" preserve="true" />
+	<input name="cognos_ip"  value="${fld:congnos_ip}" type="hidden" preserve="true" />
+	<input name="file"  value="${fld:jor_file_name}" type="hidden" preserve="true" />
+	<input name="as"  value="dhtml" type="hidden" preserve="true" />
+	
+	<div id="msg_win" style="display:${fld:if_customer_config};visibility:visible;opacity:1;">
+		<div class="icos">
+			<a id="msg_min" title="最小化" href="javascript:;">一</a>&nbsp;&nbsp;
+			<a id="msg_close" title="关闭" href="javascript:;" style="display:none;">X</a>
+		</div>
+		<div id="msg_title">自定义分组</div>
+		<div id="msg_content">
+			<!-- 这里将填充字段信息列表 -->            	
+			<table class="table table-bordered" id="dragTable" style="margin-bottom: 10px;">
+				<thead>
+					<tr style="background-color: #f5f5f5;">
+						<th nowrap>字段</th>
+						<th nowrap style="display:${fld:show_row_cross}">行</th>
+						<th nowrap>列</th>
+						<th nowrap>顺序</th>
+					</tr>
+				</thead>
+				<tbody id="gridBody">
+					<report-field-list>
+						<tr ${fld:_rowStyle} title="拖动行排序">
+							<td align="center">
+								${fld:alias}<input type='hidden' id='field_report_${fld:_rowIndex}' name='field_report' size='5' value='${fld:id}' />
+							</td>
+							<td style="display:${fld:show_row_cross}" align="center">
+								<input type='checkbox' dependent='field_report_${fld:_rowIndex}' id='is_row_head_${fld:_rowIndex}' name='is_row_head' size='1' value='${fld:is_row_head}' ${fld:checked9} onclick='this.value=(this.checked?1:0);$("is_col_head_${fld:_rowIndex}").checked=false;$("is_col_head_${fld:_rowIndex}").value="0";' />
+							</td>
+							<td align="center">
+								<input type='checkbox' dependent='field_report_${fld:_rowIndex}' id='is_col_head_${fld:_rowIndex}' name='is_col_head' size='1' value='${fld:is_col_head}' ${fld:checked10} onclick='this.value=(this.checked?1:0);$("is_row_head_${fld:_rowIndex}").checked=false;$("is_row_head_${fld:_rowIndex}").value="0";' />
+							</td>
+							<td align="center">
+								<input type='text' dependent='field_report_${fld:_rowIndex}' id='report_order_${fld:_rowIndex}' name='report_order' value='${fld:report_order}' size="1" />
+							</td>
+						</tr>
+					</report-field-list>
+				</tbody>
+			</table>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+				<button type="submit" class="btn btn-primary btn-sm">查询</button>
+			</div>
+		</div>
+	</div>
+
+	<table class="table table-bordered border-none">${controls}</table>
+	
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+		<button type="submit" name="searchBtn" class="btn btn-primary btn-md">${lbl:report_search_commit}</button>
+		<button type="button" onclick="clearForm('formFilter')" class="btn btn-primary btn-md">${lbl:report_search_clear}</button>
+		<button type="button" onclick="history.back(-1)" class="btn btn-primary btn-md">${lbl:portal_go_back}</button>
+		<button type="button" name="exportBtn" onclick="jorReportExport()" style="display:none">${lbl:portal_export_to_report}</button>
+	</div>
+</form>

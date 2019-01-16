@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		web工单流
+	</summary>
+	
+	<log>false</log>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>gooflow.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+	
+	</output>
+
+</config>

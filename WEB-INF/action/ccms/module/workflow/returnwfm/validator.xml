@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="__wfentry_id__" type="integer" required="true" label="流程实例"/>
+	<parameter id="__current_step_id__" type="integer" required="true" label="当前流程步骤"/>
+
+</validator>

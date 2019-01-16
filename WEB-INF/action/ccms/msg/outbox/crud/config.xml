@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-skill.sql" source="sql" scope="transaction" />
+		<recordset id="query-topic.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<print mode="table" recordset="query-skill.sql" tag="srows" />
+		<print mode="table" recordset="query-topic.sql" tag="drows" />
+		<print mode="form" recordset="_request" />
+	</output>
+
+</config>

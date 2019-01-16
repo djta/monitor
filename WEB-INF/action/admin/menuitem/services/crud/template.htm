@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>服务</title>
+${inc:/action/ccms/pub}
+</head>
+<body>
+
+<div class="main">
+<!--filter form-->
+	<div class="panel panel-default">
+		<div class="panel-heading text-center">
+			<h2 class="panel-title">服务查询</h2>
+		</div>
+		<div class="panel-body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm">
+				<input name="sort" type="hidden" value="description_cn" preserve="true"/>
+				<input name="order" type="hidden" value="desc" preserve="true" /> 
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+				<input type="hidden" id="menu_id" name="menu_id" value="${fld:menu_id}" preserve="true"/>
+				<div class="form-group">
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+						<select name="group_id" onchange="searchService()" class="form-control">
+							<option value="">请选择分组</option>
+							<group>
+								<option value="${fld:group_id}">${fld:group_name}</option>
+							</group>
+						</select>
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+						<input type="text" class="form-control" id="description" name="description" placeholder="请输入服务描述">
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+						<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+					</div>
+				</div>
+				<div class="form-group">
+					
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>服务中文名</th>
+						<th>路径</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr onclick="selectItem(#service_id#,'#description_cn#')">
+						<td>#description_cn#</td>
+						<td>#path#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}">
+
+<script LANGUAGE="JavaScript">
+	var search_obj;
+	$(document).ready(function() {
+		search_obj = $Search({datagrid:"datagrid",formId:"searchForm",success:function(){}}).initSearchBtn();
+		search_obj.searchData(1);
+	});
+	function selectItem(id,description_cn) {
+				parent.selectService(id,description_cn);
+				//parent.$('#_dlgdialogService').modal("hide");
+				ccms.dialog.close();
+	}
+	function searchService(){
+		search_obj.searchData(1);
+	}
+</script>
+</body>
+</html>

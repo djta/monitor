@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+  <parameter id="province" 	 type="varchar" required="false" label="province" maxlen="64"/>
+  <parameter id="city" 	 type="varchar" required="false" label="city" maxlen="64"/>
+ 	<parameter id="dealer_code"  type="varchar" required="false" label="经销商" maxlen="64"/>
+  <parameter id="brand_code" type="varchar" required="false" label="品牌" maxlen="64"/>
+ 	<parameter id="series_code" type="varchar" required="false" label="车系" maxlen="64"/>
+  
+	
+</validator>

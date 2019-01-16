@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator  onerror="/action/error/validation/ajax">
+
+    <parameter id="node_id" type="integer" required="true" label="node_id"/>
+    <parameter id="next_node" type="integer" required="true" label="next_node"/>
+
+</validator>

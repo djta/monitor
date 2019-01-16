@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		查询工单
+	</summary>
+	
+	<log>false</log>
+
+	<!--configura el control de paginacion-->
+	<set-request-attribute id="paging.recordset" value="query-wfm-search.sql" />
+	<set-request-attribute id="paging.pagesize" value="20" />
+
+	<colname>fdate,tdate,wfm_name,entry_id</colname>
+	<sql-template>query-base.sql</sql-template>
+	<paging-recordset>query-wfm-search.sql</paging-recordset>
+
+	<transaction>
+		<classname>com.ccms.Search</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<on-exit return-code="0" forward-to="/action/initview"/>
+	<on-exit return-code="1" forward-to="/action/notfound/normal"/>
+
+</config>

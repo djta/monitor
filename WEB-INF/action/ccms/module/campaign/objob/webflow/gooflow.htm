@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>GooFlow</title>
+<!--[if lt IE 9]>
+<?import namespace="v" implementation="#default#VML" ?>
+<![endif]-->
+${inc:/action/ccms/pub}
+<link rel="stylesheet" type="text/css" href="${def:context}/js/gooflow/GooFlow.css"/>
+<script type="text/javascript" src="${def:context}/js/gooflow/json2.js"></script>
+<script type="text/javascript" src="${def:context}/js/gooflow/GooFunc.js"></script>
+<script type="text/javascript" src="${def:context}/js/gooflow/GooFlow.js"></script>
+<script type="text/javascript">
+var property={
+	width:700,
+	height:380,
+	haveHead:false,
+	headBtns:[],//如果haveHead=true，则定义HEAD区的按钮
+	haveTool:true,
+	toolBtns:["task"],
+	haveGroup:false,
+	useOperStack:false
+};
+var flowObj;
+$(document).ready(function(){
+	property.width = $(document).width()-25;
+	property.height = $(document).height()-80;
+	flowObj=$.createGooFlow($("#gooflowView"),property);
+	//取消焦点事件
+	flowObj.onItemFocus=function(id,type){return false;}
+	//双击编辑事件
+	flowObj.onItemDblClick=function(id,type,jsondata){
+		if(type == "node"){
+			ccms.dialog.open({ url : "${def:context}${def:actionroot}/webflow/node/crud?id="+id+"&subject_id=${fld:subject_id}&job_id=${fld:job_id}"});
+		}else if(type == "line"){
+			ccms.dialog.open({ url : "${def:context}${def:actionroot}/webflow/nodeto/crud?id="+id+"&job_id=${fld:job_id}"});
+		}
+	}
+
+	//初始化数据
+	loadJobNode();
+});
+
+function getNodeConfig(id){
+	return flowObj.$nodeData[id];
+}
+function getLineConfig(id){
+	return flowObj.$lineData[id];
+}
+function addNode(id,json){
+	flowObj.addNode(id,json);
+}
+function addLine(id,json){
+	flowObj.addLine(id,json);
+}
+function clearData(){
+	flowObj.clearData();
+}
+
+function loadJobNode(){
+	return ajaxCall("${def:actionroot}/webflow/loadData?job_id=${fld:job_id}",{
+		method: "get",
+		progress: true,
+		dataType: "script",
+		success: function() {
+		}
+	});
+}
+</script>
+</head>
+
+<body>
+<h2 class="titleall">CS流程节点配置</h2>
+<div class="content">
+  <div class="main">
+	<div id="gooflowView"></div>
+</div>
+</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}"/>
+</body>
+</html>

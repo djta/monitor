@@ -1,0 +1,9 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"login_date":"${fld:login_date@yyyy-MM-dd}","login_time":"${fld:login_time@js}"
+		,"usuario":"${fld:usuario@js}","u_userlogin":"${fld:u_userlogin@js}"
+		,"context_alias":"${fld:context_alias@js}","remote_addr":"${fld:remote_addr@js}"},
+	</rows>
+	{}
+]}

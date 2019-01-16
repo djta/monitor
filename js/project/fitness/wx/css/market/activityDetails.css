@@ -1,0 +1,29 @@
+.bg{
+	background:#F5F5F5;
+	display: inline-block;
+}
+.comm-width{
+	margin:1rem;
+	width:auto;
+}
+.act-brief{
+	background:white;
+	border-radius:5px;
+	padding:1rem;
+	margin-bottom:1rem;
+}
+.act-brief label{
+	display: inline-block;
+	margin-bottom:1.7rem;
+	font-size:1.7rem;
+	color:#4A4A4A;
+	line-height:2.4rem;
+}
+.act-brief span{
+	padding-left:0.5rem;
+	display: inline-block;
+	width:100%;
+	color:#646464;
+	font-size:1.4rem;
+	line-height: 2.5rem;
+}

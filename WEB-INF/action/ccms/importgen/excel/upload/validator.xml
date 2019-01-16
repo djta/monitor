@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="imp_id" type="integer" required="true" label="imp_id" maxlen="10"/>
+	<parameter id="file" type="varchar" required="false" label="file" maxlen="500"/>
+	<parameter id="file.filename" type="varchar" required="false" label="filename" maxlen="400"/>
+</validator>

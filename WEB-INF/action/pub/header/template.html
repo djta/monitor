@@ -1,0 +1,701 @@
+
+<!--template support code-->
+<script type="text/javascript">
+
+/*将Dinamica新的ajax front contrl代码移至此处*/
+var _goBackFn = null; //pointer to goBack() function
+
+    //load filter form
+    function formLoaded(tag,attr)      /*判断DIV是否已经加载进来*/
+    {
+            var div = $(tag);
+            if (div == null)                    /*需要加载的层不存在*/
+                return;
+            if(div.getAttribute(attr))           /*如果已经检测到界面被加载,则退出*/
+                return true;
+            div.setAttribute(attr,true);               /*设置加载标识,并返回本DIV未加载过标识(false)*/
+            return false;
+    }
+
+    //load filter form
+    function loadFilter(afterResponseFn)
+    {
+            if(formLoaded("divFilter","loaded"))          /**/
+            {
+                if(afterResponseFn!=undefined && afterResponseFn!=null)
+                    afterResponseFn();
+                return;
+            }
+            //set goBack() parameters
+            _goBackFn = showGrid;
+
+            //llamada Ajax...
+            return ajaxCall(	httpMethod="GET", 
+                                uri=$("actionroot").value+"/filter", 
+                                divResponse="divFilter", 
+                                divProgress="divStatus", 
+                                formName=null, 
+                                afterResponseFn=(afterResponseFn==undefined?null:afterResponseFn), 
+                                onErrorFn=showGrid,
+                                ignoreShowDivStatus="true");
+    }
+
+    //load crud form
+    function loadEditor(afterResponseFn)
+    {
+            if(formLoaded("divEditor","loaded"))
+                return;
+
+            //set goBack() parameters
+            _goBackFn = showGrid;
+
+            //llamada Ajax...
+            return ajaxCall(	httpMethod="GET", 
+                                uri=$("actionroot").value+"/form", 
+                                divResponse="divEditor", 
+                                divProgress="divStatus", 
+                                formName=null, 
+                                afterResponseFn=(afterResponseFn==undefined?changeRequiredStyle:afterResponseFn), 
+                                onErrorFn=showGrid,
+                                ignoreShowDivStatus="true");
+    }
+
+    //anthony add begin 2009-12-18
+    //必填项目加红色星号
+    function changeRequiredStyle() { 
+        var cell=document.getElementsByTagName('td'); 
+        for(c=0;c<cell.length;c++) { 
+            var redstar = '<font color="#FF0000">(*)</font></strong>';
+            if (cell[c].className =="th20 required")
+            {
+                if (cell[c].innerHTML.indexOf("*")<0)
+                {
+                    cell[c].innerHTML = cell[c].innerHTML + redstar;
+                }
+                
+            }
+        } 
+
+        if(typeof(setKeyPress)=="function")
+            setKeyPress();
+
+        ////页面所有text控件全角校验 2011-8-31
+        if(typeof(allElementsCheckDBC)=="function"){allElementsCheckDBC();}
+    } 
+    //anthony add end 2009-12-18
+
+    //call search action
+    function search(afterResponseFn)
+    {
+        //set goBack() parameters
+        _goBackFn = showFilter;
+
+        hideDiv("divFilter");
+
+        //llamada Ajax...
+        return ajaxCall(	httpMethod="POST", 
+                            uri=$("actionroot").value+"/search", 
+                            divResponse="response", 
+                            divProgress="divStatus", 
+                            formName="formFilter", 
+                            afterResponseFn=(afterResponseFn==undefined?null:afterResponseFn), 
+                            onErrorFn=showFilter);
+    }
+
+
+    //define la url en donde se mostrara el resultado de consulta
+    function viewPage()
+    {
+        var url = $("actionroot").value+"/view";
+        //llama a la funcion para ir a la pagina indicada 
+        gotoPage(url);
+    }	
+
+    //retorna al estado previo que corresponde
+    //al estado actual de la pagina, cada llamada Ajax
+    //se encarga de definir cual es la funcion de goBack() que aplica
+    function goBack() 
+    {
+        _goBackFn();			
+    }
+
+    function save()
+    {
+        _goBackFn = showGrid;   //新增记录界面中,取消按钮指向查询结果界面
+
+        //提交之前数据校验，在crud/template.htm中定义“checkFields()”函数，如果不需要校验，则不需要定义该函数
+        //boolean isSubmit = true; //是否执行提交
+
+        if(typeof(checkFields)=="function"){
+            if (!checkFields()) {
+                return false;
+            }
+        }
+
+       //校验成功执行提交操作(新增或者更新)
+        var tuid = document.forms["formEditor"].elements["tuid"].value;
+        var newFlag = (tuid==""?true:(tuid=="0"?true:false));   /*界面中须要有tuid标识主键,为空是新增记录*/
+        if (newFlag){
+            return insert();
+        }
+        else{
+            return update();
+        }
+    }
+		//restaurar el formulario en caso de error
+		function retryAddnewOrEdit() {
+			setFocusOnForm("formEditor");		
+		}
+
+		function hideEditor() {
+        hideDiv("divEditor");       /*保存之后是否隐藏新增的界面*/
+		}
+
+    //mostrar el detalle de un registro
+    function insert()
+    {
+        //definir funcion goBack()
+        _goBackFn = addNewBack;			
+
+        //hideDiv("divEditor");       
+				clearErrorMessages();
+
+        //llamada Ajax...
+        return ajaxCall(	httpMethod="POST", 
+                            uri=$("actionroot").value+"/insert", 
+                            divResponse="divEditorResponse", 
+                            divProgress="divStatus", 
+                            formName="formEditor", 
+                            afterResponseFn=null, 
+                            onErrorFn=retryAddnewOrEdit);
+    }
+
+    //mostrar el detalle de un registro
+    function update()
+    {
+        //definir funcion goBack()
+        //_goBackFn = addEdit(); 
+        _goBackFn = showGrid;   //新增记录界面中,取消按钮指向查询结果界面
+
+        //hideDiv("divEditor");       
+        hideDiv("response");       
+
+				clearErrorMessages();
+        //llamada Ajax...
+        return ajaxCall(	httpMethod="POST", 
+                            uri=$("actionroot").value+"/update", 
+                            divResponse="divEditorResponse", 
+                            divProgress="divStatus", 
+                            formName="formEditor", 
+                            afterResponseFn=null, 
+                            onErrorFn=retryAddnewOrEdit);
+    }
+
+    //eliminar un registro
+    function deleteRecord(id,msg)
+    {
+        if (window.confirm(msg==undefined?"确认删除吗?":msg)==false)
+        {
+            return false;
+        }
+
+        //definir funcion goBack()
+        _goBackFn = addEdit;			
+
+        hideDiv("divEditor");       
+        hideDiv("response");       
+
+        //llamada Ajax...
+        return ajaxCall(httpMethod="GET", 
+                        uri=$("actionroot").value+"/delete" + "?id=" + id, 
+                        divResponse="divEditorResponse", 
+                        divProgress="divStatus", 
+                        formName=null, 
+                        afterResponseFn=null, 
+                        onErrorFn=showGrid);		
+
+    }
+
+    //display addnew/edit form
+    function addNew()
+    {
+        _goBackFn = showGrid;   //新增记录界面中,取消按钮指向查询结果界面
+
+				closeAllDiv();
+
+        $("divEditor").style.display='';
+
+			document.forms["formEditor"].elements["submitBtn"].style.display='inline';
+
+       if(formLoaded("divEditor" ,"loaded"))   /*0-为新增界面标识.*/
+       {
+            showDiv("divEditor");       /*如果新增界面已经加载,则显示出来*/
+            addNewBack();
+            return;
+       }
+
+        //llamada Ajax...
+        return ajaxCall(	httpMethod="GET", 
+                            uri=$("actionroot").value+"/form", 
+                            divResponse="divEditor", 
+                            divProgress="divStatus", 
+                            formName=null, 
+                            afterResponseFn=addNewBack, 
+                            onErrorFn=showGrid);
+    }
+
+    //mostrar el detalle de un registro
+    function edit(id)
+    {
+        //definir funcion goBack()
+        _goBackFn = showGrid;			
+
+        //hideDiv("response");       //不隐藏数据列表界面
+				closeAllDiv();
+        
+        //在CRUD加载过程中,已经将form加载完成
+        //loadEditor();       //检查加载界面是否为当前目录指向
+
+        //anthony add 2009-12-21 必填项目加红色星号
+        changeRequiredStyle();
+
+        document.forms["formEditor"].elements["submitBtn"].style.display='inline';
+        document.forms["formEditor"].elements["deleteCommand"].style.display='inline';
+
+        //llamada Ajax...
+        return ajaxCall(httpMethod="GET", 
+                        uri=$("actionroot").value+"/edit" + "?id=" + id, 
+                        divResponse="divEditor", 
+                        divProgress="divStatus", 
+                        formName=null, 
+                        afterResponseFn=typeof(editBackSetting)=="function"?editBackSetting:null, 
+                        onErrorFn=showGrid);
+    }
+    
+    //mostrar el detalle de un registro
+    function showDetail(id)
+    {
+        //definir funcion goBack()
+        _goBackFn = showGrid;			
+
+        //hideDiv("response");       //不隐藏数据列表界面
+				closeAllDiv();
+        
+        //在CRUD加载过程中,已经将form加载完成
+        //loadEditor();       //检查加载界面是否为当前目录指向
+
+        //anthony add 2009-12-21 必填项目加红色星号
+        changeRequiredStyle();
+
+        document.forms["formEditor"].elements["submitBtn"].style.display='none';
+        document.forms["formEditor"].elements["deleteCommand"].style.display='none';
+
+        //llamada Ajax...
+        return ajaxCall(httpMethod="GET", 
+                        uri=$("actionroot").value+"/edit" + "?id=" + id, 
+                        divResponse="divEditor", 
+                        divProgress="divStatus", 
+                        formName=null, 
+                        afterResponseFn=null, 
+                        onErrorFn=showGrid);
+    }
+
+    //muestra el formulario addnew
+    function addNewBack()       /*架载新增界面完成后,设置新增界面的内容信息*/
+    {
+        //restaura el goBack que corresponde a este estado
+        _goBackFn = showGrid;
+        
+        //closeAllDiv();
+
+        document.forms["formEditor"].elements["deleteCommand"].style.display='none';
+        document.forms["formEditor"].getElementsByTagName("span")[0].innerHTML = "${req:formTitleAddNew}"; /*找formTitleEditor*/
+        $("divEditor").style.display='';
+
+				clearForm("formEditor");
+
+        if(typeof(addNewBackSetting)=="function")
+            addNewBackSetting();
+								
+        //zhangchuan update 由于在IE中会报错（控件不可见）
+        //setFocusOnForm("formEditor");
+        
+    }
+
+    //muestra el formulario edit
+    function addEdit()
+    {
+        closeAllDiv();
+
+        $("divEditor").style.display='';
+        document.forms["formEditor"].getElementsByTagName("span")[0].innerHTML = "${req:formTitleEdit}";   /*找formTitleEditor*/
+        document.forms["formEditor"].elements["deleteCommand"].style.display='';
+
+        setFocusOnForm("formEditor");
+        
+        //restaura el goBack que corresponde a este estado
+        _goBackFn = showGrid;
+        
+    }
+
+    //display filter form
+    function showFilter()
+    {
+        closeAllDiv();        /*显示查询界面时,是否关闭其它界面*/
+
+        _goBackFn = showGrid;
+
+        //document.forms["formFilter"].getElementsByTagName("span")[0].innerHTML = "${req:formTitleFilter}";   /*找formTitleEditor*/
+        $("divFilter").style.display='';
+        //setFocusOnForm("formFilter");
+    }
+
+    //display filter form
+    function showGrid()
+    {
+        closeAllDiv();
+        $("response").style.display='';
+
+        if(typeof(searchBack) == "function"){
+            searchBack();
+		}
+        //restaura el goBack que corresponde a este estado
+        //_goBackFn = showFilter;
+    }
+
+    //display filter form
+    function hiddenGrid()
+    {
+        closeAllDiv();
+        $("response").style.display='node';
+    }
+
+/**
+* Close All Div elements
+* 将预置的几个层全部关闭
+*/
+function closeAllDiv()
+{
+    var div = null;
+
+    //检索条件层
+    div = $("divFilter");
+    if(div != null) div.style.display='none';
+
+    //编辑层
+    div = $("divEditor");
+    if(div != null) div.style.display='none';
+
+    //更新提示层
+    div = $("divEditorResponse");
+    if(div != null) div.style.display='none';
+
+    //数据列表层
+    div = $("response");
+    if(div != null) div.style.display='none';
+}
+
+/**
+* Switch Div name
+* 
+*/
+function switchDivStatus(divName)
+{
+    if(divName == "") return;
+    
+    if($(divName).style.display=='') 
+        $(divName).style.display='none'; 
+    else 
+        $(divName).style.display='';
+}
+
+/**
+* Show Div element
+* 
+*/
+function showDiv(divID)
+{
+    if (divID!=null)
+        $(divID).style.display='';
+}
+
+/**
+* Show Div element
+* 
+*/
+function hideDiv(divID)
+{
+    if (divID!=null)
+        $(divID).style.display='none';
+}
+
+
+function Toggle()
+{
+    // Try to get the FCKeditor instance, if available.
+    var oEditor ;
+    if ( typeof( FCKeditorAPI ) != 'undefined' )
+        oEditor = FCKeditorAPI.GetInstance( '_DataFCKeditor' ) ;
+
+    // Get the _Textarea and _FCKeditor DIVs.
+    var eTextareaDiv	= $( '_Textarea' ) ;
+    var eFCKeditorDiv	= $( '_FCKeditor' ) ;
+
+    // If the _Textarea DIV is visible, switch to FCKeditor.
+    if ( eTextareaDiv.style.display != 'none' )
+    {
+        // If it is the first time, create the editor.
+        if ( !oEditor )
+        {
+            CreateEditor() ;
+        }
+        else
+        {
+            // Set the current text in the textarea to the editor.
+            oEditor.SetHTML( $('_DataTextarea').value ) ;
+        }
+
+        // Switch the DIVs display.
+        eTextareaDiv.style.display = 'none' ;
+        eFCKeditorDiv.style.display = '' ;
+
+        // This is a hack for Gecko 1.0.x ... it stops editing when the editor is hidden.
+        if ( oEditor && !document.all )
+        {
+            if ( oEditor.EditMode == FCK_EDITMODE_WYSIWYG )
+                oEditor.MakeEditable() ;
+        }
+    }
+    else
+    {
+        // Set the textarea value to the editor value.
+        $('_DataTextarea').value = oEditor.GetXHTML(true) ;
+
+        // Switch the DIVs display.
+        eTextareaDiv.style.display = '' ;
+        eFCKeditorDiv.style.display = 'none' ;
+    }
+}
+
+function CreateEditor()
+{
+    // Copy the value of the current textarea, to the textarea that will be used by the editor.
+    $('_DataFCKeditor').value = $('_DataTextarea').value ;
+
+    // Automatically calculates the editor base path based on the _samples directory.
+    // This is usefull only for these samples. A real application should use something like this:
+    // oFCKeditor.BasePath = '/fckeditor/' ;	// '/fckeditor/' is the default value.
+    var sBasePath = "${def:context}/js/fckeditor/2.63/" ;
+
+    // Create an instance of FCKeditor (using the target textarea as the name).
+    var oFCKeditor = new FCKeditor( '_DataFCKeditor' ) ;
+    oFCKeditor.BasePath = sBasePath ;
+    oFCKeditor.Config['ToolbarStartExpanded'] = false ;
+    oFCKeditor.Width = '100%' ;
+    oFCKeditor.Height = '350' ;
+    oFCKeditor.Config['CustomConfigurationsPath'] = sBasePath + 'my.config.js' ;
+    oFCKeditor.ReplaceTextarea() ;
+}
+
+// The FCKeditor_OnComplete function is a special function called everytime an
+// editor instance is completely loaded and available for API interactions.
+function FCKeditor_OnComplete( editorInstance )
+{
+    // Enable the switch button. It is disabled at startup, waiting the editor to be loaded.
+    //anthony delete 2010-09-04 begin
+    //$('_BtnSwitchTextarea').disabled = false ;
+    //anthony delete 2010-09-04 end
+}
+
+function PrepareSave()
+{
+    // If the textarea isn't visible update the content from the editor.
+    if ( $( '_Textarea' ).style.display == 'none' )
+    {
+        var oEditor = FCKeditorAPI.GetInstance( '_DataFCKeditor' ) ;
+        $( '_DataTextarea' ).value = oEditor.GetXHTML(true) ;
+    }
+}
+
+/*******************************************************/
+/*全部选择      2008-12-4    by Oasahi                 */
+/*被关联checkbox控件增加checkedwith属性,指向主关联控件 */
+/*设置状态,与提交无关                                   */
+/*******************************************************/
+function checkedWith(me){
+    var formElements=document.getElementsByTagName("*");
+
+ 	for ( var i=formElements.length-1; i>=0; --i ) {
+        if(formElements[i].getAttribute("checkedwith") == null){
+            continue;
+        } else {
+            if(formElements[i].getAttribute("checkedwith") == me.getAttribute("id")){
+                if(formElements[i].type=="checkbox"){
+                    formElements[i].checked =  me.checked;
+                }
+
+                if(formElements[i].type=="text"||formElements[i].type=="password"||formElements[i].type=="hidden"){       /*设置只读属性*/
+                    if(formElements[i].getAttribute("dependent") != null){
+                        if($(formElements[i].getAttribute("dependent"))==null) {alert("关联验证元素:"+formElements[i].getAttribute("dependent")+"不存在");return;}
+                        var depwith = $(formElements[i].getAttribute("dependent"));
+                        if(depwith.type=="checkbox" && depwith.checked && me.checked){
+                            setReadWrite(formElements[i]);
+                        }else{   /*依存控件为其它类型*/
+                            if(depwith.value!="" && depwith.type!="checkbox" && me.checked)
+                                setReadWrite(formElements[i]);
+                            else
+                                setReadOnly(formElements[i]);
+                        }
+                     }else{
+                        if(me.checked)
+                            setReadWrite(formElements[i]);
+                        else
+                            setReadOnly(formElements[i]);
+                     }
+                }
+
+                if(typeof(formElements[i].onchange)=="function")
+                    formElements[i].onchange();
+            }
+        }
+ 	}
+    return true;
+}
+
+function reverseWith(me){
+    var formElements=document.getElementsByTagName("*");
+
+ 	for ( var i=formElements.length-1; i>=0; --i ) {
+        if(formElements[i].getAttribute("checkedwith") == null){
+            continue;
+        } else {
+            if(formElements[i].getAttribute("checkedwith") == me.getAttribute("id")){
+                if(formElements[i].type=="checkbox"){
+                    formElements[i].checked =  !formElements[i].checked;
+                }
+
+                if(formElements[i].type=="text"||formElements[i].type=="password"){       /*设置只读属性*/
+                    if(formElements[i].getAttribute("dependent") != null){
+                        if($(formElements[i].getAttribute("dependent"))==null) {alert("关联验证元素:"+formElements[i].getAttribute("dependent")+"不存在");return;}
+                        var depwith = $(formElements[i].getAttribute("dependent"));
+                        if(depwith.type=="checkbox" && depwith.checked){
+                            setReadWrite(formElements[i]);
+                        }else
+                            setReadOnly(formElements[i]);
+                     }else{
+                        if(me.checked)
+                            setReadWrite(formElements[i]);
+                        else
+                            setReadOnly(formElements[i]);
+                     }
+                }
+
+                if(typeof(formElements[i].onchange)=="function")
+                    formElements[i].onchange();
+            }
+        }
+ 	}
+    return true;
+}
+
+
+/*************************************************************/
+/*前置关联状态  2008-12-4    by Oasahi                       */
+/*设置被关联控件状态,如果主控件没有选中或空值,则关联控件禁用 */
+/*设置关联状态,同时与提交次序相关联                          */
+/*************************************************************/
+function dependentWith(me){
+    var formElements=document.getElementsByTagName("*");
+
+ 	for ( var i=formElements.length-1; i>=0; --i ) {
+        if(formElements[i].getAttribute("dependent") == me.getAttribute("id")){
+            if(me.type=="checkbox"){
+                if(me.checked){
+                    if(formElements[i].getAttribute("checkedwith") != null){
+                        var chkwith = $(formElements[i].getAttribute("checkedwith"));
+                        if(chkwith.type=="checkbox" && chkwith.checked){
+                            setReadWrite(formElements[i]);
+                        }
+                     }else
+                        setReadWrite(formElements[i]);
+                }else
+                    setReadOnly(formElements[i]);
+            }
+            if(me.type=="text"||me.type=="select"||me.type=="radio"||me.type=="hidden"){
+                if(me.value != ''){
+                    if(formElements[i].getAttribute("checkedwith") != null){
+                        if($(formElements[i].getAttribute("checkedwith"))==null) {alert("关联验证元素:"+formElements[i].getAttribute("checkedwith")+"不存在");return;}
+                        var chkwith = $(formElements[i].getAttribute("checkedwith"));
+                        if(chkwith.type=="checkbox" && chkwith.checked){
+                            setReadWrite(formElements[i]);
+                        }
+                     }else
+                        setReadWrite(formElements[i]);
+                }else{
+                    setReadOnly(formElements[i]);
+                    }
+            }
+
+            if(typeof(formElements[i].onchange)=="function")
+                formElements[i].onchange();
+        }
+ 	}
+    return true;
+}
+
+/*************************************************************/
+/*设置控件只读状态                                           */
+/*************************************************************/
+function setReadOnly(objName,formName){
+    document.forms[formName].elements[objName].setAttribute("readOnly","readonly");
+    document.forms[formName].elements[objName].setAttribute("class","readonly");
+    return true;
+}
+
+function setReadOnly(me){
+    me.setAttribute("readOnly","true");
+    me.setAttribute("class","readonly");        /*FF*/
+    me.setAttribute("className","readonly");    /*IE*/
+    return true;
+}
+
+function setReadWrite(me){
+    me.removeAttribute("readOnly");
+    me.setAttribute("class","");
+    me.setAttribute("className","");
+    return true;
+}
+
+//选择标签改变样式风格
+function changeLiStyle(obj){
+    var obj1 = obj.parentNode.getElementsByTagName("li");
+    for (var i=0; i<obj1.length; i++) {
+        obj1[i].id="";
+    }
+    obj.id = "tabsl";
+}
+
+
+function selectAll(id,formName){
+	var obj = document.forms[formName].elements;
+	for (var i=0;i<obj.length;i++){
+		if (obj[i].name == id){
+			obj[i].checked = true;
+		}
+	}
+}
+
+function unselectAll(id,formName){
+	var obj = document.forms[formName].elements;
+	for (var i=0;i<obj.length;i++){
+		if (obj[i].name == id){
+			if (obj[i].checked==true) obj[i].checked = false;
+			else obj[i].checked = true;
+		}
+	}
+}
+
+</script>
+
+
+<div id="InputValidatorTipDiv" style="position:absolute;visibility:hidden;height:30px;background-color:seashell;z-index:3"></div>

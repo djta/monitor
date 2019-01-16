@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>CCMS</title>
+${inc:/action/ccms/pub}
+<style> 
+input[type="checkbox"], input[type="radio"]{
+margin:0;
+} 
+input[type="checkbox"].form-control{
+height:auto;
+vertical-align: top;
+}
+.table > tbody > tr > td{
+padding:4px;
+}
+
+</style>
+<title>APP版本信息 </title>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center" style="background: #f5f5f5 none repeat scroll 0 0;border: 1px solid #ddd;color: #333;font-size: 14px;line-height: 20px;margin-top: 0;padding: 5px 15px;height: 35px;">
+			<h2 class="panel-title">APP版本信息 </h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm">
+				<input name="sort" type="hidden" value="tuid" preserve="true" />
+				<input name="order" type="hidden" value="desc" preserve="true" /> 
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+				<div class="form-group" style="height: 40px;">
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="margin: 10px; padding: 0px;margin-left: 20px;">
+						<button style="display:none" class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="addnew_btn">发布新版本</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th class="sortable " code="sequence" nowrap>序号</th>
+						<th class="sortable " code="app_code" nowrap>APP代码</th>
+						<th class="sortable " code="version_no" nowrap>版本号</th>
+						<th class="sortable " code="created" nowrap>发布时间</th>
+						<th nowrap>操作</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr name="datagridTemplate_tr" style="height:20px">
+						<td align="center">#_rowNumber#</td>
+						<td align="center">#app_code#</td>
+						<td align="center">#version_no#</td>
+						<td align="center">#created#</td>
+						<td align="center"><a href="javascript:void(0)" class="delBtn" data-tuid="#tuid#">取消发布</a></td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid"></tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+			<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							
+						</div>
+						<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor" 
+      							action="${def:context}${def:actionroot}/insert" enctype="multipart/form-data">
+							<div class="modal-body">
+									<input type="hidden" name="tuid" id="tuid" value="" preserve="true" />
+									
+									<div class="form-group">
+										<label class="col-xs-2 col-sm-3 col-md-3 col-lg-4 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">APP代码（默认为app）</label>
+										<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+											<input id="app_code" name="app_code" class="input-sm form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" type="text" />
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label class="col-xs-2 col-sm-3 col-md-3 col-lg-4 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">版本号<span class="red">*</span></label>
+										<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+											<input id="version_no" name="version_no" class="input-sm form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" type="text" />
+										</div>
+									</div>
+								
+									<div class="form-group">
+										<label class="col-xs-2 col-sm-3 col-md-3 col-lg-4 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">安装文件<span class="red">*</span></label>
+										<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+											<input id="file" name="file" type="file" />
+										</div>
+									</div>
+							</div>
+							
+							<div class="modal-footer">
+								<div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+									<button type="submit" id="saveBtn" class="btn btn-primary btn-md">保&nbsp;存</button>
+									<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script type="text/javascript" >
+$(document).ready(function() {
+	var obthis = this;
+	this.searchObj = null;
+	this.obj = null;
+	$("#addnew_btn").unbind().on("click",function(){
+		clearForm("formEditor");
+		$("#modalAddnew").modal("show");
+	});
+	this.searchObj = $Search({
+		datagrid : "datagrid",
+		formId : "searchForm",
+		progress: false,
+		rowpackage:function(obj){
+		},
+		success : function() {
+			$(".delBtn").unbind().on("click",function(e){
+				var obj = $(e.target);
+				var tuid = obj.data("tuid");
+				var url = "${def:actionroot}/delete?tuid=" + tuid;
+				ajaxCall(url,{
+					method: "get",
+					progress: true,
+					dataType: "script",
+					success: function() {
+						ccms.dialog.alert("取消发布成功！");
+						ccms.dialog.close();
+						$("#search_btn").click();
+					}
+				});
+			}); 
+		}
+	}).initSearchBtn(function(){}).searchData(1);
+});
+
+
+</script>
+</body>
+</html>

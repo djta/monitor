@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<link rel="stylesheet" type="text/css" href="${def:context}/default.css" />
+
+<!--biblioteca generica JS/Dinamica-->
+<script type="text/javascript" src="${def:context}/action/script">
+	</script>
+
+<title>SQL Generator</title>
+
+</head>
+
+<body>
+
+<!--banner-->
+<div class="banner">Generar script SQL INSERT de un esquema de
+seguridad Dinámica</div>
+<br>
+
+<center><!--formulario de filtro-->
+<div id="form">
+<form name="form1" onsubmit="return search()">
+
+<table width="450px" class="formgrid">
+
+	<!--ancho de la columna de etiquetas-->
+	<col width="45%">
+
+	<!--titulo-->
+	<tr>
+		<th colspan="2">Filtro de búsqueda</th>
+	</tr>
+
+	<!--separador-->
+	<tr height="10px">
+		<td colspan="2"></td>
+	</tr>
+
+	<!--campos-->
+	<tr>
+		<td class="formlabel required">Aplicación:</td>
+		<td><select name="webapp">
+			<rows>
+			<option value="${fld:app_id}">${fld:app_alias}</option>
+			</rows>
+		</select></td>
+	</tr>
+	<tr>
+		<td class="formlabel">Con relación Rol-Usuario:</td>
+		<td>
+			<select name="rol_usuario">
+				<option value="">NO</option>
+				<option value="0">SI</option>
+			</select>
+		</td>
+	</tr>
+
+	<!--separador-->
+	<tr height="10px">
+		<td colspan="2"></td>
+	</tr>
+
+	<!--botones-->
+	<tr>
+		<td align="center" colspan="2"><input type="submit"
+			value="Generar" class="btn_blue"></td>
+	</tr>
+
+	<!--separador-->
+	<tr height="10px">
+		<td></td>
+	</tr>
+
+</table>
+
+</form>
+</div>
+
+
+<!--indicador de progreso-->
+<div id="status" class="alert"
+	style="display: none; color: gray; width: 20%; font-weight: bold; font-family: Arial">
+<img src="${def:context}/images/progress.gif"> Por favor espere...
+</div>
+
+
+<!--panel de respuesta AJAX #1-->
+<div id="response" style="display: none; width: 100%"></div>
+
+</center>
+
+<!--codigo de soporte del template-->
+<script type="text/javascript">
+
+		//apuntador a funcion para retornar dependiendo de donde este
+		var _goBackFn = null;
+
+		//inicializacion de la pagina cuando carga
+		onload = function()
+		{ 
+		} 
+	
+		//mostrar filtro de busqueda
+		function showFilter()
+		{
+			document.getElementById("form").style.display="";
+			document.getElementById("response").style.display='none';
+		}
+
+		//ejecutar consulta
+		function search()
+		{
+
+			//definir funcion goBack()
+			_goBackFn = showFilter;
+
+			//esconder filtro de busqueda
+			document.getElementById("form").style.display="none";
+	
+			//llamada Ajax...
+			return ajaxCall(	httpMethod="POST", 
+								uri="${def:actionroot}/${fld:action}", 
+								divResponse="response", 
+								divProgress="status", 
+								formName="form1", 
+								afterResponseFn=null, 
+								onErrorFn=showFilter);
+		
+		}
+	
+	
+		//retorna al estado previo que corresponde
+		//al estado actual de la pagina, cada llamada Ajax
+		//se encarga de definir cual es la funcion de goBack() que aplica
+		function goBack() 
+		{
+			_goBackFn()			
+		}
+		
+</script>
+
+</body>
+
+</html>

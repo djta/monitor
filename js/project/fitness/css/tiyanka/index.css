@@ -1,0 +1,104 @@
+.bg{
+  background: linear-gradient(0deg, #314a6d, #99a2aa, #314a6d); 
+ /* background: url(../images/bg.png) no-repeat; */
+}
+.brief{
+	font-size:1.4rem;
+	color:white;
+	line-height:6rem;
+	text-align:center;
+}
+header{
+	height:13rem;
+	background:url(../../image/tiyanka/bg.png) no-repeat;
+	background-size:100% 100%;
+	color:#386E9D;
+}
+header .h-t-1{
+	display:inline-block;
+	font-size:2rem;
+	margin-top:3.4rem;
+	padding:0 1.8rem;
+	width:100%;
+}
+
+header .h-t-2{
+	display:inline-block;
+	font-size:1.4rem;
+	margin-top:4rem;
+	margin-left:1.8rem;
+}
+
+header .h-t-3{
+	display:inline-block;
+	float:right;
+	font-size:1.4rem;
+	margin-top:4rem;
+	margin-right:1.3rem;
+}
+.com-name{
+	
+	
+	height:4.4rem;
+	padding-left:4.7rem;
+	line-height:4.4rem;
+	background:white url(../../image/favicon.ico) no-repeat 1.8rem center;
+	background-size:auto 45%;
+	color:#363D4C;
+	font-size:1.4rem;
+	border-bottom:1px dashed #363D4C;
+	position:relative;
+}
+.com-name:after{
+    content: "";
+    position: absolute;
+    bottom: -0.8rem;
+    left: -0.8rem;
+		width: 1.6rem;
+    height: 1.6rem;
+    background-color: #8A94A1;
+    border-radius: 50%;
+}
+.com-name:before{
+    content: "";
+    position: absolute;
+    bottom: -0.8rem;
+    right: -0.8rem;
+	width: 1.6rem;
+    height: 1.6rem;
+    background-color: #8A94A1;
+    border-radius: 50%;
+}
+.con {
+	background-color:white;
+	text-align: center;
+	border-radius:0.4rem;
+}
+.con input:first-child{
+    margin-top: 3.1rem;
+}
+.con input,
+.con select{
+	width: 88%;
+    height: 4.4rem;
+    line-height: 2rem;
+    margin-top: 2rem;
+    border: 1px solid #E6E6E6;
+    border-radius: 5px;
+    font-size: 1.7rem;
+    padding: 0 1.4rem;
+    background-color:white;
+}
+
+.con select option{
+	width: 24.6rem;
+}
+.con button{
+    margin: 3rem 0;
+    width: 22rem;
+    height: 4.4rem;
+    background-color: #339FFF;
+    border-radius: 1.8rem;
+    color: white;
+    font-size: 1.7rem;
+}

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<parameter id="user_id" type="integer" required="true" label="user_id"/>
+	<parameter id="userlogin" type="varchar" required="false" label="userlogin"/>
+	<parameter id="passwd" type="varchar" required="true" label="${lbl:s_fld_password}" maxlen="15" regexp="\w{6,}?" regexp-error-label="${lbl:s_invalid_password}" />
+
+	<custom-validator classname="dinamica.security.PasswordEncryptor" 
+		on-error-label="MD5加密失败" />
+
+</validator>
+

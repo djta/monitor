@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config nodb="true">
+
+	<summary>
+		Redirect after sucessful login
+	</summary>
+	
+	<log>false</log>
+	
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.txt</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

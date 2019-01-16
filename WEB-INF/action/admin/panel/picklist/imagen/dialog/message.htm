@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Invalid Form</title>
+<LINK REL="stylesheet" type="text/css" href="${def:context}/default.css" />
+</head>
+
+<body>
+
+<center>
+
+<br>
+
+<table cellspacing="1" class="grid" width="400px">
+	<rows>
+	<tr>
+		<td ${fld:_rowStyle} align="center"><img src="${def:context}/images/alert.gif"/></td>
+		<td ${fld:_rowStyle}>${fld:message}</td>
+	</tr>
+	</rows>
+</table>
+
+<br>
+<button onclick="goBack();">${lbl:button_back}</button>
+
+<script language="javascript">
+	function goBack()
+	{
+		parent.pickClose();
+	}
+</script>
+	
+</center>
+
+</body>
+
+</html>

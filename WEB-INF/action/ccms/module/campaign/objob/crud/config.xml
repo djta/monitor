@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		外呼主题
+	</summary>
+	
+	<log>false</log>
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>		
+		<recordset id="query-template_name.sql" source="sql" scope="transaction"  />		
+		<recordset id="query-campaign.sql" source="sql" scope="transaction" />
+		<recordset id="query-subject.sql" source="sql" scope="transaction"/>
+		<recordset id="query-model.sql" source="sql" scope="transaction"/> 
+		<recordset id="query-resulttype.sql" source="sql" scope="transaction" />
+		<recordset id="query-calltype.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<print mode="table" recordset="query-template_name.sql" tag="template-name" />
+		<print mode="form" recordset="query-campaign.sql" />
+		<print mode="form" recordset="query-subject.sql" />
+		<print mode="table" recordset="query-model.sql" tag="model-name" /> 
+		<print mode="table" recordset="query-resulttype.sql" tag="result-type" />
+		<print mode="table" recordset="query-calltype.sql" tag="call-type" />
+	</output>
+
+</config>

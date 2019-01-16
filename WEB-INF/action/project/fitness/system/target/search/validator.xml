@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="target_date" type="varchar" required="false" label="target_date" />
+	<parameter id="skill_id" type="varchar" required="false" label="skill_id" />
+	
+</validator>

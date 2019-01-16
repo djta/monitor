@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		
+	</summary>
+	
+	<log>false</log>
+
+	<file-recordset>query-file.sql</file-recordset>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-file.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>com.ccms.util.attachment.DownloadFile</classname>
+	</output>
+	
+</config>

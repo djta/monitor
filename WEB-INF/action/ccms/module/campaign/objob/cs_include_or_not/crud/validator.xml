@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="job_id" type="integer" required="true" label="job_id" />
+	<parameter id="filter_id" type="integer" required="false" label="filter_id" />
+	<parameter id="p_id" type="integer" required="false" label="p_id" />
+	<parameter id="filter_type" type="varchar" required="true" label="filter_type" />
+
+</validator>
+

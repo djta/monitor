@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		删除系统应用
+	</summary>
+	
+	<log>false</log>
+
+	<set-request-attribute id="help.msg" value="" />
+
+	<!--soporte de auditoria-->
+	<audit>
+		<!--de donde saca los datos, por defecto es "_request"-->
+		<recordset>query.sql</recordset>
+		<!--que campos extrae para el registro descriptivo-->
+		<cols>	
+			<colname>app_alias</colname>		
+		</cols>
+		<table>s_application</table>
+		<oper>删除</oper>
+		<area>应用系统</area>
+		<!--
+			query para obtener el ID generado o nombre de 
+			la columna que contiene el pkey, si es query, 
+			el alias del campo debe ser "id"
+		-->
+		<pkey>id</pkey>
+	</audit>
+	
+	<transaction>
+		<classname>dinamica.audit.AuditableTransaction</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<query>delete_menu_item.sql</query>
+	<query>delete_menu_role.sql</query>
+	<query>delete_service_group.sql</query>
+	<query>delete_group_role.sql</query>
+	<query>delete_service_role.sql</query>
+	<query>delete_service.sql</query>
+	<query>delete_menu.sql</query>
+	<query>delete_group.sql</query>
+	<query>delete_role.sql</query>
+	<query>delete.sql</query>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

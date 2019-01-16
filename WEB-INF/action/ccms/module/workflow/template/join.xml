@@ -1,0 +1,4 @@
+<join id="${step_id}">
+	${condition}
+	<unconditional-result old-status="${old_status}" status="${status}" owner="${owner}" ${step_type}="${next_step}" />
+</join>

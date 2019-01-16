@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<parameter id="report_id" type="integer" required="true" label="报表" maxlen="10"/>
+    <parameter id="report_name_cn" type="varchar" required="true" label="报表名称" maxlen="256"/>
+</validator>
+
+

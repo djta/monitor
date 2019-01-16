@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="term_id" type="integer" required="true" label="话术编号" maxlen="10"/>
+	<parameter id="term_score" type="double" required="false" label="话术分值"/>
+    <parameter id="start_time" type="varchar" required="true" label="话术开始时间"/>
+	<parameter id="types" type="varchar" required="false" label="类型"/>
+	<parameter id="items" type="varchar" required="false" label="题目"/>
+	<parameter id="list_scores" type="varchar" required="false" label="题目选项"/>
+	<parameter id="matrix_scores" type="varchar" required="false" label="矩阵选项"/>
+	<parameter id="pre_class" type="varchar" required="false" label="Pre_class" />
+	<parameter id="post_class" type="varchar" required="false" label="Post_class" />
+	<parameter id="term_score_tuid" type="varchar" required="false" label="问卷分数TUID（结果集字段占位 勿删）" />
+	<parameter id="score_id" type="integer" required="false" label="score_id" />
+	<parameter id="relation_id" type="varchar" required="false" label="进入问卷的数据主键" />
+
+</validator>

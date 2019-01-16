@@ -1,0 +1,31 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+
+<config>
+
+    <summary>
+    </summary>
+    
+    <log>false</log>
+
+	<!-- 文件大小限制 (MB) -->
+	<max-size>20</max-size>
+	<file-pre></file-pre>
+
+    <transaction>
+        <classname>transactions.project.fitness.imp.ImportCardcodeExcel</classname>
+        <validator>true</validator>
+        <transaction>false</transaction>
+        <jdbc-log>false</jdbc-log>
+    </transaction>
+
+    <output>
+        <classname>dinamica.GenericOutput</classname>
+        <template>template.htm</template>
+        <set-http-headers>true</set-http-headers>
+        <content-type>text/html</content-type>
+        <expiration>0</expiration>
+        <print mode="form" recordset="query-result"/>
+        <print mode="table" recordset="query-failed" tag="failed-rows"/>
+    </output>
+
+</config>

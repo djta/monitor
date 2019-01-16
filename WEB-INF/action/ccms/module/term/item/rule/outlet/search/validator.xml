@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="item_id1" type="integer" required="false" label="item_id" />
+	<parameter id="item_name" type="varchar" required="false" label="item_name" />
+	<parameter id="item_to" type="varchar" required="false" label="item_to" />
+
+</validator>
+

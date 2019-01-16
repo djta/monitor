@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator id="report.filter.params">
+	<parameter id="report_id" type="integer" required="true" label="report_id" maxlen="10"/>
+	<parameter id="__auto_search__" type="varchar" required="false" label="__auto_search__" maxlen="10"/>
+	<parameter id="filter" type="varchar" required="false" label="filter"/>
+	
+</validator>

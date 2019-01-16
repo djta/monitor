@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+	<meta charset="utf-8">
+	<title>登录</title>
+	<!-- head 中 -->
+	<link rel="shortcut icon" href="./js/project/fitness/image/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="./js/project/fitness/css/common/common.css" />
+	<link rel="stylesheet" href="./js/project/fitness/css/login.css" />
+	<link rel="stylesheet" href="./js/project/fitness/wx/css/custom.css" />
+	<link rel="stylesheet" href="./js/project/fitness/js/drag-slider/jquery.slider.css" />
+	<style>
+
+	</style>
+</head>
+
+<body style=' -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;'>
+
+	<script language="javascript">
+		var contextPath = "";
+		if (top.frames.length != 0) {
+			if (window.location.href.replace) top.location.replace(self.location.href);
+			else top.location.href = self.document.href;
+		}
+	</script>
+	<header class="login-hd">
+		<h1>
+			<p class="tl">监控分级管理</p>
+			<p class="tr">精准定位分析</p>
+		</h1>
+		<div class="animate-box">
+			<span class="icon-friendly wave-pt wave-pt-2"></span>
+			<span class="icon-print wave-pt wave-pt-1"></span>
+			<span class="icon-lock wave-pt wave-pt-3"></span>
+			<span class="icon-daodian wave-pt wave-pt-4"></span>
+			<span class="icon-gfp wave-pt wave-pt-5"></span>
+			<span class="icon-shoufei wave-pt wave-pt-6"></span>
+			<span class="icon-cm wave-pt wave-pt-7"></span>
+			<span class="line line-1"></span>
+			<span class="line line-2"></span>
+			<span class="line line-3"></span>
+			<span class="line line-4"></span>
+			<span class="line line-5"></span>
+			<span class="wave"></span>
+		</div>
+	</header>
+	<section class="login-box">
+		<form role="form" class="form-horizontal" name="formLogin" id="formLogin" method="post">
+			<input type="hidden" name="uri" value="/action/project/fitness/home">
+			<h2 style="font:14px/18px "Trebuchet MS", Arial, Helvetica, sans-serif;">大客流检测及预警系统</h2>
+			<div class="form-group">
+				<span class="icon-user"></span>
+				<input class="form-text" type="text" id="userlogin" name="userlogin" placeholder="请输入用户名">
+				<span class="icon-cancel js-cancel" for="userlogin"></span>
+			</div>
+			<div class="form-group">
+				<span class="icon-pwd"></span>
+				<input class="form-text" type="password" id="passwd" name="passwd" placeholder="请输入密码">
+				<input type="hidden" id="passwd_mw" name="passwd_mw">
+				<span class="icon-look js-look" for="passwd"></span>
+				<span class="icon-unlook js-unlook" for="passwd"></span>
+			</div>
+
+	
+			
+			<div class="sliderBox" style="margin-top: 30px;">
+					<div id="slider2" class="slider" style="border:1px solid#ccc;" >
+						<div id="slider_bg"></div>
+						<span id="label"><i class="handler_bg"></i></span>
+						<span id="labelTip">请按住滑块，拖动到最右边</span>
+					</div>
+				</div>
+			<div class="submit-btn" id="submitbutton" style="margin-top: 30px;">登录</div>
+			<div id="tipMsg" style="display:none;"></div>
+
+	
+		</form>
+	</section>
+
+
+
+
+	<script type="text/javascript" src="./js/jquery/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="./js/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./js/bootstrap/js/bootstrap-paginator.min.js"></script>
+	<script type="text/javascript" src="./js/bootstrap/js/bootbox.min.js"></script>
+	<script type="text/javascript" src="./js/ccms/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="./js/project/fitness/js/ccms.js"></script>
+	<script type="text/javascript" src="./js/ccms/common.js"></script>
+	<script type="text/javascript" src="./js/project/fitness/js/drag-slider/jquery.slider.min.js"></script>
+	<span style="display:none">_ajax_VE8374yz_</span>
+	<script language="javascript">
+		var isverify = false;
+		$(document).ready(function () {	
+			$("#slider2").slider({
+		width: 268, // width
+		height: 38 , // height
+		sliderBg: "#fff", // 滑块背景颜色
+		color: "#9c9c9c", // 文字颜色
+		fontSize: 14, // 文字大小
+		bgColor: "#f2f2f2", // 背景颜色
+		textMsg: "请按住滑块，拖动到最右边", // 提示文字
+		successMsg: "验证通过", // 验证成功提示文字
+		successColor: "#fff", // 滑块验证成功提示文字颜色
+		time: 400, // 返回时间
+		callback: function(result) { // 回调函数，true(成功),false(失败)
+			$("#result2").text(result);
+			if(result==true){
+				$('.ui-slider-no-select ').css('background', '#7ac23c');
+			}
+		}
+	});
+
+	$('.ui-slider-btn').append('<i class="rightRow"></i>');
+
+			$("#userlogin").focus();
+
+			$(".js-cancel").unbind().on("click", function () {
+				$("#" + $(this).attr("for")).val("");
+			});
+			$(".js-look").unbind().on("click", function () {
+				$("#" + $(this).attr("for")).attr("type", "text");
+			});
+			$(".js-unlook").unbind().on("click", function () {
+				$("#" + $(this).attr("for")).attr("type", "password");
+			});
+
+			$.validator.setDefaults({
+				submitHandler: function (form) {
+					$("#passwd_mw").val($("#passwd").val());
+					var url = contextPath + "/action/security/login";
+					ajaxCall(url, {
+						form: "formLogin",
+						dataType: "script",
+						button: "submitbutton",
+						method: "POST",
+						progress: true,
+						success: function () {
+							if ("" != $("#tipMsg").html()) {
+								$("#imgCode").click();
+								alert($("#tipMsg").html());
+							}
+						}
+					});
+				},
+				errorPlacement: function (error, obj) {
+					console.error(error);
+				}
+			});
+			$("#formLogin").validate({
+				rules: {},
+				messages: {}
+			});
+			
+			$("#submitbutton").on("click", function () {
+				console.log($('#slider2 .ui-slider-btn').hasClass('success'))
+				$("#tipMsg").empty();
+				if ("" == $("#userlogin").val()) {
+					alert("请输入用户名");
+					$("#userlogin").focus();
+					return false;
+				} else if ("" == $("#passwd").val()) {
+					alert("请输入密码");
+					$("#passwd").focus();
+					return false;
+				} else if ($('#slider2 .ui-slider-btn').hasClass('success')!== true) {
+					alert("请按住滑块拖动到最右边完成验证");
+					return false;
+				}
+				$("#formLogin").submit();
+			});
+
+			$(document).keydown(function (event) {
+				if (event.keyCode == "13") {
+					$("#submitbutton").click();
+				}
+			});
+		});
+	</script>
+</body>
+
+</html>

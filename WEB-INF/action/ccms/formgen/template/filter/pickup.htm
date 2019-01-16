@@ -1,0 +1,16 @@
+<div class="col-xs-${fld:colspan} col-sm-${fld:colspan} col-md-${fld:colspan} col-lg-${fld:colspan}">
+	<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label ${fld:is_required_alias}" for="${fld:field_code_alias}_alias_filter">${fld:field_name}</label>
+	<div class="col-xs-4 col-sm-5 col-md-6 col-lg-6">						
+		<input type="hidden" name="${fld:field_code_alias}_operator" value="${fld:filter_type}" preserve="true">
+		<!--picklist-->
+		<input id="${fld:field_code_alias}_filter" name="${fld:field_code_alias}_filter" type="hidden" size="${fld:show_width}" readonly value="">
+		<input class="form-control" type="text" id="${fld:field_code_alias}_alias_filter" name="${fld:field_code_alias}_alias_filter" size="20" readonly value="">
+		${fld:plugin_control}
+	</div>
+	<div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 clearlr">
+		<img src="${DEF:context}/images/search.gif" data-type="pickopen" pick-id="${fld:field_code_alias}_filter" pick-alias="${fld:field_code_alias}_alias_filter" pick-form="${fld:pickup_form}" pick-field="${fld:pickup_field}" 
+			title="查询${fld:field_name}">
+		<img src="${DEF:context}/images/clear.gif" data-type="pickclear" pick-id="${fld:field_code_alias}_filter" pick-alias="${fld:field_code_alias}_alias_filter" pick-form="${fld:pickup_form}" 
+			title="清除选择的内容" >
+	</div>
+</div>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+    <summary>
+        Insert Record
+    </summary>
+    
+    <log>false</log>
+
+	<on-error>/action/error/alert</on-error>
+
+	<transaction>
+        <classname>com.ccms.core.formengine.FormInsertEngine</classname>
+        <validator>true</validator>
+        <transaction>false</transaction>
+        <jdbc-log>false</jdbc-log>
+    </transaction>
+
+    <output>
+        <classname>dinamica.GenericOutput</classname>
+        <template>script.js</template>
+        <set-http-headers>true</set-http-headers>
+        <content-type>text/javascript</content-type>
+        <expiration>0</expiration>
+		<print mode="form" recordset="_request" />
+    </output>
+
+</config>

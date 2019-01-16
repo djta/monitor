@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>		
+		<recordset id="query-form.sql" source="sql" scope="transaction" />
+		<recordset id="query-job.sql" source="sql" scope="transaction" />
+		<recordset id="query-inject_fields.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+		<print mode="form" recordset="query-form.sql" />
+		<print mode="form" recordset="query-job.sql" />
+		<print mode="form" recordset="query-inject_fields.sql" />
+	</output>
+
+</config>

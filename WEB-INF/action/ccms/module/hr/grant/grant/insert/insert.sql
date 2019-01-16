@@ -1,0 +1,27 @@
+INSERT INTO
+	hr_grant
+(
+	tuid
+	,grant_name
+	,userlogin
+	,authuser
+	,start_time
+	,end_time
+	,remark
+	,status
+	,created
+	,createdby
+)
+VALUES
+(
+	 ${seq:nextval@seq_hr_grant}
+	,${fld:grant_name}
+	,'${def:user}'
+	,${fld:authuser}
+	,${fld:start_time}
+	,${fld:end_time}
+	,${fld:remark}
+	,'0'
+	,'${def:timestamp}'
+	,'${def:user}'
+)

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		工单处理
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>com.ccms.workflow.SearchActionWorkflow</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-history.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<print mode="table" recordset="query-history.sql" tag="row-history"/>
+		<print mode="table" recordset="query-action.sql" tag="rows"/>
+		<print mode="table" recordset="query-child_wfm.sql" tag="crows"/>
+		<print mode="table" recordset="query-entry.sql" tag="erows" />
+		<print mode="form" recordset="_request"/>
+	</output>
+
+</config>

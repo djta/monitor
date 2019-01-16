@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>FAQ</title>
+<script type="text/javascript" src="${def:context}/action/pub/dtree"></script>
+<link rel="StyleSheet" href="${def:context}/js/faq/jquery.autocomplete.css" type="text/css" />
+<link rel="stylesheet" href="${def:context}/js/kindeditor/themes/default/default.css" />
+<script src="${def:context}/js/kindeditor/kindeditor-min.js"></script>
+<script src="${def:context}/js/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript" src="${def:context}/js/faq/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="${def:context}/js/faq/search.autocomplete.js"></script>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">资料库</h2>
+	</div>
+	<div class="panel-body col_main_body">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+				<form class="form-horizontal" role="form" method="post">
+					<div class="form-group">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="col-xs-8 col-sm-3 col-md-3 col-lg-3">
+								<input type="text" class="form-control" id="show_names" name="show_name" placeholder="请输入名称">
+							</div>
+							<div class="col-xs-4 col-sm-9 col-md-9 col-lg-9">
+								<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<button class="btn btn-primary btn-md" type="button" onclick="javascript: d.openAll();">展</button>
+							<button class="btn btn-primary btn-md" type="button" onclick="javascript: d.closeAll();">合</button>
+							<button class="btn btn-primary btn-md" type="button" onclick="javascript:faqObj.faqOperate('add','0')">增</button>
+							<button class="btn btn-primary btn-md" type="button" onclick="javascript:faqObj.rebuildIndex();">索</button>
+							<button class="btn btn-primary btn-md" type="button" onclick="javascript:faqObj.openRecycle();">回</button>
+						</div>
+					</div>
+				</form>
+				<div class="dtree">
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+				<div id="faqContent">
+				</div>
+			</div>
+	</div>
+</div>
+<script type="text/javascript">
+var d = null;
+var faqObj = null;
+function faqClass(){
+	this.faqOperate = function(type,id){
+		var thisObj = this;
+        var url = "";
+        if (type == "add"){
+            url = "${def:context}/action/ccms/module/faq/faq/addnode?tuid="+id+"&random="+Math.random();
+            ajaxCall(url,
+        			{method:"get", 
+        			response:"faqContent", 
+        			dataType:"html",
+        			success:function(){
+						$("#save_btn").unbind().on("click", function () {
+							$("#save_btn").attr("disabled",true);
+							faqObj.checkFields();
+        					ajaxCall("${def:context}/action/ccms/module/faq/faq/insert",
+        		        			{method:"post",
+        							form:"formEditor",
+        		        			dataType:"script",
+        		        			success:function(){
+        		        				window.location.reload();
+        		        			}});
+        		        });
+						$("#is_tip").unbind().on("click", function () {
+							faqObj.showTopic(this);
+        		        });
+						$("#skill-all").unbind().on("click",function(){
+        					selectAll("skill_id","formEditor");
+        				});
+        				$("#skill-reverse").unbind().on("click",function(){
+        					reverseselectAll("skill_id","formEditor");
+        				});
+        				$(".date").each(function(){
+        					$Dialog().date($(this));
+        				});
+        				//radio样式
+        				$('#faqContent input[type=radio]').iCheck({
+        					   radioClass: 'iradio_square-blue',
+        					   increaseArea: '20%'
+        				});
+        				 //checkbox样式
+        				$('#faqContent input[type=checkbox]').iCheck({
+        						checkboxClass: 'icheckbox_square-blue',
+        						increaseArea: '20%'
+        				});
+        				thisObj.editor =KindEditor.create('textarea[name="content"]', {
+       						resizeType : 1,
+       						allowPreviewEmoticons : false,
+       						allowImageUpload : false,
+       						minWidth:100,
+       						items : [
+       							'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+       							'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+       							'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+       					});
+        			}});
+            
+
+        }else if(type == "edit"){
+            url = "${def:context}/action/ccms/module/faq/faq/edit?tuid="+id+"&random="+Math.random();
+            ajaxCall(url,
+        			{method:"get", 
+        			response:"faqContent", 
+        			dataType:"html",
+        			success:function(){
+        				$("#update_btn").unbind().on("click", function () {
+        					$("#update_btn").attr("disabled",true);
+        					faqObj.checkFields();
+        					ajaxCall("${def:context}/action/ccms/module/faq/faq/update",
+        		        			{method:"post",
+        							form:"formEditor",
+        		        			dataType:"script",
+        		        			success:function(){
+        		        				window.location.reload();
+        		        			}});
+        		        });
+        				$("#is_tip").unbind().on("click", function () {
+        					faqObj.showTopic(this);
+        		        });
+        				$("#deleteCommand").unbind().on("click", function () {
+        					if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+        						faqObj.deleteFaq($(this).attr("code"));
+        					}
+        				});
+        				$("a[name='download']").unbind().on("click",function(){
+	    					if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+	    						thisObj.downloadBlob($(this).attr("code"));
+	    					}
+	    				});
+        				$("#skill-all").unbind().on("click",function(){
+        					selectAll("skill_id","formEditor");
+        				});
+        				$("#skill-reverse").unbind().on("click",function(){
+        					reverseselectAll("skill_id","formEditor");
+        				});
+        				$(".date").each(function(){
+        					$Dialog().date($(this));
+        				});
+        				//radio样式
+        				$('#faqContent input[type=radio]').iCheck({
+        					   radioClass: 'iradio_square-blue',
+        					   increaseArea: '20%'
+        				});
+        				 //checkbox样式
+        				$('#faqContent input[type=checkbox]').iCheck({
+        						checkboxClass: 'icheckbox_square-blue',
+        						increaseArea: '20%'
+        				});
+        				thisObj.editor =KindEditor.create('textarea[name="content"]', {
+       						resizeType : 1,
+       						allowPreviewEmoticons : false,
+       						allowImageUpload : false,
+       						minWidth:100,
+       						items : [
+       							'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+       							'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+       							'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+       					});
+        			}});
+        }else if(type == "detail"){
+            url = "${def:context}/action/ccms/module/faq/faq/detail?faq_id="+id+"&random="+Math.random();
+            ajaxCall(url,
+        			{method:"get", 
+        			response:"faqContent", 
+        			dataType:"html",
+	     			success:function(){
+	    				$("a[name='download']").unbind().on("click",function(){
+	    					if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+	    						thisObj.downloadBlob($(this).attr("code"));
+	    					}
+	    				});
+	    				$("#favorite").unbind().on("click",function(){
+	    					if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+	    						thisObj.faqFavorite($(this).attr("code"));
+	    					}
+	    				});
+	    			}});
+        }else if(type == "import"){
+            url = "${def:context}/action/ccms/module/faq/faq/import/form?tuid="+id+"&random="+Math.random();
+            ccms.dialog.open({url:url,id:"attachment"});
+         }else if(type == "headline"){
+            url = "${def:context}/action/ccms/module/faq/faq/headline/addnew?tuid="+id+"&flag=1&random="+Math.random();
+            ajaxCall(url,
+        			{method:"get", 
+        			response:"faqContent", 
+        			dataType:"html"});
+        }else if(type == "cancelHeadline"){
+            url = "${def:context}/action/ccms/module/faq/faq/headline/addnew?tuid="+id+"&flag=2&random="+Math.random();
+            ajaxCall(url,
+        			{method:"get", 
+        			response:"faqContent", 
+        			dataType:"html"});
+        }
+    }
+	this.divClick = function(id,flag){
+		if(flag == 1){
+			$("#div"+id).show();
+			$("#img"+id).hide();
+		}else{
+			$("#div"+id).hide();
+			$("#img"+id).show();
+		}
+	}
+	this.upload = function(tuid){
+        //是否更新业务表标志 1:是；0否
+        var parameters = "table_code=t_faq&pickId=upload&pk_value="+tuid;
+
+        var url = "${def:context}/action/ccms/attachment/crud?" + parameters + "&random="+Math.random();
+        var sheight = "400px";
+        var swidth = "800px";
+        ccms.dialog.open({"url":url,"id":"upload"});
+    }
+	this.downloadBlob = function(id){
+		window.open("${def:context}/action/ccms/attachment/download?type=0&id="+id,"附件");
+	}
+	this.openRecycle = function(){
+		ajaxCall("${def:context}/action/ccms/module/faq/recycle/form?random="+Math.random(),
+    			{method:"get", 
+    			response:"faqContent", 
+    			dataType:"html"});
+    }
+	this.rebuildIndex = function(){
+		ajaxCall("${def:context}/action/ccms/module/faq/lunece/rebuild/faq",
+    			{method:"get", 
+    			dataType:"script"});
+	}
+	this.checkFields = function(){
+		//同步数据到textarea
+		faqObj.editor.sync();
+	    return true;
+	}
+	this.deleteFaq = function(id){
+		$("#deleteCommand").attr("disabled",true);
+		$Dialog().confirm("是否确认删除?",function(){
+			ajaxCall("${def:context}/action/ccms/module/faq/recycle/delete?action=delete&tuid="+id,
+	    			{method:"get", 
+	    			dataType:"script",
+	    			success:function(){
+	    				$("#deleteCommand").attr("disabled",false);
+	    				document.location.reload();
+	    			}});
+		},function(){
+			$("#deleteCommand").attr("disabled",false);
+		})
+	}
+	this.faqFavorite = function(id){
+	    var url = "${def:context}/action/ccms/module/faq/favorite/category/form?id="+id;
+		var w = ccms.dialog.open({url:url,id:"favorite",width:750,height:520});
+	}
+	this.showTopic = function(obj){
+		if(obj.checked == true){
+			$("#topicDiv").show();
+		}else{
+			$("#topicDiv").hide();
+		}
+	}
+}
+$(document).ready(function() {
+	faqObj = new faqClass();
+	$("#search_btn").unbind().on("click",function(){
+		gotoPage("/action/ccms/module/faq/faq/crud?show_name="+encodeURI(encodeURI($("#show_names").val())));
+	});
+	searchAutoComplete("show_name",'${def:context}/action/ccms/module/faq/auto?random='+Math.random(),function(){});
+	d = new dTree('d');
+
+    //获得是否显示按钮参数
+    var show_flag = "true";
+    
+    var faq_title = "资料库";
+    if (show_flag == "true")
+    {
+        //faq_title = faq_title + '&nbsp;<input type="button" name="addFolder" value="增加" class="btn btn-primary btn-md"  onclick=javascript:faqObj.faqOperate("add","0")>&nbsp;<input type="button"  value="索引" class="btn btn-primary btn-md" onclick="javascript:faqObj.rebuildIndex()">';
+        //faq_title+='&nbsp;<input type="button"  value="回收箱" class="btn btn-primary btn-md" onclick="javascript:faqObj.openRecycle();">';
+    }
+
+	d.add(0,-1,faq_title);
+
+    var tuid = "";
+    var superior_id = "";
+    var show_name = "";
+
+    var blankStr = "&nbsp;";
+    var buttonAddNode = "";
+    var buttonEdit = "";
+    var buttonAddNode = "";
+    var buttonDelete = "";
+    var buttonUpload = "";
+	var buttonHeadline = "";
+
+    var allBtn = "";
+    var herf = "";
+	var headline = "";
+
+    <combo-faqs>
+        tuid = "${fld:tuid}";
+        superior_id = "${fld:superior_id}";
+        show_name = "<a href='javascript:faqObj.faqOperate(\"detail\","+tuid+");'>${fld:show_name}</a>";
+		headline = "${fld:headline_id}";
+
+        if (show_flag == "true")
+        {
+            buttonAddNode = "<span style='cursor: pointer;' class='glyphicon glyphicon-plus' id='img"+tuid+"' onclick='faqObj.divClick("+tuid+",1)' title='展开按钮组'></span><span id='div"+tuid+"' style='display:none;'><span  style='cursor: pointer;' class='glyphicon glyphicon-minus' onclick='faqObj.divClick("+tuid+",2)' title='收缩按钮组'></span>&nbsp;<input type=button name=addFolder value='增加' class='btn btn-primary btn-md' style='MARGIN: 0px;' onclick=javascript:faqObj.faqOperate('add','"+tuid+"')>"+blankStr;
+            buttonEdit = "<input type=button name=addFolder value='修改' class='btn btn-primary btn-md' style='MARGIN: 0px;' onclick=javascript:faqObj.faqOperate('edit','"+tuid+"')>"+blankStr;
+
+            buttonUpload = "<input type=button name=addFolder value='附件' class='btn btn-primary btn-md' style='MARGIN: 0px;' onclick=javascript:faqObj.upload('"+tuid+"')>"+blankStr;
+
+			buttonImport = "<input type=button name=addFolder value='导入' class='btn btn-primary btn-md' style='MARGIN: 0px;' onclick=javascript:faqObj.faqOperate('import','"+tuid+"')>"+blankStr;
+	
+            allBtn = buttonAddNode + buttonEdit + buttonUpload + buttonDelete + buttonImport+buttonHeadline+"</span>";
+        }
+
+        herf = blankStr + allBtn;
+        d.add(tuid,superior_id,show_name+herf);
+    </combo-faqs>
+
+    $(".dtree").html(d.toString());
+});
+</script>
+</body>
+</html>

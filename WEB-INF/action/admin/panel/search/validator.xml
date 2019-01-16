@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="app_id" type="integer" required="true" label="应用编号" />
+	<parameter id="title" type="varchar" required="false" label="服务描述" />
+
+	<custom-validator
+		classname="dinamica.validators.SQLPatternTransformer"
+		parameter="title"
+		rule="contains" />
+
+</validator>

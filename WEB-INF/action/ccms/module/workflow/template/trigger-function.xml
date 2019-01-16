@@ -1,0 +1,6 @@
+<trigger-function id="${action_id}">
+	<function type="class">
+		<arg name="class.name">${quartz_class}</arg>
+		<arg name="action_id">${action_id}</arg>
+	</function>
+</trigger-function>

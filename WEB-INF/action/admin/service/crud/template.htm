@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>系统服务维护</title>
+</head>
+<body>
+
+<!--addnew/edit form-->
+<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+	 	<div class="modal-content">
+	 		 <div class="modal-header">
+	 		 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	 		 	<h4 class="modal-title" id="formTitle">新增系统服务</h4>
+	 		 </div>
+	 		 <div class="modal-body">
+	 		 	<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+	 		 		<input type="hidden" id="tuid" name="tuid" value=""/>
+					<input type="hidden" id="group_id" name="group_id" value="${fld:group_id}" preserve="true"/>
+	 		 		<div class="row clearfix">
+	 		 			<div class="form-group">
+		 		 			<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">描述(中文)</label>
+	 		 				<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+	 		 					<input id="description_cn" class="form-control" name="description_cn" type="text" size="30" value="" maxlength="150"/>
+	 		 				</div>
+	 		 			</div>
+	 		 			<div class="form-group">
+		 		 			<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">描述(英文)</label>
+	 		 				<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+	 		 					<input id="description_en" class="form-control" name="description_en" type="text" size="30" value="" maxlength="150"/>
+	 		 				</div>
+	 		 			</div>
+	 		 			<div class="form-group">
+		 		 			<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">路径或服务</label>
+	 		 				<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+	 		 					<input id="path" class="form-control" name="path" type="text" size="30" value="" maxlength="150"/>
+	 		 				</div>
+	 		 			</div>
+	 		 			<div class="form-group">
+		 		 			<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">备注</label>
+	 		 				<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+	 		 					<input id="description" class="form-control" name="description" type="text" size="30" value="" maxlength="150"/>
+	 		 				</div>
+	 		 			</div>
+					</div>
+	 		 	</form>
+	 		 </div>
+	 		 <div class="modal-footer">
+			    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+				  <button type="button" id="save_btn" class="btn btn-primary btn-md">保&nbsp;存</button>
+				  <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+			    </div>
+		     </div>
+	 	</div>
+	 </div>
+</div>
+
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading text-center col_main_body_title">
+		<h2 class="panel-title">&nbsp;&nbsp;&nbsp;&nbsp;查询系统服务分组</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post" id="searchForm">
+			<input name="sort" type="hidden" value="path" preserve="true"/>
+			<input name="order" type="hidden" value="desc" preserve="true" /> 
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+			<input type="hidden" id="filter_group_id" name="filter_group_id" value="${fld:group_id}" preserve="true"/>
+			<div class="form-group">
+				<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+					<input name="description" class="form-control" type="text" size="25" value="" maxlength="150" placeholder="请输入服务描述" class="form-control"/>
+				</div>
+				<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+					<input name="path" class="form-control" type="text" size="25" value="" maxlength="150"  placeholder="请输入路径起始地址" class="form-control" />
+				</div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+					<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+					<button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+				</div>
+			</div>
+		</form>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>操作</th>
+					<th class="sortable" code="description_cn">中文描述</th>
+					<th class="sortable" code="description_en">英文描述</th>
+					<th class="sortable" code="path">路径</th>
+					<th class="sortable" code="description">备注</th>
+				</tr>
+			</thead>
+			<tbody id="datagridTemplate" style="display: none">
+				<tr>
+					<td align="center">
+						<button class="btn btn-primary btn-md edit_btn" type="button" code="#service_id#">修改</button>
+						<button class="btn btn-primary btn-md delete_btn" type="button" code="#service_id#">删除</button>
+					</td>
+					<td align="center">
+						#description_cn#
+					</td>
+					<td align="center">
+						#description_en#
+					</td>
+					<td align="center">
+						#path#
+					</td>
+					<td align="center">
+						#description#
+					</td>
+				</tr>
+			</tbody>
+			<tbody id="datagrid">
+			</tbody>
+		</table>
+		<div class="pageDiv">
+			<ul class="pagination">
+			</ul>
+		</div>
+	</div>
+</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script type="text/javascript">
+$(document).ready(function() {
+	var search=null;
+	var obj = $Crud({
+		formId:"formEditor",
+		button:"save_btn",
+		insertBack:function(){
+			search.searchData();
+		},
+		updateBack:function(){
+			search.searchData();
+		},
+		deleteBack:function(){
+			search.searchData();
+		},
+		addNewBack:function(){
+			$("#formTitle").html("新增系统服务");
+		},
+		editBack:function(){
+			$("#formTitle").html("修改系统服务");
+		},
+		validate:function(){
+			var flag=$("#formEditor").validate({
+				rules: {
+					description_cn: {
+						required: true,
+						rangelength: [1,150]
+					},
+					messages: {
+						description_cn: {
+							required: "请输入中文描述",
+							rangelength: "组名称长度为1到150位"
+						},
+						description_en: {
+							required: "请输入英文描述称",
+							rangelength: "组名称长度为1到150位"
+						},
+						path: {
+							required: "请输入路径或服务",
+							rangelength: "组名称长度为1到150位"
+						},
+						description: {
+							required: "请输入备注",
+							rangelength: "组名称长度为1到150位"
+						}
+					}
+				}});
+				return flag;
+			},
+			check:function(){
+				return true;
+			}
+		}).init();
+		this.search=search;
+		search=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+			$(".edit_btn").unbind().on("click", function(){
+				if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+					obj.edit({id:$(this).attr("code")});
+				}
+			});
+			$(".delete_btn").unbind().on("click", function(){
+				var obthis = $(this);
+				$Dialog().confirm("确定要删除该条数据吗?", function(){
+					if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+						obj.del({id:obthis.attr("code")});
+					}
+				});
+			});
+			
+		}}).initSearchBtn().searchData(1);
+	});
+</script>
+</body>
+</html>

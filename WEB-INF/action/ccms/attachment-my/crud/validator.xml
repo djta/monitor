@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="table_code" type="varchar" required="false" label="table_code" maxlen="128"/>
+	<!-- 文本框的id -->
+	<parameter id="id" type="varchar" required="false" label="id" maxlen="32"/>
+	<!-- 弹出框的id -->
+	<parameter id="pickId" type="varchar" required="false" label="pickId" maxlen="32"/>
+	<!-- 类型 -->
+	<parameter id="page_type" type="varchar" required="false" label="page_type" maxlen="2"/>
+	<!-- 主键序列 -->
+	<parameter id="pk_value" type="varchar" required="false" label="pk_value" maxlen="32"/>
+	<!-- 是否只提供删除功能 -->
+	<parameter id="logo" type="varchar" required="false" label="logo"/>
+	<!-- 表字段代码-->
+	<parameter id="field_code" type="varchar" required="false" label="field_code" maxlen="128"/>
+	<!-- 表字段值-->
+	<parameter id="field_value" type="varchar" required="false" label="field_value" maxlen="512"/>
+		
+</validator>

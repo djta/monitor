@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+    <summary>
+        话术树形结构
+    </summary>
+
+    <log>false</log>
+
+    <transaction>
+        <classname>dinamica.ParentChildReader</classname>
+        <validator>true</validator>
+        <transaction>false</transaction>
+        <jdbc-log>false</jdbc-log>
+        <recordset id="detail-node.sql" source="sql" scope="transaction" />
+    </transaction>
+
+    <output>
+        <classname>dinamica.ParentChildOutput</classname>
+        <template>template.htm</template>
+        <set-http-headers>true</set-http-headers>
+        <content-type>text/html; charset=UTF-8</content-type>
+        <expiration>0</expiration>
+    </output>
+    
+
+    <group-master recordset="detail-node.sql" template="group-node.htm" scope="transaction">
+		<group-detail recordset="detail-list.sql" template="group-detail-list.htm" tag="rows">
+		</group-detail>
+    </group-master>
+
+</config>

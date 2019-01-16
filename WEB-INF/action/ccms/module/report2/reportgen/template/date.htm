@@ -1,0 +1,14 @@
+<td class="th20${fld:is_required_alias}">
+	<label class="control-label">${fld:field_name}</label>
+</td>
+<td class="td20left">
+	<input type="hidden" name="${fld:field_code_alias}_operator" value="${fld:filter_type}" preserve="true" />
+	<input class="form-control" id="${fld:field_code_alias}_filter" 
+		onclick="bootstrap_date('${fld:field_code_alias}_filter')" 
+		name="${fld:field_code_alias}_filter" type="text" 
+		size="${fld:show_width}" maxlength="25" 
+		value="${fld:default_value}" 
+		readonly="readonly" 
+		${fld:plugin_code} />
+	${fld:plugin_control}
+</td>

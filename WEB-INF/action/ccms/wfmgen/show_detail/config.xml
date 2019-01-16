@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		通知消息模板
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>		
+		<recordset id="query.sql" source="sql" scope="transaction" />
+		<recordset id="query-current_step.sql" source="sql" scope="transaction" />
+		<recordset id="query-child.sql" source="sql" scope="transaction" />
+		<recordset id="query-countersign.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<print mode="table" recordset="query.sql" tag="rows" alternate-colors="true" />
+		<print mode="table" recordset="query-current_step.sql" tag="srows" alternate-colors="true" />
+		<print mode="table" recordset="query-child.sql" tag="brows" />
+		<print mode="table" recordset="query-countersign.sql" tag="crows" />
+		<print mode="form" recordset="_request" />
+	</output>
+
+</config>

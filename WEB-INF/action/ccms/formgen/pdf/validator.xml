@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="form_id" type="integer" required="true" label="form_id"/>
+</validator>

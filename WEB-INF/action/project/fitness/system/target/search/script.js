@@ -1,0 +1,13 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"tuid":"${fld:tuid}",
+		"skill_id":"${fld:skill_id}",
+		"val":"${fld:val@js}",
+		"yearmonth":"${fld:yearmonth@js}",
+		"skill_scope":"${fld:skill_scope}",
+		"target_type":"${fld:target_type}"
+	},
+	</rows>
+	{}
+]}

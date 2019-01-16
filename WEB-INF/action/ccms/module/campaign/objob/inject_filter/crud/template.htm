@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+${inc:/action/ccms/pub}
+
+<title>客户细分</title>
+
+</head>
+
+<body>
+
+<div  style="display:;width:100%" tabindex="-1" >
+  	  <div class="">
+   	    <div class="">
+   	      <div class="modal-header" style="text-align: center;">
+            <h4 class="modal-title" id="formTitle">新增人群定义</h4>
+          </div>
+          <div class="modal-body">
+			<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+			  <input type="hidden" id="tuid" name="tuid" value="">
+			   <div class="row clearfix" id="trNode">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						节点类型
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">			
+						    <div class="col-xs-8 col-sm-7 col-md-8 col-lg-8">
+				                 <input name="is_node" id="is_node" type="radio" value="0">节点
+				                 <input name="is_node" type="radio" value="1" >叶子节点
+						    </div>			
+						</div>
+					</div>
+				</div>
+				
+				<div class="row clearfix" id="trLogic" style="display:none">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						条件类型
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+						      <div class="col-xs-8 col-sm-7 col-md-8 col-lg-8">
+							<input name="logic_type" type="radio" value="and" checked>同时满足条件的结果<br/>
+				            <input name="logic_type" type="radio" value="or">任意满足其中一个条件的结果
+						      </div>						
+						</div>
+					</div>
+				</div>
+				
+				<div class="row clearfix" id="trCode" style="display:none">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						选择字段
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">			
+						<div class="col-xs-8 col-sm-7 col-md-8 col-lg-8">
+							<input name="job_id" id="job_id" type="hidden" value="${fld:job_id}" preserve="true">
+				<input name="filter_type" id="filter_type" type="hidden" value="${fld:filter_type}" preserve="true">
+				<input name="parent_id" id="parent_id" type="hidden" value="${fld:p_id}" preserve="true">
+				<input name="form_id" id="form_id" type="hidden" value="${fld:search_form_id}" preserve="true">
+				<input name="namespace" id="namespace" type="hidden" value="">
+				<input name="field_type" id="field_type" type="hidden" value="">
+				<input name="clause_code" id="clause_code_id" type="hidden" value="">
+				<input type="text"  class="form-control"  id="clause_code_name" name="clause_code_name" size="30" readonly  value="" >
+								</div>
+								<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+									<img src="${def:context}/images/search.gif" class="tool" id="pickproject" title="查询"/>
+									<img src="${def:context}/images/clear.gif" code="clause_code" class="tool2" title="清除选择的内容" />
+								</div>		
+						</div>
+					</div>
+				</div>
+				<div class="row clearfix" id="trFilter" style="display:none" >
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						选择条件
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">			
+						   <div class="col-xs-8 col-sm-7 col-md-8 col-lg-8">			
+							<select id="clause_filter" class="form-control" name="clause_filter" onchange="checkClause(this.value);">
+					<option value="=">等于</option>
+					<option value="like">包含</option>
+					<option value=">">大于</option>
+					<option value=">=">大于等于</option>
+					<option value="<">小于</option>
+					<option value="<=">小于等于</option>
+					<option value="<>">不等于</option>
+					<option value="in">任意满足</option>
+					<option value="not in">排除</option>
+					<option value="is not null">非空</option>
+					<option value="is null">为空</option>
+				</select>
+				</div>
+						</div>
+					</div>
+				</div>
+				<div class="row clearfix" id="trValue" style="display:none">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						字段值
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">		
+						 <div class="col-xs-8 col-sm-7 col-md-8 col-lg-8">
+							<input type="hidden" id="clause_value" name="clause_value" value="" >
+				<span id="clause-span" name="clause-span">
+				
+				</span><br/>
+				<input type="text" id="phrase_name" class="form-control" name="phrase_name" size="30" value="" >
+						 </div>				
+						</div>
+					</div>
+				</div>
+			</form>
+		  </div>
+		  <div class="modal-footer">
+		    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+			  <button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+			  <!--<button type="button" id="reset_btn" class="btn btn-primary btn-md">重&nbsp;置</button>
+			  <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>-->
+			  <button type="button" id="btn-del" class="btn btn-primary btn-del" data-dismiss="modal" style="display: none;">删&nbsp;除</button>
+		    </div>
+	      </div>
+	    </div>
+      </div>
+    </div>
+
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}"/>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	if("${fld:filter_type}" == "3"){
+		document.getElementById("formTitle").innerHTML = "新增人群追加定义";
+	}else{
+		document.getElementById("formTitle").innerHTML = "新增人群限定定义";
+	}
+	$("input[name='is_node']").unbind().on("ifChecked",function(){
+		changeRule($(this).val());
+	});
+	var search=null;
+    var obj = $Crud({
+        formId:"formEditor",
+        button:"save_btn",
+        insertBack:function(){
+            //search.searchData(1);
+        },
+        updateBack:function(data){
+        	//obj.edit({id:tuid});
+        },
+        deleteBack:function(){
+            search.searchData(1);
+        },
+        addNewBack:function(){
+            $("#formTitle").html("文档配置");
+            $("#btn-del").hide();
+        },
+        editBack:function(){
+            $("#formTitle").html("修改模板信息");
+            $("#btn-del").show();
+        },
+        validate:function(){
+            var flag=$("#formEditor").validate({
+                rules: {
+                	clause_code: {
+                        required: true
+                    }
+                },
+                messages: {
+                	clause_code:{
+                        required: "请输入字段名称"
+                    }
+                }
+            });
+            return flag;
+        },
+        check:function(){
+        	document.formEditor.clause_value.value = document.formEditor.phrase_name.value;
+            return true;
+        }
+    }).init();
+    
+	var tuid = "${fld:filter_id}";
+	if(tuid != ""){
+		obj.edit({id:tuid});
+	}
+    $("#pickproject").unbind().on("click",function(){
+		var url ='${def:context}${def:actionroot}/pick/field/crud?display=display:none&form_id='+$("#form_id").val();
+		ccms.dialog.open({url:url,id:"dialogPic",width:400,height:500});
+	});
+    $("#btn-del").unbind().on("click",function(){
+        var obthis = $(this);
+        $Dialog().confirm("确定要删除吗？",function(){
+        	 if(tuid != undefined && tuid != ""){
+            	obj.del({id : tuid});
+            }
+        });
+    });
+});
+function changeRule(flag){
+	if(flag == "0"){
+		document.getElementById("trLogic").style.display = "";
+		document.getElementById("trCode").style.display = "none";
+		document.getElementById("trFilter").style.display = "none";
+		document.getElementById("trValue").style.display = "none";
+	}else{
+		document.getElementById("trLogic").style.display = "none";
+		document.getElementById("trCode").style.display = "";
+		document.getElementById("trFilter").style.display = "";
+		document.getElementById("trValue").style.display = "";
+	}
+}
+
+function selectCode(n,c,s,t){
+	document.formEditor.clause_code_name.value = n;
+	document.formEditor.clause_code.value = c;
+	document.formEditor.namespace.value = s;
+	document.formEditor.field_type.value = t;
+	/*加载命名空间*/
+	loadNamespace(s);
+}
+
+function loadNamespace(n){
+			if(n == ""){
+				document.getElementById("clause-span").innerHTML="";
+				document.formEditor.phrase_name.value = "";
+				document.formEditor.phrase_name.readOnly = false;
+				return;
+			}
+            //llamada Ajax...
+            var url="${def:actionroot}/getnamespace?namespace="+n;
+            ajaxCall(url, {
+			method : "get",
+			progress : true,
+			dataType : "script",
+			success : function(data) {
+			}
+		});
+}
+
+function checkClause(f){
+	if (f=="is not null" || f=="is null") {
+		document.getElementById("clause-span").innerHTML="";
+		document.formEditor.phrase_name.value = "";
+		document.formEditor.clause_value.value = "";
+		document.formEditor.phrase_name.readOnly = true;
+	}else{
+		loadNamespace(document.getElementById("namespace").value);
+	}
+}
+
+function addStringName(){
+	var f = document.formEditor.clause_filter.value
+	var vs = document.getElementsByName("selectvalue");
+	var str = "";
+	var strV = "";
+	for(var a=0;a<vs.length;a++){
+		if(vs[a].checked == true){
+			if(f == "in" || f== "not in"){
+				strV += vs[a].value+",";
+				str += vs[a].getAttribute("label")+",";
+			}else{
+				strV = vs[a].value;
+				str = vs[a].getAttribute("label");
+				break;
+			}
+		}
+	}
+	if(str.length > 0){
+		if(str.charAt(str.length-1) == ','){
+			str = str.substring(0,str.length-1);
+			strV = strV.substring(0,strV.length-1);
+		}
+	}
+	document.formEditor.phrase_name.value = str;
+	document.formEditor.clause_value.value = strV;
+}
+
+</script>
+
+
+</body>
+
+</html>

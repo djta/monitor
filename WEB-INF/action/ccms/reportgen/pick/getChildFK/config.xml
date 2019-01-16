@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		获取下级参数
+	</summary>
+	
+	<log>false</log>
+
+	<sql-template>query-children.sql</sql-template>
+
+	<transaction>
+		<classname>com.ccms.report.SearchComboChild</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+		<print mode="form" recordset="_request" />
+		<print mode="table" recordset="query-children.sql" tag="rows" />
+	</output>
+
+</config>

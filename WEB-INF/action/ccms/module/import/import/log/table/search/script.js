@@ -1,0 +1,15 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"tuid":"${fld:tuid}"
+		,"history_id":"${fld:history_id}"
+		,"tab_id":"${fld:tab_id}"
+		,"tab_name":"${fld:tab_name@js}"
+		,"total_record":"${fld:total_record}"
+		,"insert_record":"${fld:insert_record}"
+		,"update_record":"${fld:update_record}"
+		,"error_count":"${fld:error_count}"
+	},
+	</rows>
+	{}
+]}

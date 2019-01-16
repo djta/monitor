@@ -1,0 +1,342 @@
+﻿body {
+    min-width: 500px;
+}
+#hd {
+    font-size: 14px;
+    padding: 22px 18px 16px;
+}
+#hd .welcome {
+    font-size: 14px;
+    line-height: 25px;
+}
+#manageAcct {
+    background-color: #2a69b7;
+    border-radius: 2px;
+    color: #ffffff;
+    font-size: 12px;
+    margin: 0 8px;
+    padding: 3px 8px;
+}
+#newGuide {
+    color: #787878;
+    font-size: 12px;
+    margin-right: 10px;
+    padding-left: 22px;
+}
+.storages-search label {
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+.storages-search {
+    position: relative;
+}
+.storages-search .ui-input {
+    width: 210px;
+}
+#stockSearch {
+    background: rgba(0, 0, 0, 0) url("img/icon.png") no-repeat scroll -32px 0;
+    cursor: pointer;
+    height: 16px;
+    position: absolute;
+    right: 6px;
+    top: 8px;
+    width: 16px;
+}
+.col-main {
+    float: left;
+    width: 100%;
+}
+.col-extra {
+	background: #fff none repeat scroll 0 0;
+    float: right;
+    width: 280px;
+}
+.main-wrap {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #d4d4d4;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.11);
+    margin: 0 300px 0 18px;
+}
+.m-top {
+    font-size: 12px;
+    padding: 10px;
+}
+#interval {
+    font-size: 12px;
+    margin-right: 10px;
+}
+#interval label {
+    margin-left: 5px;
+}
+#interval .checked {
+    color: #2a69b7;
+}
+.m-top table {
+    color: #fff;
+    table-layout: fixed;
+}
+.m-top table td {
+    padding: 10px;
+}
+.m-top table td {
+    padding: 12px;
+    background: #eff7ff none repeat scroll 0 0;
+    border:5px solid #fff;
+} 
+.m-top table td span {
+    width:150px;
+    margin-top: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.m-top table td div b {
+    color: #f74c23;
+    font-size: 16px;
+    font-weight: normal;
+}
+.m-top li {
+    display: table-cell;
+    float: left;
+    width: 19.99%;
+}
+.m-top li b {
+    display: block;
+}
+.m-top li em {
+    color: #f00;
+    display: inline-block;
+    white-space: nowrap;
+}
+.m-top div {
+    background: #eff7ff none repeat scroll 0 0;
+}
+.m-top div:hover {
+    background: #b6d7f9 none repeat scroll 0 0;
+}
+.m-top a:hover {
+    color: #555555;
+}
+.m-top .ta {
+    background: #eff7ff none repeat scroll 0 0;
+    color: #2a69b7;
+    display: block;
+    font-weight: bold;
+    overflow: hidden;
+    padding: 28px 0;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.m-top .ta:hover {
+    background: #b6d7f9 none repeat scroll 0 0;
+    color: #2a69b7;
+}
+.m-top .tad {
+    background: #eff7ff none repeat scroll 0 0;
+    color: #2a69b7;
+    display: block;
+    height: auto;
+    margin-top:-10px; 
+}
+.m-top .tad .left{
+	float:left;
+	width:60%;
+}
+.m-top .tad .right{
+	float:right;
+	text-align:right;
+	width:40%;
+	vertical-align:middle;
+}
+.m-top .tad span {
+    display: block;
+    margin-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.m-top .tad span b {
+    display: block;
+    font-size: 12px;
+    text-align: right;
+}
+.m-top .tad a {
+    color: #2a69b7;
+    font-size: 12px;
+    text-align: right;
+}
+.m-top .tad span i {
+    font-size: 12px;
+    font-style: normal;
+}
+.m-top .tad:hover {
+    background: #b6d7f9 none repeat scroll 0 0;
+    color: #2a69b7;
+}
+#result {
+    float: left;
+}
+.storages-search .loading {
+    background: rgba(0, 0, 0, 0) url("img/indicator.gif") no-repeat scroll 0 0;
+}
+.quick-links {
+    border-top: 1px dashed #ccc;
+    overflow: hidden;
+}
+.quick-links li {
+    float: left;
+    height: 110px;
+    text-align: center;
+    width: 20%;
+}
+.bulk-import {
+    color: #aaa;
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+}
+.bulk-links {
+    color: #f04b24;
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+    text-decoration: underline;
+}
+.quick-links li a {
+    border: 1px dashed #ccc;
+    color: #3b87b1;
+    display: block;
+    font-size: 14px;
+    height: 110px;
+    margin: -1px 0 0 -1px;
+    overflow: hidden;
+    padding-top: 30px;
+    position: relative;
+}
+.quick-links li a:hover {
+    background: #f8f8f8 none repeat scroll 0 0;
+}
+.quick-links span {
+    display: block;
+    height: 70px;
+    margin: -19px 0 18px 59px;
+    width: 100px;
+}
+.quick-links span img{
+   	height: 50px;
+    width: 50px;
+}
+.quick-links .purchase-purchase span {
+    background-position: 0 0;
+}
+.quick-links .sales-sales span {
+    background-position: 0 -48px;
+}
+.quick-links .storage-transfers span {
+    background-position: 0 -96px;
+}
+.quick-links .storage-inventory span {
+    background-position: 0 -144px;
+}
+.storage-otherWarehouse span {
+    background-position: -48px 0;
+}
+.storage-otherOutbound span {
+    background-position: -48px -48px;
+}
+.purchase-purchaseView span {
+    background-position: -503px -257px;
+}
+.accounts-unaccounts span {
+    background-position: -96px 0;
+}
+.added-service span {
+    background-position: -48px -96px;
+}
+.feedback span {
+    background-position: -48px -144px;
+}
+.notices {
+    display: inline-block;
+    height: 25px;
+    overflow: hidden;
+    padding: 0 5px 0 10px;
+    position: relative;
+    vertical-align: middle;
+}
+.notices em {
+    color: #999;
+    cursor: pointer;
+    font-family: Arial;
+    font-style: normal;
+    height: 16px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 5px;
+    width: 16px;
+}
+.notices li {
+    height: 25px;
+    line-height: 25px;
+}
+.notices li i {
+    float: left;
+    height: 16px;
+    margin: 3px 5px 0 0;
+    width: 16px;
+}
+.notices li a {
+    color: #f74c23;
+    display: block;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.extra-wrap {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.11);
+    font-size: 14px;
+    margin-right: 18px;
+}
+.extra-wrap h2 {
+    font-size: 14px;
+    text-align: center;
+}
+.extra-wrap .list {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: #fff none repeat scroll 0 0;
+    border-color: -moz-use-text-color #d4d4d4 #d4d4d4;
+    border-image: none;
+    border-style: none solid solid;
+    border-width: medium 1px 1px;
+    position: relative;
+}
+.extra-wrap ul li {
+    border-bottom: 1px dashed #cccccc;
+    line-height: 40px;
+    overflow: hidden;
+    padding: 0 12px;
+}
+body {
+}
+.quick-links span {
+}
+.quick-links li a {
+    color: #2a69b7;
+}
+.extra-wrap h2 {
+    border: 1px solid #3b68b3;
+    color: #555555;
+    line-height: 36px;
+}
+.extra-wrap h2 {
+    border: 1px solid #3b68b3;
+    color: #555555;
+    line-height: 36px;
+}

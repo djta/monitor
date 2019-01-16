@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="tuid" type="integer" required="true" label="tuid" />
+    <parameter id="type_name" type="varchar" required="true" label="type_name" maxlen="128"/>
+	<parameter id="show_order" type="integer" required="false" label="show_order" />
+	<parameter id="item_num" type="integer" required="false" label="item_num" />
+	<parameter id="remark" type="varchar" required="false" label="remark" maxlen="512"/>
+   <parameter id="tags" type="varchar" required="false" label="tags" maxlen="128"/>
+</validator>

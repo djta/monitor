@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		上班打卡
+	</summary>
+
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-post.sql" source="sql" scope="transaction" />
+		<recordset id="query-pid.sql" source="sql" scope="transaction" />
+		<recordset id="query-org_post.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+		<print mode="table" recordset="query-pid.sql" tag="rows-org_post" />
+		<print mode="table" recordset="query-post.sql" tag="rows-post" />
+		<print mode="table" recordset="query-org_post.sql" tag="org-post" />
+	</output>
+
+</config>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="id" type="varchar" required="true" label="id"/>
+	<parameter id="namespace" type="varchar" required="true" label="namespace"/>
+	<parameter id="parent_namespace" type="varchar" required="false" label="parent_namespace" />
+	<parameter id="parent_domain_value" type="varchar" required="false" label="parent_domain_value" />
+</validator>

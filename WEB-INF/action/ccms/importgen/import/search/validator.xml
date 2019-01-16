@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="subject_id" type="integer" required="true" label="专题" />
+	<parameter id="imp_name_filter" type="varchar" required="false" label="导入名称" />
+	
+	<custom-validator
+		classname="dinamica.validators.SQLPatternTransformer"
+		parameter="imp_name_filter"
+		rule="contains" />
+	
+</validator>
+

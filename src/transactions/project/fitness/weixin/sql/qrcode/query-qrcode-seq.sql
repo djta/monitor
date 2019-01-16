@@ -1,0 +1,1 @@
+SELECT nextval('seq_wx_qrcode') AS tuid FROM dual

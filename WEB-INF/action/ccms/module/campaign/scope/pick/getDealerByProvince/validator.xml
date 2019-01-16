@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="province" type="varchar" required="true" label="province" maxlen="64"/>
+	<parameter id="brand" type="varchar" required="true" label="province" maxlen="64"/>
+</validator>

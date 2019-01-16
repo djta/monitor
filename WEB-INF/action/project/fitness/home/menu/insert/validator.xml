@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="pid" type="integer" required="true" label="父级编号" maxlen="10"/>
+	<parameter id="menu_name" type="varchar" required="true" label="菜单名称" maxlen="64"/>
+	<parameter id="icon_path" type="varchar" required="false" label="菜单logo图标地址" maxlen="128"/>
+	<parameter id="icon_path2" type="varchar" required="false" label="菜单logo图标地址2" maxlen="128"/>
+	<parameter id="uri" type="varchar" required="false" label="访问路径" maxlen="256"/>
+	<parameter id="show_order" type="integer" required="false" label="显示顺序" maxlen="10"/>
+	<parameter id="menu_type" type="integer" required="true" label="菜单项类型" maxlen="10"/>
+	
+	<custom-validator classname="dinamica.validators.DuplicatedKeyValidator" 
+		on-error-label="该菜单名称已经存在" id="menu_name" sql="nodup.sql" />
+
+</validator>

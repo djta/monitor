@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<config>
+
+	<summary>
+		查询报表
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>com.ccms.report2.CognosReportSearch</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query_report.sql" source="sql" scope="transaction" />
+		<recordset id="query_filter_field.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>com.ccms.report2.CognosReportOutput</classname>
+		<set-http-headers>true</set-http-headers>
+	</output>
+</config>

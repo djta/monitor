@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="subject_id" type="integer" required="true" label="专题"/>
+	<parameter id="form_type" type="varchar" required="true" label="表单类型" />
+</validator>

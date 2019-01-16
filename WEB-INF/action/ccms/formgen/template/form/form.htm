@@ -1,0 +1,27 @@
+<form id="formEditor_${fld:form_id}" name="formEditor_${fld:form_id}" class="form-horizontal" role="form" method="post">
+	<!--__pk_value__是否为空,决定了form的保存方法为编辑保存,还是新增保存-->
+    <input type="hidden" name="__pk_value__" value="">
+    <input type="hidden" name="__p_pk_value__" value="${fld:__p_pk_value__}" preserve="true">
+	<input type="hidden" name="form_id" value="${fld:form_id}" preserve="true">
+	
+	<input type="hidden" name="__wfm_id__" value="${fld:__wfm_id__}" preserve="true">
+	<input type="hidden" name="__wfentry_id__" value="${fld:__wfentry_id__}" preserve="true">
+	<input type="hidden" name="__current_step_id__" value="${fld:__current_step_id__}" preserve="true">
+	<input type="hidden" name="__parent_wfentry_id__" value="${fld:__parent_wfentry_id__}" preserve="true">
+	<input type="hidden" name="__parent_node_id__" value="${fld:__parent_node_id__}" preserve="true">
+	<input type="hidden" name="__dowfm__" value="0" preserve="true"><!--0:否;1:是;-->
+	${controls}
+</form>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+	<div style="display:${fld:is_can_update}">
+		<button id="save_btn_${fld:form_id}" class="btn btn-primary btn-md">确定</button>
+		<button id="wfmCommand_${fld:form_id}" class="btn btn-primary btn-md">提交</button>
+	</div>
+	<button id="cancel_btn_${fld:form_id}" class="btn btn-primary btn-md" data-dismiss="modal">取消</button>
+	<div style="display:${fld:is_can_delete}">
+		<button id="delete_btn_${fld:form_id}" class="btn btn-primary btn-md">删除</button>
+	</div>
+	<div style="display:${fld:is_can_attachment}">
+		<button id="attachment_btn_${fld:form_id}" code="${fld:__pk_value__}" table_code="${fld:table_code}" class="btn btn-primary btn-md">附件</button>
+	</div>
+</div>

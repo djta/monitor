@@ -1,0 +1,24 @@
+<table class="navcontrols" cellspacing="0">
+    <tr>
+		<td align="center" NOWRAP>
+			${lbl:page_first_1}<span id="currpage"></span>${lbl:page_first_2}&nbsp;${lbl:page_total_1}<span id="pagecount"></span>${lbl:page_total_2}&nbsp;${lbl:page_total_data_1}<span id="recordcount"></span>${lbl:page_total_data_2}&nbsp;
+        </td>
+        <td align="center" NOWRAP>
+            <!-- <img src="${def:context}/images/pmfirst.gif" onclick="pageFirst()" class="tool"> -->
+            <a href="javascript:pageFirst()">${lbl:page_first}</a>&nbsp;
+        </td>
+        <td align="center" NOWRAP>
+            <!-- <img src="${def:context}/images/pmprev.gif" onclick="pagePrev()" class="tool"> -->
+            <a href="javascript:pagePrev()" name="prevPageA">${lbl:page_previous}</a>&nbsp;
+        </td>
+        
+        <td align="center" NOWRAP>
+            <!-- <img src="${def:context}/images/pmnext.gif" onclick="pageNext()" class="tool"> -->
+            <a href="javascript:pageNext()" name="nextPageA">${lbl:page_next}</a>&nbsp;
+        </td>
+        <td align="center" NOWRAP>
+            <!-- <img src="${def:context}/images/pmlast.gif" onclick="pageLast()" class="tool"> -->
+            <a href="javascript:pageLast()">${lbl:page_last}</a>&nbsp;
+        </td>
+    </tr>
+</table>

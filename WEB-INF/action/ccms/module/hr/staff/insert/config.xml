@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		新增员工
+	</summary>
+
+	<log>false</log>
+
+	<!--soporte de auditoria -->
+	<audit>
+		<!--de donde saca los datos, por defecto es "_request" -->
+		<recordset></recordset>
+		<!--que campos extrae para el registro descriptivo -->
+		<cols>
+			<colname>userlogin</colname>
+			<colname>lname</colname>
+			<colname>fname</colname>
+		</cols>
+		<table>s_user</table>
+		<oper>增加</oper>
+		<area>用户</area>
+		<pkey>select ${seq:currval@${schema}seq_user} as id from dual</pkey>
+	</audit>
+
+	<colname>skill_id;skill_id;org_post_id</colname>
+	<sql-template>insert-roles.sql;insert-skills.sql;insert-org_post.sql</sql-template>
+
+	<transaction>
+		<classname>com.ccms.InsertMaster</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<query>insert-user.sql</query>
+	<query>insert_t_staff.sql</query>
+	<query>insert-passlog.sql</query>
+	<query>insert_account.sql</query>
+	<query>update-upload.sql</query>
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

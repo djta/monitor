@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE workflow PUBLIC "-//OpenSymphony Group//DTD OSWorkflow 2.6//EN" "http://www.opensymphony.com/osworkflow/workflow_2_8.dtd">
+<workflow>
+
+	${trigger}
+
+	<initial-actions>
+		${init_action}
+	</initial-actions>
+
+	${step}
+
+	${split}
+
+	${join}
+
+</workflow>
+

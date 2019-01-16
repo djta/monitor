@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/error/validation/ajax">
+    <parameter id="subject_id" type="integer" required="true" label="subject_id"/>
+    <parameter id="campaign_id" type="varchar" required="true" label="campaign_id"/>
+    <parameter id="model_id" type="integer" required="true" label="model_id"/>
+    <parameter id="job_name" type="varchar" required="true" label="job_name" />
+    <parameter id="job_quota" type="integer" required="true" label="job_quota" />
+   
+    <parameter id="job_priority" type="integer" required="true" label="job_priority" />
+    <parameter id="from_date" type="date" required="false" label="from_date" />
+    <parameter id="to_date" type="date" required="false" label="to_date" />
+    <parameter id="reserve_accuracy" type="integer" required="true" label="reserve_accuracy"/>
+    <parameter id="remark" type="varchar" required="false" label="remark" />
+    
+    <parameter id="campaign_type" type="varchar" required="true" label="campaign_type" />
+    <parameter id="data_push_flag" type="varchar" required="false" label="data_push_flag" />
+    <parameter id="data_switch_flag" type="varchar" required="false" label="data_switch_flag" />
+    <parameter id="round_type" type="varchar" required="false" label="round_type" />
+    <parameter id="template_name" type="varchar" required="false" label="template_name" />
+ 
+    <parameter id="template_id" type="integer" required="false" label="template_id" />
+    <parameter id="parent_id" type="integer" required="false" label="parent_id" />
+    <parameter id="result_type" type="varchar" required="false" label="result_type" />
+    <parameter id="call_type" type="varchar" required="false" label="call_type" />
+    <parameter id="quota_status" type="varchar" required="false" label="quota_status" />
+   
+    <parameter id="reference_node_id" type="integer" required="false" label="reference_node_id" />
+	<parameter id="task_duplicate_scope" type="varchar" required="false" label="task_duplicate_scope" />
+	<parameter id="task_duplicate_flag" type="varchar" required="false" label="task_duplicate_flag" />
+	<parameter id="if_manual_push_flag" type="varchar" required="false" label="是否能够手工推送" />
+	<!--  -->
+    <parameter id="table_id" type="integer" required="false" label="template_id" />
+    <parameter id="form_id" type="integer" required="false" label="parent_id" />
+    <parameter id="cust_name" type="varchar" required="false" label="result_type" />
+    <parameter id="cust_code" type="varchar" required="false" label="call_type" />
+    <parameter id="cust_sex" type="varchar" required="false" label="quota_status" />
+  
+    <parameter id="cust_name_lable" type="varchar" required="false" label="template_id" />
+    <parameter id="cust_code_lable" type="varchar" required="false" label="parent_id" />
+    <parameter id="cust_sex_lable" type="varchar" required="false" label="result_type" />
+    
+    <parameter id="phone_number1" type="varchar" required="false" label="call_type" />
+    <parameter id="phone_number2" type="varchar" required="false" label="quota_status" />
+    <parameter id="phone_number3" type="varchar" required="false" label="template_id" />
+    <parameter id="phone_number4" type="varchar" required="false" label="parent_id" />
+    <parameter id="phone_number5" type="varchar" required="false" label="result_type" />
+    <parameter id="number_lable1" type="varchar" required="false" label="call_type" />
+    <parameter id="number_lable2" type="varchar" required="false" label="quota_status" />
+    <parameter id="number_lable3" type="varchar" required="false" label="template_id" />
+    <parameter id="number_lable4" type="varchar" required="false" label="parent_id" />
+    <parameter id="number_lable5" type="varchar" required="false" label="result_type" />
+  
+    <parameter id="call_type" type="varchar" required="false" label="call_type" />
+    <parameter id="quota_status" type="varchar" required="false" label="quota_status" />
+    <parameter id="template_id" type="varchar" required="false" label="template_id" />
+    <parameter id="parent_id" type="varchar" required="false" label="parent_id" />
+   
+    <parameter id="result_type" type="varchar" required="false" label="result_type" />
+    <parameter id="call_type" type="varchar" required="false" label="call_type" />
+    <parameter id="quota_status" type="varchar" required="false" label="quota_status" />    
+    
+        <parameter id="sms_number" type="varchar" required="false" label="quota_status" />    
+         <parameter id="sms_number_lable" type="varchar" required="false" label="quota_status" />    
+          <parameter id="email" type="varchar" required="false" label="quota_status" />    
+           <parameter id="pk_value" type="varchar" required="false" label="quota_status" />    
+            <parameter id="pk_value_lable" type="varchar" required="false" label="quota_status" />    
+            <parameter id="bz_pk_value" type="varchar" required="false" label="quota_status" />    
+	   <parameter id="bz_pk_value_lable" type="varchar" required="false" label="quota_status" />    
+	      <parameter id="email_lable" type="varchar" required="false" label="quota_status" />    
+	      
+	   <parameter id="search_table_id" type="varchar" required="false" label="quota_status" />    
+       <parameter id="search_form_id" type="varchar" required="false" label="quota_status" />    
+	   <parameter id="bz_type1" type="varchar" required="false" label="quota_status" />    
+	    <parameter id="ob_category" type="varchar" required="false" label="quota_status" />    
+					
+ <custom-validator 	
+	classname="dinamica.validators.DuplicatedKeyValidator" 
+	on-error-label="此名称已存在，请重新填写"
+	id="job_name" sql="nodup.sql"/>
+</validator>
+ 

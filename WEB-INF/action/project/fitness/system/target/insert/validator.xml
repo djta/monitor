@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+ 	<parameter id='target_year' type="integer" required="true" label="目标年" />
+ 	<parameter id='target_month' type="integer" required="true" label="目标月份" />
+ 	<parameter id='pk_value' type="integer" required="true" label="岗位id/分组id" />
+ 	<parameter id='guest_target' type="integer" required="false" label="资源获取量" />
+ 	<parameter id='follow_target' type="integer" required="false" label="跟进量" />
+ 	<parameter id='prepare_target' type="integer" required="false" label="预约量" />
+ 	<parameter id='visit_target' type="integer" required="false" label="实际到访量" />
+ 	<parameter id='ordernum_target' type="integer" required="false" label="成单量" />
+ 	<parameter id='orderfee_target' type="double" required="false" label="成单额" />
+ 	<parameter id='call_target' type="integer" required="false" label="回访量" />
+ 	<parameter id='call_mc_target' type="integer" required="false" label="回访预约会籍量" />
+ 	<parameter id='call_pt_target' type="integer" required="false" label="回访预约私教量" />
+ 	<parameter id='test_target' type="integer" required="false" label="体测量" />
+ 	<parameter id='unpayclass_target' type="integer" required="false" label="体验课上课量" />
+ 	<parameter id='allclass_target' type="integer" required="false" label="总上课量" />
+ 	<parameter id='site_target' type="integer" required="false" label="场开量" />
+ 	<parameter id='remark' type="varchar" required="false" label="备注" />
+ 	
+    <custom-validator classname="dinamica.validators.DuplicatedKeyValidator" 
+    on-error-label="该月份已存在" id="pk_value" sql="noRep.sql" />
+</validator>
+
+
+
+
+

@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/error/validation/ajax">
+
+    <parameter id="tuid" type="varchar" required="true" label="TUID"/>
+    <parameter id="subject_id" type="integer" required="true" label="subject_id"/>
+    <parameter id="search_table_id" type="integer" required="true" label="search_table_id"/>
+    <parameter id="search_form_id" type="integer" required="true" label="search_form_id"/>
+    <parameter id="model_name" type="varchar" required="true" label="model_name" />
+    <parameter id="remark" type="varchar" required="false" label="remark" />
+
+    <parameter id="bz_type" type="varchar" required="true" label="bz_type" />
+    <parameter id="search_sql" type="varchar" required="false" label="search_sql" />
+
+    <parameter id="import_data_batch_id" type="varchar" required="false" label="import_data_batch" />
+    <parameter id="import_data_batch_name" type="varchar" required="false" label="import_data_batch_name" />
+
+    <parameter id="pk_value_id" type="varchar" required="false" label="客户字段" />
+    <parameter id="pk_value_name" type="varchar" required="false" label="pk_value_name" />
+
+    <parameter id="bz_pk_value_id" type="varchar" required="false" label="业务主键字段" />
+    <parameter id="bz_pk_value_name" type="varchar" required="false" label="bz_pk_value_name" />
+
+    <parameter id="cust_name_id" type="varchar" required="false" label="客户名称字段" />
+    <parameter id="cust_code_id" type="varchar" required="false" label="客户编号字段" />
+    <parameter id="cust_sex_id" type="varchar" required="false" label="客户性别字段" />
+    
+    <parameter id="cust_name_name" type="varchar" required="false" label="cust_name_name" />
+    <parameter id="cust_code_name" type="varchar" required="false" label="cust_code_name" />
+    <parameter id="cust_sex_name" type="varchar" required="false" label="cust_sex_name" />
+
+    <parameter id="data_owner_id" type="varchar" required="false" label="data_owner" />
+    <parameter id="data_owner_name" type="varchar" required="false" label="data_owner_name" />
+
+    <parameter id="interested_series_id" type="varchar" required="false" label="interested_series" />
+    <parameter id="interested_series_name" type="varchar" required="false" label="interested_series_name" />
+
+    <parameter id="phone_number1_id" type="varchar" required="true" label="客户电话号码字段1" />
+    <parameter id="phone_number2_id" type="varchar" required="false" label="phone_number2" />
+    <parameter id="phone_number3_id" type="varchar" required="false" label="phone_number3" />
+    <parameter id="phone_number4_id" type="varchar" required="false" label="phone_number4" />
+    <parameter id="phone_number5_id" type="varchar" required="false" label="phone_number5" />
+    <parameter id="phone_number6_id" type="varchar" required="false" label="phone_number6" />
+
+    <parameter id="phone_number1_name" type="varchar" required="false" label="number_lable1" />
+    <parameter id="phone_number2_name" type="varchar" required="false" label="number_lable2" />
+    <parameter id="phone_number3_name" type="varchar" required="false" label="number_lable3" />
+    <parameter id="phone_number4_name" type="varchar" required="false" label="number_lable4" />
+    <parameter id="phone_number5_name" type="varchar" required="false" label="number_lable5" />
+    <parameter id="phone_number6_name" type="varchar" required="false" label="number_lable6" />
+
+    <parameter id="sms_number_id" type="varchar" required="false" label="sms_number" />
+    <parameter id="sms_number_name" type="varchar" required="false" label="sms_number_name" />
+    <parameter id="email_id" type="varchar" required="false" label="email" />
+    <parameter id="email_name" type="varchar" required="false" label="email_name" />
+
+</validator>

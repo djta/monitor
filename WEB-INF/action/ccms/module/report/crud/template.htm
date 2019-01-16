@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script language="JavaScript" type="text/javascript" src="${def:context}/action/pub/dtree"></script>
+<title>报表信息</title>
+
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+			<div class="panel-heading col_main_body_title text-center">
+				<h2 class="panel-title">报表配置<span id="typeTitleSpan"></span>	</h2>
+			</div>
+			<div class="panel-body col_main_body">
+				<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2">
+					${inc:/action/ccms/config_type?search_subject_id=${fld:subject_id}}
+				</div>
+				<div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+				<form class="form-horizontal" role="form" method="post"	id="searchForm" name="searchForm">
+					<input name="sort" type="hidden" value="tuid" preserve="true" />
+					<input name="order" type="hidden" value="desc" preserve="true" />
+					<input name="pageNo" type="hidden" value="" preserve="true" /> 
+					<input name="totalPages" type="hidden" value="" preserve="true" /> 
+					<input id="subject_id" name="subject_id1" type="hidden" value="" preserve="true"/>
+					<input name="group_type" type="hidden" value="" preserve="true"/>
+					<div class="form-group">
+						<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input id="table_id" name="table_id1" type="hidden" value="" />
+								<input type="text" id="table_alias" name="table_alias" placeholder="请选择业务" size="30" readonly value="" class="form-control" />
+							</div>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<img src="${def:context}/images/search.gif" style="cursor: pointer;"
+									id="pickOpenNotCenter" title="查询表名" />
+								<img src="${def:context}/images/clear.gif" style="cursor: pointer;"
+									id="pickClear" title="清除选择的内容" />
+							</div>
+						</div>
+						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+							<input name="report_name_cn" type="text" size="35" value=""
+								class="form-control" placeholder="请输入报表名称" />
+						</div>
+
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+							<button class="btn btn-primary btn-md" type="button"
+								id="search_btn">查询</button>
+							<button class="btn btn-primary btn-md" type="button"
+								id="search_reset_btn">清空</button>
+							<button class="btn btn-primary btn-md" type="button"
+								id="addnew_btn">新增</button>
+						</div>
+					</div>
+				</form>
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th></th>
+							<th></th>
+							<th class="sortable" code="tuid">报表ID</th>
+							<th class="sortable" code="report_name_cn">名称</th>
+							<th class="sortable" code="engine_type_alias">报表引擎</th>
+							<th class="sortable" code="table_alias">业务</th>
+							<th class="sortable" code="remark">备注</th>
+						</tr>
+					</thead>
+					<tbody id="datagridTemplate" style="display: none">
+						<tr>
+							<td align="center">
+								<button class="btn btn-primary btn-xs edit_btn" type="button"
+									code="#tuid#">修改</button>
+								<button class="btn btn-primary btn-xs delete_btn"
+									type="button" code="#tuid#">删除</button>
+							</td>
+							<td align="center">
+								#button#
+								<button class="btn btn-primary btn-xs columns_btn" type="button" title="报表预览" code="#tuid#">预览</button>
+								<button class="btn btn-primary btn-xs copy_btn" type="button" title="复制报表" code="#tuid#">复制</button>
+								<button class="btn btn-primary btn-xs export_btn" type="button" title="导出界面配置" code="#tuid#">导出</button>
+							</td>
+							<td align="center">#tuid#</td>
+							<td align="center">#report_name_cn#</td>
+							<td align="center">#engine_type_alias#</td>
+							<td align="center">#table_alias#</td>
+							<td align="center">#remark#</td>
+						</tr>
+					</tbody>
+					<tbody id="datagrid">
+					</tbody>
+				</table>
+				<div class="pageDiv">
+					<ul class="pagination">
+					</ul>
+				</div>
+			</div>
+		</div>
+	 <input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" /> 
+</div>
+<script	type="text/javascript">
+$(document).ready(function () {
+	var search=null
+	$("#subject_id").val("${fld:subject_id}");
+	search=$Search({datagrid: "datagrid", formId: "searchForm",rowpackage:function(obj){
+		var button="";
+		if(obj.engine_type=="2"){
+			button='<button class="btn btn-primary btn-md setchar_btn" type="button" title="图表设置" code="'+obj.tuid+'" >图表设置</button>';
+		}else{
+			button='<button class="btn btn-primary btn-md set_btn" type="button" title="报表设置" code="'+obj.tuid+'" >报表设置</button>';
+		}
+		obj.button=button;
+	},success: function () {
+		$(".edit_btn").unbind().on("click", function () {
+             if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+             	var url = "/action/ccms/module/report/edit?id="+$(this).attr("code");
+ 				gotoPage(url);
+             }
+         });
+		$(".delete_btn").unbind().on("click", function () {
+             var obthis = $(this);
+             $Dialog().confirm("确定要删除该条数据吗?", function () {
+                 if (obthis.attr("code") != undefined && obthis.attr("code") != "") {
+                 	var url = "/action/ccms/module/report/delete?id="+obthis.attr("code");
+ 					ajaxCall(url,{
+ 							method: "post",
+ 							progress: true,
+ 							dataType: "script",
+ 							success: function() {
+ 								$Dialog().notice("删除成功！",1000, function(){
+ 									window.location.reload();
+ 								});
+ 							}
+ 					});
+                 }
+             });
+         });
+         $(".set_btn").unbind().on("click",function(){
+ 			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+ 				var url = "${def:actionroot}/config/form?report_id="+$(this).attr("code");
+ 				gotoPage(url);
+ 			}
+ 		});
+         $(".setchar_btn").unbind().on("click",function(){
+ 			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+ 				var url = "${def:actionroot}/config/chart/form?report_id="+$(this).attr("code");
+ 				gotoPage(url);
+ 			}
+ 		});
+         $(".columns_btn").unbind().on("click",function(){
+ 			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+ 				var url = "/action/ccms/reportgen/crud?report_id="+$(this).attr("code");
+ 				gotoPage(url);
+ 			}
+ 		});
+         $(".copy_btn").unbind().on("click",function(){
+ 			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+ 				var url = "${def:context}/action/ccms/module/report/copy/form?report_id="+$(this).attr("code");
+ 				ccms.dialog.open({url:url,id:"copyForm",width:600,height:400});
+ 			}
+ 		});
+     	//配置导出
+ 		$(".export_btn").unbind().on("click",function(){
+ 			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+ 				var url = "${def:context}/action/ccms/module/subject/config/export/report?report_id="+$(this).attr("code");
+ 				window.open(url);
+ 			}
+ 		});
+         $(".setentity_btn").unbind().on("click", function(){
+ 			var obthis = $(this);
+ 			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+ 				var url="/action/workflow/authority/entity/crud?authority_id="+obthis.attr("code");
+ 				gotoPage(url);
+ 			}
+ 		});
+     	$("#openPicList").unbind().on("click", function(){
+ 			ccms.dialog.open({url:"${def:context}/action/admin/panel/picklist/imagen/form?random=" + Math.random(),id:"dialogPic",width:500,height:350});
+ 		});
+ 		$("#openServiceList").unbind().on("click", function(){
+ 			ccms.dialog.open({url:"${def:context}${def:actionroot}/service/crud?random=" + Math.random(),id:"dialogService",width:800,height:550});
+ 		});
+ 		$("#addnew_btn").unbind().on("click",function(){
+ 			var subject_id = "${fld:subject_id}";
+ 			var url = "/action/ccms/module/report/insertReport?subject_id="+subject_id;
+ 			gotoPage(url);
+ 		});
+ 		//查询条件搜索图标
+ 		$("#pickOpenNotCenter").unbind().on("click",function(){
+ 			var url = "${def:context}/action/ccms/pub/pick/table/crud?id=table_id&name=table_alias&pickId=pickOpen&subject_id="+ document.searchForm.subject_id1.value;
+ 			ccms.dialog.open({url:url,id:"pickOpen",width:800,height:600});
+ 		});
+ 		$("#pickClear").unbind().on("click",function(){
+ 			document.searchForm.table_id.value='';
+ 			document.searchForm.table_alias.value='';
+ 		});
+ 		
+     }}).initSearchBtn().searchData(1);
+     
+	typeOperate=function(t,n){
+		document.searchForm.group_type.value = t;
+		document.getElementById("typeTitleSpan").innerHTML = "&nbsp;&nbsp;-&nbsp;&nbsp;"+n;
+		search.searchData(1);
+	};
+});
+</script>
+</body>
+</html>
+

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="menu_id" type="integer" required="true" label="菜单编号" maxlen="10"/>
+	<parameter id="btn_name" type="varchar" required="true" label="按钮名称" maxlen="128"/>
+	<parameter id="btn_id" type="varchar" required="true" label="按钮id" maxlen="64"/>
+	<parameter id="uri" type="varchar" required="false" label="uri" maxlen="256"/>
+	
+	<custom-validator classname="dinamica.validators.DuplicatedKeyValidator" 
+		on-error-label="该菜单名称已使用" id="btn_name" sql="nodup-name.sql" />
+	
+	<custom-validator classname="dinamica.validators.DuplicatedKeyValidator" 
+		on-error-label="该菜单id已使用" id="btn_id" sql="nodup-id.sql" />
+</validator>

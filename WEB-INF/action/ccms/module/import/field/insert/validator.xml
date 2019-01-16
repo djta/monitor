@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+    <parameter id="tab_id" type="integer" required="true" label="业务表ID"/>
+    <parameter id="field_id" type="integer" required="true" label="字段ID"/>
+    <parameter id="field_code" type="varchar" required="false" label="字段名称"/>
+    <parameter id="col_name" type="varchar" required="false" label="电子表格列名"/>
+    <parameter id="update_mode" type="varchar" required="false" label="更新标识"/>
+    <parameter id="is_mandatory" type="varchar" required="false" label="是否非空标识"/>
+    <parameter id="is_virtual_type" type="varchar" required="false" label="是否为虚拟字段"/>
+    <parameter id="domain_namespace" type="varchar" required="false" label="命名空间名称"/>
+	<parameter id="field_type" type="varchar" required="true" label="字段类型"/>
+	<parameter id="field_length" type="varchar" required="true" label="字段长度"/>
+	<parameter id="show_order" type="varchar" required="false" label="字段顺序"/>
+	<parameter id="default_value" type="varchar" required="false" label="默认值"/>
+	<parameter id="fk_schema" type="varchar" required="false" label="外键schema"/>
+	<parameter id="fk_tab" type="varchar" required="false" label="外键关联表代码"/>
+	<parameter id="fk_fld_code" type="varchar" required="false" label="外键关联字段代码"/>
+	<parameter id="fk_fld_name" type="varchar" required="false" label="外键关联字段名"/>
+	<parameter id="remark" type="varchar" required="false" label="备注"/>
+	<parameter id="is_formula" type="varchar" required="false" label="是否为公式"/>
+	<parameter id="is_save_code" type="varchar" required="false" label="是否保存代码值"/>
+	<parameter id="regex_rule" type="varchar" required="false" label="正则表达式校验"/>
+	<parameter id="regex_tip" type="varchar" required="false" label="正则表达式校验失败提示"/>
+
+	<parameter id="show_align" type="varchar" required="false" label="数据预览时水平对齐类型"/>
+	
+	
+	<custom-validator 	
+			classname="dinamica.validators.ArrayNotEmptyValidator" 
+			on-error-label="请选择更新标识"
+			id="update_mode" parameter-name="update_mode" />
+	<custom-validator 	
+			classname="dinamica.validators.ArrayNotEmptyValidator" 
+			on-error-label="请选择是否非空标识"
+			id="is_mandatory" parameter-name="is_mandatory" />
+	 
+	<custom-validator 	
+		classname="dinamica.validators.DuplicatedKeyValidator" 
+		on-error-label="该导入字段已经存在，请重新选择"
+		sql="nodup-field_id.sql" id="field_id"/>
+	<custom-validator 	
+		classname="dinamica.validators.DuplicatedKeyValidator" 
+		on-error-label="业务表主键不能更新"
+		sql="nodup-tuid.sql" id="update_mode"/>
+	<custom-validator 	
+		classname="dinamica.validators.DuplicatedKeyValidator" 
+		on-error-label="如果不同字段对应Excel表中同一列则字段的类型必须一致"
+		sql="nodup-field_type.sql" id="col_name"/>
+</validator>
+        

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>节点跳转配置</title>
+${inc:/action/ccms/pub}
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">节点跳转信息</h2>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+			    <input type="hidden" id="tuid" name="tuid" value=""/>
+				<input type="hidden" id="node_id" name="node_id" value=""/>
+				<input type="hidden" id="next_node" name="next_node" value=""/>
+				<div class="form-group">
+					<table class="table table-bordered">
+						<tr align="center">
+							<th nowrap>删除</th>
+							<th nowrap>条件逻辑</th>
+							<th nowrap>左前缀</th>
+							<th nowrap>字段</th>
+							<th nowrap>操作符</th>
+							<th nowrap>条件值</th>
+							<th nowrap>右后缀</th>
+						</tr>
+						<tbody id="gridBody">
+							<tr align="center">
+								<td><img src="${def:context}/images/clear.gif" onclick="deleteRow(this.parentNode.parentNode.sectionRowIndex);" border="0" title="删除" /></td>
+								<td>
+									<select name="rule_logic">
+										<option value="AND">并且</option>
+										<option value="OR">或者</option>
+									</select>
+								</td>
+								<td><input type="text" name="left_prefix" size="4" maxlength="32" /></td>
+								<td>
+									<select name="rule_field">
+										<option value="">请选择</option>
+										<frows>
+											<option value="${fld:field_tuid}">${fld:field_name}</option>
+										</frows>
+									</select>
+								</td>
+								<td>
+									<select name="rule_operator">
+										<option value="=">等于</option>
+										<option value="like">包含</option>
+										<option value=">">大于</option>
+										<option value=">=">大于等于</option>
+										<option value="<">小于</option>
+										<option value="<=">小于等于</option>
+										<option value="<>">不等于</option>
+										<option value="in">任意满足</option>
+										<option value="not in">排除</option>
+										<option value="is not null">非空</option>
+										<option value="is null">为空</option>
+									</select>
+								</td>
+								<td><input type="text" name="rule_value" size="6" maxlength="32" /></td>
+								<td><input type="text" name="right_suffix" size="4" maxlength="32" /></td>
+							</tr>
+						</tbody>
+						<tr>
+							<th colspan="7" align="left">
+								<input type="button" value="添加" onclick="addRow();" class="btn_blue" />
+							</th>
+						</tr>
+					</table>
+				</div>
+				
+				<div class="form-group text-center">
+					<button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+					<button type="button" id="cancel_btn" class="btn btn-primary btn-md">取&nbsp;消</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button type="button" id="delete_btn" class="btn btn-primary btn-md" style="display:none;">删&nbsp;除</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}"/>
+
+<script LANGUAGE="JavaScript">
+var id = "${fld:id}";
+var actionObj = parent.getLineConfig(id);
+$(function(){
+	$("table").css("table-layout","auto");
+	if(typeof(actionObj.action_id) != "undefined"){
+		getAjaxCall("${def:actionroot}/edit?id="+actionObj.action_id, function(){
+			uri = "${def:actionroot}/update";
+			$("#delete_btn").unbind().on("click",function(){
+				getAjaxCall("${def:actionroot}/delete?id="+actionObj.action_id);
+			});
+			$("#delete_btn").show();
+		});
+	}else{
+		uri = "${def:actionroot}/insert";
+		addNewBackSetting();
+	}
+	
+	$("#save_btn").unbind().on("click",function(){
+		var node_id = document.formEditor.node_id.value;
+		var next_node = document.formEditor.next_node.value;
+		if(node_id != "" && next_node != "" && node_id == next_node){
+			alert("起始节点和跳转节点不能是同一个节点！");
+			return false;
+		}
+		return ajaxCall(uri, {
+			method : "post",
+			form : "formEditor",
+			button : "save_btn",
+			progress : true,
+			dataType : "script",
+			success : function() {
+			}
+		});
+	});
+	$("#cancel_btn").unbind().on("click",function(){
+		ccms.dialog.close();
+	});
+});
+
+function addRow(){
+	var b = document.getElementById("gridBody");
+	var x = b.insertRow(-1);
+	var d = b.rows[0];
+	x.align = d.align;
+
+	for (i=0;i<d.cells.length;i++){
+		var c = x.insertCell(-1);
+		c.innerHTML = d.cells[i].innerHTML;
+		c.align = d.cells[i].align;
+		c.valign = d.cells[i].valign;
+	}
+	
+	document.forms[0].rule_field[b.rows.length-1].options[0].selected=true;
+	document.forms[0].rule_operator[b.rows.length-1].options[0].selected=true;
+	document.forms[0].rule_value[b.rows.length-1].value = "";
+	document.forms[0].left_prefix[b.rows.length-1].value = "";
+	document.forms[0].right_suffix[b.rows.length-1].value = "";
+	document.forms[0].rule_logic[b.rows.length-1].options[0].selected=true;
+}
+function deleteRow(j){
+	var b = document.getElementById("gridBody");
+	if(b.rows.length <= 1){
+		alert("至少需要保留一条数据！");
+	}else{
+		b.deleteRow(j);
+	}
+}
+function setSelectValue(combo,comboValue){	   
+   var cantidad = combo.options.length;
+   for (i = 0; i < cantidad; i++) {
+      if (combo.options[i].value == comboValue) {
+         combo.options[i].selected = true;
+		 break;
+      }
+    }   
+}
+
+function addNewBackSetting(){
+	//给起始节点和结束节点赋值
+	var fromNode = parent.getNodeConfig(actionObj.from);
+	if(typeof(fromNode.node_id) == "undefined"){
+		alert("请先配置起始节点信息！");
+		ccms.dialog.close();
+	}else{
+		document.formEditor.node_id.value = fromNode.node_id;
+	}
+	var toNode = parent.getNodeConfig(actionObj.to);
+	if(typeof(toNode.node_id) == "undefined"){
+		alert("请先配置结束节点信息！");
+		ccms.dialog.close();
+	}else{
+		document.formEditor.next_node.value = toNode.node_id;
+	}
+}
+</script>
+
+</body>
+
+</html>

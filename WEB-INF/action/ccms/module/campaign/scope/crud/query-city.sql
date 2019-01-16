@@ -1,0 +1,1 @@
+    (SELECT domain_text_cn FROM t_domain WHERE namespace='Region' AND domain_value=region) AS region_name,

@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		项目起始页
+	</summary>
+	
+	<log>false</log>
+
+	<set-request-attribute id="help.msg" value="Online help for VIEW page..." />
+	<set-request-attribute id="header.title" value="导入管理" />
+	<set-request-attribute id="header.url" value='123'/>
+
+    <set-request-attribute id="formTitleAddNew" value='新增导入'/>
+    <set-request-attribute id="formTitleEdit" value='修改导入'/>
+    <set-request-attribute id="formTitleFilter" value='查询导入'/>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>		
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<print mode="form" recordset="_request" />
+	</output>
+
+</config>

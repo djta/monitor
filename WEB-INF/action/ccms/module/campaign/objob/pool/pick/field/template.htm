@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<link rel="stylesheet" type="text/css" href="${def:context}/default.css" />
+<title>Select Field Type</title>
+
+	<script language="javascript">
+	
+		var currStyle="";
+	
+		function rowOn(obj) {
+			currStyle = obj.className;
+			obj.className="hilite";
+		}
+		
+		function rowOff(obj) {
+			obj.className=currStyle
+		}
+		
+		function closePickList()
+		{
+			parent.pickClose();
+		}	
+		function selectItem(id)
+		{
+			var descripcion = document.getElementById(id);
+			parent.pickSelect(id, descripcion.innerHTML);
+			closePickList();
+		}	
+
+		/*
+		function addNew()
+		{
+			window.location='${def:context}${def:actionroot}/addnew';
+		}
+		*/
+	</script>
+
+</head>
+
+<body class="pickListBody">
+
+<center>
+
+	<table class="pickListHeader" style="width:100%;height:25px" cellspacing="0">
+	<tr>
+		<td width="95.1%">
+            <img class="tool" src="${def:context}/images/close.gif" title="Close" onclick="closePickList()" id="closeImg">&nbsp;
+		    选择字段类型
+			<span style="${fld:display}">
+				[<a href="javascript:addNew()">新增</a>]
+			</span>
+		</td>
+		<td align="right" style="padding-right:0px">
+			<img class="tool" src="${def:context}/images/close.gif" title="Cerrar"
+				onclick="closePickList()">
+		</td>
+	</tr>
+	</table>
+
+	<div class="pickListBody" style="width: 100%; height: 170px; overflow: auto;">
+
+	<!--START GRID-->
+	<table class="grid" width="100%" cellspacing="1">
+		
+		<rows>
+		<tr ${fld:_rowStyle} onmouseover="rowOn(this)" onmouseout="rowOff(this)" onclick="selectItem('${fld:id}')" >
+			<td style="font-size:9pt">
+				<span id="${fld:id}">${fld:description}</span>
+			</td>					
+		</tr>
+		</rows>
+		
+	</table>
+	
+	</div>
+	
+</center>
+	
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+/**�л�����**/
+.qieh {
+	overflow: hidden;
+	/* margin-top:-50px; */
+}
+
+.qieh .zw div.h3 {
+	text-align: center;
+	margin:10px 0px;
+	margin-bottom:20px;
+}
+
+.qieh .zw div.h3 span {
+	border: solid 1px #0079FF;
+	height: 38px;
+	line-height: 38px;
+	color: #0079FF;
+	display: inline-block;
+	padding: 0 13px;
+	margin-right: -1px;
+	font-size: 15px;
+	cursor: pointer;
+	font-family:microsoft yahei;
+}
+
+.qieh .zw div.h3 span.select {
+	background: #0079FF;
+	color: #fff;
+}
+
+.qieh .zw div.h3 span#djj {
+	border-radius: 5px 0 0 5px;
+}
+
+.qieh .zw div.h3 span#xswt {
+	border-radius: 0 5px 5px 0;
+}
+
+/**���ű�ǩ**/
+.hottag {
+	display: inline-block;
+	/* float:left; */
+	margin-left:20px;
+}
+
+.hottag div.h3 {
+	height: 60px;
+	line-height: 60px;
+	font-size: 20px;
+	color: #000;
+	font-family:microsoft yahei;
+}
+
+div.title a {
+color: #0079FF;
+font-size: 15px;
+font-family: Microsoft yahei;
+font-weight: bold;
+}

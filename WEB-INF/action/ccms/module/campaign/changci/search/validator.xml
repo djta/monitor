@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="campaign_id" type="varchar" required="false" label="活动代码" />
+	<parameter id="changci_name" type="varchar" required="false" label="场次名称" />
+</validator>
+

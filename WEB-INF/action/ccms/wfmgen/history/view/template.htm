@@ -1,0 +1,106 @@
+﻿<center>
+<!--data grid-->
+<table class="grid" width="100%" cellspacing="1">
+
+	
+	<tr>
+		<th NOWRAP>
+			操作
+		</th>
+		<th NOWRAP>
+			<a href="javascript:onclick=sortBy('wfm_name','query-wfm-history.sql')" >
+				工作流名称
+			</a>
+		</th>
+		<th NOWRAP>
+			<a href="javascript:onclick=sortBy('id','query-wfm-history.sql')" >
+				ID
+			</a>
+		</th>
+		<th NOWRAP>
+			<a href="javascript:onclick=sortBy('entry_id','query-wfm-history.sql')" >
+				工单号
+			</a>
+		</th>
+		<th NOWRAP>
+			<a href="javascript:onclick=sortBy('step_name','query-wfm-history.sql')" >
+				步骤名称
+			</a>
+		</th>
+		<th NOWRAP>
+			<a href="javascript:onclick=sortBy('action_name','query-wfm-history.sql')" >
+				操作名称
+			</a>
+		</th>
+		<th NOWRAP>
+			<a href="javascript:onclick=sortBy('owner','query-wfm-history.sql')" >
+				稿件处理人
+			</a>
+		</th>
+		<th NOWRAP>
+			<a href="javascript:onclick=sortBy('caller','query-wfm-history.sql')" >
+				拟稿人
+			</a>
+		</th>
+		<th NOWRAP>
+			<a href="javascript:onclick=sortBy('start_date','query-wfm-history.sql')" >
+				开始时间
+			</a>
+		</th>
+		<th NOWRAP>
+			<a href="javascript:onclick=sortBy('finish_date','query-wfm-history.sql')" >
+				结束时间
+			</a>
+		</th>
+		<th NOWRAP>
+			<a href="javascript:onclick=sortBy('status','query-wfm-history.sql')" >
+				状态
+			</a>
+		</th>
+	</tr>
+	
+	<rows>
+	<tr ${fld:_rowStyle}>
+		<td  align="center" NOWRAP>
+			${fld:reopen}
+		</td>		
+		
+		<td  align="center" NOWRAP>
+			${fld:wfm_name}
+		</td>		
+
+		<td  align="center" NOWRAP>
+			${fld:id}
+		</td>
+
+		<td  align="center" NOWRAP>
+			${fld:entry_id}
+		</td>
+
+		<td  align="center" NOWRAP>
+			${fld:step_name}
+		</td>
+		<td  align="center" NOWRAP>
+			${fld:action_name}
+		</td>
+		<td  align="center" NOWRAP>
+			${fld:owner}
+		</td>
+		<td  align="center" NOWRAP>
+			${fld:caller}
+		</td>
+		<td  align="center" NOWRAP>
+			${fld:start_date@yyyy-MM-dd HH:mm:ss}
+		</td>
+		<td  align="center" NOWRAP>
+			${fld:finish_date@yyyy-MM-dd HH:mm:ss}
+		</td>
+		<td  align="center" NOWRAP>
+			${fld:status}
+		</td>
+	</tr>
+	</rows>
+
+</table>
+${inc:/action/pagecontrols?is_can_query=inline}
+</center>

@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="authority_name" type="varchar" required="false" label="权限单元名称" />
+	
+	<custom-validator 	
+	classname="dinamica.validators.SQLPatternTransformer" 
+	on-error-label="SQL LIKE transformer."
+	parameter="authority_name" rule="contains" />
+	
+</validator>

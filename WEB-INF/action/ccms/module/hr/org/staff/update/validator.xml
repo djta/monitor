@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="tuid" type="varchar" required="true" label="tuid" maxlen="100" />
+	<parameter id="name" type="varchar" required="true" label="姓名"	maxlen="38" />
+	<parameter id="userlogin" type="varchar" required="true" label="userlogin" />
+	<parameter id="user_id" type="integer" required="true" label="user_id" />
+	<parameter id="sex" type="varchar" required="true" label="性别" maxlen="2" />
+	<parameter id="birthday" type="varchar" required="false" label="出生日期" />
+	<parameter id="address" type="varchar" required="false"	label="联系地址" maxlen="180" />
+	<parameter id="contace_info" type="varchar" required="false" label="联系电话" maxlen="32" />
+	<parameter id="card_no" type="varchar" required="false" label="卡号" maxlen="16" />
+	<parameter id="entry_date" type="date" required="false" label="入职日期" />
+	<parameter id="contract_from" type="date" required="false" label="合同起始日" />
+	<parameter id="contract_end" type="date" required="false" label="合同结束日" />
+	<parameter id="remark" type="varchar" required="false" label="备注" maxlen="256" />
+	<parameter id="salary" type="double" required="false" label="salary" />
+
+	<parameter id="email" type="varchar" required="false" label="Email"
+		maxlen="256" regexp="^([\w-]+\.)*?[\w-]+@[\w-]+\.([\w-]+\.)*?[\w]+$"
+		regexp-error-label="电子邮件格式错误, 请使用 xxxx@xxxxxx.xxx 格式" />
+
+	<parameter id="locale" type="varchar" required="false" label="默认语言" />
+	<parameter id="mobile" type="varchar" required="false" label="mobile" />
+	<parameter id="ext_num" type="varchar" required="false" label="ext_num" />
+
+	<parameter id="hc_id" type="varchar" required="false" label="hc_id" />
+	<parameter id="def_org_post_id" type="varchar" required="false" label="def_org_post_id" />
+
+	<parameter id="vipuserlogin" type="varchar" required="false" label="vipuserlogin" />
+	<parameter id="user_pinyin" type="varchar" required="false" label="英文姓名" maxlen="38" />
+	<parameter id="remind_type" type="varchar" required="true" label="提醒方式" maxlen="32"/>
+
+	<custom-validator classname="dinamica.validators.ArrayNotEmptyValidator"
+		on-error-label="请给用户选择技能" id="skill_id" parameter-name="skill_id" />
+</validator>

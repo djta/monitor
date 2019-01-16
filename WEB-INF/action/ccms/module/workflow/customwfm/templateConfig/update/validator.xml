@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<parameter id="wfm_id" type="integer" required="true" label="wfm_id"/>
+    <parameter id="table_id" type="integer" required="true" label="table_id"/>
+    <parameter id="wfm_name" type="varchar" required="true" label="wfm_name" />
+    <parameter id="logo_path" type="varchar" required="true" label="logo_path" />
+    <parameter id="wfm_status" type="varchar" required="false" label="wfm_status" />
+    <parameter id="is_template" type="varchar" required="true" label="is_template" />
+    <parameter id="remark" type="varchar" required="false" label="remark" />
+	<parameter id="wfm_type" type="varchar" required="false" label="wfm_type" />
+	<parameter id="xml_value" type="varchar" required="false" label="xml_value" />
+	<parameter id="node_help" type="varchar" required="false" label="node_help" />
+	
+	<custom-validator 	
+	classname="dinamica.validators.DuplicatedKeyValidator" 
+	on-error-label="该流程名已经存在，请换一个"
+	id="wfm_name" sql="dupkey.sql" />
+	
+</validator>
+
+

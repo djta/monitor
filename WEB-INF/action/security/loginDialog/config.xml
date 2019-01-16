@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config nodb="true">
+
+	<summary>
+		Login Dialog
+	</summary>
+
+	<log>false</log>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/login</content-type>
+		<expiration>0</expiration>
+	</output>
+</config>

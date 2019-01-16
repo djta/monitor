@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="name" type="varchar" required="false" label="名称" />
+	<parameter id="pickup_field" type="integer" required="true" label="pickup_field" />
+	<parameter id="pageNo" type="integer" required="false" label="pageNo" />
+	<parameter id="sort" type="varchar" required="false" label="sort" />
+	<parameter id="order" type="varchar" required="false" label="order" />
+	<parameter id="__page_size__" type="varchar" required="false" label="__page_size__" />
+	<custom-validator classname="dinamica.validators.SQLPatternTransformer" parameter="name" rule="contains" ifnull="%" />
+</validator>

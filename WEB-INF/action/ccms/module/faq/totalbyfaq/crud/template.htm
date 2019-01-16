@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>FAQ点击统计</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<ul class="nav nav-tabs">
+			<li><a href="javascript:;"  id="first">人员点击统计</a></li>
+			<li class="active"><a href="javascript:;" id="thend">题目点击统计</a></li>
+		</ul>
+		<ul class="nav nav-tabs" id="filter_list_div">
+			<li><a href="javascript:;" id="third">3天</a></li>
+			<li><a href="javascript:;" id="seven">一周</a></li>
+			<li><a href="javascript:;" id="thirty">一个月</a></li>
+			<li><a href="javascript:;" id="search">查询</a></li>
+		</ul>
+	</div>
+	<div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post"id="searchForm1" name="searchForm1">
+			<input name="sort" type="hidden" value="tuid" preserve="true" />
+			<input name="order" type="hidden" value="desc" preserve="true" />
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+			
+			<div class="form-group" style="display: none;" id="show_date">
+				<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 "></div>
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ">
+					<input type="text" class="form-control" id="fdate" name="fdate" placeholder="请选择起始日期" />
+				</div>
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+					<input type="text" class="form-control" id="tdate" name="tdate" placeholder="请选择结束日期" />
+				</div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+					<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+				</div>
+			</div>
+		</form>
+		<table class="table table-condensed" id="table">
+			<thead>
+				<tr>
+					<th class="_rowNumber" code="_rowNumber">序号</th>
+					<th class="show_name" code="show_name">FAQ标题</th>
+					<th class="total" code="total">点击次数</th>
+				</tr>
+			</thead>
+			<tbody id="datagrid1Template" style="display: none">
+				<tr>
+					<td class="text-center">#_recordNumber#</td>
+					<td class="text-center">#show_name#</td>
+					<td class="text-center">#total#</td>
+				</tr>
+			</tbody>
+			<tbody id="datagrid1">
+			</tbody>
+		</table>
+		<div class="pageDiv">
+			<ul class="pagination" data-target="datagrid1">
+			</ul>
+		</div>
+		<div class="form-group" style="display: none">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-offset-11 col-sm-offset-11 col-md-offset-11 col-lg-offset-11">
+				<button class="btn btn-primary btn-md" type="button" id="report_btn">导出</button>
+			</div>
+		</div>
+	</div>
+</div>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}"/>
+
+<SCRIPT LANGUAGE="JavaScript">
+$(document).ready(function() {
+	setActiveStatus("third");
+	onDaySearch(3);
+	
+	$("#third").unbind().on("click",function(){
+		$("#table").show();
+		$("#show_date").hide();
+		setActiveStatus("third");
+		onDaySearch(3);
+	});
+	$("#seven").unbind().on("click",function(){
+		$("#table").show();
+		$("#show_date").hide();
+		setActiveStatus("seven");
+		onDaySearch(7);
+	});
+	$("#thirty").unbind().on("click",function(){
+		$("#table").show();
+		$("#show_date").hide();
+		setActiveStatus("thirty");
+		onDaySearch(30);
+	});
+	 $("#search").unbind().on("click",function(){
+		$("#show_date").show();
+		$("#fdate").val("");
+		$("#tdate").val("");
+		setActiveStatus("search");
+	 	$("#table").hide();
+	});
+	 $("#first").unbind().on("click",function(){
+		var url="${def:context}/action/ccms/module/faq/totalbystaff/crud";
+		document.location.href = url;
+	});
+	$("#thend").unbind().on("click",function(){
+		var url="${def:context}/action/ccms/module/faq/totalbyfaq/crud";
+		document.location.href = url;
+	});
+	$("#report_btn").unbind().on("click",function(){
+		var url = "${def:context}${def:actionroot}/excel?random=" + Math.random();
+		window.open(url);
+	});
+	$Dialog().date($('#fdate'));
+	$Dialog().date($('#tdate'));
+});
+
+var s = "${def:date}";//取系统当前日期 
+searchObj=$Search({datagrid:"datagrid1",formId:"searchForm1",button:"search_btn",resetButton:"search_reset_btn",actionroot:"/action/ccms/module/faq/totalbyfaq",
+	success:function(){
+		$("#table").show();
+}}).initSearchBtn();
+function onDaySearch(flag){
+	//时间转换
+	var d = new Date(Date.parse(s.replace(/-/g,"/")));
+	if(flag == 3){
+		d.setDate(d.getDate()-3);
+	}else if(flag == 7){
+		d.setDate(d.getDate()-17);
+	}else if(flag == 30){
+		d.setMonth(d.getMonth()-1);
+	}
+	var begin = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+	document.searchForm1.fdate.value = begin;
+	document.searchForm1.tdate.value = s;
+	var url = "/action/ccms/module/faq/totalbyfaq/search";
+	searchObj.searchData(1);
+}
+
+function showFilterBefore(){
+	clearForm('formFilter');
+	showFilter();
+}
+
+//loadFilter(onDaySearch);
+
+function openExcel()
+{
+	var features = "height=500,width=800,status=no,toolbar=no,menubar=no,location=no,scrollbars=yes,resizable=yes";
+	var url = "${def:context}${def:actionroot}/excel?random=" + Math.random();
+	var w = window.open(url, null, features);
+}
+function setActiveStatus(name){
+	$("#filter_list_div").find("li").removeClass();
+	$("#"+name).parent().addClass("active");
+}
+//按人员点击统计
+function onSearchByStaff(){
+    var url = "${def:context}/action/cc/faq/totalbystaff/crud";
+    document.location.href = url;
+}
+
+//按FAQ被点统计
+function onSearchByFaq(){
+    var url = "${def:context}/action/cc/faq/totalbyfaq/crud";
+    document.location.href = url; 
+}
+</SCRIPT>
+</body>
+</html>
+

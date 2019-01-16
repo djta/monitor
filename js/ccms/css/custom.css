@@ -1,0 +1,281 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2015-8-11, 16:18:09
+    Author     : joe
+*/
+*{
+	margin:0;
+	padding:0;
+}
+
+/*tab菜单导航样式定义*/
+.close-tab {
+    font-size: 10px;
+    position:absolute;
+    right: 5px;
+    top: 15px;
+    padding-left: 5px;
+    z-index: 0;
+    cursor: hand;
+    cursor: pointer;
+    color: #94A6B0;
+}
+
+.topbar-collapse {
+    float:right;
+}
+
+/*
+   对话气泡
+   用法：使用.speech-bubble和.speech-bubble-DIRECTION类
+   <div class="speech-bubble speech-bubble-top">Hi there</div>
+*/
+ 
+.speech-bubble {
+  position: relative;
+  background-color: transparent;
+ 
+  /*width: 100px;*/
+  height: 42px;
+  line-height: 150px; /* 垂直居中 */
+  color: transparent;
+  text-align: center;
+  border-radius: 1px;
+}
+ 
+.speech-bubble:after {
+  content: '';
+  position: absolute;
+ 
+  width: 0;
+  height: 0;
+ 
+  border: 15px solid;
+}
+ 
+/* 箭头的位置 */
+.speech-bubble-top:after {
+  border-bottom-color: red;
+  left: 50%;
+  bottom: 100%;
+  margin-left: -15px;  
+}
+.speech-bubble-right:after {
+  border-left-color: red;
+ 
+  left: 100%;
+  top: 50%;
+  margin-top: -15px;   
+}
+ 
+.speech-bubble-bottom:after {
+  border-top-color: white;
+  top: 100%;
+  left: 50%;
+  margin-left: -15px;  
+}
+ 
+.speech-bubble-left:after {
+  border-right-color: red;
+  top: 50%;
+  right: 100%;
+  margin-top: -15px;   
+}
+
+.hideclass{
+  dispaly:none;
+}
+#tabManage i {
+    border-color: #bbcfeb #6183b1 #6183b1;
+	border-style: solid;
+    border-width: 5px;
+    display: block;
+    font-size: 0;
+    height: 0;
+    margin: 15px 7px 0 10px;
+    overflow: hidden;
+    width: 0;
+}
+
+.tabManage{
+	position:relative;
+}
+.tabManage ul{
+	border-radius: 0 0 5px 5px;
+    box-shadow: 0 2px 5px grey;
+    display: none;
+    left: 0;
+    position: absolute;
+    top: 38px;
+    width: 115px;
+	list-style:none;
+	cursor:pointer;
+	background-color:white;
+} 
+.tabManage:hover ul{
+	display:block;
+}
+.tabManage ul li{
+	background-color: transparent;
+    /**color: black;*/
+    height: 33px;
+    line-height: 33px;
+    padding-left: 40px;
+    width: 100%;
+}
+.tabManage ul li:hover{
+	background-color:#dad9d6;
+}
+#closeAll{
+	background-image: url("/images/close_all.png");
+    background-position: 10px center;
+    background-repeat: no-repeat;
+    background-size: auto 50%;
+    display: inline-block;
+}
+
+.tab_col_main ul li{
+	position: relative;
+	background: #6183b1 none repeat scroll 0 0;
+    height: 39px;
+    line-height: 32px;
+    margin-right: 1px;
+}
+.tab_col_main ul span{
+    border:5px solid transparent;
+    border-top-color:#ccc;
+    line-height: 27px;
+    position: absolute;
+    top:18px;
+} 
+
+.col_main ul li{
+	position: relative;
+    height: 39px;
+    line-height: 32px;
+    margin-right: 1px;
+}
+.col_main ul span{
+    line-height: 27px;
+    top:18px;
+} 
+
+.nav-bg{
+	background-color: #fff;
+	border-top:none; 
+	color:white;
+	position:relative;
+}
+
+.nav-bg a{
+	color:#b0b0b0;
+}
+
+.banner{
+	width:100%;
+	height:48px;
+	background-color: #1f4d8f;
+}
+/*tab菜单样式定义完*/
+
+/*加载等待样式开始*/
+/*定义关键帧*/
+@-webkit-keyframes opacityAnimation {
+  3% {  fill-opacity: 1; }
+  75% { fill-opacity: 0;}
+}
+@keyframes opacityAnimation {
+  3% {  fill-opacity: 1; }
+  75% {  fill-opacity: 0; }
+}
+
+.ajax-loading {
+	width: 100%;
+	height: 100%;
+	z-index:99999;
+	position: fixed;
+	_position: absolute;
+	top:0;
+	left:0;
+	background-color:rgba(0,0,0,0.5);
+}
+.ajax-loading-wait {
+	position: fixed;
+	_position: absolute;
+	width: 124px;
+	height: 124px;
+	overflow: hidden;
+	top:50%;
+	left:50%;
+	margin: -25px 0 0 -25px; 
+}
+.ajax-loading-wait svg {
+  	height: 80px;
+  	width: 80px;
+}
+.ajax-loading-wait svg g {
+	transform: scale(0.9) translate(7px, 7px);
+	-ms-transform: scale(0.9) translate(7px, 7px); 	/* IE 9 */
+	-moz-transform: scale(0.9) translate(7px, 7px); 	/* Firefox */
+	-webkit-transform: scale(0.9) translate(7px, 7px); /* Safari 和 Chrome */
+	-o-transform: scale(0.9) translate(7px, 7px); 	/* Opera */
+}
+.ajax-loading-wait svg g circle {
+  fill: dodgerblue;  	/*填充颜色dodgerblue */
+  fill-opacity: 1; 		/*填充透明度*/
+  -webkit-animation: opacityAnimation 1.2s linear infinite;
+  animation: opacityAnimation 1.2s linear infinite;  	/*使用简写属性，将动画与div元素绑定  名称 速度 速度曲线*/
+}
+/* 给circle 定位 负数-跳过n秒进入动画  css伪类*/
+.ajax-loading-wait svg g circle:nth-child(12n + 1) {
+  -webkit-animation-delay: -0.1s; /*动画开始之前的延迟。 */
+  animation-delay: -0.1s;
+}
+.ajax-loading-wait svg g circle:nth-child(12n + 2) {
+  -webkit-animation-delay: -0.2s;
+  animation-delay: -0.2s;
+}
+.ajax-loading-wait svg g circle:nth-child(12n + 3) {
+  -webkit-animation-delay: -0.3s;
+  animation-delay: -0.3s;
+}
+.ajax-loading-wait svg g circle:nth-child(12n + 4) {
+  -webkit-animation-delay: -0.4s;
+  animation-delay: -0.4s;
+}
+.ajax-loading-wait svg g circle:nth-child(12n + 5) {
+  -webkit-animation-delay: -0.5s;
+  animation-delay: -0.5s;
+}
+.ajax-loading-wait svg g circle:nth-child(12n + 6) {
+  -webkit-animation-delay: -0.6s;
+  animation-delay: -0.6s;
+}
+.ajax-loading-wait svg g circle:nth-child(12n + 7) {
+  -webkit-animation-delay: -0.7s;
+  animation-delay: -0.7s;
+}
+.ajax-loading-wait svg g circle:nth-child(12n + 8) {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+.ajax-loading-wait svg g circle:nth-child(12n + 9) {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+.ajax-loading-wait svg g circle:nth-child(12n + 10) {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+}
+.ajax-loading-wait svg g circle:nth-child(12n + 11) {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+.ajax-loading-wait svg g circle:nth-child(12n + 12) {
+  -webkit-animation-delay: -1.2s;
+  animation-delay: -1.2s;
+}

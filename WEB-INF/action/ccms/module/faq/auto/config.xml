@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		search auto complete
+	</summary>
+	
+	<log>false</log>
+	
+	<transaction>
+		<classname>com.ccms.faq.SearchAutoComplete</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+    <query>search.sql</query>
+	<query-limit>20</query-limit>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>json.txt</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>application/json</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

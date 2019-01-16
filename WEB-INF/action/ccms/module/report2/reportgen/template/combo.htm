@@ -1,0 +1,14 @@
+<td class="th20${fld:is_required_alias}">
+	<label class="control-label">${fld:field_name}</label>
+</td>
+
+<td class="td20left">
+	<input type="hidden" name="${fld:field_code_alias}_operator" value="${fld:filter_type}" preserve="true" />
+	<select class="form-control" name="${fld:field_code_alias}_filter" id="${fld:field_code_alias}_filter" ${fld:plugin_code} style="width:${fld:show_width}px">
+		<option value=""></option>
+		<rows>
+			<option value="${fld:domain_value}">${fld:domain_text}</option>
+		</rows>
+	</select>
+	${fld:plugin_control}
+</td>

@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="pid" type="integer" required="false" label="pid" />
+
+</validator>

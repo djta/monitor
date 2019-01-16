@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		Producto - Insertar registro
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>com.ccms.ParentChildDelete</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+
+	<!-- 
+		sql 是删除最外层主表的删除语句  
+		id 为最外层主表的输入参数值 
+		child 为子表元素名（有多个平级的可以用逗号隔开，注意平级的元素名称不能重复）
+	-->
+	<group-master sql="delete.sql" id="id" child="group-field,group-form">
+		<group-field table="t_field" key="tuid" pkey="table_id">
+		</group-field>
+
+		<!-- table 是当前表表名 key 当前表主键名 pkey 父表主键名  -->
+		<group-form table="t_form" key="tuid" pkey="table_id" child="group-excel,group-filter,group-grid,group-item,group-pdf,group-show">
+			<group-excel table="t_form_excel_field" key="tuid" pkey="form_id">
+			</group-excel>
+			<group-filter table="t_form_filter_field" key="tuid" pkey="form_id">
+			</group-filter>
+			<group-grid table="t_form_grid_field" key="tuid" pkey="form_id">
+			</group-grid>
+			<group-item table="t_form_item" key="tuid" pkey="form_id">
+			</group-item>
+			<group-pdf table="t_form_pdf_field" key="tuid" pkey="form_id">
+			</group-pdf>
+			<group-show table="t_form_show_field" key="tuid" pkey="form_id">
+			</group-show>
+		</group-form>
+    </group-master>
+
+</config>

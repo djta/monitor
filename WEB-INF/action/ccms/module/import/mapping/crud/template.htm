@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<!--COMMON :include style and javascript code-->
+${inc:/action/pub/common}
+
+<title>数据映射管理</title>
+
+</head>
+
+<body onmouseup="hidInputValidatorTip(3);">
+<!--a name="A0" id="A0"></a-->
+
+
+<!--COMMON HEADER-->
+${inc:/action/pub/header}
+  <h2 class="titleall">查询结果</h2>
+<div class="content">
+  <div class="main">
+  
+<center>
+
+<!--filter form-->
+<div id="divFilter" style="display:none;width:100%">
+</div>
+
+<!--addnew/edit form-->
+<div id="divEditor" style="display:none;width:100%">
+</div>
+
+<!--insert/update response-->
+<div id="divEditorResponse" style="display:none;width:100%">
+</div>
+
+<!--grid view response-->
+<div id="response" style="display:none;width:100%">
+</div>
+
+<!--progress indicator-->
+<br>
+<div id="divStatus" class="alert" style="text-align:left; display:none;color:gray;width:150px;font-weight:bold;font-family:Arial">
+	<img src="${def:context}/images/progress.gif"> 请稍候...
+</div>
+
+<!--show linked grid-->
+<iframe id="detail" name="detail" marginwidth="0" scrolling="no" frameborder="0" style="height:0%;width:100%;visibility:hidden">
+</iframe>
+
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}">
+
+</center>
+</div>
+</div>
+</body>
+
+</html>
+
+<SCRIPT LANGUAGE="JavaScript">
+
+//字段校验
+function checkFields(){
+    return true;
+}
+
+loadEditor();
+loadFilter(search);
+
+function setValueForParam(id,nametext,namespace){
+	document.formEditor.mapping_value.value = id;
+	document.formEditor.mapping_text.value = nametext;
+	document.formEditor.namespace_mapping.value = namespace;
+}
+</SCRIPT>

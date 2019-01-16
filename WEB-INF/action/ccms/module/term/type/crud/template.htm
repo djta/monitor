@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/ccms/pub}
+<title>问卷类型信息</title>
+</head>
+<body>
+<!-- 查询 -->
+<div class="panel panel-default col_mainInner">
+   	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">问卷类型信息</h2>
+    </div>
+    <div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post" id="searchForm">
+			<input id="term_id" name="term_id" type="hidden" value="${fld:term_id}"  preserve="true" />
+			<input name="sort" type="hidden" value="show_order" preserve="true"/> 
+			<input name="order" type="hidden" value="desc" preserve="true"/> 
+			<input name="pageNo" type="hidden" value="" preserve="true"/>
+			<input name="totalPages" type="hidden" value="" preserve="true"/>
+			<div class="form-group">
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+					<input type="text" class="form-control" name="type_name" placeholder="请输入类型名称" />
+				</div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+					<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+					<button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+				</div>
+			</div>
+		</form>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>操作</th>
+					<th></th>
+					<th class="sortable" code="term_name">问卷名称</th>
+					<th class="sortable" code="type_name">类型名称</th>
+					<th class="sortable" code="show_order">序号</th>
+					<th class="sortable" code="item_num">题目数量</th>
+					<th class="sortable" code="tags">标签</th>
+					<th class="sortable" code="remark">备注</th>
+				</tr>
+			</thead>
+			<tbody id="datagridTemplate" style="display:none">
+				<tr>
+					<td align="center">
+						<button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">编辑</button>
+						<button class="btn btn-primary btn-md delete_btn" type="button" code="#tuid#">删除</button>
+					</td>
+					<td align="center">
+						<button class="btn btn-primary btn-md setTermItem_btn" type="button" code="#tuid#" >题目设置</button>
+					</td>
+					<td align="center">#term_name#</td>
+					<td align="center">#type_name#</td>
+					<td align="center">#show_order#</td>
+					<td align="center">#item_num#</td>
+					<td align="center">#tags#</td>
+					<td align="center">#remark#</td>
+				</tr>
+			</tbody>	
+			<tbody id="datagrid"></tbody>
+		</table>
+		<div class="pageDiv">
+			<ul class="pagination">
+			</ul>
+		</div>
+	</div>
+</div>
+
+<!-- 编辑 -->
+<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="formTitle">新增问卷类型</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+					<input type="hidden" name="tuid" id="tuid" value="" />
+					<input name="term_id" type="hidden" value="${fld:term_id}"  preserve="true" />
+					<div class="row clearfix">
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">类型名称</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">						
+								<input id="type_name" class="form-control" name="type_name" type="text" size="35" value="" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">显示顺序</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input id="show_order" class="form-control" name="show_order" type="text" size="35" value="" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">题目数量</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input id="item_num" class="form-control" name="item_num" type="text" size="35" value="" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">标签</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input id="tags" class="form-control" name="tags" type="text" size="35" value="" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">备注</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<textarea type="text" class="form-control" id="remark" name="remark" value="" maxlength="512" ></textarea>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+					<button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+					<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}">
+<script language="javascript">
+$(document).ready(function() {
+	var search=null;
+	var obj = $Crud({
+		formId:"formEditor",
+		button:"save_btn",
+		insertBack:function(){
+			search.searchData(1);
+		},
+		updateBack:function(){
+			search.searchData(1);
+		},
+		deleteBack:function(){
+			search.searchData(1);
+		},
+		addNewBack:function(){
+			$("#formTitle").html("新增问卷类型");
+		},
+		editBack:function(){
+			$("#formTitle").html("修改问卷类型");
+		},
+		validate:function(){
+			var flag=$("#formEditor").validate({
+				rules: {
+					type_name: {
+						required: true
+					}
+				},
+				rules: {
+					show_order: {
+						required: true
+					}
+				},
+				messages: {
+					type_name:{
+						required: "请输入类型名称",
+							rangelength: "描述长度为1到128位"
+					},
+				show_order:{
+						required: "请输入显示顺序",
+							rangelength: "描述长度为1到128位"
+					}
+				}
+			});
+			return flag;
+		},
+		check:function(){
+			return true;
+		}
+	}).init();
+	this.search=search;
+	search=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		$(".edit_btn").unbind().on("click", function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				obj.edit({tuid:$(this).attr("code")});
+			}
+		});
+		$(".delete_btn").unbind().on("click",function(){
+			var obthis = $(this);
+			$Dialog().confirm("确定要删除吗？",function(){
+				if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+					var url = "/action/ccms/module/term/type/delete?tuid="+obthis.attr("code");
+					ajaxCall(url,{
+						method: "post",
+						progress: true,
+						dataType: "script",
+						success: function() {
+							search.searchData(1);
+						}
+					});
+				}
+			});
+		});
+		$(".setTermItem_btn").unbind().on("click",function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				var type_id = $(this).attr("code");
+				var url = "/action/ccms/module/term/item/crud?type_id="+type_id;
+				gotoPage(url);
+			}
+		});
+	}}).initSearchBtn().searchData(1);
+});
+</script>
+</body>
+</html>

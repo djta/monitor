@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>位置信息</title>
+<script language="JavaScript" type="text/javascript" src="${def:context}/action/pub/dtree"></script>
+${inc:/action/project/fitness/home/pub}
+<style type="text/css">
+.dtree a{
+color: white  !important;
+}
+</style>
+</head>
+<body>
+	<div class="dialogbg" >
+		<header class="header-default">
+						位置信息
+		</header>
+		<div class="panel-body col_main_body dtree">
+			<form name="treeForm" id="searchForm" class="form-horizontal" ole="form" method="post">
+				<input name="org_code" type="hidden" maxlength="100" value="" />
+			</form>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog" style="display:none;">
+			<div class="modal-dialog basic-information dialogbg">
+			<header class="header-default">
+				<span id="formTitle">新增</span>
+				<span class="header-close" onclick="$('.close').click()"></span> <!--关闭按钮无效，调用函数触发旧按钮点击事件-->
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style='display:none;'>&times;</button>
+			</header>
+			<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+				<input type="hidden" name="tuid" id="tuid" value="" preserve="true" />
+				<input type="hidden" id="pid" name="pid" value="" preserve="true" />
+				<input type="hidden" id="p_org_path" name="p_org_path" value="" preserve="true" />
+          		<div class="modal-body b-i-main">
+					<nav>
+						<li>
+							<label style="width: 120px;">位置名称：</label>
+							<input type="text" id="org_name" name="org_name" value="" maxlength="80" placeholder="位置名称"/>
+						</li>
+						
+						<li>
+							<label style="width: 120px;">位置代码：</label>
+							<input type="text" id="org_code" name="org_code" value="" maxlength="80" placeholder="位置代码"/>
+						</li>
+
+						<li>
+							<label style="width: 120px;">Logo图片：</label>
+							<img id="upload_image" src="" onclick="uploadImg()"/>
+							<button type="button" id="upload_btn" onclick="uploadImg()">上传</button>
+							<input type="hidden" id="upload_id" name="upload_id" />
+						</li>
+						<li>
+							<label style="width: 120px;">运营时间：</label>
+							<input type="text" id="business_hours_begin" name="business_hours_begin" readonly value="" placeholder="运营时间"/>
+							<label>至</label>
+							<input type="text" id="business_hours_end" name="business_hours_end" readonly value="" placeholder="运营时间"/>
+						</li>
+						<li>
+							<label style="width: 120px;">联系电话：</label>
+							<input type="text" id="contact_phone" name="contact_phone" value="" placeholder="电话"/>
+						</li>
+						<li>
+							<label style="width: 120px;">地址：</label>
+							<select id="province" name="province">
+								<option value="">请选择省</option>
+							</select>
+							<label></label>
+							<select id="city" name="city">
+								<option value="">请选择市</option>
+							</select>
+						</li>
+	
+						<li>
+							<label style="width: 120px;">顺序：</label>
+							<input type="text" id="show_order" name="show_order" value="" placeholder="顺序"/>
+						</li>
+						<li class="to100w" style="margin-left: 6%">
+							<label>备注：</label>				
+					    	<textarea rows="3" placeholder="备注" class="my-textarea" name="remark" id="remark"></textarea>
+						</li>
+					</nav>
+				</div>
+			</form>
+			<footer class="footer-default">
+			  <button type="button" id="save_btn" >确&nbsp;定</button>
+			  <button type="button" id="reset_btn" >重&nbsp;置</button>
+			</footer>
+		</div>
+	</div>
+
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+	<script language="javascript">
+		function addFirstNode(){
+			clearForm("formEditor");
+			document.formEditor.tuid.value = "";
+			$("#pid").val("0");
+			$("#p_org_path").val("");
+			$("#org_type").val("");
+			$("#org_type_name").val("");
+			$("#modalAddnew").modal();
+		}
+		function OrgClass() {
+			var obthis = this;
+			this.getOrgTypeName = function(org_type){
+				return "";
+			}
+			this.addOrg = function(org_id, org_path, org_type) {
+				clearForm("formEditor");
+				document.formEditor.tuid.value = "";
+				$("#pid").val(org_id);
+				$("#p_org_path").val(org_path);
+				org_type = parseInt(org_type)+1;
+				$("#org_type").val(org_type);
+				$("#org_type_name").val(obthis.getOrgTypeName(org_type));
+				$("#modalAddnew").modal();
+			};
+			this.init = function() {
+				$(".org_btn").unbind().on("click", function() {
+				});
+				var obj = $Crud({
+					formId : "formEditor",
+					button : "save_btn",
+					insertBack : function() {
+						window.location.reload();
+					},
+					updateBack : function() {
+						window.location.reload();
+					},
+					deleteBack : function() {
+						
+					},
+					validate : function() {
+						var flag = $("#formEditor").validate({
+							rules : {
+							},
+							messages : {
+							}
+						});
+						return flag;
+					},
+					check : function() {
+						return true;
+					}
+				}).init();
+				$(".add_btn").unbind().on("click", function() {
+					var org_id = $(this).attr("code");
+					var org_path = $(this).attr("path");
+					var org_type = $(this).attr("type");
+					$("#upload_image").attr("src","");
+					obthis.addOrg(org_id, org_path, org_type);
+				});
+				$(".edit_btn").unbind().on("click",function() {
+					if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+						obj.edit({id : $(this).attr("code")});
+					}
+				});
+				$(".delete_btn").unbind().on("click",function() {
+					var obthis = $(this);
+					$Dialog().confirm("确定要删除该条数据吗?",function() {
+						if (obthis.attr("code") != undefined && obthis.attr("code") != "") {
+							obj.del({id : obthis.attr("code")});
+						}
+					});
+				});
+
+				// 帐号管理
+				$(".staff_btn").unbind().on("click",function(){
+					if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+						var url = "${def:context}/action/project/fitness/system/staff/crud?org_id="+$(this).attr("code");
+						ccms.dialog.open({url:url,id:"orgstaff"});
+					}
+				});
+				// 帐号管理
+				$(".device_btn").unbind().on("click",function(){
+					if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+						alert("关联设备");
+					}
+				});
+			};
+		}
+
+		var orgClass = null;
+		var d = null;
+		function webinit() {
+			//初始化树
+			d = new dTree('d');
+			var org_title = "";
+			org_title += "&nbsp;&nbsp;<a href='javascript: d.openAll();'>展开</a> | <a href='javascript: d.closeAll();'>合并</a> | <a href='javascript: addFirstNode()'>添加</a>";
+			//org_title += "&nbsp;&nbsp;<a href='javascript:void(0)' title='添加' class='add_btn' code='0' path='12' ><span class='glyphicon glyphicon-plus'></span></a>";
+
+			d.add(0, -1, org_title);
+
+			var org_name = "";
+			var buttonAddNode = "";
+			var buttonEdit = "";
+			var buttonDelete = "";
+			var allBtn = "";
+
+			<combo-orgs>
+			org_name = "<a href='javascript:void(0)' class='org_btn' code='${fld:org_id}' >${fld:org_name@js}</a>";
+			buttonAddNode = "&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' class='add_btn' title='添加' code='${fld:org_id}' path='${fld:org_path@js}' type='${fld:org_type}'>添加</a>&nbsp;&nbsp;&nbsp;";
+			buttonEdit = '<a href="javascript:void(0)" class="edit_btn" title="修改" code="${fld:org_id}"><img src="${def:context}/js/project/fitness/image/SVG/nav/xiugai.svg" title="修改" /></a>&nbsp;&nbsp;&nbsp;';
+			buttonDelete = '<a href="javascript:void(0)" class="delete_btn" title="删除" code="${fld:org_id}"><img src="${def:context}/js/project/fitness/image/SVG/nav/shanchu.svg" title="删除" /></a>';
+			buttonDelete += "&nbsp;&nbsp;&nbsp;&nbsp<a href='javascript:void(0)' title='设备管理'  class='device_btn' code='${fld:org_id}'>设备管理</a>&nbsp;&nbsp;&nbsp;&nbsp<a href='javascript:void(0)' title='帐号管理' class='staff_btn' code='${fld:org_id}'>帐号管理</a>";
+			allBtn = buttonAddNode + buttonEdit + buttonDelete;
+			d.add("${fld:org_id}", "${fld:pid}", org_name + allBtn);
+			</combo-orgs>
+
+			$("#searchForm").append(d.toString());
+
+			orgClass = new OrgClass();
+			orgClass.init();
+			
+			ccms.dialog.time($("#business_hours_begin"));
+			ccms.dialog.time($("#business_hours_end"));
+		}
+		function uploadImg(){
+			var url = "${def:context}/action/project/fitness/attachment/crud?table_code=hr_org&pk_value=";
+			ccms.dialog.open({url:url,id:"upload__image",width:500,height:500});
+		}
+		function uploadOk(id){
+			var url = "${def:context}${def:actionroot}/setimage";
+			ajaxCall(url,{
+				method: "get",
+				progress: false,
+				form: "formEditor",
+				dataType: "script",
+				success: function() {
+				}
+		    });
+		}
+		$(document).ready(function() {
+			webinit();
+			searchSelectInit($("#province,#city,#district"));
+		 	getSelectDomain("province", "Province");
+			$("#province").change(function(){
+			    getSelectDomain("city", "City", "Province", $(this).val());
+			});
+		});
+	</script>
+</body>
+</html>

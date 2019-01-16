@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>自定义工作流</title>
+</head>
+<body>
+<!-- 编辑 -->
+<div class="panel panel-default col_mainInner"style="overflow: hidden">
+	<div class="panel-heading text-center">
+		<h1 class="panel-title">新增流程</h1>
+	</div>
+	<div class="panel-body col_main_body">
+		<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+			<input type="hidden" id="tuid" name="tuid" value="" />
+			
+			<div class="row clearfix">
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 text-right required">流程名称</label>
+					<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+						<input type="text" class="form-control" maxlength="54" id="wfm_name" name="wfm_name" value="" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 text-right required">模板</label>
+					<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+						<select name="template_id" id="template_id" class="form-control">
+						   <rows>
+							   <option value="${fld:tuid}">
+								  ${fld:wfm_name}
+							   </option>
+						   </rows>
+					  	</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 text-right required">流程Logo</label>
+					<div class="col-xs-5 col-sm-4 col-md-4 col-lg-4">
+						<input type="text" name="logo_path" id="logo_path" readonly  class="form-control"/> 
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+						<img src="${def:context}/images/search.gif" style="cursor: pointer;" id="openPicList" title="上传" /> 
+						<img src="${def:context}/images/preView.gif" style="cursor: pointer;" id="lookImg" title="预览" />
+						<img src="${def:context}/images/clear.gif" style="cursor: pointer;" onclick="document.formEditor.logo_path.value='';"
+							title="清除选定值" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 text-right">备注</label>
+					<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+						<textarea id="remark" name="remark" class="form-control" rows="2"></textarea>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<button type="button" id="save_btn" class="btn btn-primary btn-md">保&nbsp;存</button>
+			<button type="button" class="btn btn-primary btn-md btn_cancel">取&nbsp;消</button>
+	    </div>
+    </div>
+</div>
+
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".btn_cancel").unbind().on("click",function(){
+		//parent.$("#_dlgwfmNameCopy").modal("hide");
+		ccms.dialog.close();
+	});
+	$("#save_btn").unbind().on("click",function(){
+		return ajaxCall("${def:actionroot}/copy",{
+			method:"post", 
+			button:"save_btn", 
+			form:"formEditor",
+			success:function(){
+				window.parent.location.reload();
+			}
+		});
+	});
+	$("#openPicList").unbind().on("click", function(){
+		var url = "${def:context}/action/ccms/attachment/crud?id=logo_path&pickId=dialogPic";
+		ccms.dialog.open({url:url,id:"dialogPic",width:800,height:500});
+	});
+	$("#lookImg").unbind().on("click",function(){
+		if($("#logo_path").val()==''){
+			$Dialog().notice("请选择图片",1200);
+			return;
+		}
+		var id="${def:context}/action/ccms/attachment/preView?id="+encodeURIComponent($("#logo_path").val());
+		ccms.dialog.open({url:id,id:"yulan",width:600,height:400});
+	});
+});
+</script>
+</body>
+</html>

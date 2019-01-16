@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/project/fitness/home/pub}
+<title>照片上传</title>
+<style type="text/css">
+	#uploadform .photo {width:540px;height:400px;text-align:center;}
+	#uploadform div {text-align:center;}
+	.none {display:none;}
+</style>
+</head>
+<body class="dialogbg">
+	<nav id="menuTabList" class="am-tabs-nav am-nav am-nav-tabs r-tab">
+		<li class="am-active"><a class="three-none" href="javascript:void(0)">拍照</a></li>
+		<li><a class="three-none" href="javascript:void(0)">上传照片</a></li>
+	</nav>
+	
+	<div id="container">
+		<form name="uploadform" id="uploadform" method="post">
+			<input type="hidden" id="pk_value" name="pk_value" value="${fld:pk_value}" />
+			<input type="hidden" id="table_code" name="table_code" value="${fld:table_code}" />
+			<input type="hidden" id="imgid" name="imgid" value="${fld:imgid}" />
+			<input type="hidden" id="imgbest" name="imgbest" />
+			
+			<div id="shotDiv" class="photo none">
+				<video width="540" height="400"></video>
+			</div>
+			<div id="previewDiv" class="photo none">
+				<img width='540' height='400' id="imgstr" />
+			</div>
+			<canvas class="hide" width="540" height="400" id="mycanvas"></canvas><br/>
+			<div>
+				<button class="none" id="picbtn" type="button">拍摄</button>&nbsp;&nbsp;&nbsp;
+				<button class="none" id="picresetbtn" type="button">重拍</button>&nbsp;&nbsp;&nbsp;
+				<button id="uploadbtn" type="button">上传</button>
+			</div>
+		</form>
+	</div>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+	<script type="text/javascript">
+		$(document).ready(function() {
+			/**$("#uploadform").find("div").css("margin-left", ($("#container").width() - 540)/2+"px"); */
+			var shotnum = 0;
+			var fileid = "";
+			<photo-rows>
+			fileid = "${fld:tuid}";
+			</photo-rows>
+			if( "" != fileid && "undefined" != fileid){
+				document.getElementById("imgstr").src = '${def:context}/action/ccms/attachment/download?id='+fileid+'&&type=1';
+				parent.$("#${fld:imgid}").attr("src", "${def:context}/action/project/fitness/util/attachment/download?tuid="+fileid+"&type=1");
+				$("#previewDiv").removeClass("none");
+				$("#picresetbtn").removeClass("none");
+			}else{
+				$("#shotDiv").removeClass("none");
+				$("#picbtn").removeClass("none");
+			}
+
+			var video = document.querySelector('video');
+			var canvas = document.querySelector('canvas');
+
+			// video捕获摄像头画面
+			/**navigator.getUserMedia ({
+				video : true
+			}, success, error);*/
+			navigator.myGetUserMedia = navigator.getUserMedia||navigator.webkitGetUserMedia||navigator.mozGetUserMedia||navigator.msGetUserMedia;
+		    navigator.myGetUserMedia({video : true}, function(stream){
+		        window.URL = window.URL||window.webkitURL||window.mozURL||window.msURL;
+		        video.src = window.URL.createObjectURL(stream);
+		        video.play();
+		    }, error);
+
+			function success(stream) {
+				video.src = window.webkitURL.createObjectURL(stream);
+				video.play();
+			}
+
+			function error(err) {
+				ccms.dialog.notice('video error: ' + err, 2000);
+			}
+
+			//canvas
+			var context = canvas.getContext('2d');
+			// 拍摄
+			$("#picbtn").unbind().click(function() {
+				shotnum++;
+				context.drawImage(video, 0, 0, 540, 400);
+				var canvas = document.getElementById("mycanvas");
+				document.getElementById("imgstr").src = canvas.toDataURL("image/jpg");
+				document.getElementById("imgbest").value = canvas.toDataURL("image/jpg");
+				$("#shotDiv").addClass("none");
+				$("#previewDiv").removeClass("none");
+				$("#picbtn").addClass("none");
+				$("#picresetbtn").removeClass("none");
+			});
+			// 重拍
+			$("#picresetbtn").unbind().click(function() {
+				$("#previewDiv").addClass("none");
+				$("#shotDiv").removeClass("none");
+				$("#picresetbtn").addClass("none");
+				$("#picbtn").removeClass("none");
+				document.getElementById("imgstr").src = "";
+				document.getElementById("imgbest").value = "";
+			});
+			// 上传
+			$("#uploadbtn").unbind().click(function() {
+				if( shotnum <= 0 ){
+					ccms.dialog.notice("请先完成拍摄后再上传!");
+					return false;
+				}else{
+					$("#uploadform").attr("action", "${def:context}${def:actionroot}/insert");
+					$("#uploadform").submit();
+				}
+			});
+			// 页面跳转
+			$("#menuTabList").find("li").eq(1).unbind().click(function() {
+				location.href = "${def:context}/action/project/fitness/util/attachment/upload/crud"
+				+"?pk_value=${fld:pk_value}&table_code=${fld:table_code}&imgid=${fld:imgid}";
+			});
+		});
+	</script>
+</body>
+</html>

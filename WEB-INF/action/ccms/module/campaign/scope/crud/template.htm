@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/ccms/pub}
+<title>活动信息</title>
+</head>
+<body>
+	<!--addnew/edit form-->
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="formTitle">新增</h4>
+				</div>
+				<div class="modal-body">
+					<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+						<input type="hidden" id="vc_code" name="vc_code" value="" />
+
+						<div class="form-group">
+							<input type="hidden" id="campaign_id" name="campaign_id" value="${fld:tuid}" maxlength="32" preserve="true" /> 
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">活动</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input readonly="readonly" type="text" class="form-control" id="campaign_name" name="campaign_name" value="${fld:campaign_name}" maxlength="80" preserve="true" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">活动开始日期</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input type="text" class="form-control" id="start_date" name="start_date" value="" maxlength="80" readonly />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">活动结束日期</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input type="text" class="form-control" id="end_date" name="end_date" value="" maxlength="80" readonly />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">活动范围类型</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7" id="data">
+								<input type="radio" name="scope_type" value="1"/>全国
+								<input type="radio" name="scope_type" value="2"/>大区
+								<input type="radio" name="scope_type" value="3"/>省
+								<input type="radio" name="scope_type" value="4"/>市
+								<input type="radio" name="scope_type" value="5"/>经销商
+							</div>
+						</div>
+
+						<div id="areaSpan" class="form-group" style="display: none">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">大区</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<select class="form-control" name="brand1" id="brand1" onchange="areaOnclick(this.value)">
+									<option value="">请选择大区</option>
+									<rows-brand1-select>
+									<option value="${fld:brand_value}">${fld:brand_name}</option>
+									</rows-brand1-select>
+								</select><br/>
+								<span id="areaListSpan"></span>
+							</div>
+						</div>
+
+						<div id="provinceSpan" class="form-group" style="display: none">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">省</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<option value=""></option>
+								<rows-province-checkbox>
+								<input type="checkbox" name="province" value="${fld:province_value}"/>${fld:province_name} 
+								</rows-province-checkbox>
+							</div>
+						</div>
+
+						<div id="citySpan" class="form-group" style="display: none">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">市</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<select id="province3" name="province3" onchange="cityOnclick(this.value)">
+				            		<option value=""></option>
+				            		<rows-province1-select>
+				            		<option value="${fld:province_value}">${fld:province_name}</option>
+				            		</rows-province1-select>
+				            	</select><br/>
+								<span id="cityListSpan"></span>
+							</div>
+						</div>
+
+						<div id="dealerSpan" class="form-group" style="display: none">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">经销商</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<select class="form-control" id="brand2" name="brand2" onchange="dealerOnclick(document.getElementById('province2').value,document.getElementById('brand2').value)">
+									<option value=""></option>
+									<rows-brand2-select>
+									<option value="${fld:brand_value}">${fld:brand_name}</option>
+									</rows-brand2-select>
+								</select><br/>
+								<select class="form-control" id="province2" name="province2" onchange="dealerOnclick(document.getElementById('province2').value,document.getElementById('brand2').value)">
+									<option></option>
+									<rows-province2-select>
+									<option value="${fld:province_value}">${fld:province_name}</option>
+									</rows-province2-select>
+								</select><br/>
+								<span id="dealerListSpan"></span>
+							</div>
+						</div>
+
+						<div id="brandSpan" class="form-group" style="display:none;">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">品牌</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+				            	<rows-brand-checkbox>
+				            	<input type="checkbox" name="brand" value="${fld:brand_value}" class="form-control" />${fld:brand_name}
+				            	</rows-brand-checkbox>
+							</div>
+						</div>
+						
+						<div id="seriesSpan" class="form-group" style="display:none;">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">车系</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<select id="brand2" name="brand2" onchange="brandOnclick(this.value)">
+				            		<option value=""></option>
+				            		<rows-brand-select>
+				            		<option value="${fld:brand_value}">${fld:brand_name}</option>
+				            		</rows-brand-select>
+				            	</select>
+				            	<br/>
+				            	<span id="seriesListSpan"></span>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+						<button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+						<button type="button" id="reset_btn" class="btn btn-primary btn-md">重&nbsp;置</button>
+						<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">活动范围信息</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm">
+
+				<input name="sort" type="hidden" value="id" preserve="true" /> 
+				<input name="order" type="hidden" value="desc" preserve="true" /> 
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" /> 
+				<input name="campaign_id" type="hidden" value="${fld:tuid}" />
+				<div class="form-group">
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+						<label style="margin-left: 0px" style="display:inline-block">活动类型范围</label> 
+						<select class="form-control" name="scope_type_filter" id="scope_type_filter" style="display: inline-block; width: 40%">
+							<option value="1">全国</option>
+							<option value="2">大区</option>
+							<option value="3">省</option>
+							<option value="4">市</option>
+							<option value="5">经销商</option>
+						</select>
+					</div>
+					<div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+						<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+						<button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+						<button class="btn btn-primary btn-md" type="button" id="delete">删除</button>
+					</div>
+				</div>
+
+			</form>
+		</div>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>操作</th>
+					<th>全选 <input type="checkbox" id="check_all"></input>
+					</th>
+					<th class="sortable" code="campaign_name">活动名称</th>
+					<th class="sortable" code="scope_type">活动范围类型</th>
+					<th class="sortable" code="scope_value">活动范围</th>
+					<th class="sortable" code="start_date">活动开始日期</th>
+					<th class="sortable" code="end_date">活动结束日期</th>
+					<th class="sortable" code="created">创建时间</th>
+					<th class="sortable" code="createdby">创建人</th>
+				</tr>
+			</thead>
+			<tbody id="datagridTemplate" style="display: none">
+				<tr>
+					<td class="text-center">
+						<button class="btn btn-primary btn-md delete_btn" type="button" code="#tuid#">删除</button>
+					</td>
+					<td class="text-center">#application_id#</td>
+					<td class="text-center">#campaign_name#</td>
+					<td class="text-center">#scope_type#</td>
+					<td class="text-center">#scope_value#</td>
+					<td class="text-center">#start_date#</td>
+					<td class="text-center">#end_date#</td>
+					<td class="text-center">#created#</td>
+					<td class="text-center">#createdby#</td>
+				</tr>
+			</tbody>
+			<tbody id="datagrid">
+			</tbody>
+		</table>
+		<div class="pageDiv">
+			<ul class="pagination">
+			</ul>
+		</div>
+	</div>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+	<script language="JavaScript">
+$(document).ready(function() {
+	$("#delete").unbind().on("click",function(){
+		var leng=$('input[name=scope_id]:checked').length;
+		if(leng==0){
+			alert("请选择活动");
+		return;
+		}
+		
+			$Dialog().confirm("确定要删除吗？",function(){
+					var value="";
+					$('input[name=scope_id]').each(function(){
+						if($(this).is(":checked")){
+							value+=$(this).val()+',';
+						}
+					})
+				value= value.substring(value,value.length-1);
+					var url = "${def:context}/action/ccms/module/campaign/scope/delete?valuess=*/"+value+"/*";
+					   	ajaxCall(url,{
+					   		method: "get",
+					   		progress: false,
+					   		dataType: "script",
+					   		success: function() {
+					   			search.searchData();
+					   			$("#check_all").iCheck('uncheck');
+					   			}
+					   		});
+		});
+	});
+	
+	//选择省市区的jquery函数
+	//b
+	
+	$("#check_all").on("ifClicked",function () {     
+		if($("#check_all").is(":checked")){
+			is_check('0')
+		}else{
+			is_check('1')
+		}
+	});
+	
+	$(':radio').eq(0).on("ifChecked",function () {     
+		 scopeTypeOnclick('1')
+	});
+	
+	$(':radio').eq(1).on("ifChecked",function () {   
+		 scopeTypeOnclick('2')
+	});
+	
+	$(':radio').eq(2).on("ifChecked",function () { 
+		 scopeTypeOnclick('3')
+	});
+	
+	$(':radio').eq(3).on("ifChecked",function () {     
+		 scopeTypeOnclick('4')
+	});
+	
+	$(':radio').eq(4).on("ifChecked",function () {  
+			 scopeTypeOnclick('5')
+	});
+	
+	
+	$("#province").change(function(){
+		getSelectDomain("city", "City", "Province", $(this).val());//获取选择域
+	});
+	
+	var search=null;
+	var obj = $Crud({
+		formId:"formEditor",
+		button:"save_btn",
+		bpkField:"vc_code",
+		insertBack:function(){
+			hideSpan();
+			$('#areaListSpan').empty();
+			$('#cityListSpan').empty();
+			search.searchData();
+		},
+		updateBack:function(){
+			search.searchData();
+		},
+		deleteBack:function(){
+			search.searchData();
+		},
+		addNewBack:function(){
+			$("#formTitle").html("新增");
+		},
+		editBack:function(){
+			$("#formTitle").html("修改");
+		},
+		validate:function(){
+			var flag=$("#formEditor").validate({
+				rules : {
+			    mobile : { isMobile : true},		
+				idcard : {isIDCard : true} 
+				},
+			messages: {
+				mobile:{
+					isMobile:"请输入正确的电话号码！"
+				},
+			    idcard:{
+			    	isIDCard:"请输入正确的身份证号！"
+			    }
+			}
+		});
+			return flag;
+		}
+	
+	}).init();
+		this.search=search;
+		search=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+			 $(':input[type=checkbox]').iCheck({
+    		checkboxClass: 'icheckbox_square-blue',
+			increaseArea: '20%'
+  		 });  
+				getSelectDomain("province", "Province");
+				$('input[name=province]').on("ifChecked",function () {     
+					addvalue();
+				});
+		$(".edit_btn").unbind().on("click", function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				obj.edit({id:$(this).attr("code")});
+			}
+		});
+		$(".delete_btn").unbind().on("click", function(){
+			var obthis = $(this);
+			$Dialog().confirm("确定要删除该条数据吗?", function(){
+				if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+					obj.del({valuess:obthis.attr("code")});
+				}
+			});
+		});
+	}}).initSearchBtn().searchData(1);
+	$Dialog().date($('#start_date'));
+	$Dialog().date($('#end_date'));
+});
+
+
+
+
+//字段校验
+function checkFields(){
+    //(1)非空、日期、数字等校验
+    //if (!CheckNum("max_overdraft")) return false;//购买日期,可以为空,纯数字
+    //if(!CheckCheckbox("role_id","请设置‘功能权限’","")) return false;
+    var scope_type=document.getElementById("scope_type");
+    var scope_type_value=GetRadioValue("scope_type","formEditor");
+    if(scope_type){
+		switch(scope_type_value){
+		case "2":
+			var area=GetCheckboxValue("area","formEditor");
+			if(area==null||area==""){
+				alert("请选择大区");
+				return false;
+			}
+			break;
+		case "3":
+			var province=GetCheckboxValue("province","formEditor");
+			if(province==null||province==""){
+				alert("请选择省");
+				return false;
+			}
+			break;
+		case "4":
+			var city=GetCheckboxValue("city","formEditor");
+			if(city==null||city==""){
+				alert("请选择市");
+				return false;
+			}
+			break;
+		case "5":
+			var dealer_code=GetCheckboxValue("dealer_code","formEditor");
+			if(dealer_code==null||dealer_code==""){
+				alert("请选择经销商");
+				return false;
+			}
+			break;
+		case "6":
+			var brand=GetCheckboxValue("brand","formEditor");
+			if(brand==null||brand==""){
+				alert("请选择品牌");
+				return false;
+			}
+			break;
+		case "7":
+			var series=GetCheckboxValue("series","formEditor");
+			if(series==null||series==""){
+				alert("请选择车系");
+				return false;
+			}
+			break;
+		}
+    }else if (scope_type_value==""){
+        alert("请选择活动范围");
+        return false;
+    }
+    //各项校验后返回true
+    return true;
+}
+
+function scopeTypeOnclick(val){
+	if(val){
+		switch(val){
+		case "1":
+			hideSpan();
+			break;
+		case "2":
+			document.getElementById("areaSpan").style.display="";
+			break;
+		case "3":
+			document.getElementById("provinceSpan").style.display="";
+			break;
+		case "4":
+			document.getElementById("citySpan").style.display="";
+			break;
+		case "5":
+			document.getElementById("dealerSpan").style.display="";
+			break;
+		case "6":
+			document.getElementById("brandSpan").style.display="";
+			break;
+		case "7":
+			document.getElementById("seriesSpan").style.display="";
+			break;
+		default:
+			break;
+		}
+	}
+}
+function hideSpan(){
+	document.getElementById("areaSpan").style.display="none";
+	document.getElementById("provinceSpan").style.display="none";
+	document.getElementById("citySpan").style.display="none";
+	document.getElementById("dealerSpan").style.display="none";
+}
+function areaOnclick(brand){
+	if(brand=="") return;
+	getAreaByBrand(brand);
+}
+
+function dealerOnclick(province,brand){
+	alert(province)
+	alert(brand)
+	if(province=="" || brand=="") return;
+	getDealerByProvine(province,brand);
+}
+
+function cityOnclick(val){
+	getChildDomainCheckbox('Province',val,'City','city','cityListSpan');
+}
+
+
+function getChildDomainCheckbox(parent_namespace,parent_value,child_namespace,child_name,field_id){
+    var select = document.getElementById("province3");
+    var str = [];
+    for(i=0;i<select.length;i++){
+        if(select.options[i].selected){
+            str.push(select[i].value);
+        }
+    }
+	
+	var url="/action/ccms/module/campaign/scope/pick/getChildDomainCheckbox?child_namespace="+child_namespace+"&parent_namespace="+parent_namespace+"&parent_value="+parent_value+"&child_name="+child_name+"&field_id="+field_id;
+   	ajaxCall(url,{
+   		method: "get",
+   		progress: false,
+   		dataType: "script",
+   		success: function() {
+   			}
+   		});
+}
+function getDealerByProvine(province,brand){
+	var url="/action/ccms/module/campaign/scope/pick/getDealerByProvince?province="+province+"&brand="+brand;
+   	ajaxCall(url,{
+   		method: "get",
+   		progress: false,
+   		dataType: "script",
+   		success: function() {
+   			}
+   		});
+}
+
+
+function getAreaByBrand(brand){
+	var url="${def:context}/action/ccms/module/campaign/scope/pick/getAreaByBrand?brand="+brand;
+   	ajaxCall(url,{
+   		method: "get",
+   		progress: false,
+   		dataType: "script",
+   		success: function() {
+   			}
+   		});
+}
+//c
+function is_check (val){
+	if(val){
+		var scope_id=document.getElementsByName("scope_id");
+		var scope_all=document.getElementsByName("scope_all");
+		if(val=='1'){
+			
+			for(var i=0;i<scope_id.length;i++){
+				scope_id[i].checked=true;
+			}
+				scope_all.checked=true;
+		}else if(val=="0"){
+			for(var i=0;i<scope_id.length;i++){
+				scope_id[i].checked=false;
+			}
+				scope_all.checked=false;
+		}
+	}
+}
+//loadTabpan();
+function afterLoadFilter(){
+	document.formFilter.campaign_id.value = "${fld:campaign_id}";
+	search();
+}
+function afterLoadEditor(){
+	document.formEditor.campaign_id.value = "${fld:campaign_id}";
+	document.formEditor.campaign_name.value = "${fld:campaign_name}";
+}
+function formHidden(){
+	if(parent){
+		if(parent.formHidden){
+			parent.formHidden();
+		}
+	}
+}
+
+function addvalue(){
+	var value='';
+	$('input[name=province]').each(function(){
+		if($(this).is(":checked")){
+			value+=$(this).val()+',';
+		}
+	})
+	value= value.substring(value,value.length-1);
+	getSelectDomain("province3", "City", "Province",value);
+}
+
+
+//获取域值
+function getSelectDomain(objid, namespace, parent_namespace, parent_domain_value, callback){
+ 	if( undefined == objid || "" == objid ){
+		ccms.dialog.notice("Parameter id can not be null.");
+		return false;
+	}else if( undefined == namespace || "" == namespace ){
+		ccms.dialog.notice("Parameter namespace can not be null.");
+		return false;
+	}
+	parent_namespace = (undefined != parent_namespace ? parent_namespace : "");
+	parent_domain_value = (undefined != parent_domain_value ? parent_domain_value : "");
+	var uri = "/action/ccms/module/campaign/scope/pick/getselectdomain";
+	uri += "?field_id=" + objid + "&child_namespace=" + namespace + "&parent_namespace=" + parent_namespace + "&parent_value=" + parent_domain_value;
+	return ajaxCall(uri,{
+		method: "get",
+		progress: true,
+		dataType: "script",	
+		success: function() {
+			if( undefined != callback && null != callback ){
+				callback();
+			}
+		}
+	});
+}
+</script>
+</body>
+</html>

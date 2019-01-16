@@ -1,0 +1,35 @@
+INSERT INTO
+	t_form_show_field
+(
+	tuid
+	,form_id
+	,item_id
+	,field_id
+	,show_order
+	,show_type
+	,width
+	,colspan
+	,rowspan
+	,show_color
+	,is_mandatory
+	,is_readonly
+	,is_attachment
+	,is_cascade_combo
+)
+VALUES
+(
+	${seq:nextval@${schema}seq_default}
+	,${fld:form_id}
+	,${fld:form_item_id}
+	,${fld:form_field}
+	,${fld:form_show_order}
+	,${fld:form_show_type}
+	,${fld:form_width}
+	,${fld:form_colspan}
+	,${fld:form_rowspan}
+	,${fld:form_show_color}
+	,${fld:form_is_mandatory}
+	,${fld:form_is_readonly}
+	,${fld:form_is_attachment}
+	,${fld:form_is_cascade_combo}
+)

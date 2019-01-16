@@ -1,0 +1,18 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"userlogin":"${fld:userlogin@js}"
+		,"user_id":"${fld:user_id}"
+		,"alias":"${fld:alias@js}"
+		,"name":"${fld:name@js}"
+		,"sex":"${fld:sex@js}"
+		,"salary":"${fld:salary}"
+		,"email":"${fld:email@js}"
+		,"mobile":"${fld:mobile@js}"
+		,"address":"${fld:address@js}"
+		,"org_name":"${fld:org_name@js}"
+		,"state":"${fld:state@js}"
+	},
+	</rows>
+	{}
+]}

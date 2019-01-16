@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		新增技能
+	</summary>
+	
+	<log>false</log>
+	
+	<!--soporte de auditoria-->
+	<audit>
+		<!--de donde saca los datos, por defecto es "_request"-->
+		<recordset></recordset>
+		<!--que campos extrae para el registro descriptivo-->
+		<cols>
+			<colname>skill_name</colname>	
+			<colname>skill_scope</colname>		
+		</cols>
+		<table>hr_skill</table>
+		<oper>增加</oper>
+		<area>技能</area>
+		<!--
+			query para obtener el ID generado o nombre de 
+			la columna que contiene el pkey, si es query, 
+			el alias del campo debe ser "id"
+		-->
+		<pkey>select ${seq:currval@seq_skill} as id from dual</pkey>
+	</audit>
+	
+    <request-encoding>UTF-8</request-encoding>
+
+	<colname>role_id;role_id</colname>
+	<sql-template>insert-skill-roles.sql;insert-user-roles.sql</sql-template>
+
+	<transaction>
+		<classname>com.ccms.InsertMaster</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<query>insert_t_skill.sql</query>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

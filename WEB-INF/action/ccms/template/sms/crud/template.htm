@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>短信模板</title>
+${inc:/action/ccms/pub}
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">查询短信模板</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm">
+				<input name="sort" type="hidden" value="tuid" preserve="true" />
+				<input name="order" type="hidden" value="desc" preserve="true" /> 
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+	
+				<div class="form-group">
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 clearright clearleft">
+						<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+							<input name="template_name" placeholder="请输入模板名称" class="form-control" type="text" size="20" value="" />
+						</div>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+						<button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>操作</th>
+						<th class="sortable" code="template_name">模板名称</th>
+						<th class="sortable" code="template_content">模板内容</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td align="center">
+							<button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">编辑</button>
+							<button class="btn btn-primary btn-md delete_btn" type="button" code="#tuid#">删除</button>
+						</td>
+						<td align="center">#template_name#</td>
+						<td align="center">#template_content#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="formTitle">组织架构层级</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+						<input type="hidden" id="tuid" name="tuid" value="" />
+						<div class="row clearfix">
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">模版名称</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<input type="text" class="form-control" id="template_name" name="template_name" size="30" maxlength="128" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">模版内容</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<textarea class="form-control" id="template_content" name="template_content"  rows="" cols=""></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">帐号代码</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<select class="form-control" id="account_id" name="account_id">
+										<option value=""></option>
+										<acount-rows>
+											<option value="${fld:account_id}">${fld:account_id}</option>
+										</acount-rows>
+									</select>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+						<button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+						<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script type="text/javascript">
+$(document).ready(function(){
+	var searchObj=null;
+	var obj = $Crud({
+		formId : "formEditor",
+		button : "save_btn",
+		insertBack : function() {
+			searchObj.searchData(1);
+		},
+		updateBack : function() {
+			searchObj.searchData(1);
+		},
+		deleteBack : function() {
+			searchObj.searchData(1);
+		},
+		addNewBack : function() {
+			$("#formTitle").html("新增短信模板");
+		},
+		editBack : function() {
+			$("#formTitle").html("修改短信模版");
+		},
+		validate : function() {
+			var flag = $("#formEditor").validate({
+				rules : {
+					template_name : {
+						required : true
+					},
+					template_content: {
+						required : true
+					},
+					account_id: {
+						required : true
+					}
+				},
+				messages : {
+					template_name : {
+						required : "请输入模板名称"
+					},
+					template_content: {
+						required : "请输入模板内容"
+					},
+					account_id: {
+						required : "请输入帐号代码"
+					}
+				}
+			});
+			return flag;
+		},
+		check:function(){
+			return true;
+		}
+	}).init();
+
+	this.searchObj=searchObj;
+	searchObj=$Search({datagrid : "datagrid",formId : "searchForm",success : function() {
+		$(".edit_btn").unbind().on("click",function() {
+			if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+			obj.edit({tuid : $(this).attr("code")});
+			}});
+		$(".delete_btn").unbind().on("click",function() {
+			var obthis = $(this);
+			$Dialog().confirm("确定要删除吗?",function() {
+			if (obthis.attr("code") != undefined && obthis.attr("code") != "") {
+				obj.del({tuid : obthis.attr("code")});}
+				});
+		});
+	}}).initSearchBtn().searchData(1);
+
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"userlogin":"${fld:userlogin@js}"
+		,"context_alias":"${fld:context_alias@js}"
+		,"operation":"${fld:operation@js}"
+		,"area":"${fld:area@js}"
+		,"op_date":"${fld:op_date@yyyy-MM-dd}"
+		,"op_time":"${fld:op_time@js}"
+		,"extra_info":"${fld:extra_info@js}"
+		,"detail":"table_code=${fld:target_table}&pk_value=${fld:pkey}&op_date=${fld:op_date}&op_time=${fld:op_time}"
+	},
+	</rows>
+	{}
+]}

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<parameter id="tuid" type="integer" required="true" label="tuid"/>
+	<parameter id="service_id" type="integer" required="true" label="Service"/>
+	<parameter id="description_cn" type="varchar" required="false" label="Description(Chinese)" maxlen="150"/>
+	<parameter id="description_en" type="varchar" required="false" label="Description(English)" maxlen="150"/>
+	<parameter id="position" type="integer" required="true" label="Orden" maxlen="10" />
+	<parameter id="logo_path" type="varchar" required="false" label="logo_path" maxlen="256" />
+</validator>

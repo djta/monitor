@@ -1,0 +1,188 @@
+.inline-block {
+  display: inline-block;
+  vertical-align: middle;
+}
+.icon-add {
+  display: inline-block;
+  vertical-align: middle;
+  width:42.666666px;
+  height:42.666666px;
+  background: url('../../images/add.png') no-repeat center / contain;
+}
+.icon-bar_menu {
+  display: inline-block;
+  vertical-align: middle;
+  width:18.77333344px;
+  height:18.77333344px;
+  background: url('../../images/bar_caidan_off.png') no-repeat center / contain;
+}
+.icon-bar_menu_on {
+  display: inline-block;
+  vertical-align: middle;
+  width:18.77333344px;
+  height:18.77333344px;
+  background: url('../../images/bar_caidan_on.png') no-repeat center / contain;
+}
+.icon-bar_location {
+  display: inline-block;
+  vertical-align: middle;
+  width:18.77333344px;
+  height:18.77333344px;
+  background: url('../../images/bar_dingwei_off.png') no-repeat center / contain;
+}
+.icon-bar_location_on {
+  display: inline-block;
+  vertical-align: middle;
+  width:18.77333344px;
+  height:18.77333344px;
+  background: url('../../images/bar_dingwei_on.png') no-repeat center / contain;
+}
+.icon-bar_notice {
+  display: inline-block;
+  vertical-align: middle;
+  width:18.77333344px;
+  height:18.77333344px;
+  background: url('../../images/bar_tongzhi_off.png') no-repeat center / contain;
+}
+.icon-bar_notice_on {
+  display: inline-block;
+  vertical-align: middle;
+  width:18.77333344px;
+  height:18.77333344px;
+  background: url('../../images/bar_tongzhi_on.png') no-repeat center / contain;
+}
+.icon-bar_myhome {
+  display: inline-block;
+  vertical-align: middle;
+  width:18.77333344px;
+  height:18.77333344px;
+  background: url('../../images/bar_wode_off.png') no-repeat center / contain;
+}
+.icon-bar_myhome_on {
+  display: inline-block;
+  vertical-align: middle;
+  width:18.77333344px;
+  height:18.77333344px;
+  background: url('../../images/bar_wode_on.png') no-repeat center / contain;
+}
+.icon-call {
+  display: inline-block;
+  vertical-align: middle;
+  width:27.30666656px;
+  height:27.30666656px;
+  background: url('../../images/call.png') no-repeat center / contain;
+}
+.icon-close {
+  display: inline-block;
+  vertical-align: middle;
+  width:19.62666656px;
+  height:19.62666656px;
+  background: url('../../images/close.png') no-repeat center / contain;
+}
+.icon-close_circle {
+  display: inline-block;
+  vertical-align: middle;
+  width:25.6px;
+  height:25.6px;
+  background: url('../../images/close_circle.png') no-repeat center / contain;
+}
+.icon-date {
+  display: inline-block;
+  vertical-align: middle;
+  width:12.8px;
+  height:14.50666656px;
+  background: url('../../images/date.png') no-repeat center / contain;
+}
+.icon-emergency {
+  display: inline-block;
+  vertical-align: middle;
+  width:11.94666656px;
+  height:20.48px;
+  background: url('../../images/emergency.png') no-repeat center / contain;
+}
+.icon-filter {
+  display: inline-block;
+  vertical-align: middle;
+  width:17.06666656px;
+  height:17.06666656px;
+  background: url('../../images/filter.png') no-repeat center / contain;
+}
+.icon-follow {
+  display: inline-block;
+  vertical-align: middle;
+  width:11.94666656px;
+  height:19.62666656px;
+  background: url('../../images/follow.png') no-repeat center / contain;
+}
+.icon-level {
+  display: inline-block;
+  vertical-align: middle;
+  width:17.06666656px;
+  height:17.06666656px;
+  background: url('../../images/level.png') no-repeat center / contain;
+}
+.icon-man {
+  display: inline-block;
+  vertical-align: middle;
+  width:12.8px;
+  height:12.8px;
+  background: url('../../images/man.png') no-repeat center / contain;
+}
+.icon-woman {
+  display: inline-block;
+  vertical-align: middle;
+  width:12.8px;
+  height:12.8px;
+  background: url('../../images/woman.png') no-repeat center / contain;
+}
+.icon-more {
+  display: inline-block;
+  vertical-align: middle;
+  width:6.82666656px;
+  height:11.09333344px;
+  background: url('../../images/more.png') no-repeat center / contain;
+}
+.icon-msg {
+  display: inline-block;
+  vertical-align: middle;
+  width:27.30666656px;
+  height:27.30666656px;
+  background: url('../../images/msg.png') no-repeat center / contain;
+}
+.icon-search {
+  display: inline-block;
+  vertical-align: middle;
+  width:17.06666656px;
+  height:17.06666656px;
+  background: url('../../images/search.png') no-repeat center / contain;
+}
+.icon-setting {
+  display: inline-block;
+  vertical-align: middle;
+  width:17.06666656px;
+  height:17.06666656px;
+  background: url('../../images/setting.png') no-repeat center / contain;
+}
+.icon-back {
+  display: inline-block;
+  vertical-align: middle;
+  width:17.06666656px;
+  height:17.06666656px;
+  background: url('../../images/back.png') no-repeat center / contain;
+}
+
+.icon-issue {
+  display: inline-block;
+  vertical-align: middle;
+  width:28.16px;
+  height:28.16px;
+  background: url('../../images/issue.png') no-repeat center / contain;
+}
+
+.icon-bar_table {
+  display: inline-block;
+  vertical-align: middle;
+  width:42.666666px;
+  height:42.666666px;
+  background: url('../../images/bar_table.png') no-repeat center / contain;
+}

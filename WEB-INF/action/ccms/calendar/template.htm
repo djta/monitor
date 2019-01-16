@@ -1,0 +1,159 @@
+<html>
+<head>
+
+<script language="javascript">
+	function reloadCalendar(){
+		var date2='${req:date.lbound}';
+		var date3='${req:date.ubound}';
+		var time='${req:date.time}';
+		var y = document.getElementById("year").value;
+		var m = document.getElementById("month").value;
+		//var date = "1" + "-" + m + "-" + y;
+		var date = y + "-" + m + "-" + "1";   //"yyyy-M-d"
+		url = "${def:context}/action/ccms/calendar?id=${req:parent.ElementID}&date=" + date + "&dfo=yyyy-MM-dd";
+		url = url + "&date.lbound=" + date2;
+		url = url + "&date.ubound=" + date3;
+		url = url + "&date.time=" + time;
+		window.location = url;
+	}
+	
+	var currStyle = "";
+
+	function rowOn(obj) {
+		currStyle = obj.className;
+		if (currStyle=="calDisabled"){
+		}else{
+			if (currStyle =="calEmptyCell"){
+			}else{
+				obj.className = "calDay2";
+			}
+		}
+	}
+	
+	function rowOff(obj) {
+		obj.className = currStyle;
+	}
+</script>
+
+<style>
+TABLE.calendar {
+	background-color: #C5C5E3;
+}
+
+TH.calendar {
+	color: black;
+	background-color: #FFFF99;
+	font-family: Arial;
+	font-size: 8pt;
+	padding: 1px;
+}
+
+TD.calEmptyCell {
+	color: black;
+	background-color: white;
+	font-family: Arial;
+	font-size: 8pt;
+	padding: 1px;
+}
+
+TD.calCurDay {
+	color: blue;
+	font-weight: bold;
+	background-color: #CCFFFF;
+	font-family: Arial;
+	font-size: 8pt;
+	padding: 1px;
+	cursor: pointer;
+}
+
+TD.calDay {
+	color: black;
+	background-color: white;
+	font-family: Arial;
+	font-size: 8pt;
+	padding: 1px;
+	cursor: pointer;
+}
+
+TD.calDisabled {
+	color: red;
+	background-color: white;
+	font-family: Arial;
+	font-size: 8pt;
+	padding: 1px;
+	text-decoration: line-through;
+}
+
+TD.calDay2 {
+	background-color: #CCCCCC;
+	font-size: 8pt;
+	font-family: Arial;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.calendarHeader {
+	background-color: #E3E4FA;
+	color: black;
+	font-family: Arial;
+	font-size: 9pt;
+	padding: 1px;
+}
+</style>
+
+</head>
+
+<body>
+
+	<center>
+		<!--start calendar header-->
+		<table class="calendarHeader" style="width: 240px;" cellspacing="0">
+			<tr>
+				<td width="96%">
+					<select name="month" id="month" onchange="reloadCalendar()">
+						<option value="1">${lbl:calendar_january}</option>
+						<option value="2">${lbl:calendar_february}</option>
+						<option value="3">${lbl:calendar_march}</option>
+						<option value="4">${lbl:calendar_april}</option>
+						<option value="5">${lbl:calendar_may}</option>
+						<option value="6">${lbl:calendar_june}</option>
+						<option value="7">${lbl:calendar_july}</option>
+						<option value="8">${lbl:calendar_august}</option>
+						<option value="9">${lbl:calendar_september}</option>
+						<option value="10">${lbl:calendar_october}</option>
+						<option value="11">${lbl:calendar_november}</option>
+						<option value="12">${lbl:calendar_december}</option>
+					</select> &nbsp; 
+					<select name="year" id="year" onchange="reloadCalendar()">
+						<years>
+						<option value="${fld:year}">${fld:year}</option>
+						</years>
+					</select>
+				</td>
+				<td align="right" style="padding-right: 4px">
+					<img style="cursor: pointer" src="${def:context}/images/close.png" title="关闭" onclick="parent.closeBox('${req:parent.ElementID}')">
+				</td>
+			</tr>
+		</table>
+		<!--end calendar header-->
+		<!--calendar table-->
+		<table style="width: 240px; height: 130px" cellspacing="1">
+			<tr>
+				<th class="calendar">${lbl:calendar_sunday}</th>
+				<th class="calendar">${lbl:calendar_monday}</th>
+				<th class="calendar">${lbl:calendar_tuesday}</th>
+				<th class="calendar">${lbl:calendar_wednesday}</th>
+				<th class="calendar">${lbl:calendar_thursday}</th>
+				<th class="calendar">${lbl:calendar_friday}</th>
+				<th class="calendar">${lbl:calendar_saturday}</th>
+			</tr>
+
+			<!--calendar body-->
+			${inc:/action/ccms/calendar/hgrid}
+
+		</table>
+
+	</center>
+
+</body>
+</html>

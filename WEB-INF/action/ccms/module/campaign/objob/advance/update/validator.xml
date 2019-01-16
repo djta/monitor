@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/error/validation/ajax">
+ <custom-validator 	
+	classname="dinamica.validators.DuplicatedKeyValidator" 
+	on-error-label="此模板名称已存在，请重新填写"
+	id="template_name" sql="nodup.sql"/>
+    <parameter id="tuid" type="integer" required="false" label="tuid"/>
+    <parameter id="model_id" type="integer" required="true" label="model_id"/>
+    <parameter id="template_name" type="varchar" required="true" label="template_name" />
+    <parameter id="if_manual_push_flag" type="varchar" required="true" label="if_manual_push_flag" />
+    <parameter id="round_type" type="varchar" required="false" label="round_type" />
+    <parameter id="data_switch_flag" type="varchar" required="false" label="data_switch_flag" />
+    <parameter id="data_push_flag" type="varchar" required="false" label="data_push_flag" />
+    <parameter id="reserve_accuracy" type="varchar" required="false" label="reserve_accuracy" />
+    <parameter id="job_priority" type="varchar" required="true" label="job_priority" />
+    <parameter id="job_quota" type="varchar" required="true" label="job_quota" />
+    <parameter id="campaign_id" type="varchar" required="false" label="campaign_id" />
+    <parameter id="subject_id" type="varchar" required="false" label="subject_id" />
+    <parameter id="task_duplicate_flag" type="varchar" required="true" label="task_duplicate_flag" />
+    <parameter id="task_duplicate_scope" type="varchar" required="true" label="task_duplicate_scope" />
+    <parameter id="from_date" type="date" required="false" label="from_date" />
+    <parameter id="to_date" type="date" required="false" label="to_date" />
+      
+</validator>
+ 

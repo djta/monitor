@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/error/validation/ajax">
+    <parameter id="campaign_id" type="varchar" required="true" label="活动编号" maxlen="32"/>
+    <parameter id="regist_from_time" type="varchar" required="true" label="开始时间" maxlen="25"/>
+    <parameter id="regist_to_time" type="varchar" required="true" label="结束时间" maxlen="25"/>
+    <parameter id="event_city" type="varchar" required="true" label="活动站点" maxlen="25"/>
+    <parameter id="car_series" type="varchar" required="false" label="活动车系" maxlen="32"/>
+    <parameter id="show_order" type="integer" required="false" label="顺序编号" maxlen="10"/>
+    <parameter id="changci_name" type="varchar" required="true" label="场次名称" maxlen="256"/>
+	 <parameter id="changci_time" type="varchar" required="false" label="场次时间" maxlen="64"/>
+    <parameter id="remark" type="varchar" required="false" label="备注" maxlen="512"/>
+    <parameter id="changci_quota" type="integer" required="false" label="配额" maxlen="10"/>
+   		<custom-validator 	
+		classname="dinamica.validators.DuplicatedKeyValidator" 
+		on-error-label="该场次已经存在，请重新输入."
+		sql="nodup.sql" id="changci_name1"/>
+</validator>
+

@@ -1,0 +1,475 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>修改字段</title>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div
+			class="panel-heading text-center col_main_body_title col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-md-offset-1 col-lg-offset-1">
+				<h1 class="panel-title" id="formTitle">修改字段</h1>
+			</div>
+			<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1"
+				style="margin-top: -12px;">
+				<button type="button" id="save_btn" class="btn btn-primary btn-md">保&nbsp;存</button>
+			</div>
+		</div>
+		<div class="panel-body col_main_body">
+			<form id="formEditor" name="formEditor" class="form-horizontal"
+				role="form" method="post">
+				<input type="hidden" id="tuid" name="tuid" value="${fld:tuid}" /> <input
+					id="table_id" name="table_id" type="hidden" value=""
+					preserve="true" />
+				<div class="row clearfix">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">字段名称(中文)</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input id="field_name_cn" name="field_name_cn"
+									class="form-control" type="text" size="30"
+									value="${fld:field_name_cn}" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">字段代码</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<textarea type="text" id="field_code" class="form-control"
+									name="field_code" rows="3">${fld:field_code}</textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">字段类型</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<input id="field_type" name="field_type" type="hidden" value="" />
+								<input type="text" id="type_alias" name="type_alias" size="30"
+									value="${fld:field_type}" readonly class="form-control" />
+							</div>
+							<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+								<img src="${def:context}/images/search.gif" class="tool"
+									id="pickOpenNotCenter" title="查询字段类型" /> <img
+									src="${def:context}/images/clear.gif" id="pickClear"
+									class="tool2" title="清除选择的内容" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">字段长度</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input name="field_length" value="${fld:field_length}"
+									class="form-control" type="text" size="30" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">是否空值</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input name="is_mandatory" type="radio" value="0" />非空 <input
+									name="is_mandatory" type="radio" value="1" />空值
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">值域命名</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input name="domain_namespace"
+									value="${fld:domain_namespace}" class="form-control"
+									type="text" size="30" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">显示风格</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input id="show_type" name="show_type" type="radio" value="0" />文本框
+								<input id="show_type" name="show_type" type="radio" value="1" />下拉框
+								<input id="show_type" name="show_type" type="radio" value="2" />复选框
+								<input id="show_type" name="show_type" type="radio" value="3" />多选一
+								<input id="show_type" name="show_type" type="radio" value="5" />日期
+								<input id="show_type" name="show_type" type="radio" value="6" />文本域
+								<input id="show_type" name="show_type" type="radio" value="7" />选取框(外键关联)
+								<input id="show_type" name="show_type" type="radio" value="8" />手工代码
+								<input id="show_type" name="show_type" type="radio" value="9" />隐藏值
+								<input id="show_type" name="show_type" type="radio" value="10" />日期时间
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">事件扩展代码</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<textarea type="text" id="plugin_code" name="plugin_code"
+									class="form-control" rows="3">${fld:plugin_code}</textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">外键SCHEMA</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<input id="fk_schema" name="fk_schema" class="form-control"
+									value="${fld:fk_schema}" type="text" size="30" maxlength="32" /> <input
+									id="fk_schema_hidden" name="fk_schema_hidden" type="hidden"
+									value="${fld:fk_schema}" />
+							</div>
+							<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+								<img src="${def:context}/images/search.gif" class="tool"
+									id="pickOpenNotCenter1" title="查询" /> <img
+									src="${def:context}/images/clear.gif" id="schema" class="tool2"
+									title="清除选择的内容" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">外键字段</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<input id="fk_fld_id" name="fk_fld_id" class="form-control"
+									value="${fld:fk_fld_id}" type="text" size="30"
+									maxlength="32" /> <input id="fk_fld_id_hidden"
+									name="fk_fld_id_hidden" type="hidden"
+									value="${fld:fk_fld_id_hidden}" />
+							</div>
+							<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+								<img src="${def:context}/images/search.gif" class="tool"
+									id="pickOpenNotCenter2" title="查询" /> <img
+									src="${def:context}/images/clear.gif" id="waijian"
+									class="tool2" title="清除选择的内容" />
+							</div>
+						</div>
+						<div class="form-group"></div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">外键表意字段(该字段在中英文切换中会作为中文字段使用)</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<input id="fk_fld_anchor" name="fk_fld_anchor"
+									class="form-control" value="${fld:fk_fld_anchor}"
+									type="text" size="30" maxlength="32" /> <input
+									id="fk_fld_anchor_hidden" name="fk_fld_anchor_hidden"
+									type="hidden" value="${fld:fk_fld_anchor_hidden}" />
+							</div>
+							<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+								<img src="${def:context}/images/search.gif" class="tool"
+									id="waijianbiaoyi" title="查询" /> <img
+									src="${def:context}/images/clear.gif" id="biaoyi" class="tool2"
+									title="清除选择的内容" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">外键数据源SQL语句</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<textarea type="text" name="fk_sql" class="form-control"
+									rows="3" maxlength="4000">${fld:fk_sql}</textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">默认值重要提示:所有值都会被转化小写</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<textarea name="default_value" rows="3" class="form-control">${fld:default_value}</textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">插入值时公式(例如${fld:xxxx}-${fld:yyyy})重要提示:所有
+								值插入时都会被转化小写</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<textarea name="insert_phrase" rows="3" class="form-control">${fld:insert_phrase}</textarea>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">字段名称(英文)</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input id="field_name_en" name="field_name_en" type="text"
+									class="form-control" size="30" value="${fld:field_name_en}" />
+							</div>
+						</div>
+						<div class="form-group"></div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+								字段代码别名</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input id="field_code_alias" name="field_code_alias"
+									class="form-control" type="text"
+									value="${fld:field_code_alias}" size="30" value=""
+									maxlength="64" />
+							</div>
+						</div>
+						<div class="form-group"></div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">字段格式</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input type="text" id="format_mark" class="form-control"
+									name="format_mark" value="${fld:format_mark}" size="30" />
+							</div>
+						</div>
+						<div class="form-group"></div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">小数点位数</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input name="decimal_length" value="${fld:decimal_length}"
+									class="form-control" type="text" size="30" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">是否虚拟字段</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input name="is_virtual_type" type="radio" value="0" />否 <input
+									name="is_virtual_type" type="radio" value="1" />是
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">显示顺序</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input name="show_order" class="form-control"
+									value="${fld:show_order}" type="text" size="30" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">控件扩展代码</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<textarea type="text" id="plugin_control" name="plugin_control"
+									class="form-control" rows="3">${fld:plugin_control}</textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">外键表名</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<input id="fk_tab" name="fk_tab" class="form-control"
+									value="${fld:fk_tab}" type="text" size="30" maxlength="32" />
+								<input id="fk_tab_hidden" name="fk_tab_hidden" type="hidden"
+									value="${fld:fk_tab_hidden}" />
+							</div>
+							<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+								<img src="${def:context}/images/search.gif" class="tool"
+									id="waijianbiaoming" title="查询" /> <img
+									src="${def:context}/images/clear.gif" id="biaoming"
+									class="tool2" title="清除选择的内容" />
+							</div>
+						</div>
+						<div class="form-group"></div>
+						<div class="form-group"></div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">外键字段别名</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input name="fk_fld_alias" value="${fld:fk_fld_alias}"
+									class="form-control" type="text" size="30" maxlength="32" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">外键参考字段(该字段在中英文切换中会作为英文字段使用)</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<input id="fk_references" name="fk_references"
+									class="form-control" value="${fld:fk_references}"
+									type="text" size="30" maxlength="32" /> <input
+									id="fk_references_hidden" name="fk_references_hidden"
+									type="hidden" value="${fld:fk_references_hidden}" />
+							</div>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<img src="${def:context}/images/search.gif" class="tool"
+									id="waijiancankaoziduan" title="查询" /> <img
+									src="${def:context}/images/clear.gif" id="cankao" class="tool2"
+									title="清除选择的内容" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">外键删除标志字段(该字段在弹出框选择时作为查询过滤条件)</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<input id="fk_fld_deleted" name="fk_fld_deleted"
+									class="form-control" value="${fld:fk_fld_deleted}"
+									type="text" size="30" maxlength="32" /> <input
+									id="fk_fld_deleted_hidden" name="fk_fld_deleted_hidden"
+									type="hidden" value="${fld:fk_fld_deleted_hidden}" />
+							</div>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<img src="${def:context}/images/search.gif" class="tool"
+									id="waijianshanchu" title="查询" /> <img
+									src="${def:context}/images/clear.gif" id="shanchu"
+									class="tool2" title="清除选择的内容" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">是否为公式</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input id="is_formula" name="is_formula" type="radio" value="0" />否
+								<input id="is_formula" name="is_formula" type="radio" value="1" />是
+							</div>
+						</div>
+						<div class="form-group"></div>
+						<div class="form-group"></div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">更新值时公式重要提示:所有值更新时都会被转化小写</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<textarea name="update_phrase" rows="3" class="form-control">${fld:update_phrase}</textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">备注</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<textarea type="text" name="remark" class="form-control"
+									rows="3" maxlength="200">${fld:remark}</textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<input type="hidden" name="actionroot" id="actionroot"
+		value="${def:actionroot}" />
+	<script language="javascript">
+$(document).ready(function() {
+	document.formEditor.table_id.value = "${fld:table_id}";
+	document.formEditor.field_type.value = "${fld:field_type}";
+	//编辑给radio赋值
+	setCheckboxValue("is_mandatory","${fld:is_mandatory@js}","formEditor");
+	setCheckboxValue("show_type","${fld:show_type@js}","formEditor");
+	setCheckboxValue("is_virtual_type","${fld:is_virtual_type@js}","formEditor");
+	setCheckboxValue("is_formula","${fld:is_formula@js}","formEditor");
+	$("#save_btn").unbind().on("click",function(){
+		var url = "${def:actionroot}/update";
+		ajaxCall(url,{
+				method: "post",
+				progress: true,
+				form: "formEditor",
+				button: "save_btn",
+				dataType: "script",
+				success: function() {
+				}
+		});
+	});
+	//查询条件清空图标字段类型
+	$("#pickClear").unbind().on("click",function(){
+		document.formEditor.type_alias.value='';
+		document.formEditor.field_type.value='';
+	});
+	//查询条件搜索图标字段类型
+	$("#pickOpenNotCenter").unbind().on("click",function(){
+		var url = "${def:context}/action/ccms/pub/pick/fieldtype?pickId=pickOpen&id=field_type&name=type_alias";
+		ccms.dialog.open({url:url,id:"pickOpen",width:500,height:300});
+	});
+	//查询条件清空图标外键SCHEMA
+	$("#schema").unbind().on("click",function(){
+		document.formEditor.fk_schema.value='';
+		document.formEditor.fk_schema_hidden.value='';
+	});
+	//查询条件搜索图标外键SCHEMA
+	$("#pickOpenNotCenter1").unbind().on("click",function(){
+		var url = "${def:context}/action/ccms/pub/pick/db_schema?pickId=pickOpen&id=fk_schema_hidden&name=fk_schema";
+		ccms.dialog.open({url:url,id:"pickOpen",width:500,height:300});
+	});
+	//查询条件清空图标外键表名
+	$("#biaoming").unbind().on("click",function(){
+		document.formEditor.fk_tab.value='';
+		document.formEditor.fk_tab_hidden.value='';
+	});
+	//查询条件搜索图标外键表名
+	$("#waijianbiaoming").unbind().on("click",function(){
+		var schema = document.formEditor.fk_schema.value;
+		if (schema =="" || schema==null){
+			$Dialog().notice("请选择外键SCHEMA!",1500);
+			return;
+		} 
+		if (schema!="")
+		{
+		var url = "${def:context}/action/ccms/pub/pick/db_table?pickId=pickOpen&id=fk_tab_hidden&name=fk_tab&schema=" + schema;
+		ccms.dialog.open({url:url,id:"pickOpen",width:500,height:300});
+		}
+	});
+	//查询条件清空图标外键字段
+	$("#waijian").unbind().on("click",function(){
+		document.formEditor.fk_fld_id.value='';
+		document.formEditor.fk_fld_id_hidden.value='';
+	});
+	//查询条件搜索图标外键字段
+	$("#pickOpenNotCenter2").unbind().on("click",function(){
+		var schema2 = document.formEditor.fk_schema.value;
+		var table2 = document.formEditor.fk_tab.value;
+		 if (schema2 =="" || schema2==null){
+			$Dialog().notice("请选择外键表名!",1500);
+			return;
+		} 
+		if (schema2!=""&&table2!=""){
+			var url = "${def:context}/action/ccms/pub/pick/db_column6?pickId=pickOpen&id=fk_fld_id_hidden&name=fk_fld_id&schema="+schema2+'&table='+table2;
+			ccms.dialog.open({url:url,id:"pickOpen",width:500,height:300});
+		}
+	});
+	//查询条件清空图标外键参考字段
+	$("#cankao").unbind().on("click",function(){
+		document.formEditor.fk_references.value='';
+		document.formEditor.fk_references_hidden.value='';
+	});
+	//查询条件搜索图标外键参考字段
+	$("#waijiancankaoziduan").unbind().on("click",function(){
+		var schema1 = document.formEditor.fk_schema.value;
+		var table1 = document.formEditor.fk_tab.value;
+		if (schema1 =="" || schema1==null||table1 =="" || table1==null){
+			$Dialog().notice("请选择外键表名!",1500);
+			return;
+		} 
+		if (schema1!=""&&table1!="")
+		{
+		var url = "${def:context}/action/ccms/pub/pick/db_column1?pickId=pickOpen&id=fk_references_hidden&name=fk_references&schema=" + schema1+'&table='+table1;
+		ccms.dialog.open({url:url,id:"pickOpen",width:500,height:300});
+		}
+	});
+	//查询条件清空图标外键表意字段
+	$("#biaoyi").unbind().on("click",function(){
+		document.formEditor.fk_fld_anchor.value='';
+		document.formEditor.fk_fld_anchor_hidden.value='';
+	});
+	//查询条件搜索图标外键表意字段
+	$("#waijianbiaoyi").unbind().on("click",function(){
+		var schema1 = document.formEditor.fk_schema.value;
+		var table1 = document.formEditor.fk_tab.value;
+		if (schema1 =="" || schema1==null||table1 =="" || table1==null){
+			$Dialog().notice("请选择外键表名!",1500);
+			return;
+		} 
+		if (schema1!=""&&table1!="")
+		{
+		var url = "${def:context}/action/ccms/pub/pick/db_column2?pickId=pickOpen&id=fk_fld_anchor_hidden&name=fk_fld_anchor&schema=" + schema1+'&table='+table1;
+		ccms.dialog.open({url:url,id:"pickOpen",width:500,height:300});
+		}
+	});
+	//查询条件清空图标外键删除标志字
+	$("#shanchu").unbind().on("click",function(){
+		document.formEditor.fk_fld_deleted.value='';
+		document.formEditor.fk_fld_deleted_hidden.value='';
+	});
+	//查询条件搜索图标外键删除标志字
+	$("#waijianshanchu").unbind().on("click",function(){
+		var schema1 = document.formEditor.fk_schema.value;
+		var table1 = document.formEditor.fk_tab.value;
+		if (schema1 =="" || schema1==null||table1 =="" || table1==null){
+			$Dialog().notice("请选择外键表名!",1500);
+			return;
+		} 
+		if (schema1!=""&&table1!="")
+		{
+		var url = "${def:context}/action/ccms/pub/pick/db_column3?pickId=pickOpen&id=fk_fld_deleted_hidden&name=fk_fld_deleted&schema=" + schema1+'&table='+table1;
+		ccms.dialog.open({url:url,id:"pickOpen",width:500,height:300});
+		}
+	});
+});
+</script>
+</body>
+</html>
+

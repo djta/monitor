@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		 放入回收箱
+	</summary>
+	
+	<log>false</log>
+	
+	<on-error>${def:actionroot}/error</on-error>
+
+	<transaction>
+		<classname>com.ccms.faq.RecycleTransaction</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+    <query>update_status.sql</query>
+    
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

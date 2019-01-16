@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<validator>
+	<parameter id="schema" type="varchar" required="true" label="schema" maxlen="150" />
+	<parameter id="table" type="varchar" required="true" label="table" maxlen="150" />
+	<parameter id="control" type="varchar" required="true" label="control" maxlen="150" />	
+	<parameter id="control_alias" type="varchar" required="true" label="control_alias" maxlen="150" />	
+</validator>

@@ -1,0 +1,1 @@
+select tuid as service_tuid from wx_service t where t.wxid= ${fld:weixin_id}

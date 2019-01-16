@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+    <parameter id="pk_value" type="varchar" required="false" label="pk_value" maxlen="32"/>
+	<parameter id="table_code" type="varchar" required="false" label="table_code" maxlen="32"/>
+	<!-- 文本框的id -->
+	<parameter id="id" type="varchar" required="false" label="id" maxlen="32"/>
+	<!-- 弹出框的id -->
+	<parameter id="pickId" type="varchar" required="false" label="pickId" maxlen="32"/>
+</validator>

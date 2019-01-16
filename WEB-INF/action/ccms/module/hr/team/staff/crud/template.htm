@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">
+				团组人员管理<span id="typeTitleSpan"></span>
+			</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<form class="form-horizontal" role="form" method="post"
+					id="searchForm" name="searchForm">
+					<input name="sort" type="hidden" value="userlogin" preserve="true" />
+					<input name="order" type="hidden" value="desc" preserve="true" />
+					<input name="pageNo" type="hidden" value="" preserve="true" /> <input
+						name="totalPages" type="hidden" value="" preserve="true" /> 
+					<div class="form-group">
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+							<input class="form-control" id="name" name="name" type="text"
+								size="30" value="" maxlength="35" placeholder="请输入名称" /> <input
+								preserve="true" id="team_id" name="team_id" type="hidden"
+								value="${fld:team_id}" />
+						</div>
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+							<button class="btn btn-primary btn-md" type="button"
+								id="search_btn">查询</button>
+							<button class="btn btn-primary btn-md" type="button"
+								id="search_reset_btn">清空</button>
+							<button class="btn btn-primary btn-md" type="button"
+								id="addnew_btn">新增</button>
+						</div>
+					</div>
+				</form>
+				<!--grid view response-->
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>操作</th>
+							<th class="sortable" code="userlogin">登录代码</th>
+							<th class="sortable" code="name">名称</th>
+						</tr>
+					</thead>
+					<tbody id="datagridTemplate" style="display: none">
+						<tr>
+							<td align="center">
+								<button class="btn btn-primary btn-md delete_btn" type="button"
+									code="#tuid#">删除</button>
+							</td>
+							<td align="center">#userlogin#</td>
+							<td align="center">#name#</td>
+						</tr>
+					</tbody>
+					<tbody id="datagrid"></tbody>
+				</table>
+				<div class="pageDiv">
+					<ul class="pagination"></ul>
+				</div>
+			</div>
+		</div>
+	</div>
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}"/>
+<script language="JavaScript">
+$(document).ready(function () {
+	$("#addnew_btn").unbind().on("click",function(){
+		ccms.dialog.open({
+			url : "${def:context}${def:actionroot}/insertStaff/crud?pickId=pickid&team_id="+"${fld:team_id}" ,id:"pickid"});
+	});
+	$Search({datagrid: "datagrid", formId: "searchForm", success: function () {
+		//删除按钮
+		$(".delete_btn").unbind().on("click", function () {
+			var obthis = $(this);
+			$Dialog().confirm("确定要删除吗？",function(){
+				if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+					var url = "/action/ccms/module/hr/team/staff/delete?id="+obthis.attr("code");
+					ajaxCall(url,{
+						method: "post",
+						progress: true,
+						dataType: "script",
+						success: function() {
+						 window.location.reload();			
+						}
+					});
+				}
+			});
+		});
+	}}).initSearchBtn().searchData(1);
+});
+                
+</script>
+</body>
+</html>
+

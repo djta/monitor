@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="daochu_userall" type="varchar" required="false" label="userall" />
+	<parameter id="daochu_skill_id" type="integer" required="false" label="skill_id" />
+	<parameter id="daochu_staff_category" type="varchar" required="false" label="staff_category" />
+	<parameter id="daochu_zhuangtai" type="integer" required="false" label="zhuangtai" />
+	<parameter id="org_id" type="integer" required="false" label="org_id"/>
+	
+</validator>

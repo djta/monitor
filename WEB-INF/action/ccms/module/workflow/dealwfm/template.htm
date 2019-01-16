@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" type="text/css" href="${def:context}/js/ccms/css/timeline.css"/>
+<script language="JavaScript" type="text/javascript" src="${def:context}/action/pub/dtree"></script>
+<title>选取数据</title>
+${inc:/action/ccms/pub}
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+  		<h2 class="panel-title">流程处理
+  		<button id="wfmReturnToList" type="button" style="margin-top:-5px;display:none;" class="btn btn-primary btn-md pull-right">返回</button>
+  		<button id="wfmstatebtn" type="button" style="margin-top:-5px;display:none;" class="btn btn-primary btn-md pull-right">状态</button>
+  		</h2>
+  	</div>
+	<div class="panel-body col_main_body"  id="panel_body_content">
+		 <ul class="timeline animated">
+			 <row-history>
+	          <li class="active">
+	            <div class="timeline-icon">
+	              <div class="bg-primary">
+	                <i class="glyphicon glyphicon-download"></i>
+	              </div>
+	            </div>
+	            <div class="timeline-content">
+	              <p>
+	               <font size="5">${fld:node_name}</font>
+	              </p>
+	              </p>
+	               ${fld:name}&nbsp;&nbsp; ${fld:finish_date@yyyy-MM-dd  HH:mm}
+	              </p>
+	              <p id="p${fld:history_id}">
+	             	 ${fld:comments}
+	              </p>
+	            </div>
+	          </li>
+			</row-history>
+			 <li class="active" id="formDiv">
+			 	 <div class="timeline-icon">
+	              	<div class="bg-primary">
+	                	<i class="glyphicon glyphicon-pencil"></i>
+	              	</div>
+	            </div>
+	            <div class="timeline-content">
+	            	<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+						<div class="row clearfix">
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label required">意见:</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<textarea name="_entry_comment_" id="_entry_comment_"  class="form-control" ></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label required">操作:</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<rows>
+										<input class="form-control showAssignTr" type="radio" id="__action_id__" name="__action_id__" value="${fld:action_id}"  node_type="${fld:node_type}" step_type="${fld:step_type}" pre_class="${fld:pre_class}" next_node="${fld:next_node}"  />${fld:action_name}<br/>
+									</rows>
+								</div>
+							</div>
+							<div class="form-group" id="assignUserTr" style="display:none">
+								<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label required">人员:</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+										<input id="__assign_user__" name="__assign_user__" type="hidden" value="" />
+										<div id="assign_user_div"  style="display:none">
+										</div>
+								</div>
+							</div>
+							<div class="form-group text-center" >
+								<button class="btn btn-primary btn-md" type="button" id="submitButton" style="display:none;">提交</button>
+								<div id="childWfmDiv" style="display:inline;">
+									<crows>
+										<input type="button" class="btn_blue" value="${fld:node_name}" onclick="dealWfmClass.openChildWfm('${fld:p_pk_value}','${fld:document_id}','${fld:child_wfm_id}','${fld:parent_id}','${fld:parent_node_id}','${fld:step_type}')" />
+									</crows>
+								</div>
+								<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+								<input type="hidden" name="next_node_type" id="next_node_type" value="" />
+								<input type="hidden" name="next_step_type" id="next_step_type" value="" />
+								<input type="hidden" name="pre_class" id="pre_class" value="" />
+							</div>
+						</div>
+						<erows>
+						<input name="__wfm_id__"  value="${fld:wfm_id}" type="hidden" preserve="true" />
+						<input name="__wfentry_id__"  value="${fld:entry_id}" type="hidden" preserve="true" />
+						<input name="__current_step_id__"  value="${fld:__current_step_id__}" type="hidden" preserve="true" />
+						<input name="__pk_value__"  value="${fld:pk_value}" type="hidden" preserve="true" />
+						</erows>
+					</form>
+	            </div>
+			 </li>
+		</ul>
+	</div>
+</div>
+
+</body>
+
+<script type="text/javascript">
+function DealWfmClass(){
+	this.init=function(){
+		var obthis=this;
+		$("#panel_body_content").animate({
+			 scrollTop: $("#panel_body_content")[0].scrollHeight
+		}, 500);
+		var is_have = document.forms["formEditor"].elements["__action_id__"];
+		if(!is_have){
+			$("#formDiv").hide();
+			$("#footerDiv").hide();
+		}else{
+			$("#formDiv").show();
+			$("#footerDiv").show();
+		}
+		//check is pc then visible btn
+		if(!$Mobile.any()){
+			$("#wfmstatebtn").show();
+			$("#wfmstatebtn").unbind();
+			$("#wfmstatebtn").unbind().on("click",function(){
+				obthis.wfmstate();
+			});
+
+		}else{
+			$("#wfmstatebtn").hide();
+		}
+		$("#wfmReturnToList").show();
+		$("#wfmReturnToList").unbind().on("click",function(){
+			obthis.wfmReturnToList();
+		});
+		$("#submitButton").unbind();
+		$("#submitButton").unbind().on("click",function(){
+			obthis.updateWfm();
+		});
+		 $(".showAssignTr").unbind().on('ifChecked', function(event){ //ifCreated 事件应该在插件初始化之前绑定 
+			var next_node_type=$(this).attr("node_type");
+			var next_step_type=$(this).attr("step_type");
+			var pre_class=$(this).attr("pre_class");
+			var next_node=$(this).attr("next_node");
+			obthis.showAssignTr(next_node_type, next_step_type, pre_class,next_node);
+	    });
+		 /**
+		$(".showAssignTr").unbind();
+		$(".showAssignTr").unbind().on("click",function(){
+			var next_node_type=$(this).attr("node_type");
+			var next_step_type=$(this).attr("step_type");
+			var pre_class=$(this).attr("pre_class");
+			var next_node=$(this).attr("next_node");
+			obthis.showAssignTr(next_node_type, next_step_type, pre_class,next_node);
+		});*/
+	};
+	this.wfmReturnToList = function(){
+		if (typeof(top.dealWfmBackUrl) != undefined && top.dealWfmBackUrl != null && (top.dealWfmBackUrl.startsWith("/") || top.dealWfmBackUrl.startsWith("http"))){
+			gotoBack();/*与top.dealWfmBackUrl无关了*/
+		}else{
+			window.history.go(-4);
+		}
+	};
+	this.wfmstate=function(){
+		var url = "${def:context}/action/ccms/wfmgen/show_status?entry_id=${fld:__wfentry_id__}";
+		ccms.dialog.open({url:url,id:"workflow"});
+	};
+	this.updateWfm=function(){
+
+		if(!GetRadioValue("__action_id__","formEditor")){
+			alert("请选择操作！","当前无可用操作，请知晓！");
+			return false;
+		}
+
+		var next_node_type =$("#next_node_type").val();
+		var next_step_type =$("#next_step_type").val();
+		//如果当前选择的操作指向的下一节点为子流程节点或者会签节点，则默认把数据分配人分给当前人
+		//next_step_type == "2"为汇聚节点
+		if(next_step_type == "2" || next_step_type == "3" || next_step_type == "4"){
+			document.formEditor.__assign_user__.value = "${def:user}";
+		}
+		
+		var pre_class =$("#pre_class").val();
+		if(document.formEditor.__assign_user__.value == "" && $.trim($("#assign_user_div").html())!="" && pre_class == "" &&  next_node_type=="1" ){
+			$Dialog().alert("请指定下一流程处理人！");
+			return false;
+		}
+		var url="${def:actionroot}/updatewfm";
+		ajaxCall(url,{
+			method: "POST",
+			form:"formEditor",	
+			progress: true,
+			dataType: "script",
+			success: function(){
+			}
+		});
+	};
+	this.openChildWfm=function(p_pk_value,document_id,child_wfm_id,parent_id,parent_node_id,step_type){
+		if(parent_id!="" && parent_node_id!="" && document_id !=""){
+		    var addnew_first=3;
+			var url = '${def:context}/action/doc?document_id=' + document_id +'&__wfm_id__='+(step_type=="3"?"":child_wfm_id)+'&__p_pk_value__=' + p_pk_value + '&__parent_wfentry_id__=' + parent_id + '&__parent_node_id__=' + parent_node_id + '&__form_action__='+addnew_first+'&__search_action__=0';
+			var parent=window.dialogArguments;
+			if(parent){
+				parent.parent.location.href = url;
+				window.close();
+			}
+		}
+	};
+	this.showAssignTr=function(next_node_type,next_step_type,pre_class,next_node){
+		//非结束结点，并且不是子流程节点和会签节点，Action前置类为空      汇聚节点
+		if((next_node_type=="2" || next_node_type=="1") && (next_step_type=="1" || next_step_type=="3"|| next_step_type=="4" )){
+			$("#assignUserTr").hide();
+			$("#submitButton").show();
+		}else{
+			this.selectStaff(next_step_type,next_node);
+		}
+		$("#__assign_user__").val('');
+		$("#__assign_name__").val('');
+		$("#next_node_type").val(next_node_type);
+		$("#next_step_type").val(next_step_type);
+		$("#pre_class").val(pre_class);
+	};
+	this.selectStaff=function(next_step_type,next_node){
+		var obthis=this;
+		var url='${def:context}${def:actionroot}/select-staff?entry_id=${fld:__wfentry_id__}&action_id='+GetRadioValue('__action_id__','formEditor')+"&step_type="+next_step_type+"&next_node="+next_node+"&current_step_id=${fld:__current_step_id__}";
+		ajaxCall(url,{
+			method: "get",
+			progress: true,
+			response:"assign_user_div",
+			dataType: "html",
+			success: function(){
+				$("#submitButton").show();
+				if($.trim($("#assign_user_div").html())==""){
+					$("#assignUserTr").hide();
+				}else{
+					$("#assign_user_div").show();
+					$("#assignUserTr").show();
+				}
+				$('.radioClick').iCheck({
+				    radioClass: 'iradio_square-blue',
+				    increaseArea: '20%'
+				});
+			    $(".radioClick").on('ifChecked', function(event){ //ifCreated 事件应该在插件初始化之前绑定 
+			    	var userlogin=$(this).attr("userlogin").split(";")[0];
+					$("#__assign_user__").val(userlogin);
+			    });
+			    /**
+				$(".radioClick").unbind();
+				$(".radioClick").unbind().on("click",function(){
+					var userlogin=$(this).attr("userlogin");
+					$("#__assign_user__").val(userlogin);
+				});*/
+				$("#panel_body_content").animate({
+					 scrollTop: $("#panel_body_content")[0].scrollHeight
+				}, 500);
+			}
+		});
+	};
+}
+var dealWfmClass=null;
+$(document).ready(function() {
+	dealWfmClass=new DealWfmClass();
+	dealWfmClass.init();
+});
+</script>
+
+</html>

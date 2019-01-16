@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+    <parameter id="report_id" type="varchar" required="true" label="report_id"/>
+    <parameter id="tuid" type="varchar" required="true" label="tuid"/>
+    <parameter id="remark" type="varchar" required="false" label="remark"/>
+    <parameter id="title" type="varchar" required="true" label="title"/>
+    <parameter id="title_x" type="varchar" required="true" label="title_x"/>
+    <parameter id="title_y" type="varchar" required="true" label="title_y"/>
+    <parameter id="title_z" type="varchar" required="false" label="title_z"/>
+    <parameter id="field_x" type="integer" required="true" label="field_x"/>
+    <parameter id="field_y" type="integer" required="true" label="field_y"/>
+    <parameter id="field_z" type="integer" required="false" label="field_z"/>
+    <parameter id="format_x" type="varchar" required="false" label="format_x"/>
+    <parameter id="format_y" type="varchar" required="false" label="format_y"/>
+    <parameter id="format_z" type="varchar" required="false" label="format_z"/>
+    <parameter id="chart_type" type="varchar" required="true" label="chart_type"/>
+    <parameter id="is_3d" type="varchar" required="true" label="is_3d"/>
+    <parameter id="callback_js" type="varchar" required="false" label="callback_js"/>
+
+</validator>
+
+

@@ -1,0 +1,1 @@
+select 1 from cc_register where mobile = ${fld:mobile} and status = 1 

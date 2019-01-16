@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/ccms/pub}
+<title>外呼主题</title>
+</head>
+<body>
+	<!--addnew/edit form-->
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="formTitle">新增</h4>
+				</div>
+				<div class="modal-body">
+					<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+						<input type="hidden" name="vc_code" id="vc_code" value="" />
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">
+								 加载模版[<a href="javascript:void(0);" onclick="javascript:showAdvance();" title="显示配置选项">高级选项</a>]
+							</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input id="tuid" name="tuid" type="hidden" value="" /> 
+								<input id="subject_id" name="subject_id" type="hidden" value="${fld:subject_id}" preserve="true" /> 
+								<input id="campaign_id" name="campaign_id" type="hidden" value="${fld:campaign_id}" preserve="true" /> 
+								<input id="template_id" name="template_id" type="hidden" size="35" value="" /> 
+								<input id="table_id" name="table_id" type="hidden" size="35" value="" /> 
+								<input id="form_id" name="form_id" type="hidden" size="35" value="" /> 
+								<input id="cust_name" name="cust_name" type="hidden" size="35" value="" /> 
+								<input id="cust_code" name="cust_code" type="hidden" size="35" value="" /> 
+								<input id="cust_sex" name="cust_sex" type="hidden" size="35" value="" /> 
+								<input id="cust_name_lable" name="cust_name_lable" type="hidden" size="35" value="" /> 
+								<input id="cust_code_lable" name="cust_code_lable" type="hidden" size="35" value="" /> 
+								<input id="cust_sex_lable" name="cust_sex_lable" type="hidden" size="35" value="" /> 
+								<input id="phone_number1" name="phone_number1" type="hidden" size="35" value="" /> 
+								<input id="phone_number2" name="phone_number2" type="hidden" size="35" value="" /> 
+								<input id="phone_number3" name="phone_number3" type="hidden" size="35" value="" /> 
+								<input id="phone_number4" name="phone_number4" type="hidden" size="35" value="" /> 
+								<input id="phone_number5" name="phone_number5" type="hidden" size="35" value="" /> 
+								<input id="number_lable1" name="number_lable1" type="hidden" size="35" value="" /> 
+								<input id="number_lable2" name="number_lable2" type="hidden" size="35" value="" /> 
+								<input id="number_lable3" name="number_lable3" type="hidden" size="35" value="" /> 
+								<input id="number_lable4" name="number_lable4" type="hidden" size="35" value="" /> 
+								<input id="number_lable5" name="number_lable5" type="hidden" size="35" value="" /> 
+								<input id="sms_number" name="sms_number" type="hidden" size="35" value="" /> 
+								<input id="sms_number_lable" name="sms_number_lable" type="hidden" size="35" value="" /> 
+								<input id="email" name="email" type="hidden" size="35" value="" /> 
+								<input id="email_lable" name="email_lable" type="hidden" size="35" value="" /> 
+								<input id="pk_value" name="pk_value" type="hidden" size="35" value="" /> 
+								<input id="pk_value_lable" name="pk_value_lable" type="hidden" size="35" value="" /> 
+								<input id="bz_pk_value" name="bz_pk_value" type="hidden" size="35" value="" /> 
+								<input id="bz_pk_value_lable" name="bz_pk_value_lable" type="hidden" size="35" value="" /> 
+								<input id="search_table_id" name="search_table_id" type="hidden" size="35" value="" /> 
+								<input id="search_form_id" name="search_form_id" type="hidden" size="35" value="" /> 
+								<input id="bz_type1" name="bz_type1" type="hidden" size="35" value="" /> 
+								<input id="ob_category" name="ob_category" type="hidden" size="35" value="" /> 
+								<select id="load_template" name="load_template" onchange="loadTemplate(this.value);" class="form-control" "/>
+									<option value="">请选择模版</option>
+									<template-name>
+									<option value="${fld:job_id}">${fld:template_name}</option>
+									</template-name>
+								</select>
+							</div>
+						</div>
+
+						<div id="advance_div">
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 "> 
+									选择模板[<a href="javascript:void(0);" onclick="javascript:showAdvances();" title="维护模板信息">维护模板</a>]
+								</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7"></div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 "> 
+									选择模型[<a href="javascript:void(0);" onclick="javascript:showModel();" title="维护模型信息">维护模型</a>]
+								</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<select id="model_id" name="model_id" class="form-control"" >
+										<option value="">请选择模型</option>
+										<model-name>
+										<option value="${fld:model_id}">${fld:model_name}</option>
+										</model-name>
+									</select>
+								</div>
+							</div>
+
+
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 "> 
+									上级活动主题<br>(如果选择了本项,则必须同时选择参照任务) 
+								</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<input id="parent_id" name="parent_id" type="hidden" value="" /> 
+									<input type="text" id="parent_name" name="parent_name" size="30" readonly class=" form-control readonly" value="" style="display: inline-block; width: 86%" /> 
+									<img src="${def:context}/images/search.gif" class="tool" id="seach1" title="查询活动主题" /> 
+									<img src="${def:context}/images/clear.gif" onclick="pickClear('formEditor','parent_id','parent_name');" class="tool2" title="清除选择的内容" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 "> 参照任务 </label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<input id="reference_node_id" name="reference_node_id" type="hidden" value="" /> 
+									<input type="text" id="reference_node_name" name="reference_node_name" size="30" readonly class="form-control  readonly" value="" style="display: inline-block; width: 86%" /> 
+									<img src="${def:context}/images/search.gif" class="tool" id="seach2" title="查询活动主题" /> 
+									<img src="${def:context}/images/clear.gif" onclick="pickClear('formEditor','reference_node_id','reference_node_name');" class="tool2" title="清除选择的内容" />
+								</div>
+							</div>
+
+
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 "> 参照任务结果状态 </label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<select id="result_type" name="result_type" onclick="getCallType(this.value);" class=" form-control ">
+										<option value="">任 意</option>
+										<result-type>
+										<option value="${fld:result_type}">${fld:result_type_name}</option>
+										</result-type>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 "> 参照任务拨打状态 </label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<select id="call_type" name="call_type" class=" form-control ">
+										<option value="">任 意</option>
+										<call-type>
+										<option value="${fld:call_type}">${fld:call_type_name}</option>
+										</call-type>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 "> 参照任务配额状态 </label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<select id="quota_status" name="quota_status" class=" form-control ">
+										<option value="2">任 意</option>
+										<option value="0">配额未满</option>
+										<option value="1">配额已满</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<input id="campaign_type" name="campaign_type" type="hidden" value="${fld:campaign_type}" preserve="true" />
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">外呼主题名称</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input id="job_name" name="job_name" type="text" size="35" value="" class="form-control" />
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">除重范围</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7" style="margin-top: 5px">
+								按活动<input type="radio" id="task_duplicate_scope" class="form-control" name="task_duplicate_scope" checked="checked" value="0" /> &nbsp;&nbsp; 
+								按主题<input type="radio" id="task_duplicate_scope" class="form-control" name="task_duplicate_scope" value="1" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">除重对象</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7" style="margin-top: 5px">
+								按客户<input type="radio" id="task_duplicate_flag" class="form-control" name="task_duplicate_flag" checked="checked" value="0" /> &nbsp;&nbsp; 
+								按CASE(Leads)<input type="radio" id="task_duplicate_flag" class="form-control" name="task_duplicate_flag" value="1" /> &nbsp;&nbsp; 
+								按CASE识别(Leads+更新时间)<input type="radio" id="task_duplicate_flag" class="form-control" name="task_duplicate_flag" value="2" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">数据推送模式</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<select id="data_push_flag" name="data_push_flag" class="form-control">
+									<option value="">不推送</option>
+									<option value="0">OnGoing</option>
+									<option value="1">跟进提醒</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">数据切换模式</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<select id="data_switch_flag" name="data_switch_flag" class="form-control">
+									<option value="">不切换</option>
+									<option value="0">OnGoing</option>
+									<option value="1">跟进提醒</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">轮次类型</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<select id="round_type" name="round_type" class="form-control">
+									<option value=""></option>
+									<option value="1">售前第一轮</option>
+									<option value="2">售前第二轮</option>
+									<option value="3">售前第三轮</option>
+									<option value="4">售前第四轮</option>
+									<option value="11">车主第一轮</option>
+									<option value="12">车主第二轮</option>
+									<option value="13">车主第三轮</option>
+									<option value="14">车主第四轮</option>
+									<option value="20">投诉回访</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">预约时间精度(分钟)(目前外呼强制指定预约精度为5分钟)</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input id="reserve_accuracy" name="reserve_accuracy" type="text" value="" preserve="true" class="form-control" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">数据配额</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input id="job_quota" name="job_quota" type="text" size="6" value="999999" preserve="true" class="form-control" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">任务优先级(0最高,1第二)</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input id="job_priority" name="job_priority" type="text" size="6" value="1" preserve="true" class="form-control" />
+							</div>
+						</div>
+
+
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">启始日期</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input id="from_date" name="from_date" type="text" value="" preserve="true" class="form-control" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">结束日期</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input id="to_date" name="to_date" type="text" value="" preserve="true" class="form-control" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">是否能够手工推送</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7" style="margin-top: 5px">
+								是<input type="radio" id="if_manual_push_flag" class="form-control" name="if_manual_push_flag" checked="checked" value="1" /> &nbsp;&nbsp; 
+								否<input type="radio" id="if_manual_push_flag" class="form-control" name="if_manual_push_flag" value="0" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">备注</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<textarea class="form-control" rows="3" name="remark" id="remark"></textarea>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+						<button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+						<button type="button" id="reset_btn" class="btn btn-primary btn-md">重&nbsp;置</button>
+						<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">外呼主题</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm">
+				<input name="sort" type="hidden" value="id" preserve="true" /> 
+				<input name="order" type="hidden" value="desc" preserve="true" /> 
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+
+				<div class="form-group">
+					<label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label">专题名称</label>
+					<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+						<input name="campaign_id" type="hidden" value="${fld:campaign_id}" preserve="true" /> 
+						<input type="text" id="subject_name1" name="subject_name1" size="30" readonly class="form-control" value="${fld:subject_name}" />
+					</div>
+
+					<label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label">活动名称</label>
+					<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+						<input type="text" id="campaign_name" name="campaign_name" size="30" readonly class="form-control" value="${fld:campaign_name}" preserve="true" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label">任务名称</label>
+					<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+						<input name="job_name2" type="text" size="35" value="" class="form-control" />
+					</div>
+
+					<div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+						<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+						<button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>操作</th>
+						<th></th>
+						<th class="sortable" code="xuhao">序号</th>
+						<th class="sortable" code="tuid">主题代码</th>
+						<th class="sortable" code="job_name">外呼主题</th>
+						<th class="sortable" code="template_name">模型名称</th>
+						<th class="sortable" code="model_name">模板名称</th>
+						<th class="sortable" code="from_date">开始时间</th>
+						<th class="sortable" code="to_date">结束时间</th>
+						<th class="sortable" code="is_enabled">是否启用</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td class="text-center" nowrap>
+							<button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">编辑</button>
+							<button class="btn btn-primary btn-md delete_btn" type="button" code="#tuid#">删除</button>
+						</td>
+						<td class="text-center" nowrap>
+							#url_enabled#
+							<!--a href="javascript:void(0);" onclick="javascript:showTeam('#tuid#');" title="工作组信息">指定工作组</a>
+							<a href="javascript:void(0);" onclick="javascript:showSkill('#tuid#');" title="技能信息">限定技能</a-->
+							<a href="javascript:void(0);" onclick="javascript:previewSql('#tuid#','#search_table_id#','#search_form_id#');" title="预览SQL语句">预览SQL语句</a>
+							<a href="javascript:void(0);" onclick="javascript:showNode('#tuid#');" title="设置流程">设置流程</a>
+							<a href="javascript:void(0);" onclick="javascript:showDoc('#tuid#');" title="文档配置">文档配置</a>
+							#show_pool#
+						</td>
+						<td class="text-center">#xuhao#</td>
+						<td class="text-center">#tuid#</td>
+						<td class="text-center">#job_name#</td>
+						<td class="text-center">#template_name#</td>
+						<td class="text-center">#model_name#</td>
+						<td class="text-center">#from_date#</td>
+						<td class="text-center">#to_date#</td>
+						<td class="text-center">#is_enabled#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<iframe id="detail" name="detail" marginwidth="0" scrolling="no" frameborder="0" style="min-height:800px;width:100%;visibility:hidden">
+	</iframe>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+	<script language="JavaScript">
+	var search=null;
+$(document).ready(function() {
+	$('#advance_div').hide();
+	var obj = $Crud({
+		formId:"formEditor",
+		button:"save_btn",
+		bpkField:"tuid",
+		insertBack:function(){
+			search.searchData();
+		},
+		updateBack:function(){
+			search.searchData();
+		},
+		deleteBack:function(){
+			search.searchData();
+		},
+		addNewBack:function(){
+			$("#formTitle").html("新增");
+		},
+		editBack:function(){
+			$("#formTitle").html("修改");
+		},
+		validate:function(){
+			var flag=$("#formEditor").validate({
+				rules : {
+					job_name : { required:true},		
+					load_template : {required:true} 
+				},
+				messages: {
+					job_name:{
+						required:"请输入外呼主题名称！"
+					},
+					load_template:{
+						required:"请选择模板！"
+				    }
+				}
+			});
+			return flag;
+		}
+	}).init();
+	this.search=search;
+	search=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		$("table").css("table-layout", "auto");
+		$(".edit_btn").unbind().on("click", function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				obj.edit({id:$(this).attr("code")});
+			}
+		});
+		
+		$("#seach1").unbind().on("click",function(){
+			var url = "${def:context}${def:actionroot}/pickproject/form?campaign_id="+${fld:campaign_id}
+			ccms.dialog.open({url:url,id:"dialogPic",width:600,height:500});
+		});
+		 
+		$("#seach2").unbind().on("click",function(){
+			var url = "${def:context}${def:actionroot}/pickproject1/form?job_id="+$('#parent_id').val();
+			ccms.dialog.open({url:url,id:"dialogPic",width:600,height:500});
+		});
+		
+		$(".delete_btn").unbind().on("click", function(){
+			var obthis = $(this);
+			$Dialog().confirm("确定要删除该条数据吗?", function(){
+				if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+					obj.del({id:obthis.attr("code")});
+				}
+			});
+		});
+	}}).initSearchBtn().searchData(1);
+	$Dialog().date($('#from_date'));
+	$Dialog().date($('#to_date'));
+});
+function showAdvance(){
+	if($('#advance_div').is(':hidden')){
+		$('#advance_div').show();
+	}else{
+		$('#advance_div').hide();
+	}
+}
+
+function showAdvances() {
+	var url="${def:context}${def:actionroot}/advance/crud?campaign_id="+$('#campaign_id').val();	 
+	ccms.dialog.open({url:url,id:"dialogPic",width:1000,height:700});
+}
+
+function showPool(search_form_id,search_table_id,job_id){
+	var url = '${def:context}${def:actionroot}/pool/crud?form_id=' + search_form_id + '&table_id='+ search_table_id + '&job_id=' + job_id;
+	ccms.dialog.open({url:url,id:"dialogPic"});
+}
+function showModel() {
+	var url="${def:context}${def:actionroot}/model/crud?subject_id="+$('#campaign_id').val();	 
+	ccms.dialog.open({url:url,id:"dialogPic",width:1000,height:700});
+}
+
+function loadTemplate(job_id){
+	var uri="${def:context}${def:actionroot}/loadtemplate?job_id="+job_id;
+  	ajaxCall(uri,{
+		method: "get",
+		progress: true,
+		dataType: "script",
+		success: function() {
+		}
+	});
+}
+
+function showNode(id){
+	$("#detail")[0].style.visibility = "visible";
+	$("#detail")[0].src ='${def:context}${def:actionroot}/webflow?job_id=' + id;
+}
+
+function showDoc(id){
+	$("#detail")[0].style.visibility = "visible";
+	$("#detail")[0].src ='${def:context}${def:actionroot}/doc/crud?job_id=' + id;
+}
+
+function setJobStatus(id,status){
+    return ajaxCall("${def:actionroot}/status" + "?id=" + id + "&enabled_status=" + status,{
+		method: "get",
+		progress: true,
+		dataType: "script",
+		success: function() {
+		}
+	});
+}
+
+function getCallType(code){
+    return ajaxCall("${def:actionroot}/getcalltype" + "?code=" + code,{
+		method: "get",
+		progress: true,
+		dataType: "script",
+		success: function() {
+		}
+	});
+}
+
+function previewSql(job_id,table_id,form_id){
+	var url = '${def:context}${def:actionroot}/preview_sql/crud?table_id=' + table_id + '&form_id=' + form_id + '&job_id=' + job_id;
+	ccms.dialog.open({url:url,id:"dialogPic"});
+}
+
+function pickSelect(id, description){
+	var pickForm = null;
+	var pickControl = null;
+	var idControl = null;
+	var pickOtherControl = new Array();
+	if(pickForm != null && pickForm != undefined ) {
+		for(var i=2;i<pickSelect.arguments.length;i++){
+			if(document.forms[pickForm].elements[pickOtherControl[i-2]] !=null && document.forms[pickForm].elements[pickOtherControl[i-2]]!= undefined)
+			 	document.forms[pickForm].elements[pickOtherControl[i-2]].value = pickSelect.arguments[i];
+		}
+		document.forms[pickForm].elements[idControl].value = id;
+		document.forms[pickForm].elements[pickControl].value = description;
+
+    	//如果控件onchange事件不为空,则执行
+	    if(typeof(document.forms[pickForm].elements[idControl].onchange)=="function")
+			document.forms[pickForm].elements[idControl].onchange();
+
+		if(typeof(document.forms[pickForm].elements[pickControl].onchange)=="function")
+			document.forms[pickForm].elements[pickControl].onchange();
+        
+	}else{
+		for(var i=2;i<pickSelect.arguments.length;i++){
+			document.getElementById(pickOtherControl[i-2]).value = pickSelect.arguments[i];
+		}
+		document.getElementById(idControl).value = id;
+		document.getElementById(pickControl).value = description;
+
+    	//如果控件onchange事件不为空,则执行
+		if(document.getElementById(idControl).getAttribute("onchange")!=""){
+			eval(document.getElementById(idControl).getAttribute("onchange"));
+		}
+	 	if(document.getElementById(pickControl).getAttribute("onchange")!=""){
+			eval(document.getElementById(pickControl).getAttribute("onchange"));
+		}
+	}
+}
+</script>
+</body>
+</html>

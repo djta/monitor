@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/error/validation/ajax">
+    <parameter id="campaign_id" type="varchar" required="true" label="活动编号" maxlen="32"/>
+    <parameter id="scope_type" type="varchar" required="true" label="活动范围类型" maxlen="32"/>
+    <parameter id="start_date" type="date" required="false" label="开始时间"/>
+    <parameter id="end_date" type="date" required="false" label="结束时间"/>
+     <parameter id="dealer_code" type="varchar" required="false" label="结束时间"/>
+</validator>
+

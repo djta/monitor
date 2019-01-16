@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		upload
+	</summary>
+	
+	<log>false</log>
+	
+	<on-error>${def:actionroot}/uploaderror</on-error>
+
+	<transaction>
+        <classname>com.ccms.imp.UploadExcelImport</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-import.sql" source="sql" scope="transaction" />
+		<recordset id="query-import_table.sql" source="sql" scope="transaction" />
+		<recordset id="query_all_domain.sql" source="sql" scope="transaction" />
+		<recordset id="query_all_mapping.sql" source="sql" scope="transaction" />
+		<recordset id="query-import_field.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<print mode="form" recordset="_request" />
+		<print mode="table" recordset="rsTitle" tag="trows" />
+		<print mode="table" recordset="rsTitle" tag="trows2" />
+	</output>
+
+</config>

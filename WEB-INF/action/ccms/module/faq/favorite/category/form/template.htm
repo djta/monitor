@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/ccms/pub}
+<title>FAQ收藏</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">选择收藏类别</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form"   method="post" id="searchForm" name="searchForm">
+			<input name="sort" type="hidden" value="description" preserve="true"/>
+			<input name="order" type="hidden" value="desc" preserve="true" /> 
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+			<div class="form-group">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+					<input name="name" class="form-control"  type="text" size="15" value="" maxlength="35" placeholder="请输入名称"/> 
+				</div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+					<button class="btn btn-primary btn-md" type="submit" id="search_btn">查询</button>
+					<button class="btn btn-primary btn-md" type="button" id="btn_reset">清空</button>
+					<button class="btn btn-primary btn-md" type="button" id="addnew_btn"  title="增加收藏类别" >新增类别</button>
+				</div>
+			</div>
+		</form>
+		<table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="sortable" code="description" >类别名称</th>
+            </tr>
+            </thead>
+            <tbody id="datagridTemplate" style="display:none">
+                <tr onclick="selectItem('#id#','#description#')" title="选择" style="cursor:pointer;">
+					<td align="center"  title="选择收藏类别">#description#</td>
+				</tr>
+            </tbody>
+            <tbody id="datagrid">
+            </tbody>
+        </table>
+        <div class="pageDiv">
+            <ul class="pagination">
+            </ul>
+        </div>
+	</div>
+</div>
+
+<!-- 新增 -->
+<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="formTitle">新增收藏类型</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+                    <input type="hidden" id="tuid" name="tuid" default="0" value=""/>
+                    <div class="row clearfix">
+                        <div class="form-group">
+                            <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">类别名称</label>
+                            <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+                                <input name="name" class="form-control"  id="name" type="text" size="20" maxlength="128" value=""/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+                    <button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+                    <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" name="faq_id" id="faq_id" value="${fld:id}" preserve="true"/>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+</body>
+<script type="text/javascript">
+var searchObj=null;
+$(document).ready(function(){
+    var obj = $Crud({
+        formId: "formEditor",
+        button: "save_btn",
+        insertBack: function () {
+        	$(".error").empty();
+        	searchObj.searchData();
+        },
+        addNewBack: function () {
+            $("#formTitle").html("新增收藏类型");
+        },
+        validate: function () {
+            var flag = $("#formEditor").validate({
+                rules: {
+                	name: {
+                        required: true
+                    }
+                },
+                messages: {
+                	name: {
+                        required: "值不能为空"
+                    }
+                }
+            });
+            return flag;
+        }
+    }).init();
+    searchObj=$Search({datagrid:"datagrid",formId:"searchForm",button:"search_btn",resetButton:"btn_reset",success:function(){
+		
+		}}).initSearchBtn().searchData(1);
+});
+
+function selectItem(id,name){
+	ajaxCall("${def:context}/action/ccms/module/faq/favorite/insert?faq_id="+$("#faq_id").val()+"&category_id="+id,
+			{method:"get", 
+			dataType:"script"
+			/* ,success:function(){
+				ccms.dialog.close();
+			} */
+			});
+	ccms.dialog.notice("收藏成功！",1500, function(){
+
+		ccms.dialog.close();
+	});
+			//parent.$("#_dlgfavorite").modal("hide");
+	}
+</script>
+
+</html>

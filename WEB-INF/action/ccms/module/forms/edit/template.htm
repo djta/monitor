@@ -1,0 +1,341 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>修改表单</title>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading text-center col_main_body_title col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="col-xs-10 col-sm-10 col-md-9 col-lg-9 col-md-offset-1 col-lg-offset-1">
+				<h1 class="panel-title" id="formTitle">修改表单</h1>
+			</div>
+			<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1"
+				style="margin-top: -12px;">
+				<button type="button" id="save_btn" class="btn btn-primary btn-md">保&nbsp;存</button>
+			</div>
+		</div>
+			<div class="panel-body col_main_body">
+				<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+					<input type="hidden" id="tuid" name="tuid" value="${fld:tuid}" />
+					<input name="subject_id" id="subject_id" type="hidden" value="${fld:subject_id}"  preserve="true" />
+					<input name="form_type" id="form_type" type="hidden" value="${fld:form_type}"  preserve="true" />
+					<div class="row clearfix">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">表单中文名称</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input name="form_name_cn" value="${fld:form_name_cn}" class="form-control" type="text" size="35" value="" id="form_name_cn" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">业务</label>
+								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+									<input type="text" id="table_alias" value="${fld:table_alias}" name="table_alias" size="30"  class="form-control" readonly />
+									<input name="table_id" type="hidden" value="${fld:table_id}" id="table_id" />
+								</div>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<img src="${def:context}/images/search.gif" style="cursor: pointer;"
+										id="pickOpenNotCenter" title="查询表名" />
+									<img src="${def:context}/images/clear.gif" style="cursor: pointer;"
+										id="pickClear" title="清除选择的内容" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">数据所属人字段</label>
+								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+									<input id="owner_field_name" name="owner_field_name" class="form-control" value="${fld:owner_field_name}" type="text" size="30" readonly  class="readonly" />
+									<input id="owner_field" name="owner_field" type="hidden" value="${fld:owner_field}" />
+									
+								</div>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<img src="${def:context}/images/search.gif" style="cursor: pointer;"
+										id="pickOpenNotCenter1" title="查询" />
+									<img src="${def:context}/images/clear.gif"  style="cursor: pointer;"
+										id="pickClear1" title="清除选择的内容" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">编辑界面列数</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<select name="col_num_edit" class="form-control" id="col_num_edit">
+											<option value=""></option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">每页显示行数</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+										<input name="page_size" class="form-control" type="text" size="35" value="${fld:page_size}" />
+									<input name="is_hidden" type="hidden" value="0" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">加载查询条件操作</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									0:不加载；&nbsp;1:加载；&nbsp;2:加载后查询；&nbsp;4:加载后显示查询条件；&nbsp;8:查询后显示查询条件；&nbsp;16:查询同时显示查询条件；&nbsp;32:查询同时显示查询结果；&nbsp;64:查询后不显示查询结果
+									<input name="search_action" class="form-control" type="text" size="35" value="${fld:search_action}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">界面引入代码<br/>(可以引入外部文件)</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<textarea type="text" name="head_inc" class="form-control" cols="40" rows="3" maxlength="1024" >${fld:head_inc}</textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">字段检测代码</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<textarea type="text" name="checkfield" class="form-control" cols="40" rows="3" maxlength="4000" >${fld:checkfield}</textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">加载查询界面后JS代码<br/>(完成加载查询界面后执行)</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<textarea type="text" name="loadfilter_js" class="form-control" cols="40" rows="3" maxlength="8000" >${fld:loadfilter_js}</textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">编辑加载后JS代码<br/>(完成加载编辑界面后执行)</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<textarea type="text" name="editback_js" class="form-control" cols="40" rows="3" maxlength="8000" >${fld:editback_js}</textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">更新保存后JS代码<br/>(更新数据后执行)</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<textarea type="text" name="update_js" class="form-control" cols="40" rows="3" maxlength="1024" >${fld:update_js}</textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">编辑数据源SQL语句</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<textarea type="text" name="edit_sql" class="form-control" cols="40" rows="3" maxlength="4000" >${fld:edit_sql}</textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">新增后操作</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input name="insert_classname" class="form-control" type="text" size="50" value="${fld:insert_classname}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">新增替换类</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input name="insert_classname_replace" class="form-control" type="text" size="50" value="${fld:insert_classname_replace}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">修改后操作</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input name="update_classname" type="text" class="form-control" size="50" value="${fld:update_classname}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">修改替换类</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input name="update_classname_replace" class="form-control" type="text" size="50" value="${fld:update_classname_replace}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">删除后操作</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input name="delete_classname" class="form-control" type="text" size="50" value="${fld:delete_classname}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">备注</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<textarea type="text" name="remark" class="form-control" cols="40" rows="2" maxlength="200" >${fld:remark}</textarea>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">表单英文名称</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input name="form_name_en" class="form-control" type="text" size="35" value="${fld:form_name_en}" id="form_name_en" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">数据访问类型</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input name="access_type" class="form-control" type="radio" value="0" />可见本人 &nbsp;
+									<input name="access_type" class="form-control" type="radio" value="1" />可见团队 &nbsp;
+									<input name="access_type" class="form-control" type="radio" value="2" />可见本级 &nbsp;
+									<input name="access_type" class="form-control" type="radio" value="3" />可见本级与团队 &nbsp;
+									<input name="access_type" class="form-control" type="radio" value="4" />可见所有人
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">数据操作类型</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input name="operation_type" class="form-control" type="radio" value="0" />只能修改本人 &nbsp;
+									<input name="operation_type" class="form-control" type="radio" value="1" />可以修改他人 &nbsp;
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">查询界面列数</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<select name="col_num_filter" class="form-control" id="col_num_filter">
+											<option value=""></option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">&nbsp;</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">加载表单操作</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									0:不加载；&nbsp;1:加载；&nbsp;2:加载后新增；&nbsp;4:加载后编辑；&nbsp;8:新增之后查询；&nbsp;16:修改之后查询；&nbsp;32:删除后查询 ；&nbsp;64:加载后看明细
+									<input name="form_action" class="form-control" type="text" size="35" value="${fld:form_action}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">界面JS代码<br/>(调用界面时执行)</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<textarea type="text" name="form_js" class="form-control" cols="40" rows="3" maxlength="8000" >${fld:form_js}</textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">按键约束代码</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<textarea type="text" name="keypress" class="form-control" cols="40" rows="3" maxlength="4000" >${fld:keypress}</textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">加载界面后JS代码<br/>(完成加载界面后执行)</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<textarea type="text" name="loadeditor_js" class="form-control" cols="40" rows="3" maxlength="8000" >${fld:loadeditor_js}</textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">新增显示后JS代码<br/>(显示新增界面后执行)</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<textarea type="text" name="addnew_js" class="form-control" cols="40" rows="3" maxlength="8000" >${fld:addnew_js}</textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">新增保存后JS代码<br/>(插入数据后执行)</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<textarea type="text" name="insert_js" class="form-control" cols="40" rows="3" maxlength="1024" >${fld:insert_js}</textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">查询执行成功后JS代码<br/>(查询数据后执行)</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<textarea type="text" name="search_success_js" class="form-control" cols="40" rows="3" maxlength="1024" >${fld:search_success_js}</textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">检索数据源SQL语句</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<textarea type="text" id="search_sql" class="form-control" name="search_sql" cols="40" rows="3" maxlength="4000" >${fld:search_sql}</textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">新增前校验</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input name="insert_classname_validator" class="form-control" type="text" size="50" value="${fld:insert_classname_validator}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">新增后操作1</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input name="insert_classname1" class="form-control" type="text" size="50" value="${fld:insert_classname1}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">修改前校验</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input name="update_classname_validator" class="form-control" type="text" size="50" value="${fld:update_classname_validator}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">修改后操作1</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input name="update_classname1" class="form-control" type="text" size="50" value="${fld:update_classname1}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">删除前校验</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input name="delete_classname_validator" class="form-control" type="text" size="50" value="${fld:delete_classname_validator}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">删除替换操作</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input name="delete_classname_replace" class="form-control" type="text" size="50" value="${fld:delete_classname_replace}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script language="javascript">
+$(document).ready(function() {
+	//编辑给表单赋值
+	setCheckboxValue("access_type","${fld:access_type}","formEditor");
+	setCheckboxValue("operation_type","${fld:operation_type}","formEditor");
+	setComboValue("col_num_filter","${fld:col_num_filter}","formEditor");
+	setComboValue("col_num_edit","${fld:col_num_edit}","formEditor");
+	
+	$("#save_btn").unbind().on("click",function(){
+		var url = "${def:actionroot}/update";
+		ajaxCall(url,{
+				method: "post",
+				progress: true,
+				form: "formEditor",
+				button: "save_btn",
+				dataType: "script",
+				success: function() {
+					$Dialog().notice("修改成功！",1000,function(){
+						gotoBack();
+					});
+				}
+		});
+	});
+	//选取业务
+	$("#pickOpenNotCenter").unbind().on("click",function(){
+		var subject_id = document.formEditor.subject_id.value;
+		var url = "${def:context}/action/ccms/pub/pick/table/crud?id=table_id&name=table_alias&pickId=pickOpen&subject_id="+subject_id;
+		ccms.dialog.open({url:url,id:"pickOpen",width:800,height:600});
+	});
+	//清除业务相关文本框
+	$("#pickClear").unbind().on("click",function(){
+		document.formEditor.table_alias.value='';
+		document.formEditor.table_id.value='';
+	});
+	//选取所属人字段
+	$("#pickOpenNotCenter1").unbind().on("click",function(){
+		var table_id = document.formEditor.table_id.value;
+		if(table_id==null || table_id==''){
+			$Dialog().notice("请选择业务",1500);
+			return;
+		}
+		var url = "${def:context}/action/ccms/pub/pick/field/crud?pickId=pickOpen&id=owner_field&name=owner_field_name&table_id="+table_id;
+		ccms.dialog.open({url:url,id:"pickOpen",width:800,height:600});
+	});
+	//清除所属人字段相关文本框
+	$("#pickClear1").unbind().on("click",function(){
+		document.formEditor.owner_field_name.value='';
+		document.formEditor.owner_field.value='';
+	});
+});
+</script>
+</body>
+</html>
+

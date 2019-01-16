@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator id="validator.excel">
+	<parameter id="file" type="varchar" required="false" label="临时文件" maxlen="500"/>
+	<parameter id="file.filename" type="varchar" required="false" label="文件名" maxlen="400"/>
+	<parameter id="total_registros" type="integer" required="false" label="总记录数"/>
+	<parameter id="total_errores" type="integer" required="false" label="错误总数"/>
+	<parameter id="superior_id" type="integer" required="true" label="父节点编号" maxlen="10"/>
+
+	<parameter id="start_date" type="date" required="false" label="开始日期"/>
+    <parameter id="end_date" type="date" required="false" label="结束日期"/>
+
+	<custom-validator
+		classname="dinamica.validators.DateRangeValidator"
+		on-error-label="开始日期不能大于结束日期"
+		date1="start_date" date2="end_date" />
+</validator>

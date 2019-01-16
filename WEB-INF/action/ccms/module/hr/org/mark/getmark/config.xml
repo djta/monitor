@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+
+	</summary>
+
+	<log>false</log>
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-mark.sql" source="sql" scope="transaction" />
+	</transaction>
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+		<print mode="form" recordset="query-mark.sql" />
+	</output>
+
+</config>

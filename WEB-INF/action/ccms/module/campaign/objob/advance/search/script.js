@@ -1,0 +1,16 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"tuid":"${fld:tuid}",
+		"template_name":"${fld:template_name}",
+		"model_name":"${fld:model_name}",
+		"task_duplicate_flag":"${fld:task_duplicate_flag}",
+		"task_duplicate_scope":"${fld:task_duplicate_scope}",
+		"job_quota":"${fld:job_quota}",
+		"job_priority":"${fld:job_priority}",
+		"is_enabled":"${fld:is_enabled}",
+		"url_enabled":"${fld:url_enabled@js}"
+	},
+	</rows>
+	{}
+]}

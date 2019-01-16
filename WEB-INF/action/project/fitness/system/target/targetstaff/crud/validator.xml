@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+    <parameter id="tuid" type="varchar" required="true" label="tuid"/>
+    <parameter id="skill_id" type="varchar" required="true" label="skill_id"/>
+    <parameter id="yearmonth" type="varchar" required="true" label="yearmonth"/>
+    <parameter id="skill_scope" type="varchar" required="true" label="skill_scope"/>
+    <parameter id="target_type" type="varchar" required="true" label="target_type"/>
+</validator>

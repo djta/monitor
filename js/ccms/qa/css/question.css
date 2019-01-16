@@ -1,0 +1,111 @@
+.container {
+	width: 1170px;
+}
+
+qh3 {
+	height: 80px;
+	margin: 0px -15px;
+	line-height: 80px;
+	font-size: 18px;
+	color: #000;
+}
+
+/**闁跨喐纾ユ潏鎴︽晸閺傘倖瀚�*/
+.bjq {
+	margin: 10px auto;
+}
+
+.taglist1 {
+	/* padding-left:60px; */
+	margin-bottom: 20px;
+}
+
+.taglist1 li {
+	/* clear: both;
+	width:150px; */
+	height: 32px;
+	line-height: 32px;
+	float: left;
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+ul li {
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+.tag-choice-close {
+	display: block;
+	width: 10px;
+	font-size: 1px;
+	outline: none;
+	background: url('/js/select2-3.4.3/select2.png?pps') right top no-repeat;
+}
+
+.select2-choices  li.select2-search-choice {
+	display: none;
+}
+
+.tipred {
+	color: red;
+}
+
+.show-pop-tag input {
+	width: 97%;
+}
+
+.show-pop-tag span.tag-select {
+	position: relative;
+	display: inline-block;
+	margin: 0px 5px 0 -26px;
+	width: 20px;
+	height: 20px;
+	background: url('../../../../images/qa/select.png') no-repeat center
+		center;
+	text-indent: -9999em;
+	vertical-align: middle;
+	cursor: pointer;
+	z-index: 10;
+	background-color: #EEE;
+}
+
+.showTagDialog {
+	border: 1px solid #CCC;
+	background: white;
+}
+
+.showTagDialog li {
+	margin: 1% 0;
+}
+
+.showTagDialog li.current {
+	background: #EEE;
+}
+
+.showTagDialog li.tagli:active {
+	background: #EEE;
+}
+
+.showTagDialog li.taglis {
+	display: inline-block;
+	background: #FFF;
+	border: 1px solid #0079FF;
+	padding: 0 8px;
+	height: 28px;
+	line-height: 28px;
+	max-width: 180px;
+	overflow: hidden;
+	color: #666;
+	vertical-align: middle;
+	font-size: 13px;
+	margin-left:5px;
+	border-radius: 5px;
+}
+.showTagDialog li.taglis:active {
+	background: #0079FF;
+}
+.showTagDialog li.taglis:hover {
+	background: #0079FF;
+}

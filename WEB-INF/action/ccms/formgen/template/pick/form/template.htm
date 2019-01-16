@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+${inc:/action/ccms/pub}
+<title>选择信息</title>
+</head>
+
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title">
+		<h2 class="panel-title">选择信息</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<form id="formFilter" name="formFilter" class="form-horizontal" role="form" method="post">
+			<input id="pickup_field" name="pickup_field" type="hidden" value="${fld:pickup_field}" preserve="true"> 
+			<input name="sort" type="hidden" value="" preserve="true"/> 
+			<input name="order" type="hidden" value="" preserve="true"/> 
+			<input name="pageNo" type="hidden" value="" preserve="true"/>
+			<input name="totalPages" type="hidden" value="" preserve="true"/>
+			<div class="form-group">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label" for="name">条件</label>
+					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">						
+						<input class="form-control" name="name" id="name" type="text" maxlength="128">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-right">
+					<div>
+						<select name="__page_size__" id="__page_size___filter">
+							<option value=""></option>
+							<option value="5">5</option>
+							<option value="10">10</option>
+							<option value="20">20</option>
+							<option value="30">30</option>
+							<option value="50">50</option>
+							<option value="100">100</option>
+							<option value="200">200</option>
+							<option value="500">500</option>
+						</select>
+						行/页
+					 </div>
+				</div>
+				<div class="col-xs-8 col-sm-8 col-md-7 col-lg-7 col-md-offset-1 col-lg-offset-1">
+					<button class="btn btn-primary btn-md" id="search_btn">查询</button>
+					<button class="btn btn-primary btn-md" id="search_reset_btn">清空</button>
+				</div>
+			</div>
+		</form>
+		<table class="table table-bordered" id="searchResultTable">
+			<thead>
+				<tr id="viewHeader">
+					<th class="sortable" code="description" title="选择">信息</th>
+					<th class="sortable" code="reference" title="参考说明">参考信息</th>
+				</tr>
+			</thead>
+			<tbody id="datagridTemplate" style="display: none">
+				<tr code-id="#id#" code-desc="#description#">
+					<td>#description#</td>
+					<td>#reference#</td>
+				</tr>
+			</tbody>
+			<tbody id="datagrid">
+			</tbody>
+		</table>
+		<div class="pageDiv">
+			<ul class="pagination">
+			</ul>
+		</div>
+	</div>
+</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}">
+<script type="text/javascript">
+var searchObj = null;
+$(document).ready(function() {
+	searchObj = $Search({datagrid:"datagrid",formId:"formFilter",success:function(){
+		try{
+			$("#searchResultTable tr").each(function(index){
+				if(index > 0){
+					$(this).on("click",function(){
+						   parent.$("#${fld:pick-id}").val($(this).attr("code-id"));
+						   parent.$("#${fld:pick-alias}").val($(this).attr("code-desc"));
+						   //parent.$("#_dlg${fld:pick-id}").modal("hide");
+						   ccms.dialog.close();
+					   });
+				}
+			});
+		}catch(e){
+			console.debug(e);
+		}
+	}}).initSearchBtn();
+	searchObj.searchData(1);
+	$("#__page_size___filter").unbind().on("change",function(){
+		searchObj.searchData(1);
+	});
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"tuid":"${fld:tuid}",
+		"from_score":"${fld:from_score}",
+		"to_score":"${fld:to_score}",
+		"show_order":"${fld:show_order}",
+		"remark":"${fld:remark}"
+	},
+	</rows>
+	{}
+]}

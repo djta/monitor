@@ -1,0 +1,1 @@
+delete from cc_config where tuid = ${fld:cnfg_id}

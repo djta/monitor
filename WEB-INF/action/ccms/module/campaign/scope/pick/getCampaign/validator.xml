@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="dealer_code" 	 type="varchar" required="false" label="dealer_code" maxlen="64"/>
+	<parameter id="interested_brand" type="varchar" required="false" label="interested_brand" maxlen="64"/>	
+	<parameter id="interested_series" type="varchar" required="false" label="interested_series" maxlen="64"/> 
+	<parameter id="cust_code" type="varchar" required="false" label="cust_code" maxlen="64"/> 
+</validator>

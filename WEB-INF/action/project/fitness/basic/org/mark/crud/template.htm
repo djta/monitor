@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>位置标注</title>
+${inc:/action/project/fitness/home/pub}
+<link rel="stylesheet" type="text/css" href="http://api.amap.com/Public/css/demo.Default.css" />
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=ee7789650da128fa636573755e032541&callback="></script>
+</head>
+<body>
+	<div class="dialogbg">
+		<header class="header-default">
+						地理位置
+		</header>
+		
+		
+		
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" id="form_mark" name="form_mark">
+				<input id="org_id" name="org_id" type="hidden" value="${fld:org_id}" preserve="true" /> 
+				<input id="coordinate" name="coordinate" type="hidden" value="" />
+				<div class="form-group">
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+						<select id="area_code" name="area_code" class="form-control">
+							<option value="">选择城市</option>
+							<option value="010">北京市</option>
+							<option value="021">上海市</option>
+							<option value="020">广州市</option>
+						</select>
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<input type="text" id="address" name="address" value="" placeholder="门店地址" />
+					</div>
+					<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+						<button  type="button"  id="save_btn_mark">保存</button>
+						<!-- &nbsp;<label >在地图上找到相应位置后单击，再点击“保存”按钮完成标记</label> -->
+					</div>
+					<div>
+					<label style="font-size: 12px">在地图上找到相应位置后单击，再点击“保存”按钮完成标记</label> 
+					</div>
+				</div>
+				<div id="iCenter" style="width: 97%; height: 400px; border: 1px solid #F6F6F6; display: block;">
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+	<script language="javascript">
+		function OrgClass() {
+			this.mapObj = null;
+			this.geocoder = null;
+			/* 地理标注 */
+			this.loadMap = function() {
+				var obthis = this;
+				obthis.mapObj = new AMap.Map("iCenter");
+				/*在地图中添加ToolBar插件*/
+				obthis.mapObj.plugin(["AMap.ToolBar"],function(){
+					toolBar = new AMap.ToolBar();
+					obthis.mapObj.addControl(toolBar);
+				});
+				/* 加载地理编码插件 */
+				obthis.mapObj.plugin(["AMap.Geocoder"],function(){
+					geocoder = new AMap.Geocoder({
+						radius:1000, //以已知坐标为中心点，radius为半径，返回范围内兴趣点和道路信息
+						extensions: "base"//返回地址描述以及附近兴趣点和道路信息，默认"base" 
+					});
+				});
+				
+				obthis.mapObj.plugin(["AMap.ToolBar"], function() {
+					obthis.mapObj.addControl(new AMap.ToolBar());
+				});
+				/*为地图注册click事件获取鼠标点击出的经纬度坐标*/
+				var clickEventListener = AMap.event.addListener(obthis.mapObj,'click',function(e){
+					var lngx = e.lnglat.getLng();
+					var laty = e.lnglat.getLat();
+					$("#coordinate").val("{" + lngx + "," + laty + "}");
+					obthis.mapObj.clearMap();
+					obthis.addMarker(lngx, laty);
+				});
+				ajaxCall("${def:actionroot}/getmark?org_id="+$("#org_id").val(),{
+					method: "get",
+					progress: false,
+					dataType: "script",
+					success: function() {
+						var _position = $("#coordinate").val();
+						if("" != _position){
+							_position = _position.replace("{","").replace("}","");
+							var tmp = _position.split(",");
+							obthis.addMarker(tmp[0], tmp[1]);
+						}else{
+							obthis.mapObj.setCity("010");
+						}
+					}
+				});
+				$("#area_code").unbind().on("change",function(){
+					if($("#area_code").val()!=""){
+						obthis.mapObj.setCity($("#area_code").val());
+					}
+				});
+				$("#save_btn_mark").unbind().on("click",function(e){
+					if($("#coordinate").val() == ""){
+						$Dialog().notice("请先进行标记后再保存.",1500);
+					}else{
+						ajaxCall("${def:actionroot}/update",{
+							method: "post",
+							form:"form_mark",
+							button: "save_btn_mark",
+							progress: true,
+							dataType: "script",
+							success: function() {
+							},
+							error: function() {
+								$Dialog().notice("保存失败.",1500);
+							}
+						});
+					}
+					e.preventDefault();
+				});
+			};
+			/*实例化点标记*/
+			this.addMarker = function (lngx, laty){
+				var obthis = this;
+				marker = new AMap.Marker({
+					icon:"http://webapi.amap.com/images/marker_sprite.png",
+					position:new AMap.LngLat(lngx,laty)
+				});
+				marker.setMap(obthis.mapObj);  /*在地图上添加点*/
+				obthis.mapObj.setFitView();	/* 自适应窗口*/
+				// 逆地理编码
+		        geocoder.getAddress(new AMap.LngLat(lngx,laty), function(status, result) {
+		            if (status === 'complete' && result.info === 'OK') {
+				        var address = result.regeocode.formattedAddress; //返回地址描述
+				        $("#address").val(address);
+		            }
+		        });
+			};
+		}
+		$(document).ready(function() {
+			selectInit($("#area_code"));
+			var org = new OrgClass();
+			org.loadMap();
+		});
+	</script>
+</body>
+</html>

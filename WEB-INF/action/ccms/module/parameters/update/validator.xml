@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+    <parameter id="tuid" type="varchar" required="true" label="TUID"/>
+    <parameter id="domain_value" type="varchar" required="true" label="domain_value"/>
+    <parameter id="domain_text_cn" type="varchar" required="true" label="domain_text_cn" />
+    <parameter id="domain_text_en" type="varchar" required="true" label="domain_text_en" />
+    <parameter id="is_default" type="varchar" required="false" label="is_default" />
+    <parameter id="namespace" type="varchar" required="true" label="namespace" maxlen="128"/>
+    <parameter id="parent_namespace" type="varchar" required="false" label="parent_namespace" maxlen="128"/>
+    <parameter id="parent_domain_value" type="varchar" required="false" label="parent_domain_value" maxlen="32"/>
+	<parameter id="remark" type="varchar" required="false" label="remark" maxlen="250"/>
+	<parameter id="show_order" type="integer" required="false" label="show_order"/>
+	<parameter id="subject_id" type="integer" required="true" label="subject_id"/>
+
+	<custom-validator 	
+		classname="dinamica.validators.DuplicatedKeyValidator" 
+		on-error-label="此域值已存在，请重新填写"
+		id="domain_value" sql="nodup.sql"/>
+	
+</validator>
+
+

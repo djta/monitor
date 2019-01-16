@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="entity_id" type="integer" required="true" label="entity_id"/>
+	<parameter id="org_id" type="integer" required="true" label="org_id" />
+</validator>

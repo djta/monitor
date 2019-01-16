@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="tuid" type="integer" required="true" label="ID" maxlen="10"/>
+	<parameter id="action" type="varchar" required="false" label="ACTION" maxlen="10"/>
+</validator>

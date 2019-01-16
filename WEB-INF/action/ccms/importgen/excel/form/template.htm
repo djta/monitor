@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+${inc:/action/ccms/pub}
+<title>ImportExcel</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">导入Excel</h2>
+		</div>
+		<div class="panel-body col_main_body">
+		<form class="form-horizontal"  name="uploadform" enctype="multipart/form-data"
+		 action="${def:context}${def:actionroot}/upload" id="thumbForm" method="POST"
+		  style="font-size:14px;padding:30px 20px 10px 20px;">
+				<div class="form-group">
+					<div
+						class="col-xs-8 col-sm-7 col-md-7 col-lg-7  col-xs-offset-5 col-sm-offset-5 col-md-offset-5 col-lg-offset-5">
+						<input type="file" name="file" size="30" />
+					</div>
+					<input type="hidden" name="imp_id" value="${fld:imp_id}"
+						preserve="true" />
+				</div>
+				<div
+					class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-offset-5 col-sm-offset-5 col-md-offset-5 col-lg-offset-5">
+					<input id="submitbtn" name="doSubmit" type="submit" 
+						class="btn btn-primary btn-md" value="上传"/>
+				</div>
+			</form>
+		</div>
+	</div>
+<iframe name="uploadFrame" style="display:none">
+</iframe>
+<script language="javascript">
+$(document).ready(function() {
+	$("#submitbtn").unbind().on("click",function(){
+		if (document.uploadform.file.value=="") {
+			$Dialog().alert("请选择上传文件！");
+			document.uploadform.file.focus();
+			return false;
+		}
+
+		document.uploadform.submit.disabled = true;
+	});
+});
+function uploadOK()
+{
+	$Dialog().alert("文件上传成功");
+	document.uploadform.file.value="";
+	document.uploadform.submit.disabled = false;
+	document.uploadform.file.focus();
+}
+function uploadFail(){
+	document.uploadform.file.value="";
+	document.uploadform.submit.disabled = false;
+	document.uploadform.file.focus();
+}
+</script>
+</body>
+</html>

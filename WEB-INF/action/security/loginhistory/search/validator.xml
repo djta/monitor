@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="fdesde" type="date" required="false" label="起始日期" />
+	<parameter id="fhasta" type="date" required="false" label="结束日期" />
+
+	<custom-validator classname="dinamica.validators.DateRangeValidator"
+		on-error-label="结束日期必须大于起始日期" date1="fdesde" date2="fhasta" id="fhasta" />
+
+</validator>
+

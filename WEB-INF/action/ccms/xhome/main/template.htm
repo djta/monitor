@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/ccms/xhome/pub}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>首页</title>
+<link href="${def:context}/js/ccms/xhome/css/main.css" rel="stylesheet" type="text/css">
+<link href="${def:context}/js/ccms/xhome/css/common.css" rel="stylesheet" type="text/css">
+</head>
+<style>
+.main-wrap ul li a{
+  vertical-align:middle;
+  text-align: center;
+}
+.main-wrap ul li a img{
+  width:65px;
+  height:65px;
+  margin-top:-20px;
+}
+
+</style>
+<body class="body">
+	<div class="main" style="width: 100%; float: right;background:#F5F5F5;">
+		<div id="hd" class="cf">
+			<div class="fl welcome cf">
+				<strong><span id="greetings" value="" ></span> ， <span id="username"><user-rows>${fld:username@js}</user-rows></span></strong>
+				<span id="notices" class="notices">
+					<ul style="margin-top: 0px">
+						<li style="color: red; font-size: 12px;">
+						<a href="javascript:void(0)" code="" addtabs="headmsg" title="" url="" id="headmsg"></a>
+						</li>
+					</ul>
+				</span>
+				<span style="float:right">
+				</span>
+			</div>
+		</div>
+		<div id="bd" class="index-body cf">
+			<div class="col-main" style="border-bottom:1px solid #fff;">
+				<div class="main-wrap cf">
+					<div class="station">
+						<a id="set_up" style="color:#c6c6c6;font-size: 16px;margin-top:10px;margin-left:10px;margin-bottom:0px;" class="glyphicon glyphicon-cog"></a>
+					</div>
+					<br>
+				</div>
+				<div class="col-main">
+					<div class="main-wrap cf" style="border-top:1px solid #fff">
+						<charts-rows>
+							${inc:${fld:uri}}
+						</charts-rows>
+					</div>
+					<div class="main-wrap cf" style="border-top:1px solid #fff">
+						<ul class="quick-links">
+							<quick-rows>
+								<li class="purchase-purchase">
+									<a href="javascript:showModal('${fld:menu_name}')">
+										<img alt="${fld:menu_name}" src="${def:context}/js/ccms/xhome/image/ribao.png">
+										<br>
+										<div>${fld:menu_name}</div>
+									</a>
+								</li>
+							</quick-rows>
+						</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-extra" style="position: absolute;top: 69px; right:0px;background:#F5F5F5;">
+				<div class="extra-wrap" style="position: relative;background:#F5F5F5">
+					<a class="glyphicon glyphicon-cog" style="position: absolute; top: 12px; right: 240px; z-index: 10; color: #c6c6c6; font-size: 16px;" id="fastquery"></a>
+					<h2>快速查看</h2>
+					<div class="list">
+						<ul>
+							<fast-rows>
+								<li>
+									<a href="javascript:showModal('${fld:menu_name}')" >${fld:menu_name}</a>
+								</li>
+							</fast-rows>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	<script type="text/javaScript">
+		$(document).ready(function() {
+			parent.$(".username").text($("#username").text());
+			showtime();
+			$(".subBtn").unbind().on("click", function() {
+				/* $(".nav-bg").append("<span class='caret'></span>"); */
+				var uri = $(this).attr("uri");
+				if (undefined != uri && "" != uri) {
+					loadDivPage("body_content", uri);
+				}
+			});
+			// 常用功能
+			$("#set_up").unbind().click(function() {
+				var url = "${def:context}${def:actionroot}/main/quickmenu/form";
+				ccms.dialog.open({url : url, id : "dialogPic", width : 600, height : 500});
+			});
+			// 快速查看
+			$("#fastquery").unbind().click(function() {
+				var url = "${def:context}${def:actionroot}/main/fastquery/form";
+				ccms.dialog.open({url : url, id : "dialogPic", width : 600, height : 500});
+			});
+			
+			$(".tool2").unbind().on("click",function(){
+	        	var code = $(this).attr("code");
+	        	if( undefined != code && "" != code ){
+	        		$("#" + code + "_id").val("");
+	        		$("#" + code + "_name").val("");
+	        		top.$("#" + code + "_id").val("");
+	        	}
+	        });
+		});
+		function showModal(modalName) {
+			parent.$("li[title='" + modalName + "']").click();
+		}
+		function showtime() {
+			var now = new Date();
+			var hours = now.getHours();
+			var minutes = now.getMinutes();
+			var seconds = now.getSeconds();
+			var timeValue = "" +((hours >= 12) ? "下午" : "上午" );
+			$("#greetings").html(timeValue+"好");
+		}
+	</script>
+</body>
+</html>

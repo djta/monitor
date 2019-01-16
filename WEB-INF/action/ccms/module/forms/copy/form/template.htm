@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>复制结构</title>
+</head>
+<body>
+<div class="main">
+	<div class="panel panel-default">
+		<div class="panel-heading text-center">
+			<h1 class="panel-title">复制表单</h1>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="panel-body">
+				<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+					<input type="hidden" id="tuid" name="tuid" value="" />
+					<input type="hidden" id="form_id" name="form_id" value="${fld:form_id}" />
+					<div class="row clearfix">
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">待复制表单名</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input name="form_old" class="form-control" type="text" size="80" value="${fld:form_name}" readonly />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">表单名</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input id="form_name" class="form-control" name="form_name" type="text" size="80" value="" maxlength="128" />
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
+				<button type="button" class="btn btn-primary btn-md btn_save">保&nbsp;存</button>
+				<button type="button" class="btn btn-primary btn-md btn_cancel">取&nbsp;消</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script>
+$(document).ready(function(){
+	$(".btn_save").unbind().on("click",function(){
+		var url = "/action/ccms/module/forms/copy/insert";
+		ajaxCall(url,{
+	        method: "post",
+	        progress: true,
+	        form: "formEditor",
+	        dataType: "script",
+	        success: function(data) {
+	        	
+	        }
+	    });
+	});
+	
+	$(".btn_cancel").unbind().on("click",function(){
+		$("#_dlgcopyForm",window.parent.document).find(".dialog-close").click();
+	});
+});
+</script>
+</body>
+</html>

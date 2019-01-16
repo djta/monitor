@@ -1,0 +1,453 @@
+<!--addnew/edit form-->
+<form name="formEditor" onsubmit="return save()">
+
+<div class="tabs">
+    <ul>
+        <li onclick="changeLiStyle(this);" id="tabsl"><b></b>
+            <a  
+                onmouseover="javascript:window.status='';return true;" 
+                onmouseout="javascript:window.status='';return true;" 
+                href='#' 
+                onclick='JavaScript:return false;'>
+                <span id="formTitleEditor">修改记录</span>
+            </a><p></p>
+        </li>
+    </ul>
+    <div id='hline'></div>
+</div>
+<div id="tabmain">
+
+<FIELDSET><LEGEND>CS模型信息</LEGEND>
+<TABLE class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0>
+    
+        <!--column layout-->
+        <col width="40%">
+        <col width="60%">
+
+        <!--form fields-->
+
+		<tr id="advance_div" style="display:;width:100%">
+			<td colspan="2" width="100%">
+				<table class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0>
+			        <col width="40%">
+			        <col width="60%">
+					<tr>
+						<td class="th20 required">
+							模型名称
+						</td>
+						<td class="td20left">
+							<input id="model_name" name="model_name" type="text" size="35" value="">
+						</td>
+					</tr>
+
+					<tr>
+						<td class="th20 required">
+							专题名称
+						</td>
+						<td class="td20left">
+							<!--picklist-->
+							<input name="subject_id" type="hidden" value="${fld:subject_id}" preserve="true">
+							<input type="text" id="subject_name" name="subject_name" size="30"  readonly  class="readonly"  value="${fld:subject_name}"  preserve="true">
+						</td>
+					</tr>
+			
+					<!--form fields-->
+					<tr>
+						<td class="th20 required">
+							检索业务
+						</td>
+						<td class="td20left">
+							<input name="search_table_id" id="search_table_id" type="hidden" value="${fld:search_table_id}">
+							<input type="text" id="search_table_name" name="search_table_name" size="30"  readonly  class="readonly"  value="${fld:search_table_name}" >
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('search_table_name','search_table_id','${def:context}${def:actionroot}/pick/table?display=display:none&subject_id='+document.formEditor.subject_id.value,'400','200','formEditor')"
+								title="查询业务">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','search_table_id','search_table_name');" class="tool2"
+								title="清除选择的内容">
+						</td>
+					</tr>
+			
+					<tr>
+						<td class="th20 required">
+							检索表单
+						</td>
+						<td class="td20left">
+							<input id="search_form_id" name="search_form_id" type="hidden" value="${fld:search_form_id}">
+							<input type="text" id="search_form_name" name="search_form_name" size="30"  readonly  class="readonly"  value="${fld:search_form_name}" >
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('search_form_name','search_form_id','${def:context}${def:actionroot}/pick/form?display=display:none&table_id='+document.formEditor.search_table_id.value,'400','200','formEditor')"
+								title="查询表单">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','search_form_id','search_form_name');" class="tool2"
+								title="清除选择的内容">
+						</td>
+					</tr>
+			
+			
+					<tr>
+						<td class="th20">
+							检索语句
+						</td>
+						<td class="td20left">
+						    <textarea id="search_sql" name="search_sql" rows="5" cols="40" ></textarea>
+						</td>
+					</tr>
+			
+					<tr style="display:none">
+						<td class="th20 required">
+							客户编号字段
+						</td>
+						<td class="td20left">
+							<input id="cust_code_field" name="cust_code_field" type="hidden">
+							<input id="cust_code_field_lable" name="cust_code_field_lable" type="text" size="30"  class="readonly" >
+			
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('cust_code_field_lable','cust_code_field','${def:context}${def:actionroot}/pick/field/crud?display=display:none&table_id='+document.formEditor.search_table_id.value+'&form_id='+document.formEditor.search_form_id.value,'400','320','formEditor')"
+								title="查询字段">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','cust_code_field','cust_code_field_lable');" class="tool2"
+								title="清除选择的内容">
+						</td>
+					</tr>
+								
+					<tr>
+						<td class="th20 required">
+							业务类型
+						</td>
+						<td class="td20left">
+							<select name="bz_type" style="width:180" id="bz_type">
+								<option value=""></option>
+								<option value="0">客户信息</option>
+								<option value="1">销售线售</option>
+								<option value="2">投诉信息</option>
+								<option value="3">问询信息</option>
+								<option value="4">活动注册</option>
+								<option value="5">数据修复</option>
+								<option value="6">数据除重</option>
+								<option value="9">车辆信息</option>
+								<option value="10">提醒信息</option>
+							</select>
+						</td>
+					</tr>
+
+					<tr>
+						<td class="th20 required">
+							子CASE编号对应的字段(例如线索编码)
+						</td>
+						<td class="td20left">
+							<input id="bz_pk_value" name="bz_pk_value"  value="" type="text" size="20" preserve="true">
+							字段描述 
+							<input id="bz_pk_value_lable" name="bz_pk_value_lable" value="" type="text" size="20" preserve="true">
+			
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('bz_pk_value_lable','bz_pk_value','${def:context}/action/subject/campaign/objob/model/pick/field/crud?display=display:none&table_id='+$('#search_table_id').val()+'&form_id='+$('#search_form_id').val(),'400','320','formEditor')"
+								title="查询字段">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','bz_pk_value','bz_pk_value_lable');" class="tool2"
+								title="清除选择的内容">
+						</td>
+					</tr>
+			
+					<tr>
+						<td class="th20 required">
+							CASE编号对应字段(例如客户ID)
+						</td>
+						<td class="td20left">
+							<input id="pk_value" name="pk_value"  value="" type="text" size="20" preserve="true">
+							字段描述 
+							<input id="pk_value_lable" name="pk_value_lable" value="" type="text" size="20" preserve="true">
+			
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('pk_value_lable','pk_value','${def:context}/action/subject/campaign/objob/model/pick/field/crud?display=display:none&table_id='+$('#search_table_id').val()+'&form_id='+$('#search_form_id').val(),'400','320','formEditor')"
+								title="查询字段">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','pk_value','pk_value_lable');" class="tool2"
+								title="清除选择的内容">
+						</td>
+					</tr>
+			
+					<tr>
+						<td class="th20 required">
+							客户编号字段
+						</td>
+						<td class="td20left">
+							<input id="cust_code" name="cust_code"  value="" type="text" size="20" preserve="true">
+							字段描述 
+							<input id="cust_code_lable" name="cust_code_lable" value="" type="text" size="20" preserve="true">
+			
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('cust_code_lable','cust_code','${def:context}/action/subject/campaign/objob/model/pick/field/crud?display=display:none&table_id='+$('#search_table_id').val()+'&form_id='+$('#search_form_id').val(),'400','320','formEditor')"
+								title="查询字段">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','cust_code','cust_code_lable');" class="tool2"
+								title="清除选择的内容" >
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="th20 required">
+							客户名称字段
+						</td>
+						<td class="td20left">
+							<input id="cust_name" name="cust_name"  value="" type="text" size="20" preserve="true">
+							字段描述 
+							<input id="cust_name_lable" name="cust_name_lable" value="" type="text" size="20" preserve="true">
+			
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('cust_name_lable','cust_name','${def:context}/action/subject/campaign/objob/model/pick/field/crud?display=display:none&table_id='+$('#search_table_id').val()+'&form_id='+$('#search_form_id').val(),'400','320','formEditor')"
+								title="查询字段">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','cust_name','cust_name_lable');" class="tool2"
+								title="清除选择的内容">
+						</td>
+					</tr>
+			
+			
+					<tr>
+						<td class="th20">
+							客户性别字段
+						</td>
+						<td class="td20left">
+							<input id="cust_sex" name="cust_sex"  value="" type="text" size="20" preserve="true">
+							字段描述 
+							<input id="cust_sex_lable" name="cust_sex_lable" value="" type="text" size="20" preserve="true">
+			
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('cust_sex_lable','cust_sex','${def:context}/action/subject/campaign/objob/model/pick/field/crud?display=display:none&table_id='+$('#search_table_id').val()+'&form_id='+$('#search_form_id').val(),'400','320','formEditor')"
+								title="查询字段">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','cust_sex','cust_sex_lable');" class="tool2"
+								title="清除选择的内容">
+						</td>
+					</tr>
+			
+					<tr>
+						<td class="th20 required">
+							客户电话号码字段1（手机号码）
+						</td>
+						<td class="td20left">
+							<input id="phone_number1" name="phone_number1"  value="" type="text" size="20" preserve="true">
+							字段描述 
+							<input id="number_lable1" name="number_lable1"  value="" type="text" size="20" preserve="true">
+			
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('number_lable1','phone_number1','${def:context}/action/subject/campaign/objob/model/pick/field/crud?display=display:none&table_id='+$('#search_table_id').val()+'&form_id='+$('#search_form_id').val(),'400','320','formEditor')"
+								title="查询字段">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','phone_number1','number_lable1');" class="tool2"
+								title="清除选择的内容">
+						</td>
+					</tr>
+			
+					<tr>
+						<td class="th20">
+							客户电话号码字段2
+						</td>
+						<td class="td20left">
+							<input id="phone_number2" name="phone_number2"  value="" type="text" size="20" preserve="true">
+							字段描述 
+							<input id="number_lable2" name="number_lable2"  value="" type="text" size="20" preserve="true">
+			
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('number_lable2','phone_number2','${def:context}/action/subject/campaign/objob/model/pick/field/crud?display=display:none&table_id='+$('#search_table_id').val()+'&form_id='+$('#search_form_id').val(),'400','320','formEditor')"
+								title="查询字段">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','phone_number2','number_lable2');" class="tool2"
+								title="清除选择的内容">
+						</td>
+					</tr>
+			
+					<tr>
+						<td class="th20">
+							客户电话号码字段3
+						</td>
+						<td class="td20left">
+							<input id="phone_number3" name="phone_number3"  value="" type="text" size="20" preserve="true">
+							字段描述 
+							<input id="number_lable3" name="number_lable3"  value="" type="text" size="20" preserve="true">
+			
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('number_lable3','phone_number3','${def:context}/action/subject/campaign/objob/model/pick/field/crud?display=display:none&table_id='+$('#search_table_id').val()+'&form_id='+$('#search_form_id').val(),'400','320','formEditor')"
+								title="查询字段">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','phone_number3','number_lable3');" class="tool2"
+								title="清除选择的内容">
+						</td>
+					</tr>
+			
+					<tr>
+						<td class="th20">
+							客户电话号码字段4
+						</td>
+						<td class="td20left">
+							<input id="phone_number4" name="phone_number4"  value="" type="text" size="20" preserve="true">
+							字段描述 
+							<input id="number_lable4" name="number_lable4"  value="" type="text" size="20" preserve="true">
+			
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('number_lable4','phone_number4','${def:context}/action/subject/campaign/objob/model/pick/field/crud?display=display:none&table_id='+$('#search_table_id').val()+'&form_id='+$('#search_form_id').val(),'400','320','formEditor')"
+								title="查询字段">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','phone_number4','number_lable4');" class="tool2"
+								title="清除选择的内容">
+						</td>
+					</tr>
+			
+					<tr>
+						<td class="th20">
+							客户电话号码字段5
+						</td>
+						<td class="td20left">
+							<input id="phone_number5" name="phone_number5"  value="" type="text" size="20" preserve="true">
+							字段描述 
+							<input id="number_lable5" name="number_lable5"  value="" type="text" size="20" preserve="true">
+			
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('number_lable5','phone_number5','${def:context}/action/subject/campaign/objob/model/pick/field/crud?display=display:none&table_id='+$('#search_table_id').val()+'&form_id='+$('#search_form_id').val(),'400','320','formEditor')"
+								title="查询字段">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','phone_number5','number_lable5');" class="tool2"
+								title="清除选择的内容">
+						</td>
+					</tr>
+			
+					<tr>
+						<td class="th20">
+							客户电话号码字段6
+						</td>
+						<td class="td20left">
+							<input id="phone_number6"  name="phone_number6"  value="" type="text" size="20" preserve="true">
+							字段描述 
+							<input id="number_lable6" name="number_lable6"  value="" type="text" size="20" preserve="true">
+			
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('number_lable6','phone_number6','${def:context}/action/subject/campaign/objob/model/pick/field/crud?display=display:none&table_id='+$('#search_table_id').val()+'&form_id='+$('#search_form_id').val(),'400','320','formEditor')"
+								title="查询字段">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','phone_number6','number_lable6');" class="tool2"
+								title="清除选择的内容">
+						</td>
+					</tr>
+			
+					<tr>
+						<td class="th20">
+							发送短信用到的号码字段
+						</td>
+						<td class="td20left">
+							<input id="sms_number"  name="sms_number"  value="" type="text" size="20" preserve="true">
+							字段描述 
+							<input id="sms_number_lable" name="sms_number_lable"  value="" type="text" size="20" preserve="true">
+			
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('sms_number_lable','sms_number','${def:context}/action/subject/campaign/objob/model/pick/field/crud?display=display:none&table_id='+$('#search_table_id').val()+'&form_id='+$('#search_form_id').val(),'400','320','formEditor')"
+								title="查询字段">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','sms_number','sms_number_lable');" class="tool2"
+								title="清除选择的内容">
+						</td>
+					</tr>
+			
+					<tr>
+						<td class="th20">
+							发送EMAIL用到的字段
+						</td>
+						<td class="td20left">
+							<input id="email"  name="email"  value="" type="text" size="20" preserve="true">
+							字段描述 
+							<input id="email_lable" name="email_lable"  value="" type="text" size="20" preserve="true">
+			
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('email_lable','email','${def:context}/action/subject/campaign/objob/model/pick/field/crud?display=display:none&table_id='+$('#search_table_id').val()+'&form_id='+$('#search_form_id').val(),'400','320','formEditor')"
+								title="查询字段">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','email','email_lable');" class="tool2"
+								title="清除选择的内容">
+						</td>
+					</tr>
+			
+					<tr>
+						<td class="th20">
+							感兴趣车系字段<br>(活动里有发DM任务,则需要选择)
+						</td>
+						<td class="td20left">
+							<input id="interested_series"  name="interested_series"  value="" type="text" size="20" preserve="true">
+							字段描述
+							<input id="interested_series_lable" name="interested_series_lable"  value="" type="text" size="20" preserve="true">
+			
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('interested_series_lable','interested_series','${def:context}/action/subject/campaign/objob/model/pick/field/crud?display=display:none&table_id='+$('#search_table_id').val()+'&form_id='+$('#search_form_id').val(),'400','320','formEditor')"
+								title="查询字段">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','interested_series','interested_series_lable');" class="tool2"
+								title="清除选择的内容">
+						</td>
+					</tr>
+
+					<tr>
+						<td class="th20">
+							数据导入批次字段
+						</td>
+						<td class="td20left">
+							<input id="import_data_batch"  name="import_data_batch"  value="" type="text" size="20" preserve="true">
+							字
+							段描述
+							<input id="import_data_batch_lable" name="import_data_batch_lable"  value="" type="text" size="20" preserve="true">
+			
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('import_data_batch_lable','import_data_batch','${def:context}/action/subject/campaign/objob/model/pick/field/crud?display=display:none&table_id='+$('#search_table_id').val()+'&form_id='+$('#search_form_id').val(),'400','320','formEditor')"
+								title="查询字段">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','import_data_batch','import_data_batch_lable');" class="tool2"
+								title="清除选择的内容">
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="th20">
+							数据专属人字段
+						</td>
+						<td class="td20left">
+							<input id="data_owner" name="data_owner"  value="" type="text" size="20" preserve="true">
+							字段描述
+							<input id="data_owner_lable" name="data_owner_lable" value="" type="text" size="20" preserve="true">
+			
+							<img src="${def:context}/images/search.gif" class="tool"
+								onclick="pickOpen('data_owner_lable','data_owner','${def:context}/action/subject/campaign/objob/model/pick/field/crud?display=display:none&table_id='+$('#search_table_id').val()+'&form_id='+$('#search_form_id').val(),'400','320','formEditor')"
+								title="查询字段">
+							<img src="${def:context}/images/clear.gif"
+								onclick="pickClear('formEditor','data_owner','data_owner_lable');" class="tool2"
+								title="清除选择的内容">
+						</td>
+					</tr>	
+
+				</table>
+			</td>
+		</tr>
+</TABLE>
+</FIELDSET>
+
+<FIELDSET><LEGEND>操作信息</LEGEND>
+<TABLE class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <col width="80%">
+        <col width="20%">
+        <!--buttons-->
+        <tr>
+            <td align="center" >
+                <input id="submitBtn" type="submit" class="btn_blue" value="保存" >
+                <input type="button" class="btn_gray" value="取消" onclick="_goBackFn()" >
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="deleteCommand" type="button" class="btn_gray" style="display:none" value="删除"  onclick="deleteRecord(tuid.value)">
+            </td>
+            <td class="th20 required" >
+                特别标注<font color="red"><B>*</B></font>为必填信息.
+            </td>
+        </tr>
+    
+</table>
+</FIELDSET>
+</div>
+    <!--tuid是否为空,决定了form的保存方法为编辑保存,还是新增保存-->
+    <input type="hidden" id="tuid" name="tuid" value="">
+
+</form>

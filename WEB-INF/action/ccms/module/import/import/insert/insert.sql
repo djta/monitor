@@ -1,0 +1,35 @@
+INSERT	INTO
+	t_import
+(
+	tuid
+	,imp_name
+	,before_class_name
+	,pre_class_name
+	,post_class_name
+	,title_line_num
+	,is_previwe_flag
+	,subject_id
+	,remark
+	,after_sql
+	,created
+	,createdby
+	,validator_class_name
+	,is_error_continue
+)
+VALUES
+(
+	${seq:nextval@seq_import}
+	,${fld:imp_name}
+	,${fld:before_class_name}
+	,${fld:pre_class_name}
+	,${fld:post_class_name}
+	,${fld:title_line_num}
+	,${fld:is_previwe_flag}
+	,${fld:subject_id}
+	,${fld:remark}
+	,${fld:after_sql}
+	,{ts '${def:timestamp}'}
+	,'${def:user}'
+	,${fld:validator_class_name}
+	,${fld:is_error_continue}
+)               

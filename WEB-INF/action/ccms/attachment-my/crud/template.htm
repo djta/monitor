@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>上传图片</title>
+${inc:/action/ccms/pub}
+<style>
+.custom{}
+.custom .customTitle{
+	background: #fefbe4;
+	border: 1px solid #f3ecb9;
+	color: #993300;
+}
+.custom .customBody{
+	margin-top:20px;
+	padding-left: 3px;
+}
+.systemImage{
+	width:180px;
+	height:180px;
+	margin-left:20px;
+}
+.systemImage img{
+	width:120px;
+	height:120px;
+	border-radius:20px;
+	cursor: pointer;
+}
+input[type="file"]{
+	display: inline !important;
+}
+.file {
+    position: absolute;
+    display: inline-block;
+    background: #965050;
+    border-radius: 4px;
+    padding: 6px 12px;
+    color: #fff;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 22px;
+    margin-left:5px;
+}
+.file input {
+    height: 30px;
+    left: 1px;
+    opacity: 0;
+    filter:alpha(opacity=0);
+    position: absolute;
+    top: 2px;
+    width: 70px;
+}
+}
+.file:hover {
+    background: #286090;
+    border-color: #204d74;
+    color: #fff !important;
+    text-decoration: none !important;
+}
+a:hover {
+    background: #286090;
+    border-color: #204d74;
+    color: #fff !important;
+    text-decoration: none !important;
+}
+</style>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<!-- 标题 -->
+	<div class="panel-heading col_main_body_title">
+		<h2 class="panel-title">上传附件</h2>
+	</div>
+	<!-- 上传界面 -->
+	<div class="panel-body col_main_body custom" id="workspace1">
+		
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 customBody">
+			<form class="form-horizontal" name="form" id="form" action="${def:context}/action/ccms/attachment-my/insert" 
+				method="post" enctype="multipart/form-data" onSubmit="return translationClass.upload()"
+				target="uploadFrame">
+				
+				<label>选择本地文件：</label>
+				<input class="btn btn-primary btn-md " type="submit" value="上传" name="submit" />
+				
+				<a class="file">选择文件
+				    <input type="file" name="file" id="file" size="30" />
+				</a>
+				
+				<span id="showFileName" style="margin-left: 90px"></span>
+				
+				
+				<input type="hidden" name="description" size="30" />
+				<input type="hidden" id="pk_value" name="pk_value" value="${fld:pk_value}" /> 
+				<input type="hidden" id="table_code"  name="table_code" value="${fld:table_code}" />
+				<input type="hidden" id="field_value" name="field_value" value="${fld:field_value}" /> 
+				<input type="hidden" id="field_code"  name="field_code" value="${fld:field_code}" />
+				<input type="hidden" id="page_type" name="page_type" value="${fld:page_type}"/>
+				<button class="btn btn-primary btn-md material_btn" type="button" style="display:none; ">从素材库选择</button>
+			</form>
+		</div>
+	</div>
+		
+	<!-- 素材库界面 -->
+	<div class="panel-body col_main_body " id="workspace2" style="display:none;">
+		<ul class="nav nav-tabs" id="systemLabel">
+			<rows-li>
+				<li><a href="javascript:void(0);" class="li" code="${fld:domain_value}">${fld:domain_text_cn}</a></li>
+			</rows-li>
+			<li class="active"><a href="javascript:void(0);" class="my">我的素材</a></li>
+		</ul>
+		<div class="tab-pane" id="contentArea1">
+			<form class="form-horizontal" role="form" method="post" id="searchForm" name="searchForm">
+				<input name="sort" type="hidden" value="created" preserve="true" />
+				<input name="order" type="hidden" value="desc" preserve="true" />
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+				<input id="urlId" name="urlId" type="hidden" value="${fld:id}" preserve="true" />
+				<input id="urlPickId" name="urlPickId" type="hidden" value="${fld:pickId}" preserve="true" />
+				<input id="imageId" name="imageId" type="hidden" value="${fld:imageId}" preserve="true" />
+				<input type="hidden" id="pk_value" name="pk_value" value="${fld:pk_value}" /> 
+				<input type="hidden" id="table_code"  name="table_code" value="${fld:table_code}" />
+				<input type="hidden" id="field_value" name="field_value" value="${fld:field_value}" /> 
+				<input type="hidden" id="field_code"  name="field_code" value="${fld:field_code}" />
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th class="sortable" code="file_type">文件类型</th>
+						<th class="sortable" code="file_name">文件名称</th>
+						<th class="sortable" code="file_size">大小</th>
+						<th class="sortable" code="created">时间</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display:none ">
+					<tr>
+						<td align="center">
+							<img src="#file_type_name#" style="width:40px;height:40px;"></img>
+						</td>
+						<td align="center">
+							#file_name#
+						</td>
+						<td align="center">
+							#file_size#KB
+						</td>
+						<td align="center">
+							#created#
+						</td>
+						<td align="center">
+							<button class="btn btn-primary btn-md download_btn" type="button" code="#tuid#">下载</button>
+							<button class="btn btn-primary btn-md delete_btn" type="button" code="#tuid#">删除</button>
+						</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid"></tbody>
+			</table>
+			<div class="pageDiv" >
+				<ul class="pagination" data-target="datagrid">
+				</ul>
+			</div>
+		</div>
+		<div class="tab-pane" id="contentArea2">
+			<form class="form-horizontal" role="form" method="post" id="searchForm1" name="searchForm1">
+				<input name="sort" type="hidden" value="created" preserve="true" />
+				<input name="order" type="hidden" value="desc" preserve="true" />
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+				<input name="file_show_type" type="hidden" value="" preserve="true" />
+				
+				<div class="form-group">
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+						<select name="file_service_type" class="form-control" onchange="translationClass.searchChange()">
+							<option value="">请选择类型</option>
+							<roes-file>
+								<option value="${fld:val}">${fld:name}</option>
+							</roes-file>
+						</select>
+					</div>
+				</div>
+			</form>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div id="datagrid1Template" style="display:none">
+					<div class="pull-left systemImage">
+						<div class="text-center">
+							<img src="${def:context}#file_path#" class="sysImg_btn" code="#file_path#" title="选择" style="cursor: pointer;" />
+						</div>
+					</div>
+				</div>
+				<div id="datagrid1"></div>
+				<div class="pageDiv">
+					<ul class="pagination" data-target="datagrid1">
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<iframe name="uploadFrame" style="display:none">
+</iframe>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script language="javascript">
+function TranslationClass(){
+	this.init = function(){
+		var obthis = this;
+
+		//从素材库选择按钮
+		$(".material_btn").unbind().on("click",function(){
+			document.getElementById("workspace1").style.display = 'none';
+			document.getElementById("workspace2").style.display = 'inline';
+			document.getElementById("contentArea1").style.display = 'none';
+			document.getElementById("contentArea2").style.display = 'inline';
+			$("#systemLabel").show();
+			obthis.searchMy();
+		});
+		//标签页
+		$(".li").unbind().on("click",function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				document.searchForm1.file_show_type.value = $(this).attr("code");
+				document.getElementById("contentArea1").style.display = 'none';
+				document.getElementById("contentArea2").style.display = '';
+				obthis.searchLabel();
+			}
+		});
+		$(".my").unbind().on("click",function(){
+			document.getElementById("contentArea1").style.display = '';
+			document.getElementById("contentArea2").style.display = 'none';
+			obthis.searchMy();
+		});
+	},
+	this.searchMy = function(){//查询我的素材
+		$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+			//下载
+			$(".download_btn").unbind().on("click", function(){
+				if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+					var url = "${def:context}/action/ccms/attachment/download?id="+$(this).attr("code")+"&type=0";
+					window.open(url,"dl");
+				}
+			});
+			//删除
+			translationClass.bindDelete();
+
+		}}).initSearchBtn().searchData(1);
+	},
+	this.bindDelete = function(){
+		$(".delete_btn").unbind().on("click", function(){
+		   var  pk_tuid=$(this).attr("code");
+			$Dialog().confirm("确定要删除吗？",function(){
+			if(pk_tuid != undefined && pk_tuid != ""){
+				var url = "${def:context}/action/ccms/attachment/delete?id="+pk_tuid;
+				ajaxCall(url,{
+					method: "get",
+					progress: true,
+					dataType: "script",
+					success: function() {
+					    translationClass.searchMy();
+					}
+				});
+			}
+			});
+		});
+	},
+	this.searchLabel = function(){//查询系统自带图片
+		$Search({datagrid:"datagrid1",formId:"searchForm1",actionroot:"/action/ccms/attachment/searchSystemImg",success:function(){
+			//选择系统图片
+			$(".sysImg_btn").unbind().on("click",function(){
+				if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+					parent.$("#${fld:id}").val($(this).attr("code"));
+					//parent.$("#_dlg${fld:pickId}").modal("hide");
+					ccms.dialog.close();
+				}
+			});
+		}}).initSearchBtn().searchData(1);
+	},
+	this.searchChange = function(){
+		var obthis = this;
+		obthis.searchLabel();
+	},
+	this.upload = function(){
+		if (document.form.file.value == "") {
+			$Dialog().notice("请选择文件！",1200);
+			document.form.file.focus();
+			return false;
+		}
+		return true;
+	},
+	this.uploadOk = function(){//上传成功提示
+		if (document.all) {
+			document.form.file.outerHTML += "";
+		}else{
+			document.form.file.value = "";
+		}
+		document.form.description.value = "";
+		document.form.file.value = "";
+		$Dialog().notice("上传成功！",1200,function(){
+			$("#showFileName").html("");
+
+			var id = document.getElementById("urlId").value;
+			var pickId = document.getElementById("urlPickId").value;
+			var imageId = document.getElementById("imageId").value;
+			
+			var url = "/action/ccms/attachment/download?type=1&id="+imageId;
+			parent.$("#"+id).val(url);
+			//parent.$("#_dlg"+pickId).modal("hide");
+			if(typeof(parent.dialog)!="undefined"){
+				parent.dialog.close(pickId);
+			}else{
+				ccms.dialog.close(pickId);
+			}
+			
+			document.getElementById("workspace1").style.display = '';
+			document.getElementById("workspace2").style.display = '';
+			document.getElementById("contentArea1").style.display = 'inline';
+			document.getElementById("contentArea2").style.display = 'none';
+			$("#systemLabel").hide();
+			translationClass.searchMy();
+		});
+	}
+}
+
+var translationClass=null;
+$(document).ready(function(){
+	translationClass = new TranslationClass();
+	translationClass.init();
+
+	document.getElementById("workspace1").style.display = '';
+	document.getElementById("workspace2").style.display = '';
+	document.getElementById("contentArea1").style.display = 'inline';
+	document.getElementById("contentArea2").style.display = 'none';
+	$("#systemLabel").hide();
+	translationClass.searchMy();
+
+	if("${fld:logo}"=="true"){
+		$(".delete_btn").remove();
+	}
+	
+	$(".file").on("change","input[type='file']",function(){
+	    var filePath=$(this).val();
+        $("#showFileName").html(filePath);
+	    /* if(filePath.indexOf("jpg")!=-1 || filePath.indexOf("png")!=-1){
+	        $(".fileerrorTip").html("").hide();
+	        var arr=filePath.split('\\');
+	        var fileName=arr[arr.length-1];
+	        $("#showFileName").html(fileName);
+	    }else{
+	        $(".showFileName").html("");
+	        $(".fileerrorTip").html("您未上传文件，或者您上传文件类型有误！").show();
+	        return false 
+	    } */
+	});
+	
+});
+</script>
+</body>
+</html>

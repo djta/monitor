@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+    <parameter id="tuid" type="varchar" required="true" label="TUID"/>
+    <parameter id="item_id" type="integer" required="true" label="item_id"/>
+    <parameter id="list_name" type="varchar" required="true" label="选择项名称" maxlen="100"/>
+	<parameter id="list_score" type="double" required="false" label="选项分值" maxlen="10"/>
+	<parameter id="show_type" type="varchar" required="true" label="显示类型"/>
+	<parameter id="is_unspeak" type="varchar" required="true" label="是否读出"/>
+    <parameter id="show_order" type="integer" required="false" label="显示顺序"/>
+    <parameter id="remark" type="varchar" required="false" label="remark" maxlen="250"/>
+	
+	<parameter id="list_code" type="varchar" required="true" label="选择项代码" maxlen="12" regexp="^[a-zA-Z][a-zA-Z0-9]{3,12}$"
+		regexp-error-label="最输入少3位最多12位,首位为字母，由数字、字母组成 "/>
+    <custom-validator classname="dinamica.validators.DuplicatedKeyValidator"
+		on-error-label="选择项代码已经存在，请换一个" id="list_code" sql="nodup.sql" />
+</validator>
+
+

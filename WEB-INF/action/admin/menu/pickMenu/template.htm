@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script language="JavaScript" type="text/javascript" src="${def:context}/action/pub/dtree"></script>
+<title>选择上级菜单</title>
+${inc:/action/ccms/pub}
+</head>
+<body>
+<div class="pop_content" style="overflow-y:auto;height:440px;">
+	<div class="dtree">
+		<script type="text/javascript">
+			function closePickList()
+			{
+				parent.$('#_dlgparent').modal('hide');
+			}	
+
+			function menuClick(id,name){
+				parent.pickSelectMenu(id, name);
+				closePickList();
+			}
+
+			var d = new dTree('d');
+
+			d.add(0,-1, "菜单(<a href='javascript: d.openAll();'>展开</a> | <a href='javascript: d.closeAll();'>合并</a>)");
+
+			var pid = 0;
+			var btn = "";
+
+			<rows>
+				if("${fld:pid}" != ""){
+					pid = "${fld:pid}";
+				}else{
+					pid = 0;
+				}
+				btn = "<a href='javascript:menuClick(${fld:menu_id},\"${fld:title@js}\")'>${fld:title@js}</a>";
+				d.add("${fld:menu_id}",pid,btn);
+			</rows>
+			
+			document.write(d);
+		</script>
+
+	</div>
+	
+</div>
+</body>
+
+</html>

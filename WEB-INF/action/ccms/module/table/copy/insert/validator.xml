@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="subject_id" type="integer" required="true" label="专题" maxlen="10"/>
+    <parameter id="table_id" type="integer" required="true" label="table_id" maxlen="10"/>
+    <parameter id="table_alias" type="varchar" required="true" label="业务名" maxlen="100"/>
+	<parameter id="is_copy_form" type="varchar" required="true" label="是否复制界面" maxlen="2"/>
+
+</validator>
+
+

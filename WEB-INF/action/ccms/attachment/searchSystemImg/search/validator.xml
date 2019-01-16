@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="file_show_type" type="varchar" required="true" label="file_show_type" maxlen="32"/>
+	<parameter id="file_service_type" type="varchar" required="false" label="file_service_type" maxlen="32"/>
+</validator>

@@ -1,0 +1,19 @@
+INSERT INTO
+	t_form_excel_field
+(
+	tuid
+	,form_id
+	,field_id
+	,show_order
+	,show_type
+	,width
+)
+VALUES
+(
+	${seq:nextval@${schema}seq_default}
+	,${fld:form_id}
+	,${fld:excel_field}
+	,${fld:excel_show_order}
+	,${fld:excel_show_type}
+	,${fld:excel_width}
+)

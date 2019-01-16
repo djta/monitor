@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		查询
+	</summary>
+	
+	<log>false</log>
+
+	<sql-template>query-base.sql</sql-template>
+	<paging-recordset>ob_inject_pool_preview.sql</paging-recordset>
+	<preview-sql>preview_sql</preview-sql>
+
+	<transaction>
+		<classname>com.ccms.core.engine.ObJobPreviewSearch</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+   <output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+		<print mode="form" recordset="preview_sql"/>
+	</output>
+
+</config>

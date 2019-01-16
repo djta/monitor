@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>问卷管理</title>
+</head>
+<body>
+<!-- 查询 -->
+<div class="panel panel-default col_mainInner">
+   	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">问卷管理</h2>
+    </div>
+    <div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post" id="searchForm">
+			<input name="sort" type="hidden" value="term_name" preserve="true"/> 
+			<input name="order" type="hidden" value="desc" preserve="true"/> 
+			<input name="pageNo" type="hidden" value="" preserve="true"/>
+			<input name="totalPages" type="hidden" value="" preserve="true"/>
+		</form>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div id="datagridTemplate" style="display:none">
+				<div class="col-sm-4 col-md-3 col-lg-2 col-xs-6">
+					<div class="text-center">
+						<img src="${def:context}#logo_path#" class="term_btn" code="#tuid#" title="预览问卷" style="width:60%;border-radius:1em;cursor: pointer;"/><br>
+					</div>
+					<div class="text-center">
+						<b>#term_name#</b>
+					</div>
+				</div>
+			</div>
+			<div id="datagrid"></div>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}">
+<script language="javascript">
+$(document).ready(function() {
+	$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		//预览
+		$(".term_btn").unbind().on("click",function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				var url = "/action/ccms/termgen?term_id="+$(this).attr("code");
+				gotoPage(url);
+			}
+		});
+	}}).initSearchBtn().searchData(1);
+});
+</script>
+</body>
+</html>

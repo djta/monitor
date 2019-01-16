@@ -1,0 +1,667 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>动作信息</title>
+<script type="text/javascript" src="${def:context}/js/gooflow/GooFlowUtil.js"></script>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-body col_main_body">
+      	<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+			<div class="tabs">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#basicDiv" data-toggle="tab">基本属性</a></li>
+					<li><a href="#quartzDiv" data-toggle="tab">定时属性</a></li>
+					<li><a href="#gotoRuleDiv" data-toggle="tab">跳转属性</a></li>
+					<li><a href="#emailTipDiv" data-toggle="tab">邮件通知</a></li>
+					<li><a href="#smsTipDiv" data-toggle="tab">短信通知</a></li>
+					<li><a href="#sysTipDiv" data-toggle="tab">系统通知</a></li>
+				</ul>
+			</div>
+			<div class="tab-content" style="padding-top:10px;">
+				<div id="basicDiv"  class="tab-pane active">
+		      			<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">动作编号</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+								<input type="text" id="action_id" name="action_id" value="" size="30" readonly  class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">动作名称</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+								<input type="text" id="action_name" name="action_name" value="" size="30"   class="form-control"   maxlength="30"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">是否自动执行</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">	
+								<input name="is_auto" type="radio" value="0" checked class="form-control" />否
+								<input name="is_auto" type="radio" value="1" class="form-control" />是					
+							</div>
+						</div>
+						<div class="form-group" id="specifyPermissions">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">指定权限</label>
+							<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">	
+								<input id="table_id1" name="authority_id" type="hidden" value="" />
+								<input type="text" id="table_alias1" name="authority_group_name" size="30"  readonly  class="form-control"  value="" />
+							</div>
+							<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
+								<img src="${def:context}/images/search.gif" id="pickAuthorityGroup" title="查询权限" />
+								<img src="${def:context}/images/clear.gif" id="pickClearA" title="清除选择的内容" />	
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">前置类名称</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">	
+								<input type="text" id="pre_class" name="pre_class" value="" class="form-control" size="50" maxlength="120" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">后置类名称</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">	
+								<input type="text" id="post_class" name="post_class" value="" class="form-control" size="50" maxlength="120" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">条件类名称</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">	
+								<input type="text" id="condition_class" name="condition_class" value="com.ccms.workflow.condition.WorkflowRuleCondition"  class="form-control" size="50" maxlength="120" />
+							</div>
+						</div>
+				</div>
+				<div id="quartzDiv"   class="tab-pane">
+		      			<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">超时时长(分钟): </label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+								<input type="text" id="quartz_timeout" name="quartz_timeout" value="" size="30" maxlength="8"  class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">延迟时间(分钟)</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+								<input type="text" id="quartz_delay" name="quartz_delay" value="" size="30" maxlength="8"  class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">cron表达式</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+								<input type="text" id="quartz_cron" name="quartz_cron" value="" size="30" maxlength="120"  class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">定时类名称</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+								<input type="text" id="quartz_class" name="quartz_class" value=""  size="50" maxlength="120"  class="form-control" />
+							</div>
+						</div>
+				</div>
+				<div id="gotoRuleDiv" class="tab-pane">
+		      			<!-- <div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">CS活动</label>
+							<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+								<input id="cs_campaign_id" name="cs_campaign_id" type="hidden" value="" />
+								<input type="text" id="cs_campaign_name" name="cs_campaign_name" size="30"  readonly  class="form-control"  value="" />
+							</div>
+							<div class="col-xs-2 col-sm-3 col-md-3 col-lg-3">	
+								<img src="${def:context}/images/search.gif" id="pickCampaign" title="查询活动" />
+								<img src="${def:context}/images/clear.gif" id="pickClearCs" title="清除选择的内容" />	
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">CS活动主题</label>
+							<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+								
+								<input id="cs_job_id" name="cs_job_id" type="hidden" value="" />
+								<input type="text" id="cs_job_name" name="cs_job_name" size="30"  readonly  class="form-control"  value="" />
+							</div>
+							<div class="col-xs-2 col-sm-3 col-md-3 col-lg-3">	
+								<img src="${def:context}/images/search.gif" class="tool" id="pickJob" title="查询活动主题" />
+								<img src="${def:context}/images/clear.gif" id="pickClearCsJobName" title="清除选择的内容" />
+							</div>
+					</div>-->
+					<table class="grid" width="100%">
+						<tr align="center">
+							<td>删除</td>
+							<td>逻辑</td>
+							<td>左前缀</td>
+							<td>字段</td>
+							<td>操作符</td>
+							<td>条件值</td>
+							<td>右后缀</td>
+						</tr>
+						<tbody id="gridBody">
+						<tr align="center">
+							<td><img src="${def:context}/images/clear.gif" onclick="deleteRow(this.parentNode.parentNode.sectionRowIndex)" border="0" title="删除"  /></td>
+							<td>
+								<select name="rule_logic" >
+									<option value="AND">并且</option>
+									<option value="OR">或者</option>
+								</select>
+							</td>
+							<td>
+								<input type="text" name="left_prefix" size="4" />
+							</td>
+							<td>
+								<select name="rule_field" id="rule_field">
+									<option value="">请选择</option>
+								</select>
+							</td>
+							<td>
+								<select name="rule_operator">
+									<option value="like">包含</option>
+									<option value="=">等于</option>
+									<option value=">">大于</option>
+									<option value=">=">大于等于</option>
+									<option value="<">小于</option>
+									<option value="<=">小于等于</option>
+									<option value="<>">不等于</option>
+									<option value="is not null">非空</option>
+									<option value="is null">空值</option>
+								</select>
+							</td>
+							<td>
+								<input type="text" name="rule_value" size="6" />
+							</td>
+							<td>
+								<input type="text" name="right_suffix" size="4" />
+							</td>
+						</tr>
+						</tbody>
+						<tr>
+							<th colspan="7" align="left">
+								<button type="button" id="addRow" class="btn btn-primary" >添加</button>
+							</th>
+						</tr>
+					</table>
+				</div>
+				<div id="emailTipDiv" class="tab-pane">
+		      			<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">按权限组发送</label>
+							<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+								<input id="email_skill_id" name="email_skill_id" type="hidden" value="" />
+								<input type="text" id="email_skill_name" name="email_skill_name" size="30"  readonly  class="form-control"  value="" />
+							</div>
+							<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
+								<img src="${def:context}/images/search.gif" id="pickAuthority1" title="查询" />
+								<img src="${def:context}/images/clear.gif" id="pickClear1" title="清除选择的内容" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">权限组邮件主题</label>
+							<div class="col-xs-7 col-sm-8 col-md-8 col-lg-8">
+								<input type="text" id="email_skill_subject" name="email_skill_subject" value="" class="form-control" size="30" maxlength="120" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">权限组邮件模版</label>
+							<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+								<input id="email_skill_template_id" name="email_skill_template_id" type="hidden" value="" />
+								<input type="text" id="email_skill_template_name" name="email_skill_template_name" size="30"  readonly  class="form-control"  value="" />
+							</div>
+							<div class="col-xs-2 col-sm-3 col-md-3 col-lg-3">
+								<img src="${def:context}/images/search.gif" id="pickEmailTemplate1" title="查询模版" />
+								<img src="${def:context}/images/clear.gif" id="pickClearEmail" title="清除选择的内容" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">发送流程接收人</label>
+							<div class="col-xs-7 col-sm-8 col-md-8 col-lg-8">
+								<input type="checkbox" id="email_assign_user" name="email_assign_user" value="" class="form-control" />
+							</div>
+						</div>
+				</div>
+				<div id="smsTipDiv"  class="tab-pane">
+		      			<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">按权限组发送</label>
+							<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+								<input id="sms_skill_id" name="sms_skill_id" type="hidden" value="" />
+								<input type="text" id="sms_skill_name" name="sms_skill_name" size="30"  readonly  class="form-control"  value="" />
+							</div>
+							<div class="col-xs-2 col-sm-3 col-md-3 col-lg-3">
+								<img src="${def:context}/images/search.gif" id="pickAuthority2" title="查询" />
+								<img src="${def:context}/images/clear.gif" id="pickClear2" title="清除选择的内容" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">权限组短信模版</label>
+							<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+								<input id="sms_skill_template_id" name="sms_skill_template_id" type="hidden" value="" />
+								<input type="text" id="sms_skill_template_name" name="sms_skill_template_name" size="30"  readonly  class="form-control"  value="" />
+							</div>
+							<div class="col-xs-2 col-sm-3 col-md-3 col-lg-3">
+								<img src="${def:context}/images/search.gif" class="tool" id="pickSmsTemplate" title="查询模版" />
+								<img src="${def:context}/images/clear.gif" onclick="pickClear('sms_skill_template_id','sms_skill_template_name');" class="tool2" title="清除选择的内容" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">发送流程接收人</label>
+							<div class="col-xs-7 col-sm-8 col-md-8 col-lg-8">
+								<input type="checkbox" id="sms_assign_user" name="sms_assign_user" value="" class="form-control"  />
+							</div>
+						</div>
+				</div>
+				<div id="sysTipDiv" class="tab-pane">
+		      			<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">按权限组发送</label>
+							<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+								<input id="remind_skill_id" name="remind_skill_id" type="hidden" value="" />
+								<input type="text" id="remind_skill_name" name="remind_skill_name" size="30"  readonly  class="form-control"  value="" />
+							</div>
+							<div class="col-xs-2 col-sm-3 col-md-3 col-lg-3">
+								<img src="${def:context}/images/search.gif" id="pickAuthority3" title="查询" />
+								<img src="${def:context}/images/clear.gif" id="pickClear3" title="清除选择的内容" />
+							</div>
+						</div>
+		      			<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">权限组通知标题</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input type="text" id="remind_skill_subject" name="remind_skill_subject" value="" size="30" maxlength="120" class="form-control"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">权限组通知模版</label>
+							<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+								<input id="remind_skill_template_id" name="remind_skill_template_id" type="hidden" value="" />
+								<input type="text" id="remind_skill_template_name" name="remind_skill_template_name" size="30"  readonly  class="form-control"  value="" />
+							</div>
+							<div class="col-xs-2 col-sm-3 col-md-3 col-lg-3">
+								<img src="${def:context}/images/search.gif" id="pickEmailTemplate2" title="查询模版" />
+								<img src="${def:context}/images/clear.gif" id="pickClearRemind" title="清除选择的内容" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">权限组通知模版</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input type="checkbox" id="remind_assign_user" name="remind_assign_user" value="" class="form-control" />
+							</div>
+						</div>
+				</div>
+			
+			</div>
+			<input type="hidden" name="from_node_id" id="from_node_id" value="" />
+			<input type="hidden" name="to_node_id" id="to_node_id" value="" />
+		</form>
+	</div>
+	<div class="panel-footer navbar-fixed-bottom text-center">
+		<button type="button" id="save_btn" class="btn btn-primary btn-md" >保&nbsp;存</button>
+		<button type="button" class="btn btn-primary btn-md" id="cancel_btn">取&nbsp;消</button>
+	</div>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+</div>
+</body>
+
+<script type="text/javascript">
+function LineClass(){
+	this.id = "${fld:id}";
+	this.jsondata = parent.webflowClass.getFlowConfig();
+	this.linedata = parent.webflowClass.getLineConfig(this.id);
+	this.init=function(){
+		var  obthis=this;
+		var fromNode = parent.webflowClass.getNodeConfig(obthis.linedata.from);
+		
+		//开始节点、分支节点、汇聚节点不能配置权限
+		if(fromNode.node_type==0 || fromNode.step_type==1 || fromNode.step_type==2){
+			document.getElementById("specifyPermissions").style.display='none';
+		}
+		
+		//汇聚节点后的线默认设置为自动执行
+		if(fromNode.step_type==2){
+			this.linedata.is_auto="1";
+		}
+		this.initDate();
+
+		$("#pickAuthority1").unbind("click");
+		$("#pickAuthority1").unbind().on("click",function(){
+			var url = "${def:context}/action/ccms/pub/pick/authority/crud?pickId=pickAuthority1&id=email_skill_id&name=email_skill_name";
+			ccms.dialog.open({url:url,id:"pickAuthority1",width:500,height:400});
+		});
+		$("#pickClear1").unbind().on("click",function(){
+			$("#email_skill_id").val('');
+			$("#email_skill_name").val('');
+		});
+		
+		$("#pickAuthority2").unbind("click");
+		$("#pickAuthority2").unbind().on("click",function(){
+			var url = "${def:context}/action/ccms/pub/pick/authority/crud?pickId=pickAuthority2&id=sms_skill_id&name=sms_skill_name";
+			ccms.dialog.open({url:url,id:"pickAuthority2",width:500,height:400});
+		});
+		$("#pickClear2").unbind().on("click",function(){
+			$("#sms_skill_id").val('');
+			$("#sms_skill_name").val('');
+		});
+		
+		$("#pickAuthority3").unbind("click");
+		$("#pickAuthority3").unbind().on("click",function(){
+			var url = "${def:context}/action/ccms/pub/pick/authority/crud?pickId=pickAuthority3&id=remind_skill_id&name=remind_skill_name";
+			ccms.dialog.open({url:url,id:"pickAuthority3",width:500,height:400});
+		});
+		$("#pickClear3").unbind().on("click",function(){
+			$("#remind_skill_id").val('');
+			$("#remind_skill_name").val('');
+		});
+		$("#pickCampaign").unbind("click");
+		$("#pickCampaign").unbind().on("click",function(){
+			var url = "${def:context}/action/ccms/pub/pick/campaign/crud?pickId=pickCampaign&id=cs_campaign_id&name=cs_campaign_name";
+			ccms.dialog.open({url:url,id:"pickCampaign",width:500,height:400});
+		});
+		$("#pickClearCs").unbind().on("click",function(){
+			$("#cs_campaign_id").val('');
+			$("#cs_campaign_name").val('');
+		});
+		
+		$("#pickJob").unbind("click");
+		$("#pickJob").unbind().on("click",function(){
+			var cs_campaign_id = document.formEditor.cs_campaign_id.value;
+			if(cs_campaign_id == ""){
+				$Dialog().alert("请先选择活动！");
+				return false;
+			}
+			var url = "${def:context}/action/ccms/pub/pick/objob/crud?pickId=pickJob&id=cs_job_id&name=cs_job_name&campaign_id="+cs_campaign_id;
+			ccms.dialog.open({url:url,id:"pickJob",width:500,height:400});
+		});
+		$("#pickClearCsJobName").unbind().on("click",function(){
+			$("#cs_job_id").val('');
+			$("#cs_job_name").val('');
+		});
+		
+		$("#pickEmailTemplate1").unbind();
+		$("#pickEmailTemplate1").unbind().on("click",function(){
+			var url = "${def:context}/action/ccms/pub/pick/email?pickId=pickEmail&id=email_skill_template_id&name=email_skill_template_name";
+			ccms.dialog.open({url:url,id:"pickEmail",width:500,height:400});
+		});
+		$("#pickClearEmail").unbind().on("click",function(){
+			$("#email_skill_template_id").val('');
+			$("#email_skill_template_name").val('');
+		});
+		
+		$("#pickEmailTemplate2").unbind();
+		$("#pickEmailTemplate2").unbind().on("click",function(){
+			var url = "${def:context}/action/ccms/pub/pick/email?pickId=pickRemind&id=remind_skill_template_id&name=remind_skill_template_name";
+			ccms.dialog.open({url:url,id:"pickRemind",width:500,height:400});
+		});
+		$("#pickClearRemind").unbind().on("click",function(){
+			$("#remind_skill_template_id").val('');
+			$("#remind_skill_template_name").val('');
+		});
+		
+		
+		$("#pickSmsTemplate").unbind();
+		$("#pickSmsTemplate").unbind().on("click",function(){
+			ccms.dialog.open({url:"${def:context}/action/ccms/pub/pick/sms?id=sms_skill_template_id&name=sms_skill_template_name&pickId=pickSms",id:"pickSms",width:500,height:400});
+		});
+		
+		$("#addRow").unbind();
+		$("#addRow").unbind().on("click",function(){
+			obthis.addRow();
+		});
+		
+		
+		$("#pickAuthorityGroup").unbind();
+		$("#pickAuthorityGroup").unbind().on("click",function(){
+			var url = "${def:context}/action/ccms/pub/pick/authority/crud?pickId=pickOpen&id=table_id1&name=table_alias1";
+			ccms.dialog.open({url:url,id:"pickOpen",width:500,height:400});
+		});
+		$("#pickClearA").unbind().on("click",function(){
+			$("#table_id1").val('');
+			$("#table_alias1").val('');
+		});
+			
+		$("#save_btn").unbind();
+		$("#save_btn").unbind().on("click",function(){
+			obthis.saveData();
+		});
+		
+		$("#cancel_btn").unbind("click");
+		$("#cancel_btn").unbind().on("click",function(){
+			$("#_dlglineForm",window.parent.document).find(".dialog-close").click();//关闭此弹出窗口-新增
+		});
+	};
+	this.initDate=function(){
+		if(typeof(this.jsondata) == "undefined"){
+			$Dialog().alert("请先配置流程信息！",function(){
+				$("#_dlglineForm",window.parent.document).find(".dialog-close").click();//关闭此弹出窗口-新增
+			});
+		}else{
+			if(this.linedata){
+				var fromNode = parent.webflowClass.getNodeConfig(this.linedata.from);
+				var toNode = parent.webflowClass.getNodeConfig(this.linedata.to);
+				//如果是暂存节点则起始节点和结束节点相同
+				if(toNode.type == "blank"){
+					toNode = fromNode;
+				}
+				if(typeof(fromNode.node_id) != "undefined" && typeof(toNode.node_id) != "undefined"){
+					document.formEditor.from_node_id.value = fromNode.node_id;
+					document.formEditor.to_node_id.value = toNode.node_id;
+					var action_id = this.linedata.action_id;
+					if(typeof(action_id) != "undefined" && action_id != null && action_id != ""){//修改
+						//加载字段后给跳转规则赋值
+						this.loadColumn(this.updateGotoRules);
+						document.formEditor.action_id.value = this.linedata.action_id;
+						document.formEditor.action_name.value = this.linedata.action_name;
+						setCheckboxValue("is_auto",this.linedata.is_auto,"formEditor");
+						
+						document.formEditor.authority_id.value = this.linedata.authority_id;
+						document.formEditor.authority_group_name.value = this.linedata.authority_group_name;
+						document.formEditor.pre_class.value = this.linedata.pre_class;
+						document.formEditor.post_class.value = this.linedata.post_class;
+						document.formEditor.condition_class.value = this.linedata.condition_class;
+
+						document.formEditor.quartz_timeout.value = this.linedata.quartz_timeout;
+						document.formEditor.quartz_delay.value = this.linedata.quartz_delay;
+						document.formEditor.quartz_cron.value = this.linedata.quartz_cron;
+						document.formEditor.quartz_class.value = this.linedata.quartz_class;
+						/* document.formEditor.cs_campaign_id.value = this.linedata.cs_campaign_id;
+						document.formEditor.cs_campaign_name.value = this.linedata.cs_campaign_name;
+						document.formEditor.cs_job_id.value = this.linedata.cs_job_id;
+						document.formEditor.cs_job_name.value = this.linedata.cs_job_name; */
+
+						document.formEditor.email_skill_id.value = this.linedata.email_skill_id;
+						document.formEditor.email_skill_name.value = this.linedata.email_skill_name;
+						document.formEditor.email_skill_subject.value = this.linedata.email_skill_subject;
+						document.formEditor.email_skill_template_id.value = this.linedata.email_skill_template_id;
+						document.formEditor.email_skill_template_name.value = this.linedata.email_skill_template_name;
+						if(this.linedata.email_assign_user){
+							if(this.linedata.email_assign_user == "1"){
+								document.getElementById("email_assign_user").checked = true;
+							}
+						}
+
+						document.formEditor.sms_skill_id.value = this.linedata.sms_skill_id;
+						document.formEditor.sms_skill_name.value = this.linedata.sms_skill_name;
+						document.formEditor.sms_skill_template_id.value = this.linedata.sms_skill_template_id;
+						document.formEditor.sms_skill_template_name.value = this.linedata.sms_skill_template_name;
+						if(this.linedata.sms_assign_user){
+							if(this.linedata.sms_assign_user == "1"){
+								document.getElementById("sms_assign_user").checked = true;
+							}
+						}
+
+						document.formEditor.remind_skill_id.value = this.linedata.remind_skill_id;
+						document.formEditor.remind_skill_name.value = this.linedata.remind_skill_name;
+						document.formEditor.remind_skill_subject.value = this.linedata.remind_skill_subject;
+						document.formEditor.remind_skill_template_id.value = this.linedata.remind_skill_template_id;
+						document.formEditor.remind_skill_template_name.value = this.linedata.remind_skill_template_name;
+						if(this.linedata.remind_assign_user){
+							if(this.linedata.remind_assign_user == "1"){
+								document.getElementById("remind_assign_user").checked = true;
+							}
+						}
+					}else{//新增
+						//获取主键序列号
+						getSequence("action_id",null);
+						//加载字段
+						this.loadColumn(null);
+					}
+				}else{
+					$Dialog().alert("请先配置节点信息！",function(){
+						$("#_dlglineForm",window.parent.document).find(".dialog-close").click();//关闭此弹出窗口-新增
+					});
+				}
+			}else{
+				$Dialog().alert("请先配置节点信息！",function(){
+					$("#_dlglineForm",window.parent.document).find(".dialog-close").click();//关闭此弹出窗口-新增
+				});
+			}
+		}
+	};
+
+	this.updateGotoRules=function(){
+		var goto_rules = this.linedata.goto_rules;
+		if(typeof(goto_rules) == "undefined" || goto_rules.length == 0){
+			return false;
+		}
+		for ( var i = 0;i < goto_rules.length;i++ ){
+			rule = goto_rules[i];
+			obthis.addRow();
+			var b = document.getElementById("gridBody");
+			this.setSelectValue(document.forms[0].rule_field[b.rows.length-1],rule.rule_field);
+			this.setSelectValue(document.forms[0].rule_operator[b.rows.length-1],rule.rule_operator);
+			this.setSelectValue(document.forms[0].rule_logic[b.rows.length-1],rule.rule_logic);
+			document.forms[0].rule_value[b.rows.length-1].value = rule.rule_value;
+			document.forms[0].left_prefix[b.rows.length-1].value = rule.left_prefix;
+			document.forms[0].right_suffix[b.rows.length-1].value = rule.right_suffix;
+		}
+		var b = document.getElementById("gridBody");
+		if(b.rows.length > 1){
+			obthis.deleteRow(0);
+		}
+	};
+	this.setSelectValue=function(combo,comboValue){	   
+	   var cantidad = combo.length;
+	   for (i = 0; i < cantidad; i++) {
+		  if (combo[i].value == comboValue) {
+			 combo[i].selected = true;
+		  }
+		}   
+	};
+
+	this.loadColumn=function(backFunc){
+		var table_id = this.jsondata.table_id;
+		var　url="${def:context}/action/ccms/module/workflow/webflow/column?id=rule_field&table_id="+table_id;
+		ajaxCall(url,{
+			method: "GET",
+			progress: true,
+			dataType: "script",
+			success:function(){
+				backFunc;
+			}
+		});
+	};
+	this.addRow=function(){
+		var b = document.getElementById("gridBody");
+		var x = b.insertRow(-1);
+		var d = b.rows[0];
+		x.align = d.align;
+		for (i=0;i<d.cells.length;i++)
+		{
+			var c = x.insertCell(-1);
+			c.innerHTML = d.cells[i].innerHTML;
+			c.align = d.cells[i].align;
+			c.valign = d.cells[i].valign;
+		}
+		document.forms[0].rule_field[b.rows.length-1].options[0].selected=true;
+		document.forms[0].rule_operator[b.rows.length-1].options[0].selected=true;
+		document.forms[0].rule_value[b.rows.length-1].value = "";
+		document.forms[0].left_prefix[b.rows.length-1].value = "";
+		document.forms[0].right_suffix[b.rows.length-1].value = "";
+		document.forms[0].rule_logic[b.rows.length-1].options[0].selected=true;
+	};
+	this.saveData=function(){
+		if(document.formEditor.action_name.value == ""){
+			$Dialog().alert("动作名称不能为空！");
+			return false;
+		}
+		//正常的流程操作需要指定权限
+		var fromNode = parent.webflowClass.getNodeConfig(this.linedata.from);
+		if(fromNode.node_type!=0 && fromNode.step_type!=1 && fromNode.step_type!=2){
+			if($("#table_id1").val()=="" || $("#table_id1").val()==null){
+				$Dialog().notice("请设置权限！",1500);
+				return;
+			}
+		}
+		//更新Gooflow中配置信息
+		this.linedata.action_id = document.formEditor.action_id.value;
+		this.linedata.action_name = document.formEditor.action_name.value;
+		this.linedata.is_auto = GetRadioValue("is_auto","formEditor");
+		this.linedata.authority_id = document.formEditor.authority_id.value;
+		this.linedata.authority_group_name = document.formEditor.authority_group_name.value;
+		this.linedata.pre_class = document.formEditor.pre_class.value;
+		this.linedata.post_class = document.formEditor.post_class.value;
+		this.linedata.condition_class = document.formEditor.condition_class.value;
+
+		this.linedata.quartz_timeout = document.formEditor.quartz_timeout.value;
+		this.linedata.quartz_delay = document.formEditor.quartz_delay.value;
+		this.linedata.quartz_cron = document.formEditor.quartz_cron.value;
+		this.linedata.quartz_class = document.formEditor.quartz_class.value;
+	/* 	this.linedata.cs_campaign_id = document.formEditor.cs_campaign_id.value;
+		this.linedata.cs_campaign_name = document.formEditor.cs_campaign_name.value;
+		this.linedata.cs_job_id = document.formEditor.cs_job_id.value;
+		this.linedata.cs_job_name = document.formEditor.cs_job_name.value; */
+
+		this.linedata.email_skill_id = document.formEditor.email_skill_id.value;
+		this.linedata.email_skill_name = document.formEditor.email_skill_name.value;
+		this.linedata.email_skill_subject = document.formEditor.email_skill_subject.value;
+		this.linedata.email_skill_template_id = document.formEditor.email_skill_template_id.value;
+		this.linedata.email_skill_template_name = document.formEditor.email_skill_template_name.value;
+		this.linedata.email_assign_user = document.getElementById("email_assign_user").checked?"1":"0";
+
+		this.linedata.sms_skill_id = document.formEditor.sms_skill_id.value;
+		this.linedata.sms_skill_name = document.formEditor.sms_skill_name.value;
+		this.linedata.sms_skill_template_id = document.formEditor.sms_skill_template_id.value;
+		this.linedata.sms_skill_template_name = document.formEditor.sms_skill_template_name.value;
+		this.linedata.sms_assign_user = document.getElementById("sms_assign_user").checked?"1":"0";
+
+		this.linedata.remind_skill_id = document.formEditor.remind_skill_id.value;
+		this.linedata.remind_skill_name = document.formEditor.remind_skill_name.value;
+		this.linedata.remind_skill_subject = document.formEditor.remind_skill_subject.value;
+		this.linedata.remind_skill_template_id = document.formEditor.remind_skill_template_id.value;
+		this.linedata.remind_skill_template_name = document.formEditor.remind_skill_template_name.value;
+		this.linedata.remind_assign_user = document.getElementById("remind_assign_user").checked?"1":"0";
+		
+		//获取from节点和to节点
+		this.linedata.from_node_id = document.formEditor.from_node_id.value;
+		this.linedata.to_node_id = document.formEditor.to_node_id.value;
+
+		//拼跳转规则
+		var rule_field = document.getElementsByName("rule_field");
+		var rule_operator = document.getElementsByName("rule_operator");
+		var rule_value = document.getElementsByName("rule_value");
+		var left_prefix = document.getElementsByName("left_prefix");
+		var right_suffix = document.getElementsByName("right_suffix");
+		var rule_logic = document.getElementsByName("rule_logic");
+		var goto_rules = {};
+		for(var i=0;i<rule_field.length;i++){
+			goto_rules[i] = {
+							rule_field:rule_field[i].value,
+							rule_operator:rule_operator[i].value,
+							rule_value:rule_value[i].value,
+							left_prefix:left_prefix[i].value,
+							right_suffix:right_suffix[i].value,
+							rule_logic:rule_logic[i].value
+			};
+		}
+		this.linedata.goto_rules = goto_rules;
+
+		parent.webflowClass.updateLineConfig(this.id,this.linedata);
+		$("#_dlglineForm",window.parent.document).find(".dialog-close").click();//关闭此弹出窗口-新增
+	}
+}
+
+function deleteRow(j){
+	var b = document.getElementById("gridBody");
+	if(b.rows.length <= 1){
+		$Dialog().alert("至少需要保留一条数据！");
+	}else{
+		b.deleteRow(j);
+	}
+};
+
+var lineClass=null;
+$(document).ready(function(){
+	lineClass=new LineClass();
+	lineClass.init();
+});
+</script>
+
+</html>

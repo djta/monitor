@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="namespace" type="varchar" required="true" label="namespace" maxlen="32"/>
+	<parameter id="parent_namespace" type="varchar" required="true" label="parent_namespace" maxlen="32"/>
+	<parameter id="parent_domain_value" type="varchar" required="false" label="parent_domain_value" maxlen="128"/>
+	<parameter id="select_id" type="varchar" required="true" label="select_id" maxlen="128"/>
+	<parameter id="show_value_type" type="varchar" required="true" label="show_value_type" maxlen="32"/>
+	<parameter id="show_type" type="varchar" required="true" label="show_type" maxlen="32"/>
+</validator>

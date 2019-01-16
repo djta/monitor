@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>选取数据</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">选取题库ID</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post" id="searchForm" name="searchForm">
+			<input name="sort" type="hidden" value="id" preserve="true"/>
+			<input name="order" type="hidden" value="desc" preserve="true" /> 
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+			
+			<div class="form-group">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+		
+				</div>
+			</div>
+		</form>
+				<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th class="sortable" code="tuid">题库ID</th>
+						<th class="sortable" code="term_name">题库名称</th>				
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr code1="#term_name#" code="#tuid#" id="selectItem" class="selectItem" style="cursor:pointer;" title="选择">
+						<td class="text-center">#tuid#</td>
+						<td class="text-center">#term_name#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+		<div class="pageDiv">
+			<ul class="pagination"></ul>
+		</div>
+	</div>
+</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script language="JavaScript">
+   (function() {
+		var $S = function (){
+			return new $S.fn.init();
+		},
+		$S_init = null;
+		$S.fn = $S.prototype;
+		$S_init = $S.fn.init = function() {
+			var onthis=this;
+			onthis.selectItem = function(question_bank_id,term_name) {
+				parent.$("#question_bank_id").val(question_bank_id);
+				parent.$("#question_bank_name").val(term_name);
+				ccms.dialog.close();
+			};
+			
+			$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+				$("#btn_reset").unbind().on("click",function(){
+					document.searchForm.product.value='';
+				});
+				$(".selectItem").unbind().on("click",function(){
+					var question_bank_id=$(this).attr("code");
+					var term_name=$(this).attr("code1");
+					onthis.selectItem(question_bank_id,term_name);
+				});
+			}}).initSearchBtn().searchData(1);
+		};
+		$S_init.prototype = $S.fn;
+		window["club"]["Serverid"] = $S;
+	})();
+	$(document).ready(function() {
+		club.Serverid();
+	});
+</script>
+</body>
+</html>

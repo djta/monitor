@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<parameter id="subject_id" type="integer" required="true" label="专题"/>
+    <parameter id="table_id" type="integer" required="true" label="业务"/>
+    <parameter id="report_name_cn" type="varchar" required="true" label="报表中文名称" maxlen="256"/>
+    <parameter id="report_name_en" type="varchar" required="true" label="报表英文名称" maxlen="256"/>
+    <parameter id="report_type" type="varchar" required="true" label="报表类型" />
+	<parameter id="engine_type" type="varchar" required="true" label="报表引擎" />
+	<parameter id="congnos_ip" type="varchar" required="false" label="Cognos Ip" maxlen="128" />
+	<parameter id="jor_file_name" type="varchar" required="false" label="简表配置文件路径" maxlen="1024" />
+    <parameter id="col_num_filter" type="integer" required="true" label="查询显示列数"/>
+    <parameter id="report_sql" type="varchar" required="false" label="SQL语句"/>
+    <parameter id="remark" type="varchar" required="false" label="备注" maxlen="256"/>
+    <parameter id="show_total_type" type="varchar" required="true" label="是否显示汇总" maxlen="2"/>
+    <parameter id="show_sub_total_type" type="varchar" required="true" label="是否显示小计汇总" maxlen="2"/>
+    <parameter id="show_percent_type" type="varchar" required="true" label="是否显示百分比" maxlen="2"/>
+    <parameter id="if_customer_design" type="varchar" required="true" label="是否客户自定义条件" maxlen="2"/>
+    <parameter id="is_sql_phrase" type="varchar" required="true" label="SQL语句类型" maxlen="2"/>
+    <parameter id="is_merge_zero" type="varchar" required="true" label="是否合并空行及零行" maxlen="2"/>
+    <parameter id="is_merge_vertical" type="varchar" required="true" label="是否垂直合并表头" maxlen="2"/>
+    <parameter id="is_show_zero" type="varchar" required="true" label="零是否显赤为空" maxlen="2"/>
+    <parameter id="form_js" type="varchar" required="false" label="界面JS代码"/>
+    <parameter id="loadfilter_js" type="varchar" required="false" label="加载条件界面后JS代码"/>
+    <parameter id="searchback_js" type="varchar" required="false" label="查询后JS代码"/>
+    <parameter id="searchpre_js" type="varchar" required="false" label="查询前JS代码"/>
+
+	<parameter id="url" type="varchar" required="false" label="url" maxlen="1024"/>
+</validator>

@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>面板</title>
+${inc:/action/ccms/pub}
+</head>
+<body>
+<div class="main">
+	<div class="panel panel-default">
+		<div class="panel-heading text-center">
+			<h2 class="panel-title">查询面板</h2>
+		</div>
+	</div>
+	<div class="panel-body">
+		<form class="form-horizontal" role="form" method="post" id="searchForm">
+			<input type="hidden" name="app_id" value="${fld:app_id}" />
+			<input name="order" type="hidden" value="desc" preserve="true" /> 
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+			<div class="form-group">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+					<select name="role_id" size="1" class="form-control">
+						<rows>
+							<option value="${fld:role_id}">${fld:description}</option>
+						</rows>
+					</select>
+				</div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+				</div>
+			</div>
+		</form>
+			<div id="datagridTemplate" style="display: none">
+				<div>
+					<div align="center" onmouseover="rowOn(this)" onmouseout="rowOff(this)" style="width:100px;height:100px;float:left;">
+						<div id="image_#service_id#_wait" style="margin-top: 5px; color: gray; width: 100px; font-weight: normal; font-family: Arial">
+							<img src="${def:context}/images/progress.gif" /> 加载中...
+						</div>
+						<img id="image_#service_id#" style="display: none;width:70px;height:70px;" class="tool" src="${def:context}#icon_path#" border="0"
+							onload="displayImage('image_#service_id#')"
+							title="#description#" />
+							<br>
+						#description#
+					</div>
+				</div>
+			</div>
+			<div id="datagrid"></div>
+			<div class="pageDiv" style="clear:both;">
+				<ul class="pagination">
+				</ul>
+			</div>
+	</div>
+	<!--用于传递当前目录到header模版中-->
+	<input type="hidden" name="actionroot" id="actionroot"	value="${def:actionroot}" />
+</div>
+</body>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		
+	}}).initSearchBtn().searchData(1);
+});
+	
+function displayImage(imageID){
+	document.getElementById(imageID + "_wait").style.display='none';
+	document.getElementById(imageID).style.display='';
+}
+function rowOn(obj) {
+	currStyle = obj.style.backgroundColor;
+	obj.style.cursor="pointer";
+	obj.style.backgroundColor="#E3E4FA";
+}
+
+function rowOff(obj) {
+	obj.style.backgroundColor=currStyle;
+}
+
+</script>
+
+</html>

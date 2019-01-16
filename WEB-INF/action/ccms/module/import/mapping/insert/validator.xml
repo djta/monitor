@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator  onerror="/action/ccms/validate">
+
+    <parameter id="old_data" type="varchar" required="true" label="错误数据"/>
+    <parameter id="mapping_value" type="varchar" required="true" label="对应数据库值" />
+    <parameter id="namespace_mapping" type="varchar" required="true" label="命名空间" />
+
+</validator>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/ccms/pub}
+<title>活动信息</title>
+</head>
+<body>
+	<!--addnew/edit form-->
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="formTitle">新增</h4>
+				</div>
+				<div class="modal-body">
+					<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+						<input type="hidden" id="vc_code" name="vc_code" value="" /> 
+						<input type="hidden" id="tuid" name="tuid" value="" /> 
+						<input type="hidden" id="subject_id1" name="subject_id1" value="" />
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label required">专题名称</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<input type="text" class="form-control" id="subject_name1" name="subject_name1" readonly class="readonly" value="" maxlength="80" />
+							</div>
+
+							<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label required">活动名称</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<input type="text" class="form-control" id="campaign_name" name="campaign_name" value="" maxlength="80" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label ">活动英文名称</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<select class="form-control" name="campaign_name_en" id="campaign_name_en">
+									<option value="0">收入</option>
+									<option value="1">税收</option>
+									<option value="2">未分类</option>
+								</select>
+							</div>
+
+							<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label required">活动代码</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<input type="text" class="form-control" id="campaign_code" name="campaign_code" value="" maxlength="80" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label required">活动配额</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<input type="text" class="form-control" id="campaign_quota" name="campaign_quota" value="" maxlength="80" />
+							</div>
+
+							<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label ">是否可推荐</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<select class="form-control" name="is_recommend" id="is_recommend">
+									<option value="0">是</option>
+									<option value="1">否</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label ">活动类型</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<select class="form-control" name="campaign_type1" id="campaign_type1">
+									<option value="">全部</option>
+									<option value="0">业务活动</option>
+									<option value="1">OnGoing</option>
+									<option value="2">日常活动</option>
+									<option value="3">跟进提醒</option>
+								</select>
+							</div>
+
+							<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label ">优选级</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<input type="text" class="form-control" id="priority" name="priority" value="" maxlength="80" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-2 col-md-2 col-lg- control-label ">活动年</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<input type="text" class="form-control" id="launch_year" name="launch_year" value="" maxlength="80" />
+							</div>
+							<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label ">活动城市</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<input type="text" class="form-control" id="launch_city" name="launch_city" value="" maxlength="80" />
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label ">合作伙伴</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<textarea class="form-control" rows="3" name="partners_name" id="partners_name"></textarea>
+							</div>
+
+							<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label ">活动平台</label>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+								<input type="text" class="form-control" id="launch_platform" name="launch_platform" value="" maxlength="80" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label ">备注</label>
+							<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+								<input type="text" class="form-control" id="remark" name="remark" value="" maxlength="80" />
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+						<button type="button" id="reset_btn" class="btn btn-primary btn-md">重&nbsp;置</button>
+						<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">项目管理</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm">
+				<input name="sort" type="hidden" value="tuid" preserve="true" /> 
+				<input name="order" type="hidden" value="desc" preserve="true" /> 
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+				<input id="subject_id" name="subject_id" type="hidden" value="${fld:subject_id}" preserve="true" /> 
+
+				<div class="form-group">
+					<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">专题名称</label>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+						<input class="form-control" name="subject_name" id="subject_name" type="text" preserve="true" readonly class="readonly" value="${fld:subject_name}" />
+					</div>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+						<input class="form-control" name="campaign_name" id="campaign_name" value="" type="text" placeholder="请输入活动名称" />
+					</div>
+					<div class="col-xs- col-sm-2 col-md-2 col-lg-2">
+						<select class="form-control" name="campaign_type" id="campaign_type">
+							<option value="">请选择活动类型</option>
+							<option value="0">业务活动</option>
+							<option value="1">OnGoing</option>
+							<option value="2">日常活动</option>
+							<option value="3">跟进提醒</option>
+						</select>
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+						<button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>操作</th>
+						<th></th>
+						<th class="sortable" code="tuid" nowrap>编号</th>
+						<th class="sortable" code="campaign_type" nowrap>活动类型</th>
+						<th class="sortable" code="campaign_code" nowrap>活动代码</th>
+						<th class="sortable" code="campaign_name" nowrap>活动名称</th>
+						<th class="sortable" code="campaign_name_en" nowrap>活动英文名称</th>
+						<th class="sortable" code="campaign_status" nowrap>活动状态</th>
+						<th nowrap>备注</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td class="text-center" nowrap>
+							<button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">编辑</button>&nbsp;&nbsp;&nbsp; 
+						</td>
+						<td class="text-center" nowrap>
+							#url_status# 
+							<a href="javascript:void(0);" onclick="javascript:showRule('#tuid#');" title="规则配置">规则配置</a> 
+							<a href="javascript:void(0);" onclick="javascript:showJob('#tuid#');" title="任务管理">活动主题</a> 
+							<a href="javascript:void(0);" onclick="javascript:searchField('#tuid#');" title="站点管理">站点管理</a> 
+							<a href="javascript:void(0);" onclick="javascript:showScope('#tuid#');" title="活动范围">活动范围</a>
+						</td>
+						<td class="text-center" nowrap>#tuid#</td>
+						<td class="text-center" nowrap>#campaign_type#</td>
+						<td class="text-center">#campaign_code#</td>
+						<td class="text-center">#campaign_name#</td>
+						<td class="text-center">#campaign_name_en#</td>
+						<td class="text-center" nowrap>#campaign_status#</td>
+						<td class="text-center">#remark#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+	<script language="JavaScript">
+		var search = null;
+		$(document).ready(function() {
+			var obj = $Crud({
+				formId : "formEditor",
+				button : "save_btn",
+				bpkField : "tuid",
+				insertBack : function() {
+					search.searchData();
+				},
+				updateBack : function() {
+					search.searchData();
+				},
+				deleteBack : function() {
+					search.searchData();
+				},
+				addNewBack : function() {
+					$('#subject_id1').val($('#subject_id').val())
+					$('#subject_name1').val($('#subject_name').val())
+					$("#formTitle").html("新增");
+				},
+				editBack : function() {
+					$("#formTitle").html("修改");
+				},
+				validate : function() {
+					var flag = $("#formEditor").validate({
+						rules : {},
+						messages : {}
+					});
+					return flag;
+				}
+			}).init();
+			var campaignTypeMap = {"0":"业务活动","1":"OnGoing","2":"日常活动","3":"跟进提醒"};
+			this.search = search;
+			search = $Search({
+				datagrid : "datagrid",
+				formId : "searchForm",
+				rowpackage : function(obj){
+					obj.campaign_type = campaignTypeMap[obj.campaign_type];
+				},
+				success : function() {
+					$("table").css("table-layout", "auto");
+					$(".edit_btn").unbind().on("click", function() {
+						if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+							obj.edit({id : $(this).attr("code")});
+						}
+					});
+					$(".delete_btn").unbind().on("click", function() {
+						var obthis = $(this);
+						$Dialog().confirm("确定要删除该条数据吗?", function() {
+							if (obthis.attr("code") != undefined && obthis.attr("code") != "") {
+								obj.del({id : obthis.attr("code")});
+							}
+						});
+					});
+				}
+			}).initSearchBtn().searchData(1);
+		});
+		function showJob(id) {
+			ccms.dialog.open({url : '${def:context}${def:actionroot}/objob/crud?campaign_id=' + id});
+		}
+		function searchField(id) {
+			ccms.dialog.open({url : '${def:context}${def:actionroot}/changci/crud?campaign_id=' + id});
+		}
+		function setCampaignStatus(id, status) {
+			ajaxCall("${def:actionroot}/status" + "?id=" + id + "&campaign_status=" + status, {
+				method : "get",
+				progress : false,
+				dataType : "script",
+				success : function() {
+				}
+			});
+		}
+		function showRule(id) {
+			ccms.dialog.open({url : '${def:context}${def:actionroot}/cstree/frame?campaign_id=' + id});
+		}
+		function showScope(id) {
+			ccms.dialog.open({url : '${def:context}${def:actionroot}/scope/crud?campaign_id=' + id});
+		}
+	</script>
+</body>
+</html>

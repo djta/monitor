@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>选择字段</title>
+</head>
+<body>
+<table class="table table-bordered">
+	<tr>
+		<th>
+			字段名
+		</th>
+		<th>
+			类型
+		</th>
+	</tr>
+	<rows>
+		<tr onclick="selectItem('${fld:column_name}')" title="选择" style="cursor:pointer;">
+			<td>
+				${fld:column_name}
+			</td>
+			<td>
+				${fld:type_name}
+			</td>
+		</tr>
+	</rows>
+</table>
+
+<script language="JavaScript" type="text/javascript">
+function selectItem(name){
+	//界面配置中查询条件用到
+	parent.$("#${fld:id}").val(name);
+	parent.$("#${fld:name}").val(name);
+	//parent.$("#_dlg${fld:pickId}").modal("hide");//关闭此弹出窗口
+	ccms.dialog.close();
+}
+</script>
+</body>
+</html>

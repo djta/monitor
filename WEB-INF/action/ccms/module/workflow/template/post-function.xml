@@ -1,0 +1,6 @@
+<post-functions>
+	<function type="class">
+		<arg name="class.name">${class}</arg>
+		<arg name="action_id">${action_id}</arg>
+	</function>
+</post-functions>

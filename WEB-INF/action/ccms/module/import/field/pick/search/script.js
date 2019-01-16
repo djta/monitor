@@ -1,0 +1,20 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"id":"${fld:tuid}"
+		,"field_code":"${fld:field_code@js}"
+		,"field_name_cn":"${fld:field_name_cn@js}"
+		,"field_length":"${fld:field_length}"
+		,"default_value":"${fld:default_value@js}"
+		,"domain_namespace":"${fld:domain_namespace@js}"
+		,"field_type":"${fld:field_type@js}"
+		,"field_name":"${fld:field_name@js}"
+		,"show_order":"${fld:show_order}"
+		,"fk_schema":"${fld:fk_schema@js}"
+		,"fk_tab":"${fld:fk_tab@js}"
+		,"fk_fld_code":"${fld:fk_fld_code@js}"
+		,"is_mandatory":"${fld:is_mandatory@js}"
+	},
+	</rows>
+	{}
+]}

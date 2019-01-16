@@ -1,0 +1,30 @@
+insert into ws_sale_order_detail
+(
+sale_order_detail
+,sale_order_id
+,goods_id
+,quantity
+,price
+,state
+,created
+,createdby
+,updated
+,updatedby
+,snapshot
+--,channel_id
+)
+values
+(
+${seq:nextval@seq_ws_sale_order_detail}
+,${fld:sale_order_id}
+,${fld:goods_id}
+,${fld:goods_num}
+,${fld:actual_price}
+,'1'
+,{ts '${def:timestamp}'}
+,'${def:user}'
+,null
+,null
+,0
+--,${fld:channel_id}
+)

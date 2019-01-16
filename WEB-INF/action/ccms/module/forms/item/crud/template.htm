@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>分栏信息</title>
+</head>
+<body>
+<!--addnew/edit form-->
+<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="formTitle">新增分栏</h4>
+			</div>
+			<div class="modal-body">
+				<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+					<input type="hidden" id="tuid" name="tuid" value="" />
+					<input type="hidden" id="form_id" name="form_id" value="" preserve="true" />
+					<div class="row clearfix">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-4 col-md-4 col-lg-4 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">分栏名称(中文)</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input type="text" class="form-control" id="item_name_cn" name="item_name_cn" value="" maxlength="200" size="30" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-4 col-md-4 col-lg-4 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">显示列数</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input type="text" class="form-control" id="col_num" name="col_num" value="" size="30" maxlength="6" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-4 col-md-4 col-lg-4 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">分栏代码</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input type="text" class="form-control" id="item_code" name="item_code" value="" maxlength="128" size="30" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-4 col-md-4 col-lg-4 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">上方扩展代码</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<textarea type="text" class="form-control" name="plugin_top"  cols="50" rows="2" ></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-4 col-md-4 col-lg-4 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">备注</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<textarea type="text" class="form-control" name="remark"  cols="50" rows="2" maxlength="128" ></textarea>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-4 col-md-4 col-lg-4 control-label required">分栏名称(英文)</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input type="text" class="form-control" id="item_name_en" name="item_name_en" value="" maxlength="200" size="30" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-4 col-md-4 col-lg-4 control-label ">显示顺序</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input type="text" class="form-control" name="show_order" value="" size="30" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-4 col-md-4 col-lg-4 control-label ">同页显示文档</label>
+							<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+								<input id="linkage_document_id" name="linkage_document_id" type="hidden" value="" />
+								<input type="text" class="form-control" id="linkage_document_alias" name="linkage_document_alias" size="30" readonly value="" />
+							</div>
+							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+								<img src="${def:context}/images/search.gif" style="cursor: pointer;"
+									id="pickOpen" title="查询同页显示界面名称" />
+								<img src="${def:context}/images/clear.gif"  style="cursor: pointer;"
+									id="pickClear" title="清除选择的内容" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-4 col-md-4 col-lg-4 control-label ">样式代码</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input type="text" class="form-control" id="fieldset_style" name="fieldset_style" value="" maxlength="512" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-4 col-md-4 col-lg-4 control-label">下方扩展代码</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<textarea type="text" class="form-control" name="plugin_bottom"  cols="50" rows="2"></textarea>
+							</div>
+						</div>
+					</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+					<button type="button" id="save_btn" class="btn btn-primary btn-md">保&nbsp;存</button>
+					<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--grid view response-->
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h1 class="panel-title">界面分栏</h1>
+	</div>
+	<div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post" id="searchForm" name="searchForm">
+			<input name="sort" type="hidden" value="tuid" preserve="true"/>
+			<input name="order" type="hidden" value="desc" preserve="true" /> 
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+			<div class="form-group">
+				<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+					<input name="form_id" type="hidden" value=""  preserve="true" />
+					<input name="item_name_cn" class="form-control" placeholder="请输入分栏名称(中文)" type="text" size="35" value="" />
+				</div>
+				<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+					<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+					<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+					<button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+				</div>
+			</div>
+		</form>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>操作</th>
+					<th class="sortable" code="tuid">分栏ID</th>
+					<th class="sortable" code="item_code">分栏代码</th>
+					<th class="sortable" code="linkage_document_alias">同显文档</th>
+					<th class="sortable" code="item_name_cn">分栏名称(中文)</th>
+					<th class="sortable" code="item_name_en">分栏名称(英文)</th>
+					<th class="sortable" code="col_num">界面列数</th>
+					<th class="sortable" code="show_order">显示顺序</th>
+					<th class="sortable" code="remark">备注</th>
+				</tr>
+			</thead>
+			<tbody id="datagridTemplate" style="display: none">
+				<tr>
+					<td align="center">
+						<button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">编辑</button>
+						<button class="btn btn-primary btn-md delete_btn" type="button" code="#tuid#">删除</button>
+					</td>
+					<td align="center">
+						#tuid#
+					</td>
+					<td align="center">
+						#item_code#
+					</td>
+					<td align="center">
+						#linkage_document_alias#
+					</td>
+					<td align="center">
+						#item_name_cn#
+					</td>
+					<td align="center">
+						#item_name_en#
+					</td>
+					<td align="center">
+						#col_num#
+					</td>
+					<td align="center">
+						#show_order#
+					</td>
+					<td align="center">
+						#remark#
+					</td>
+				</tr>
+			</tbody>
+			<tbody id="datagrid"></tbody>
+		</table>
+		<div class="pageDiv">
+			<ul class="pagination"></ul>
+		</div>
+	</div>
+</div>
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script>
+$(document).ready(function(){
+	document.searchForm.form_id.value = "${fld:form_id}";
+	var search = null;
+	var obj = $Crud({
+		formId:"formEditor",
+		button:"save_btn",
+		insertBack:function(){
+			search.searchData();
+		},
+		updateBack:function(){
+			search.searchData();
+		},
+		deleteBack:function(){
+			search.searchData();
+		},
+		addNewBack:function(){
+			document.formEditor.form_id.value = "${fld:form_id}";
+			$("#formTitle").html("新增分栏");
+		},
+		editBack:function(){
+			$("#formTitle").html("修改分栏");
+		},
+		validate:function(){
+			var flag=$("#formEditor").validate({
+				rules: {
+					item_name_cn: {
+						required: true,
+						rangelength: [1,200]
+					},
+					item_name_en: {
+						required: true,
+						rangelength: [1,200]
+					},
+					col_num: {
+						required: true,
+						isNumber:true,
+						rangelength: [1,6]
+					},
+					show_order:{
+						isNumber:true
+					}
+				},
+				messages: {
+					item_name_cn: {
+						required: "请输入分栏名称(中文)",
+						rangelength: "分栏名称(中文)长度为1到200位"
+					},
+					item_name_en: {
+						required: "请输入分栏名称(英文)",
+						rangelength: "分栏名称(英文)长度为1到200位"
+					},
+					col_num: {
+						required: "请输入显示列数",
+						rangelength: "显示列数长度为1到15位"
+					}
+				}
+			});
+			return flag;
+		},
+		check:function(){
+			return true;
+		}
+	}).init();
+	search=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		$(".edit_btn").unbind().on("click", function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				obj.edit({id:$(this).attr("code")});
+			}
+		});
+		$(".delete_btn").unbind().on("click", function(){
+			var obthis = $(this);
+			$Dialog().confirm("确定要删除吗?", function(){
+				if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+					obj.del({id:obthis.attr("code")});
+				}
+			});
+		});
+		$("#pickOpen").unbind().on("click",function(){
+			var form_id = document.formEditor.form_id.value;
+			var url = "${def:context}${def:actionroot}/pick/linkageform?form_id="+form_id;
+			ccms.dialog.open({url:url,id:"pickLink",width:500,height:400});
+		});
+		$("#pickClear").unbind().on("click",function(){
+			document.formEditor.linkage_document_id.value='';
+			document.formEditor.linkage_document_alias.value='';
+		});
+	}}).initSearchBtn().searchData(1);
+});
+</script>
+</body>
+</html>

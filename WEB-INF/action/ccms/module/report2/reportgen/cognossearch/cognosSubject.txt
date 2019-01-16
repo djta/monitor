@@ -1,0 +1,18 @@
+<html><body>
+<form name='cognosForm' id='cognosForm' method='POST' action='${fld:cognos_url}' target='_parent'>
+<input type="hidden" name="b_action" value="cognosViewer"/>
+<input type="hidden" name="m" value="portal/report-viewer.xts"/>
+<input type="hidden" name="ui.action" value="run"/>
+<input type="hidden" name="ui.tool" value="CognosViewer"/>
+<input type="hidden" name="ui.object" value="${fld:report_name}" />
+<input type="hidden" name="run.prompt" value="false"/>
+${fld:input_params}
+</form>
+<script type='text/javascript'>
+	function cogonsFormSubmit(){
+		document.getElementById('cognosForm').submit();
+	}
+	cogonsFormSubmit();
+</script>
+</body><html>
+

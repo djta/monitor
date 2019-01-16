@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/error/validation/ajax">
+
+    <parameter id="tuid" type="integer" required="true" label="TUID" maxlen="100"/>
+	 <parameter id="owenadvice" type="varchar" required="false" label="意见" maxlen="4000"/>
+    <parameter id="entry_id" type="integer" required="true" label="entry_id"/>
+	<parameter id="node_id" type="integer" required="true" label="node_id"/>
+</validator>

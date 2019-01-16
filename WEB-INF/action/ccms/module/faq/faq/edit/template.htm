@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>FAQ信息</title>
+</head>
+<body>
+<div class="panel panel-default">
+	<div class="panel-heading text-center">
+		<h2 class="panel-title">修改FAQ信息</h2>
+	</div>
+	<div class="panel-body">
+		<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+		    <input name="faq_code" type="hidden" size="19" value="">
+		    <input name="lable_code" type="hidden" size="19" value="">
+			<div class="form-group">
+				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">标题</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input class="form-control" id="show_name" name="show_name" type="text" maxlength="128"/>
+					</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">标签</label>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				   <input class="form-control" id="lable" name="lable" type="text" maxlength="128">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">附件</label>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					<TABLE>
+	                <rows-attachment>
+	                    <TR>
+	                        <TD >
+	                            <a href="javascript:void(0);" code="${fld:attachment_id}" name="download"
+									title="打开附件">${fld:file_name}
+								</a> &nbsp;&nbsp;&nbsp; 
+								<a
+									href="javascript:void(0);" code="${fld:attachment_id}" name="download"
+									title="下载附件">下载
+								</a>
+	                        </td>
+	                    </TR>
+                       </rows-attachment>
+                   	</TABLE>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">FAQ内容</label>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					<textarea class="form-control" id="content" name="content" style="visibility:hidden;">${fld:content}</textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">对应技能</label>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					<span ><a href="javascript:void(0);" id="skill-all">全选</a>-<a href="javascript:void(0);" id="skill-reverse">反选</a></span><br/>
+					<check-skill>
+						<input type="checkbox" name="skill_id" value="${fld:skill_id}">${fld:skill_name}<br/>
+					</check-skill>
+				</div>
+			</div>
+			
+			
+			<div class="form-group">
+				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">起始日期</label>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					<input type="text" class="form-control date" id="start_date" name="start_date"
+							placeholder="请选择起始日期" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">结束日期</label>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					<input type="text" class="form-control date" id="end_date" name="end_date"
+							placeholder="请选择起始日期" />
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">是否通知</label>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				    <input type="checkbox" id="is_tip" name="is_tip" value="1">通知
+					<div id="topicDiv" style="display:none">
+						<drows>
+							<input name="topic_name" type="radio" value="${fld:topic_name}" checked>${fld:topic_name}
+						</drows>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">是否过期</label>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					<input type="radio" id="is_expired" name="is_expired" value="0">未过期
+	           		<input type="radio" id="is_expired" name="is_expired" value="1">已经过期
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">是否公告</label>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					<input type="radio" id="is_bulletin" name="is_bulletin" value="0"> 不公告
+	            	<input type="radio" id="is_bulletin" name="is_bulletin" value="1">发布公告
+				</div>
+			</div>
+			
+			<!--tuid是否为空,决定了form的保存方法为编辑保存,还是新增保存-->
+			<input type="hidden" id="tuid" name="tuid" value="${fld:tuid}">
+			<input type="hidden" id="create_date" name="create_date" value="${fld:create_date}">
+			<input type="hidden" id="superior" name="superior" value="${fld:superior}">
+		</form>
+		<div class="modal-footer">
+			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+				<input type="button" class="btn btn-primary btn-md" value="保存" id="update_btn">
+			</div>
+			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+				<input type="button" class="btn btn-primary btn-md" value="删除" id="deleteCommand" style="display:${fld:delete_button_style}" code="${fld:tuid}">
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+<SCRIPT>
+faqObj.initEditData = function(){
+    $("#formEditor #show_name").val("${fld:show_name_faq@js}");
+    $("#formEditor #lable").val("${fld:lable@js}");
+    $("#formEditor #start_date").val("${fld:start_date@yyyy-MM-dd}");
+    $("#formEditor #end_date").val("${fld:end_date@yyyy-MM-dd}");
+    setCheckboxValue('is_expired','${fld:is_expired}','formEditor');
+    setCheckboxValue('is_bulletin','${fld:is_bulletin}','formEditor');
+}
+faqObj.initEditData();
+</SCRIPT>
+</html>

@@ -1,0 +1,126 @@
+.bg{
+	background:#F7F7F7;
+}
+.header{
+	background:white;
+	padding:2rem;
+	border-bottom:1px solid #F7F7F7;
+}
+.header .head-img{
+	width:6rem;
+	height:6rem;
+	margin-right:2rem;
+	border-radius:50%;
+}
+.header .user-info{
+	margin-top:0.9rem;
+	height:2.7rem;
+}
+.header .user-name{
+	display:inline-block;
+	font-size:1.6rem;
+	line-height:2.7rem;
+	font-weight: bold;
+	margin-right:2rem;
+}
+
+.header .user-sex{
+	display:inline-block;
+	width:1.5rem;
+	height:1.5rem;
+	background:url(../../image/btn-sex-boy.png) no-repeat center center;
+	background-size:100%;
+	margin-top:0.6rem;
+}
+.header .user-sex.sex-girl{
+	background-image:url(../../image/btn-sex-girl.png);
+}
+.header .user-tel{
+	display:inline-block;
+	font-size:1.4rem;
+	line-height:2rem;
+	margin-right:4rem;
+}
+.header .user-duties{
+	display:inline-block;
+	font-size:1.4rem;
+	line-height:2rem;
+}
+
+.con-title{
+	background:white;
+	color:#262525;
+	font-size:1.7rem;
+	line-height:3.5rem;
+	padding:1rem 2rem;
+	font-weight: bold;
+	margin-bottom:0.8rem;
+}
+.con-title select{
+	background:none;
+	border:none;
+	font-size:1.6rem;
+	line-height:3.5rem;
+	height:3.5rem;
+	font-weight: bold;
+}
+.con-list .con-details{
+	padding:1.3rem 1.8rem;
+}
+.con-details{
+	margin-bottom:3px;
+	background:white;
+}
+.con-details img{
+	width:9.3rem;
+	height:6.9rem;
+	margin-right:1rem;
+	border:1px solid #F7F7F7;
+}
+.con-details .cour-info{
+	position:relative;
+}
+.con-details .cour-status{
+	position:absolute;
+	right:0;
+	top:2.4rem;
+	display: inline-block;
+	width:7rem;
+	height:2.4rem;
+	line-height: 2.4rem;
+	font-size:1.4rem;
+	background:#1B9621;
+	border-radius:2rem;
+	color:white;
+	text-align: center;
+}
+
+.con-details .cour-name{
+	display: inline-block;
+	width:50%;
+	color:#3B3B3B;
+	font-size:1.6rem;
+	line-height:2.4rem;
+	margin-top:0.3rem;
+}
+.con-details .cour-brief{
+	display: inline-block;
+	width:50%;
+	font-size:1.4rem;
+	color:#3B3B3B;
+	line-height:2rem;
+}
+.con-details .cour-desc{
+	display: inline-block;
+	margin-top:0.3rem;
+	width:50%;
+	font-size:1.4rem;
+	line-height:1.8rem;
+	color:#898989;
+}
+.no-data{
+	font-size:1.6rem;
+	color:black;
+	text-align: center;
+	line-height: 40rem;
+}

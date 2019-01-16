@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>业务表导入历史信息</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">业务表导入历史信息</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post"
+				id="searchForm" name="searchForm">
+				<input name="sort" type="hidden" preserve="true" /> <input
+					name="order" type="hidden" value="desc" preserve="true" /> <input
+					name="pageNo" type="hidden" value="" preserve="true" /> <input
+					name="totalPages" type="hidden" value="" preserve="true" />
+				<input name="history_id_filter" id="history_id_filter" type="hidden" preserve="true"/>
+				<div class="form-group">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<input  class="form-control"  id="table_name" name="table_name" type="text" maxlength="32"  placeholder="业务表名" value="" />
+					</div>
+					<button type="button" id="search_btn"
+						class="btn btn-primary btn-md">查询</button>
+					<button type="button" id="search_reset_btn"
+						class="btn btn-primary btn-md">重置</button>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th class="sortable" code="tab_name">导入表名称</th>
+						<th class="sortable" code="total_record">导入记录总数</th>
+						<th class="sortable" code="insert_record">插入记录数</th>
+						<th class="sortable" code="update_record">更新记录数</th>
+						<th class="sortable" code="error_count">忽略记录数</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td align="center">#tab_name#</td>
+						<td align="center">#total_record#</td>
+						<td align="center">#insert_record#</td>
+						<td align="center">#update_record#</td>
+						<td align="center">#error_count#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<input type="hidden" name="actionroot" id="actionroot"
+		value="${def:actionroot}">
+		<script language="javascript">
+		$(document).ready(function() {
+			$("#history_id_filter").val("${fld:history_id}");
+			$Search({
+				datagrid : "datagrid",
+				formId : "searchForm",
+				success : function() {
+				}
+			}).initSearchBtn().searchData(1);
+			$("#search_btn").unbind().on("click", function() {
+				$(".error").empty();
+			});
+			$("#reset_btn").unbind().on("click", function() {
+				clearForm('searchForm');
+			});
+		});
+	</script>
+</body>
+</html>

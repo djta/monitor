@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>操作明细</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">操作明细</h2>
+		</div>
+<div class="panel-body col_main_body">
+	<table  class="table table-condensed" >
+		<tr>
+			<th colspan="4">
+				未处理情况
+			</th>
+		</tr>
+		<tr>
+			<th >
+				操作名称
+			</th>
+			<th >
+				当前未处理人
+			</th>
+			<th >
+				创建时间
+			</th>
+			<th >
+				当前状态
+			</th>
+		</tr>
+		<srows>
+		<tr ${fld:_rowStyle}>
+			<td  align="center">
+				${fld:action_name}
+			</td>	
+			
+			<td  align="center">
+				${fld:owner}
+			</td>
+			
+			<td  align="center">
+				${fld:start_date@yyyy-MM-dd HH:mm:ss}
+			</td>	
+			<td  align="center">
+				${fld:status}
+			</td>
+		</tr>
+		</srows>
+	</table>
+	<br/>
+	<table class="table table-condensed" >
+		<tr>
+			<th colspan="4">
+				已处理情况
+			</th>
+		</tr>
+		<tr>
+			<th nowrap>
+				操作名称
+			</th>
+			<th nowrap>
+				已操作人
+			</th>
+			<th nowrap>
+				已操作时间
+			</th>
+			<th nowrap>
+				会签意见
+			</th>
+		</tr>
+		
+		<rows>
+		<tr ${fld:_rowStyle}>
+			<td  align="center">
+				${fld:action_name}
+			</td>	
+			
+			<td  align="center">
+				${fld:caller}
+			</td>	
+
+			<td  align="center">
+				${fld:finish_date@yyyy-MM-dd HH:mm:ss}
+			</td>
+			<td  align="center">
+				${fld:comments@html}
+			</td>
+				
+		</tr>
+		</rows>
+	</table>
+	</div>
+	<brows>
+		<button class="btn btn-primary btn-md childWfm"  type="button" code="${fld:child_entry_id}" >子流程</button>
+	</brows>
+	<crows>
+		<button class="btn btn-primary btn-md showCountersign"  type="button" code="${fld:parent_entry_id}" >会签意见</button>
+	</crows>
+</div>
+</body>
+</html>
+<script>
+function ShowDetailClass(){
+	this.init=function(){
+		$(".childWfm").unbind();
+		$(".childWfm").unbind().on("click",function(){
+			var entry_id=$(this).attr("code");
+			var url="${def:context}${def:actionroot}/show_status?entry_id="+entry_id;
+			ccms.dialog.open({url:url,id:"pickOpen",width:500,height:400});
+		});
+		$(".showCountersign").unbind();
+		$(".showCountersign").unbind().on("click",function(){
+			var entry_id=$(this).attr("code");
+			var url="${def:context}${def:actionroot}/show_countersign?entry_id=="+entry_id;
+			ccms.dialog.open({url:url,id:"pickOpen",width:500,height:400});
+		});
+		
+	}
+}
+var showDetailClass=null;
+$(document).ready(function(){
+	showDetailClass=new ShowDetailClass();
+	showDetailClass.init();
+});
+</script>

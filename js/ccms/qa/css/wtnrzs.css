@@ -1,0 +1,52 @@
+.shul {
+	height: 114px;
+	background: url(../../../../images/qa/zjx.png) no-repeat center center;
+	border-bottom: solid 1px #AFCDD3;
+}
+
+.shul div {
+	width: 50%;
+	float: left;
+	padding-top: 20px;
+	overflow: hidden;
+}
+
+.shul div p {
+	font-size: 15px;
+	line-height: 34px;
+}
+
+.shul div p.num2 {
+	font-size: 21px;
+	color: #000;
+}
+
+.shul div.zc {
+	text-align: right;
+}
+
+.shul div.zc p {
+	margin-right: 20px;
+}
+
+.shul div.yc {
+	text-align: left;
+}
+
+.shul div.yc p {
+	margin-left: 20px;
+}
+dd.jiejue {
+	line-height: 35px;
+	border-bottom: dotted 1px #333;
+	font-size: 15px;
+	color: #010101;
+	clear: both
+}
+dd.jiejue a.huifu {
+	margin-left: 10px;
+}
+dd.jiejue img {
+	margin-left: 10px;
+	cursor: pointer;
+}

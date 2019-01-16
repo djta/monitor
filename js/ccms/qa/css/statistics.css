@@ -1,0 +1,25 @@
+.tablist{
+	/* width:60%; */
+}
+.tablist th{
+	text-align:center;
+}
+.tablist td{
+	text-align:center;
+}
+.dtab1{
+}
+.dtab3 table{
+	/* width:60%; */
+}
+
+.searchDiv .btn-search{
+	/*  margin-left: 140%; */
+	 margin-bottom:0px;
+}
+.searchDiv2.form-group{
+	margin-bottom:0px;
+}
+.searchDiv.form-group{
+	margin-bottom: 0px;
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>部门信息</title>
+	<script language="JavaScript" type="text/javascript" src="${def:context}/action/pub/dtree"></script>
+</head>
+<body>
+<!-- 右侧人员信息 -->
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+		<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+			</div>
+			<h2 class="panel-title">查询单位信息</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 column">
+					<form name="treeForm" id="searchForm1" class="form-horizontal" role="form" method="post" >
+					<button type="button" class="btn btn-primary btn-md yesAll">全选</button>
+					<button type="button" class="btn btn-primary btn-md noAll">取消全选</button>
+					<button type="button" id="save_btn" class="btn btn-primary btn-md">保存</button>
+					<input type="hidden" id="tuid" name="tuid" default="0" value="123" />
+					<input type="hidden" id="entity_id" name="entity_id" value="${fld:entity_id}" /> 
+					<!-- <input type="hidden" id="org_id" name="org_id" value="${fld:org_id}" /> -->
+					</form>
+				</div>
+		<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+	</div>
+	</div>
+<script>
+var entityClass = null;
+var d = null;
+$(document).ready(function() {
+	$(".yesAll").unbind().on("click",function(){
+		selectAll('org_id','treeForm');
+	});
+	$(".noAll").unbind().on("click",function(){
+		unselectAll('org_id','treeForm');
+	});
+	//初始化树
+	d = new dTree('d');
+	d.add(0, -1,"&nbsp;</a>&nbsp;<a href='javascript: d.openAll();'>展开</a> | <a href='javascript: d.closeAll();'>合并</a>");
+	var org_id = "";
+	var pid = "";
+	var org_name = "";
+	<combo-orgs>
+		org_id = "${fld:org_id}";
+		pid = "${fld:pid}";
+		if ("${fld:org_type}" == "0") {
+			org_name = "<input name='org_id' type='checkbox' value='${fld:org_id}' />"+"${fld:org_name}";
+		} else {
+			org_name = "${fld:org_name}";
+		}
+		d.add(org_id, pid, org_name);
+	</combo-orgs>
+	$("#searchForm1").append(d.toString());
+	$("#save_btn").unbind().on("click",function(){
+		var url = "/action/ccms/module/hr/authority/entity/list/unit/update";
+		ajaxCall(url,{
+	        method: "post",
+	        progress: true,
+	        form: "searchForm1",
+	        dataType: "script",
+	        success: function(data) {
+	        }
+	    });
+	});
+	<rows>
+		setCheckboxValue("org_id","${fld:org_id}","treeForm");
+	</rows>
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="id" type="integer" required="true" label="ID del producto" maxlen="10"/>
+	<custom-validator
+	 classname='dinamica.validators.NoRecordsFound'
+	 on-error-label="任务下没有开始节点,不能删除开始节点."
+	 sql='find-type.sql'/>
+</validator>

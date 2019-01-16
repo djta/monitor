@@ -1,0 +1,37 @@
+insert into
+    t_import_rule_filter
+(
+    tuid
+    ,rule_id
+    ,clause_code
+    ,clause_filter
+    ,clause_value
+    ,is_node
+    ,parent_id
+    ,logic_type
+    ,phrase_name
+    ,namespace
+    ,field_type
+    ,filter_type
+    ,created
+    ,createdby
+    ,field_id
+)
+values
+(
+    ${seq:nextval@seq_import_rule_filter}
+    ,${fld:rule_id}
+    ,${fld:clause_code}
+    ,${fld:clause_filter}
+    ,${fld:clause_value}
+    ,${fld:is_node}
+    ,${fld:parent_id}
+    ,${fld:logic_type}
+    ,${fld:phrase_name}
+    ,${fld:namespace}
+    ,${fld:field_type}
+    ,null
+    ,{ts '${def:timestamp}'}
+    ,'${def:user}'
+    ,${fld:field_id}
+)

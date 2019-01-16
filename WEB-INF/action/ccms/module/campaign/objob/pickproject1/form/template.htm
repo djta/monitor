@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>选取数据</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">选取活动节点</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post" id="searchForm" name="searchForm">
+			<input name="sort" type="hidden" value="" preserve="true"/>
+			<input name="order" type="hidden" value="desc" preserve="true" /> 
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+			<input id="job_id" name="job_id" type="hidden" value="${fld:job_id}" preserve="true" /> 
+			<div class="form-group">
+				<div class="col-xs-5 col-sm-4 col-md-4 col-lg-4  col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+					<input id="name" class="form-control" placeholder="输入活动主题名称" name="name" type="text" size="30" value="" maxlength="35" /> 
+				</div>
+				<div class="col-xs-7 col-sm-4 col-md-4 col-lg-4  col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+					<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+					<button class="btn btn-primary btn-md" type="button" id="btn_reset">清空</button>
+				</div>
+			</div>
+		</form>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th class="sortable" code="tuid">节点编号</th>
+					<th class="sortable" code="title">节点名称</th>
+				</tr>
+			</thead>
+			<tbody id="datagridTemplate" style="display: none">
+				<tr onclick="selectItem('#description#','#id#')" style="cursor:pointer;" title="选择">
+					<td align="center">#id#</td>
+					<td align="center">#description#</td>
+				</tr>
+			</tbody>
+			<tbody id="datagrid"></tbody>
+		</table>
+		<div class="pageDiv">
+			<ul class="pagination"></ul>
+		</div>
+	</div>
+</div>
+
+<div id="divStatus" class="alert" style="display: none; color: gray; width: 60%; font-weight: normal; font-family: Arial; margin-top: 10px">
+	<img src="${def:context}/images/progress.gif" /> 请稍候...
+</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script type="text/javascript">
+$(document).ready(function(){
+	if( "" != "${fld:pid}" && "undefined" != "${fld:pid}" ){
+		$("#pid").val("${fld:pid}");
+	}
+	$Search({datagrid:"datagrid",formId:"searchForm",rowpackage:function(obj){
+	},success:function(){
+	}}).initSearchBtn().searchData(1);
+	$("#btn_reset").unbind().on("click",function(){
+		document.searchForm.name.value = '';
+	});
+});
+function selectItem(name,id){
+	//界面配置中查询条件用到
+	
+	parent.$("#reference_node_id").val(id);
+	parent.$("#reference_node_name").val(name);
+	ccms.dialog.close();
+}
+</script>
+</body>
+</html>

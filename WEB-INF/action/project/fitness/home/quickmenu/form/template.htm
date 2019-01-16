@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/project/fitness/home/pub}
+<title></title>
+</head>
+<body class="dialogbg">
+	<form method="post" id="quickForm" name="quickForm">
+	<section class="r-i-5-set" id="quickmenu">
+		<figure>
+			<img src="${def:context}/js/project/fitness/image/SVG/index/icon_shoupai.svg" title=""/>
+			<figcaption>手牌管理</figcaption>
+		</figure>
+		<figure>
+			<img src="${def:context}/js/project/fitness/image/SVG/index/icon_danci.svg" title=""/>
+			<figcaption>单次消费项目管理</figcaption>
+		</figure>
+		<figure>
+			<img src="${def:context}/js/project/fitness/image/SVG/index/icon_guizi.svg" title=""/>
+			<figcaption>储物柜管理</figcaption>
+		</figure>
+		<figure>
+			<img src="${def:context}/js/project/fitness/image/SVG/index/icon_sijiaoleixing.svg" title=""/>
+			<figcaption>私教类型管理</figcaption>
+		</figure>
+		<figure>
+			<img src="${def:context}/js/project/fitness/image/SVG/index/icon_neiwaima.svg" title=""/>
+			<figcaption>内外码管理</figcaption>
+		</figure>
+		<figure>
+			<img src="${def:context}/js/project/fitness/image/SVG/index/icon_yingxiao.svg" title=""/>
+			<figcaption>营销活动设置</figcaption>
+		</figure>
+		<figure>
+			<img src="${def:context}/js/project/fitness/image/SVG/index/icon_shoupai.svg" title=""/>
+			<figcaption>手牌管理</figcaption>
+		</figure>
+		<figure>
+			<img src="${def:context}/js/project/fitness/image/SVG/index/icon_danci.svg" title=""/>
+			<figcaption>单次消费项目管理</figcaption>
+		</figure>
+		<figure>
+			<img src="${def:context}/js/project/fitness/image/SVG/index/icon_guizi.svg" title=""/>
+			<figcaption>储物柜管理</figcaption>
+		</figure>
+		<figure>
+			<img src="${def:context}/js/project/fitness/image/SVG/index/icon_sijiaoleixing.svg" title=""/>
+			<figcaption>私教类型管理</figcaption>
+		</figure>
+		<figure>
+			<img src="${def:context}/js/project/fitness/image/SVG/index/icon_neiwaima.svg" title=""/>
+			<figcaption>内外码管理</figcaption>
+		</figure>
+		<figure>
+			<img src="${def:context}/js/project/fitness/image/SVG/index/icon_yingxiao.svg" title=""/>
+			<figcaption>营销活动设置</figcaption>
+		</figure>
+		<figure>
+			<img src="${def:context}/js/project/fitness/image/SVG/index/icon_shoupai.svg" title=""/>
+			<figcaption>手牌管理</figcaption>
+		</figure>
+		<figure>
+			<img src="${def:context}/js/project/fitness/image/SVG/index/icon_danci.svg" title=""/>
+			<figcaption>单次消费项目管理</figcaption>
+		</figure>
+		<figure>
+			<img src="${def:context}/js/project/fitness/image/SVG/index/icon_guizi.svg" title=""/>
+			<figcaption>储物柜管理</figcaption>
+		</figure>
+	</section>
+	</form>
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		loadQuickMenu();
+		
+		$("#close_btn").unbind().on("click",function(){
+			ccms.dialog.close();
+		});
+	});
+	function loadQuickMenu(){
+		var quickobj = $("#quickmenu"), str = '';
+		quickobj.empty();
+		<menu-rows>
+			str = '<figure>';
+			str += '<img src="${def:context}${fld:icon_path@js}" title="${fld:menu_name@js}"/>';
+			str += '<figcaption><input type="checkbox" name="menu_id" value="${fld:menu_id}" />${fld:menu_name@js}</figcaption>';
+			str += '</figure>';
+			quickobj.append(str);
+		</menu-rows>
+		ccms.util.renderCheckbox("menu_id");
+		quickobj.append('<div class="form-group text-center"><button id="save_btn" type="button">保存</button></div>');
+		$("#save_btn").unbind().on("click",function(){
+			var uri="${def:context}${def:actionroot}/insert";
+			ajaxCall(uri,{
+				method: "post",
+				form: "quickForm",
+				progress: true,
+				dataType: "script",
+				success: function() {
+				}
+			});
+		});
+		setCheckedQuickMenu();
+	}
+	function setCheckedQuickMenu(){
+		<quickmenu-rows>
+		setCheckboxRadioValue("menu_id", "${fld:menu_id}");
+		</quickmenu-rows>
+	}
+</script>
+</html>

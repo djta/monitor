@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="grant_name" type="varchar" required="false" label="grant_name" />
+	<custom-validator 
+		classname="dinamica.validators.SQLPatternTransformer" 
+		parameter="grant_name" 
+		rule="contains" />
+</validator>
+

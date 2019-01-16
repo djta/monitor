@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		员工导出
+	</summary>
+
+	<log>false</log>
+	
+	<colname>daochu_userall,daochu_skill_id,daochu_staff_category,daochu_zhuangtai</colname>
+	
+	<sql-template>query-base.sql</sql-template>
+
+	<transaction>
+		<classname>transactions.project.fitness.SearchData</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericExcelOutput</classname>
+	</output>
+
+	<excel recordset="query-base.sql" sheetname="员工列表" filename="员工列表.xls" header-background="true">
+		<col id="name" label="姓名" /> 
+		<col id="name_en" label="英文名" />
+		<col id="mobile" label="手机" />
+		<col id="skill_name" label="岗位" />
+		<col id="staff_category" label="分类" />
+		<col id="salary" label="工资" />
+		<col id="remark" label="备注" />
+		<col id="i_status" label="在职状态" />
+		
+	</excel>
+</config>

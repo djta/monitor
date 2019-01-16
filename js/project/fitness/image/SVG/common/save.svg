@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="43px" height="20px" viewBox="0 0 43 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49 (51002) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 20</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-20" transform="translate(0.000000, 1.000000)" fill="#D1DCDE">
+            <text id="保存" font-family="PingFangSC-Regular, PingFang SC" font-size="13" font-weight="normal">
+                <tspan x="17" y="14">保存</tspan>
+            </text>
+            <g id="save" transform="translate(0.000000, 2.000000)" fill-rule="nonzero">
+                <path d="M9.81188812,0.0140643357 L9.23568675,0.0140643357 L9.23568675,5.10041958 L3.2425007,5.10041958 L3.2425007,0.0140643357 L0,0.0140643357 L0,12.0000336 L11.9864224,12.0000336 L11.9864224,2.40370909 L9.81188812,0.0140643357 Z M1.84405595,11.0933539 L10.6033174,11.0933539 L10.6033174,6.00704895 L1.84405595,6.00704895 L1.84405595,11.0933539 Z" id="Fill-1"></path>
+                <polygon id="Fill-2" points="2.47408112 7.57445033 9.8811189 7.57445033 9.8811189 6.62166713 2.47408112 6.62166713"></polygon>
+                <polygon id="Fill-3" points="2.47408112 9.11110493 9.8811189 9.11110493 9.8811189 8.14298182 2.47408112 8.14298182"></polygon>
+                <polygon id="Fill-4" points="2.47408112 10.5862489 9.8811189 10.5862489 9.8811189 9.63353288 2.47408112 9.63353288"></polygon>
+                <polygon id="Fill-5" points="6.89986573 4.10156643 8.28290347 4.10156643 8.28290347 0.0294713287 6.89986573 0.0294713287"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

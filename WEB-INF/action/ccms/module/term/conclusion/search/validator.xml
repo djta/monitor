@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<parameter id="term_id" type="integer" required="true" label="term_id" />
+	<parameter id="from_score" type="integer" required="false" label="from_score" />
+</validator>

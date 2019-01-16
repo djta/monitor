@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		查询
+	</summary>
+	
+	<log>false</log>
+
+	<!--configura el control de paginacion-->
+	<set-request-attribute id="paging.recordset" value="query-report-result.sql" />
+	<set-request-attribute id="paging.pagesize" value="10000" />
+
+	<sql-template>query-base.sql</sql-template>
+	<paging-recordset>query-report-result.sql</paging-recordset>
+
+	<transaction>
+		<classname>com.ccms.report2.SearchReport</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<on-exit return-code="0" forward-to="/${def:actionroot}/view"/>
+	<on-exit return-code="1" forward-to="/${def:actionroot}/withsearch"/>
+
+</config>

@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="fdesde" type="date" required="false" label="起始日期" />
+	<parameter id="fhasta" type="date" required="false" label="结束日期" />
+	<parameter id="name" type="varchar" required="false" label="登录名" />
+	<parameter id="term_name" type="varchar" required="false" label="问卷名称" />
+
+	<custom-validator classname="dinamica.validators.DateRangeValidator"
+		on-error-label="结束日期必须大于起始日期" date1="fdesde" date2="fhasta" id="fhasta" />
+	<custom-validator
+		classname="dinamica.validators.SQLPatternTransformer"
+		parameter="name"
+		rule="contains" />
+	<!-- <custom-validator
+		classname="dinamica.validators.SQLPatternTransformer"
+		parameter="term_name"
+		rule="contains" /> -->
+
+</validator>
+

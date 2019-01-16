@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/ccms/pub}
+<title></title>
+<link href="${def:context}/js/ccms/css/home.css" rel="stylesheet" />
+</head>
+<body class="body">
+	<!-- header -->
+	<div class="home_head" style="display:none;">
+		<div class="home_container_box" >
+			<h1 class="home_logo">
+				<a class="home_avatar" href="${def:context}/action/ccms/home"><img src="${def:context}/js/ccms/img/avatar_default.png"> </a>
+				<a href="${def:context}/action/ccms/home" class="home_txt" id="home_tenantry_name"></a>  
+			</h1>
+			<div class="home_mod-head__nav"> 
+				<a href="javascript:void(0)" class="home_mod-head__nav-item"><span>${def:user}</span></a> 
+				<span class="home_mod-head__nav-line"></span>  
+				<a href="${def:context}/action/security/exit" id="logout" class="mod-head__nav-item">退出</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- body -->
+	<div class="home_main_body" style="top:0px;bottom:0px;right:0px;">
+		<div class="home_container_box" style="padding-right:0px;">
+			<div class="home_col_side" id="home_col_side" style="display:none;">
+				<ul class="home_menu_box" id="menuTab">
+				</ul>
+			</div>
+			<div class="home_col_side_any col-xs-12 col-sm-12 col-md-12 col-lg-12" id="home_col_child" style="display:none;">
+				<ul class="home_menu_box" id="menuChildTab">
+				</ul>
+			</div>
+			
+            <div class="main col_main " id="tabs" style="height: 100%; overflow:auto;;padding-top:1px">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                	<i class="close-tab glyphicon glyphicon-remove" id="close-all-tab" style="padding-right:40px"></i>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content" id="tab_content" style="height: 100%; overflow:auto;padding-top:1px">
+                    <div role="tabpanel" class="tab-pane active" id="body_content" style="height: 100%; overflow:auto;"></div>
+                </div>
+
+            </div>
+
+		</div>
+	</div>
+
+	<!-- footer -->
+	<div class="home_mod-footer" style="display:none;">
+		<div class="home_container_box">
+			<span class="home_mod-footer__copyright-text">Copyright&nbsp;© 2014 Desoft. All Rights Reserved.</span>
+		</div>
+	</div>
+<input type="hidden" id="home_actionroot" value="${def:actionroot}"/>
+<script type="text/javascript" src="${def:context}/js/ccms/home.js?random="+Math.random()></script>
+</body>
+</html>

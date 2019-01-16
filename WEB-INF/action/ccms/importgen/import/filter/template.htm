@@ -1,0 +1,65 @@
+<form name="formFilter" onsubmit="return search()">
+
+<TABLE class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0>
+<!-- 页面内容标签：如“新增记录”、“修改记录” -->
+<tr>
+<td>
+<div class="tabs">
+    <ul>
+        <li onclick="changeLiStyle(this);" id="tabsl"><b></b>
+            <a  
+                onmouseover="javascript:window.status='';return true;" 
+                onmouseout="javascript:window.status='';return true;" 
+                href='#' 
+                onclick='JavaScript:return false;'>
+                <span id="formTitleFilter">查询导入</span>
+            </a><p></p>
+        </li>
+    </ul>
+    <div id='hline'></div>
+</div>
+</td>
+</tr>
+</table>
+
+<FIELDSET><LEGEND>查询信息</LEGEND>
+<TABLE class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <!--column layout-->
+        <col width="15%">
+        <col width="35%">
+        <col width="15%">
+        <col width="35%">
+        <!--form title-->
+
+        <!--form fields-->
+		<tr>
+			<td class="th20 required" nowrap>
+				导入名称
+			</td>
+			<td class="td20left">
+				<input id="imp_name_filter" name="imp_name_filter" type="text" size="35" value="" >
+			</td>
+			
+		</tr> 
+        <!--最多显示记录个数-->
+		<input name="limitedcount"  value="1000" type="hidden" >
+		
+
+</TABLE>
+</FIELDSET>
+
+<FIELDSET><LEGEND>操作信息</LEGEND>
+<TABLE class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <tr>
+        <!--buttons-->
+        <td align="center" colspan="2">
+            <input type="submit" class="btn_blue" value="查询" >
+            <input type="button" class="btn_gray" value="重置"  onclick="clearForm('formFilter')">
+            <input type="button" class="btn_gray" value="取消"  onclick="_goBackFn()">
+			<input id="subject_id" name="subject_id" type="hidden" value="" preserve="true">
+        </td>
+        </tr>
+</TABLE>
+</FIELDSET>
+
+</form>

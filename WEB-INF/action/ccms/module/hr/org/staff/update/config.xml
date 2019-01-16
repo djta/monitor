@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		更新员工信息
+	</summary>
+
+	<log>false</log>
+
+	<colname>skill_id;skill_id;org_post_id</colname>
+	<sql-template>insert-skills.sql;insert-roles.sql;insert-org_post.sql</sql-template>
+
+	<transaction>
+		<classname>com.ccms.InsertMaster</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<query>update_t_staff.sql</query>
+	<query>delete-skills.sql</query>
+	<query>delete-org_post.sql</query>
+	<query>delete-roles.sql</query>
+	<query>update-user.sql</query>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

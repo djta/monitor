@@ -1,0 +1,13 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/project/fitness/home/pub}
+</head>
+<body>
+	<script language="javascript">
+	alert("上传成功！");
+	parent.location.href = "${def:context}${def:actionroot}/crud?pk_value=${fld:pk_value}&table_code=${fld:table_code}&"+new Date().getTime();
+	parent.parent.$("#${fld:imgid}").attr("src", "${def:context}/action/project/fitness/util/attachment/download?tuid=${fld:tcode}&type=1");
+	</script>
+</body>
+</html>

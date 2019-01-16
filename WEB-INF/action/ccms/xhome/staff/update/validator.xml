@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+    <parameter id="user_id" type="integer" required="true" label="user_id"/>
+    <parameter id="name" type="varchar" required="true" label="姓名" maxlen="128" />
+    <parameter id="skill_id" type="integer" required="true" label="岗位" maxlen="64" />
+    <parameter id="mobile" type="varchar" required="true" label="电话" maxlen="32" />
+    <parameter id="vc_contact" type="varchar" required="false" label="其它电话" maxlen="18" />
+	<parameter id="sex" type="varchar" required="false" label="性别" maxlen="2" />
+    <parameter id="upload_id" type="integer" required="false" label="寸照" maxlen="64" />
+</validator>

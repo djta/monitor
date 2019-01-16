@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<title>技能信息</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+    <div class="panel-heading col_main_body_title text-center">
+        <h2 class="panel-title">查询技能</h2>
+    </div>
+		<div class="panel-body col_main_body">
+        <form class="form-horizontal" role="form" method="post"
+              id="searchForm" name="searchForm">
+            <input name="sort" type="hidden" value="skill_name" preserve="true"/>
+            <input name="order" type="hidden" value="desc" preserve="true"/> <input
+                name="pageNo" type="hidden" value="" preserve="true"/> <input
+                name="totalPages" type="hidden" value="" preserve="true"/>
+
+            <div class="form-group">
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                       <input type="text" id="skill_name" placeholder="请输入技能名称" class="form-control" name="skill_name" value="" size="20"/>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+                    <button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+                    <button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+                </div>
+            </div>
+        </form>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>操作</th>
+                <th class="sortable" code="tenantry_name">租户名称</th>
+                <th class="sortable" code="skill_name">技能名称</th>
+                <th>权限等级</th>
+                <th>备注</th>
+            </tr>
+            </thead>
+            <tbody id="datagridTemplate" style="display:none">
+            <tr>
+                <td align="center">
+                    <button class="btn btn-primary btn-md edit_btn" type="button" code="#skill_id#">编辑</button>
+                </td>
+                <td align="center">#tenantry_name#</td>
+                <td align="center">#skill_name#</td>
+                <td align="center">#scope_alias#</td>
+                <td align="center">#remark#</td>
+            </tr>
+            </tbody>
+            <tbody id="datagrid">
+            </tbody>
+        </table>
+        <div class="pageDiv">
+            <ul class="pagination">
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="formTitle">新增技能</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+                    <input type="hidden" id="tuid" name="tuid" default="0" value=""/>
+                    <div class="row clearfix">
+                        <div class="form-group">
+                            <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">名称</label>
+                            <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+                                <input type="text" class="form-control"  id="skill_name2" name="skill_name" maxlength="64" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">系统角色</label>
+                            <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+                                <role-list>
+                                    <input name="role_id"   id="role_id" type="checkbox" value="${fld:role_id}"/>
+                                    ${fld:rolename}
+                                </role-list>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 "> 职责权限</label>
+                            <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+                                <input type="radio" id="skill_scope" name="skill_scope" value="0"/>全国
+                                <input type="radio" id="skill_scope" name="skill_scope" value="1"/>区域
+                                <input type="radio" id="skill_scope" name="skill_scope" value="2"/>经销商
+                                <input type="radio" id="skill_scope" name="skill_scope" value="9"/>所有者
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">默认绑定技能</label>
+                            <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+                                <input type="radio" id="is_default" name="is_default" value="0"/>否
+                                <input type="radio" id="is_default" name="is_default" value="1"/>是
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="form-group">
+                            <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">备注</label>
+
+                            <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+                                <textarea name="remark" class="form-control" id="remark" cols="30" rows="2" maxlength="256"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+                    <button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+                    <button type="button" class="btn btn-primary btn-md delete_btn" >删除</button>
+                    <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}"/>
+
+
+<script language="javascript">
+    $(document).ready(function () {
+    	var search1=null;
+        var obj = $Crud({
+            formId: "formEditor",
+            button: "save_btn",
+            insertBack: function () {
+            	$(".error").empty();
+            	search1.searchData();
+            },
+            updateBack: function () {
+            	search1.searchData();
+            },
+            deleteBack: function () {
+            	search1.searchData();
+            },
+            addNewBack: function () {
+            	$(".delete_btn").hide();
+                $("#formTitle").html("新增技能信息");
+            },
+            editBack: function () {
+            	$(".delete_btn").show();
+                $("#formTitle").html("修改技能信息");
+            },
+            validate: function () {
+                var flag = $("#formEditor").validate({
+                    rules: {
+                        skill_name: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        skill_name: {
+                            required: "请输入技能名称"
+                        }
+                    }
+                });
+                return flag;
+            }
+        }).init();
+
+        search1=$Search({datagrid: "datagrid", formId: "searchForm", success: function () {
+            $(".edit_btn").unbind().on("click", function () {
+                if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+                    obj.edit({id: $(this).attr("code")});
+                }
+            });
+            $(".delete_btn").unbind();
+            $(".delete_btn").unbind().on("click", function () {
+                $Dialog().confirm("确定要删除吗?", function () {
+                    if ($("#tuid").val() != undefined && $("#tuid").val() != "") {
+                        obj.del({id: $("#tuid").val()});
+                        //$("#modalAddnew").modal("hide");
+                        ccms.dialog.close();
+                    }
+                });
+            });
+        }}).initSearchBtn().searchData(1);
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="menu_id" type="integer" required="false" label="menu_id" /> 
+	<parameter id="group_id" type="integer" required="false" label="group_id" /> 
+	<parameter id="description" type="varchar" required="false" label="描述" /> 
+	
+	<custom-validator 
+		classname="dinamica.validators.SQLPatternTransformer" 
+		parameter="description" 
+		rule="contains" 
+		ifnull="%" />
+
+</validator>

@@ -1,0 +1,365 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<!--COMMON :include style and javascript code-->
+
+<title>模板信息</title>
+${inc:/action/ccms/pub}
+</head>
+
+<body>
+
+<!--addnew/edit form-->
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+  	  <div class="modal-dialog">
+   	    <div class="modal-content">
+   	      <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="formTitle">新增</h4>
+          </div>
+          <div class="modal-body">
+			<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+			  <input type="hidden" id="tuid" name="tuid" value=""/>
+			   <div class="row clearfix">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						模版名称
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+								<input name="subject_id" type="hidden" value="${fld:subject_id}" preserve="true">							
+					<input name="campaign_id" type="hidden" value="${fld:campaign_id}" preserve="true">					
+					<input name="template_name" class="form-control" id="template_name" type="text" value="${fld:template_name}">				
+						</div>
+					</div>
+				</div>
+				
+				<div class="row clearfix">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						选择模型
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<select id="model_id" class="form-control" name="model_id">
+									<option value="">请选择模型</option>
+								<model-name>
+									<option value="${fld:model_id}">${fld:model_name}</option>
+								</model-name>
+							</select>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row clearfix">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						除重对象
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<input id="task_duplicate_flag" name="task_duplicate_flag" type="radio" value="0" >按客户
+				<input id="task_duplicate_flag" name="task_duplicate_flag" type="radio" value="1" checked >按CASE(Leads)
+				<input id="task_duplicate_flag" name="task_duplicate_flag" type="radio" value="2" >按CASE识别(Leads+更新时间)
+						</div>
+					</div>
+				</div>
+				
+				<div class="row clearfix">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						除重范围
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<input id="task_duplicate_scope" name="task_duplicate_scope" type="radio" value="0" >按活动
+				<input id="task_duplicate_scope" name="task_duplicate_scope" type="radio" value="1" checked >按主题
+				<!--input id="task_duplicate_scope" name="task_duplicate_scope" type="radio" value="3" >不除重-->
+						</div>
+					</div>
+				</div>
+				
+				<div class="row clearfix">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						数据配额						
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<input id="job_quota" class="form-control" name="job_quota" type="text" value="999999" preserve="true">
+						</div>
+					</div>
+				</div>
+				
+				<div class="row clearfix">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						任务优先级(0最高,1第二)
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<input id="job_priority" class="form-control" name="job_priority" type="text" size="6" value="1" >
+						</div>
+					</div>
+				</div>
+				<div class="row clearfix">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						启始日期
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<input id="from_date" name="from_date" class="form-control" type="text"  value=""  title="YYYY-MM-DD" placeholder="YYYY-MM-DD" >
+						</div>
+					</div>
+				</div>
+				<div class="row clearfix">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						结束日期
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<input id="to_date" name="to_date" class="form-control" type="text" value="" title="YYYY-MM-DD" placeholder="YYYY-MM-DD" >
+						</div>
+					</div>
+				</div>
+				<div class="row clearfix">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						预约时间精度(分钟)(目前外呼强制指定预约精度为5分钟)
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<input id="reserve_accuracy" class="form-control" name="reserve_accuracy" type="text" size="35" value="1" preserve="true">
+						</div>
+					</div>
+				</div>
+				<div class="row clearfix">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						数据推送模式
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<select id="data_push_flag" class="form-control" name="data_push_flag" >
+					<option value=""> 不推送 </option>
+					<option value="0">OnGoing</option>
+					<option value="1">跟进提醒</option>
+				</select>
+						</div>
+					</div>
+				</div>
+				<div class="row clearfix">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						数据切换模式
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<select id="data_switch_flag" class="form-control" name="data_push_flag" >
+					<option value=""> 不切换 </option>
+					<option value="0">OnGoing</option>
+					<option value="1">跟进提醒</option>
+				</select>
+						</div>
+					</div>
+				</div>
+				<div class="row clearfix">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						轮次类型
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<select id="round_type" class="form-control" name="round_type" >
+					<option value=""></option>
+					<option value="1">售前第一轮</option>
+					<option value="2">售前第二轮</option>
+					<option value="3">售前第三轮</option>
+					<option value="4">售前第四轮</option>
+					<option value="11">车主第一轮</option>
+					<option value="12">车主第二轮</option>
+					<option value="13">车主第三轮</option>
+					<option value="14">车主第四轮</option>
+					<option value="20">投诉回访</option>
+				</select>
+						</div>
+					</div>
+				</div>
+				<div class="row clearfix">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						是否能够手工推送
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<input type="radio" name="if_manual_push_flag" value="1" id="if_manual_push_flag">是
+				<input type="radio" name="if_manual_push_flag" value="0" id="if_manual_push_flag">否
+						</div>
+					</div>
+				</div>
+				
+			</form>
+		  </div>
+		  <div class="modal-footer">
+		    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+			  <button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+			  <button type="button" id="reset_btn" class="btn btn-primary btn-md">重&nbsp;置</button>
+			  <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+			  <button type="button" id="btn-del" class="btn btn-primary btn-del" data-dismiss="modal">删&nbsp;除</button>
+		    </div>
+	      </div>
+	    </div>
+      </div>
+    </div>
+
+
+<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">模板信息</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm">
+						<input name="sort" type="hidden" value="model_id" preserve="true"/>
+						<input name="order" type="hidden" value="desc" preserve="true" /> 
+						<input name="pageNo" type="hidden" value="" preserve="true" /> 
+						<input name="totalPages" type="hidden" value="" preserve="true" />
+				<div class="form-group">
+                <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 ">
+                    <input type="text" class="form-control" name="model_name" title="模型名称" placeholder="模型名称"/>
+                </div>
+            
+                <div class="col-xs-8 col-sm-4 col-md-4 col-lg-4">
+                    <button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+                    <button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+                    <button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+                </div>
+            </div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>操作</th>
+						<th></th>
+						<th class="sortable" code="tuid">模板代码</th>
+						<th class="sortable" code="template_name">模板名称</th>
+						<th class="sortable" code="model_name">模型名称</th>
+						<th class="sortable" code="task_duplicate_flag'">除重对象</th>
+						<th class="sortable" code="task_duplicate_scope">除重范围</th>
+						<th class="sortable" code="job_quota">数据配额</th>
+						<th class="sortable" code="job_priority">任务优先级</th>
+						<th class="sortable" code="is_enabled">状态</th>							
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td class="text-center">
+							<button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">编辑</button>
+							<button class="btn btn-primary btn-md doc_btn" type="button" code="#tuid#">文档</button>
+						</td>
+						<td class="text-center">#url_enabled#</td>
+						<td class="text-center">#tuid#</td>
+						<td class="text-center">#template_name#</td>
+						<td class="text-center">#model_name#</td>
+						<td class="text-center">#task_duplicate_flag#</td>
+						<td class="text-center">#task_duplicate_scope#</td>
+						<td class="text-center">#job_quota#</td>
+						<td class="text-center">#job_priority#</td>
+						<td class="text-center">#is_enabled#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+
+<script language="javascript">
+var search=null;
+$(document).ready(function() {
+	ccms.dialog.date($("#from_date"));
+	ccms.dialog.date($("#to_date"));
+	
+    var obj = $Crud({
+        formId:"formEditor",
+        button:"save_btn",
+        insertBack:function(){
+            search.searchData(1);
+        },
+        updateBack:function(){
+            search.searchData(1);
+        },
+        deleteBack:function(){
+            search.searchData(1);
+        },
+        addNewBack:function(){
+            $("#formTitle").html("新增模板");
+            $("#btn-del").hide();
+        },
+        editBack:function(){
+            $("#formTitle").html("修改模板信息");
+            $("#btn-del").show();
+        },
+        validate:function(){
+            var flag=$("#formEditor").validate({
+                rules: {
+                	template_name: {
+                        required: true,
+                        rangelength: [1,128]
+                    }
+                },
+                messages: {
+                	template_name:{
+                        required: "请输入模板名称",
+                        rangelength: "客户名称长度为128"
+                    }
+                }
+            });
+            return flag;
+        },
+        check:function(){
+            return true;
+        }
+    }).init();
+    search=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+        $(".edit_btn").unbind().on("click", function(){
+            if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+                obj.edit({id:$(this).attr("code")});
+            }
+        });
+        
+        $(".doc_btn").unbind().on("click", function(){
+            if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+            	var url = '${def:context}${def:actionroot}/doc/crud?template_id='+$(this).attr("code");
+			$Dialog().open({
+				url : url,
+				id : "sendMessage",
+				width : 900,
+				height : 800
+			});
+            }
+        });
+        
+        $("#btn-del").unbind().on("click",function(){
+            var obthis = $(this);
+            $Dialog().confirm("确定要删除吗？",function(){
+                if($("#tuid").val() != undefined && $("#tuid").val() != ""){
+                	obj.del({id : $("#tuid").val()});
+                }
+            });
+        });
+    }}).initSearchBtn().searchData(1);
+});
+
+function enabled(id,status)
+{
+	return ajaxCall("${def:actionroot}/enable" + "?id=" + id + "&enabled_status=" + status,{
+   		method: "get",
+   		progress: true,
+   		dataType: "script",
+   		success: function() {
+   		}
+   	});
+}
+</script>
+
+</body>
+
+</html>

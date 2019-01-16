@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		项目起始页
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>		
+		<recordset id="query-campaign_name.sql" source="sql" scope="transaction" />
+		<recordset id="query-car_series.sql" source="sql" scope="transaction" />
+		<recordset id="query-province.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<expiration>0</expiration>
+		<print mode="form" recordset="_request"/>
+		<print mode="form" recordset="query-campaign_name.sql" />
+		<print mode="table" recordset="query-car_series.sql" tag="car_series" alternate-colors="true" />
+		<print mode="table" recordset="query-province.sql" tag="_provinces" alternate-colors="true" />
+	</output>
+
+</config>

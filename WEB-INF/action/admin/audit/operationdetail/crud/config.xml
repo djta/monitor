@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config nodb="ture">
+
+	<summary>
+		业务操作历史信息管理
+	</summary>
+	
+	<log>false</log>
+
+	<set-request-attribute id="header.title" value="审计控制" />
+    <set-request-attribute id="formTitleFilter" value='查询审计控制信息'/>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>		
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<expiration>0</expiration>
+		<print mode="form" recordset="_request"/>
+	</output>
+
+</config>

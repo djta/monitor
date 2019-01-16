@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="lname" type="varchar" required="false" label="姓氏" maxlen="25" />
+	<parameter id="fname" type="varchar" required="true" label="名称" maxlen="25" />
+	<parameter id="mobile" type="varchar" required="false" label="手机号码" maxlen="80"/>
+	<parameter id="locale" type="varchar" required="false" label="${lbl:s_profile_lang}" />
+	<parameter id="email" type="varchar" required="false" label="${lbl:s_profile_email}"
+		maxlen="80" regexp="^([\w-]+\.)*?[\w-]+@[\w-]+\.([\w-]+\.)*?[\w]+$"
+		regexp-error-label="电子邮件格式错误, 请使用 xxxx@xxxxxx.xxx 格式" />
+
+
+
+</validator>

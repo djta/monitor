@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>自定义工作流</title>
+</head>
+<body>
+<!-- 编辑 -->
+<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="formTitle">修改流程</h4>
+			</div>
+			<div class="modal-body">
+				<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+					<input type="hidden" id="tuid" name="tuid" value="" />
+					
+					<div class="row clearfix">
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 text-right required">流程名称</label>
+							<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+								<input type="text" class="form-control" maxlength="54" name="wfm_name" value="" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 text-right required">业务</label>
+							<div class="col-xs-5 col-sm-4 col-md-4 col-lg-4">
+								<input type="text" name="table_name" id="table_name" readonly class="form-control"/> 
+								<input type="hidden" name="table_id" id="table_id" /> 
+							</div>
+							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+								<img src="${def:context}/images/search.gif" class="tool" id="pickTable" style="cursor: pointer;" title="查询业务" />
+								<img src="${def:context}/images/clear.gif" code1="table_id" code2="table_name" style="cursor: pointer;" class="tool2 pickClear" title="清除选择的内容" />	
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 control-label required">是否启用</label>
+							<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+								<input type="radio" class="form-control" name="wfm_status" value="1" checked />启用
+								<input type="radio" class="form-control" name="wfm_status" value="0" />禁用
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 text-right required">流程Logo</label>
+							<div class="col-xs-5 col-sm-4 col-md-4 col-lg-4">
+								<input type="text" name="logo_path" id="logo_path" readonly  class="form-control"/> 
+							</div>
+							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+								<img src="${def:context}/images/search.gif" style="cursor: pointer;" id="openPicList" title="上传" /> 
+								<img src="${def:context}/images/preView.gif" style="cursor: pointer;" id="lookImg" title="预览" />
+								<img src="${def:context}/images/clear.gif" style="cursor: pointer;" onclick="document.formEditor.logo_path.value='';"
+									title="清除选定值" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 control-label">备注</label>
+							<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+								<textarea id="remark" name="remark" class="form-control" rows="2"></textarea>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<button type="button" id="save_btn" class="btn btn-primary btn-md">保&nbsp;存</button>
+					<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+			    </div>
+		    </div>
+		</div>
+	</div>
+</div>
+
+<!-- 查询 -->
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">自定义工作流</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post" id="searchForm">
+			<input name="sort" type="hidden" value="wfm_name" preserve="true"/>
+			<input name="order" type="hidden" value="desc" preserve="true" /> 
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+			
+			<div class="form-group">
+				<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+					<input type="text" class="form-control" id="name" name="name" placeholder="请输入流程名称" />
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+					<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+					<button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+					<button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="add_btn">复制模板流程</button>
+				</div>
+			</div>
+		</form>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>操作</th>
+					<th class="sortable" code="wfm_name">流程名称</th>
+					<th class="sortable" code="wfm_status">流程状态</th>
+					<th class="sortable" code="remark">备注</th>
+				</tr>
+			</thead>
+			<tbody id="datagridTemplate" style="display: none">
+				<tr>
+					<td align="center">
+						<button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">编辑</button>
+						<button class="btn btn-primary btn-md config_btn" type="button" code="#tuid#">配置</button>
+						#button#
+					</td>
+					<td align="center">
+						#wfm_name#
+					</td>
+					<td align="center">
+						#wfm_status#
+					</td>
+					<td align="center">
+						#remark#
+					</td>
+				</tr>
+			</tbody>
+			<tbody id="datagrid"></tbody>
+		</table>
+		<div class="pageDiv">
+			<ul class="pagination">
+			</ul>
+		</div>
+	</div>
+</div>
+
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script type="text/javascript">
+function CustomClass(){
+	this.init=function(){
+		this.searchObj=null;
+		var obthis = this;
+		var obj = $Crud({
+			formId:"formEditor",
+			button:"save_btn",
+			insertBack:function(){
+				obthis.searchObj.searchData();
+			},
+			updateBack:function(){
+				obthis.searchObj.searchData();
+			},
+			deleteBack:function(){
+				obthis.searchObj.searchData();
+			},
+			 addNewBack:function(){
+				$("#formTitle").html("新增流程");
+			}, 
+			editBack:function(){
+				$("#formTitle").html("修改流程");
+			},
+			validate:function(){
+				var flag=$("#formEditor").validate({
+					rules: {
+						wfm_status: {
+							required: true
+						},
+						table_id:{
+							required: true
+						},
+						table_name:{
+							required: true
+						},
+						is_template: {
+							required: true
+						},
+						logo_path:{
+							required: true
+						}
+					},
+					messages: {
+						wfm_status: {
+							required: "请选择流程状态"
+						},
+						table_id:{
+							required: "请选择业务"
+						},
+						table_name:{
+							required: "请选择业务"
+						},
+						is_template: {
+							required: "请选择是否为模板"
+						},
+						logo_path:{
+							required: "请输入流程Logo"
+						}
+					}
+				});
+				return flag;
+			},
+			check:function(){
+				return true;
+			}
+		}).init();
+		obthis.searchObj=$Search({datagrid:"datagrid",formId:"searchForm",
+			rowpackage:function(obj){
+				if(obj.xml_release=="1"){
+					obj.button="<button class='btn btn-primary btn-md wfm_btn' type='button' code='"+obj.tuid+"' code1='"+obj.document_id+"'>发起流程</button>";
+				}else{
+					obj.button="";
+				}
+			},
+			success:function(){
+			$(".wfm_btn").unbind();
+			$(".wfm_btn").unbind().on("click",function(){
+				if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+					var code=$(this).attr("code");
+					var code1=$(this).attr("code1");
+					gotoPage("/action/ccms/doc?document_id="+code1+"&__wfm_id__="+code);
+				}
+			});
+			$(".edit_btn").unbind().on("click", function(){
+				if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+					obj.edit({id:$(this).attr("code")});
+				}
+			});
+			$(".config_btn").unbind().on("click",function(){
+				if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+					var tuid = $(this).attr("code");
+					var url = "${def:context}/action/ccms/module/workflow/customwfm/templateConfig/flowview?tuid="+tuid;
+					ccms.dialog.open({url:url,id:"configWfm"});
+				}
+			});
+		}}).initSearchBtn().searchData(1);
+		$("#add_btn").unbind().on("click",function(){
+			var url = "${def:context}/action/ccms/module/workflow/customwfm/insert-template";
+			ccms.dialog.open({url:url,id:"wfmNameCopy",width:800,height:600});
+		});
+		$("#openPicList").unbind().on("click", function(){
+			var url = "${def:context}/action/ccms/attachment/crud?id=logo_path&pickId=dialogPic";
+			ccms.dialog.open({url:url,id:"dialogPic",width:800,height:500});
+		});
+		$("#lookImg").unbind().on("click",function(){
+			if($("#logo_path").val()==''){
+				$Dialog().notice("请选择图片",1200);
+				return;
+			}
+			var id="${def:context}/action/ccms/attachment/preView?id="+encodeURIComponent($("#logo_path").val());
+			ccms.dialog.open({url:id,id:"yulan",width:600,height:400});
+		});
+		$("#pickTable").unbind().on("click",function(){
+			var subject_id = '${def:subject}';
+			ccms.dialog.open({url:"${def:context}/action/ccms/pub/pick/table/crud?id=table_id&name=table_name&pickId=pickOpen&subject_id="+subject_id,id:"pickOpen",width:500,height:400});
+		});
+	}
+}
+
+var customClass=null;
+$(document).ready(function(){
+	customClass = new CustomClass();
+	customClass.init();
+});
+
+</script>
+</body>
+</html>

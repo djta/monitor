@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		找回密码
+	</summary>
+	
+	<log>false</log>
+	
+	<transaction>
+		<classname>security.ResetPassword</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<query>update.sql</query>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<expiration>0</expiration>
+	</output>
+
+	<mail enabled="true">
+		<subject recordset="_request">密码重置通知</subject>
+		<mail-to recordset="_request" colname="email"/>
+		<body recordset="_request">message.txt</body>
+	</mail>
+
+</config>

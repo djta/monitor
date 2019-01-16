@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/ccms/xhome/pub}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Language" content="zh-CN" />
+<link rel="stylesheet" href="${def:context}/js/ccms/xhome/css/suspmenu.css" type="text/css" media="screen" />
+
+<title>CCMS</title>
+<style type="text/css">
+.nav-bg{
+	background-color: #354052;
+	border-top:none; 
+	color:white;
+	position:relative;
+}
+.nav-bg a{
+	color:#b0b0b0;
+}
+#closeAll{
+	background-image: url("${def:context}/images/close_all.png");
+    background-position: 10px center;
+    background-repeat: no-repeat;
+    background-size: auto 50%;
+    display: inline-block;
+}
+</style>
+</head>
+<body class="body">
+	<!-- header -->
+	<div class="home_head banner">
+		<div id="menuTree">
+			<!--div id="showMenu" style="width:50px;height:20px;background:white;"><span>菜单</span></div-->
+		</div>
+	
+		<div class="biaoti"></div>
+		<div class="home_container_box" >
+			<div class="top-tip">
+				<a href="javascript:void(0);" ><img class="top-tip-icon selftpwd" src="${def:context}/js/ccms/xhome/image/menu/pwd.png"></a>
+			</div>
+			
+			<div class="top-info">
+				<img class="touxiang" src="${def:context}/js/ccms/xhome/image/touxiang.png">
+				<span class="username"></span>
+				<a href="${def:context}/action/security/exit" id="logout" class="mod-head__nav-item">退出</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- body -->
+	<div class="home_main_body workarea" >
+		<!-- div class="left" id="home_col_side" >
+			<ul class="top-nav" id="menunav">
+				
+			</ul>
+		</div-->
+		
+		<div class="main col_main" id="tabs">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs nav-bg" role="tablist">
+				 <li id="tabManage" class="tabManage">
+				 	<i class="glyphicon glyphicon-menu-down"></i>
+					<ul>
+						<li id="closeAll">关闭全部</li>
+						<li id="closeCurrent">关闭当前页</li>
+			 			<li id="refreshCurrent">刷新当前页</li>
+				 	</ul>
+				</li> 
+			</ul>
+				
+			<!-- Tab panes -->
+			<div class="tab-content" id="tab_content">
+				<div role="tabpanel" class="tab-pane active" id="body_content" style="height: 100%; overflow:auto;">
+					<li class="nav-li menu" addtabs="" title="首页" id="homepage" close="false" style="display:none;" url="/action/ccms/xhome/main" >';
+					<a href="javascript:void(0)" class="cmenu_title subBtn firstPage">首页</a></li>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+	<!-- footer -->
+	<div class="home_mod-footer" style="display:none;">
+		<div class="home_container_box">
+			<span class="home_mod-footer__copyright-text">Copyright&nbsp;© 2014 Desoft. All Rights Reserved.</span>
+		</div>
+	</div>
+<input type="hidden" id="home_actionroot" value="${def:actionroot}"/>
+<input type="hidden" id="project_id" name="project_id" maxlength="64" value="" />
+
+<script type="text/javascript" src="${def:context}/js/ccms/xhome/js/home.js?random="+Math.random()></script>
+<script type="text/javaScript">
+	$(document).ready(function() {
+	});
+</script>
+</body>
+</html>

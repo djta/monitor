@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		Producto - Insertar registro
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>com.ccms.ParentChildDelete</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+
+	<!-- 
+		sql 是删除最外层主表的删除语句  
+		id 为最外层主表的输入参数值 
+		child 为子表元素名（有多个平级的可以用逗号隔开，注意平级的元素名称不能重复）
+	-->
+	<group-master sql="delete.sql" id="id" child="group-param">
+		<!-- table 是当前表表名 key 当前表主键名 pkey 父表主键名  -->
+		<group-param table="t_document_params" key="tuid" pkey="document_id">			
+		</group-param>
+
+    </group-master>
+
+</config>

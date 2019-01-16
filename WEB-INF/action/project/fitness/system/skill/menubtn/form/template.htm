@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/project/fitness/home/pub}
+<title>授权管理</title>
+</head>
+<body>
+   <div class='dialogbg'>
+	<div class="panel-default col_mainInner">
+		<div class="panel-body col_main_body basic-dialog" style="margin-top: 60px;">
+			<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+				<input type="hidden" id="skill_id" name="skill_id" value="${fld:skill_id}"/>
+				<div id="menu_btn_list"></div>
+			</form>
+		</div>
+	</div>
+   </div>
+
+	<!--用于传递当前目录到header模版中-->
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+	<script language="javascript">
+    $(document).ready(function () {
+    	loadSkillMenu();
+    	loadData();
+    });
+    function loadSkillMenu(){
+    	var obj = $("#menu_btn_list");
+    	obj.empty();
+    	var i = 0;
+    	var str = '<div class="modal-body b-i-main"><nav>';
+    	<menu-rows>
+    		i++;
+    		str += '<li class="row100w"><div class="form-group" id="menu_${fld:menu_id}">';
+    		str += '<label class="col-xs-12 col-sm-12 col-md-12 col-lg-12">${fld:menu_name@js}<input name="check_menu" value="${fld:menu_id}" type="checkbox" /></label>';
+    		str += '</div>';
+    		str += '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="border-bottom:1px solid rgb(207, 207, 207);margin-bottom:20px;"></div>';
+    		str += '</li><li></li>';
+    	</menu-rows>
+    	str += '</nav>';
+		obj.append(str);
+    	var btnstr = '<div class="form-group text-center">';
+    	btnstr += '<button class="save_btn" type="button">保&nbsp;&nbsp;存</button>';
+    	btnstr += '<button class="cancel_btn" type="button">取&nbsp;&nbsp;消</button>';
+    	btnstr += '<button class="select_btn" code="0" type="button">全选</button>';
+    	btnstr += '</div>';
+    	obj.append(btnstr);
+    	//obj.append(btnstr);
+    	if( i <= 0 ){
+    		obj.empty();
+    		obj.append('<div class="form-group text-center no-data">请先设置菜单权限</div>');
+    	}else{
+        	loadMenuBtn();
+        	$(".save_btn").unbind().on("click",function(){
+        		ajaxCall("${def:context}${def:actionroot}/insert", {
+    				method : "post",
+    				form: "formEditor",
+    				dataType : "script",
+    				progress : true,
+    				success : function() {
+    				}
+        		});
+        	});
+        	$(".cancel_btn").unbind().on("click",function(){
+        		ccms.dialog.close();
+        	});
+        	ccms.util.renderCheckbox("check_menu");
+        	$("input[name=check_menu]").unbind().on("ifClicked",function(){
+        		$("input[name=menu_btn_id][code-menu="+$(this).val()+"]").iCheck("check");
+        	});
+        	$("input[name=check_menu]").on("ifUnchecked",function(){
+        		$("input[name=menu_btn_id][code-menu="+$(this).val()+"]").iCheck("uncheck");
+        	});
+        	$(".select_btn").unbind().on("click",function(){
+        		if( undefined != $(this).attr("code") && "0" == $(this).attr("code") ){
+            		$("input[name=menu_btn_id]").iCheck("check");
+            		$("input[name=check_menu]").iCheck("check");
+            		$(this).attr("code","1");
+            		$(this).html("取消全选");
+        		}else{
+            		$("input[name=menu_btn_id]").iCheck("uncheck");
+            		$("input[name=check_menu]").iCheck("uncheck");
+            		$(this).html("全选");
+        			$(this).attr("code","0");
+        		}
+        	});
+    	}
+    }
+    function loadMenuBtn(){
+		<btn-rows>
+			var str = '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding-botton:10px;">';
+			str += '<input name="menu_btn_id" value="${fld:menu_btn_id}" code-btn="${fld:btn_id}" code-menu="${fld:menu_id}" type="checkbox" />${fld:btn_name@js}';
+			str += '</div>';
+			$("#menu_${fld:menu_id}").append(str);
+    	</btn-rows>
+    	ccms.util.renderCheckbox("menu_btn_id");
+    }
+    function loadData(){
+    	<kmbtn-rows>
+    		$("input[name=menu_btn_id][value=${fld:menu_btn_id}]").iCheck("check");
+    	</kmbtn-rows>
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		新增角色
+	</summary>
+	
+	<log>false</log>
+
+	<audit>
+		<recordset>query.sql</recordset>
+		<cols>	
+			<colname>rolename</colname>		
+			<colname>description</colname>
+		</cols>
+		<table>s_role</table>
+		<oper>增加</oper>
+		<area>角色</area>
+		<pkey>role_id</pkey>
+	</audit>
+
+	<transaction>
+		<classname>com.ccms.dinamica.domain.admin.AfterTransaction</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<query>insert.sql</query>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

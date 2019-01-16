@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="imp_id" type="integer" required="true" label="imp_id" maxlen="10"/>
+
+	<custom-validator 	
+		classname="dinamica.validators.NoRecordsFound" 
+		on-error-label="没有对应的权限访问本导入功能.请联系管理员为您分配权限."
+		sql="checkSkill.sql" />
+
+</validator>

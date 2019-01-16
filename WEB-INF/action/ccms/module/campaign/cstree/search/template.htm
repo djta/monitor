@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    ${inc:/action/ccms/pub}
+	<title>活动规则管理</title>
+	<style type="text/css">
+	 <!--
+	 body {
+		overflow-x:scroll;
+	 }
+	 * html {
+		overflow-x:scroll;
+	 }
+	 -->
+	 </style> 
+	<script language="JavaScript" type="text/javascript" src="${def:context}/action/pub/dtree"></script>
+    <SCRIPT LANGUAGE="JavaScript">
+        function gotoCRUD(type,id,s){
+            var url = "";
+			id = id.substring(1);
+			s = s.substring(1);
+            if (type == "clause" || type == "clause-item" || type == "wjob" || type == "yjob"){
+                return;
+            }if(type == "campaign"){
+                url = "${def:context/action/ccms/module/campaign/objob/crud?campaign_id="+id+"&random="+Math.random();
+            }else if(type == "parentjob"){
+                url = "${def:context}/action/ccms/module/campaign/objob/crud?campaign_id="+s+"&random="+Math.random();
+            }else if(type == "job"){
+                url = "${def:context}/action/ccms/module/campaign/objob/webflow?job_id="+id+"&random="+Math.random();
+            }
+			if(url == "") return;
+            parent.frames["main"].document.location.href = url;
+        }
+
+		function filterCRUD(type,id,job,addon){
+			var url = "${def:context}/action/ccms/module/campaign/objob/inject_filter/crud";
+			if(addon != "" && addon != "0" && addon != "3"){
+				url = "${def:context}/action/ccms/module/campaign/objob/cs_include_or_not/crud";
+			}
+			var tuid = "";
+			var job_id = job.substring(1);
+			var p_id = "";
+			if(type == "add"){
+				p_id = id.substring(1);
+			}else if(type == "update"){
+				tuid = id.substring(1);
+			}
+			url += "?filter_type="+addon+"&job_id="+job_id+"&filter_id="+tuid+"&p_id="+p_id+"&random="+Math.random();
+			parent.frames["main"].document.location.href = url;
+		}
+    </SCRIPT>
+</head>
+
+<body>
+<div class="dtree">
+<form name="treeForm">
+<TABLE class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0>
+
+    <input name="faq_code" type="hidden" size="19" maxlength="100" value="">
+
+
+		<tr>
+		        <td >
+		        <span class="required">
+		        <a href="javascript: d.openAll();">展开</a> | <a href="javascript: d.closeAll();">合并</a>
+		        </span>
+		        </td>
+		</tr>
+</table>
+
+	<script type="text/javascript">
+
+		d = new dTree('d');
+		
+		var title = "活动规则管理";
+
+		d.add(0,-1,title);
+
+		var tuid = "";
+		var operator = "";
+		var superior_id = "";
+        var show_name = "";
+		var buttons = "";
+		 <rows>
+			tuid = "${fld:tuid}";
+			operator = "${fld:operator}";
+			superior_id = "${fld:superior_id}";
+			buttons = "";
+            show_name = "<a href='javascript:gotoCRUD(\"${fld:operator}\",\"${fld:superior_id}\",\"${fld:super}\");'>${fld:show_name}</a>";
+			if(operator == "clause"){
+				buttons += "&nbsp;<image src='${def:context}/images/add.gif' onclick=\"filterCRUD('addnull','','${fld:super}','${fld:addon}')\" title='新增' style='cursor:pointer'/>";
+			}else if(operator == "clause-node"){
+				buttons += "&nbsp;<image src='${def:context}/images/add.gif' onclick=\"filterCRUD('add','${fld:tuid}','${fld:super}','${fld:addon}')\" title='新增' style='cursor:pointer'/>";
+				buttons += "&nbsp;<image src='${def:context}/images/edit.gif' onclick=\"filterCRUD('update','${fld:tuid}','${fld:super}','${fld:addon}')\" title='修改' style='cursor:pointer'/>";
+			}else if(operator == "clause-item"){
+				buttons += "<a href='javascript:filterCRUD(\"update\",\"${fld:tuid}\",\"${fld:super}\",\"${fld:addon}\")'>${fld:show_name}</a><image src='${def:context}/images/edit.gif' onclick=\"filterCRUD('update','${fld:tuid}','${fld:super}','${fld:addon}')\" title='修改' style='cursor:pointer'/>";
+				show_name = "";
+			}
+            d.add(tuid,superior_id,show_name+buttons);
+        </rows>
+        
+		document.write(d);
+
+	</script>
+</form>
+</div>
+</body>
+
+</html>

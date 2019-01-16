@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/error/validation/ajax">  
+
+    <parameter id="document_id" type="integer" required="true" label="document_id"/>
+    <parameter id="form_type" type="varchar" required="true" label="form_type"/>
+    <parameter id="show_order" type="varchar" required="true" label="show_order" />
+    <parameter id="template_id" type="varchar" required="true" label="template_id" />
+<custom-validator 	
+	classname="dinamica.validators.DuplicatedKeyValidator" 
+	on-error-label="此文档已存在，请重新选择"
+	id="document_id" sql="nodup.sql"/>
+</validator>
+
+

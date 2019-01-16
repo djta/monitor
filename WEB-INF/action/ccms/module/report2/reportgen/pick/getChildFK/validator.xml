@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="table_name" type="varchar" required="true" label="table_name" maxlen="128"/>
+	<parameter id="value_field_code" type="varchar" required="true" label="value_field_code" maxlen="128"/>
+	<parameter id="show_field_code" type="varchar" required="true" label="show_field_code" maxlen="128"/>
+	<parameter id="parent_field_code" type="varchar" required="true" label="parent_field_code" maxlen="128"/>
+	<parameter id="parent_value" type="varchar" required="false" label="parent_value" maxlen="128"/>
+	<parameter id="select_id" type="varchar" required="true" label="select_id" maxlen="128"/>
+</validator>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="namespace" type="varchar" required="false" label="命名空间" />
+	<parameter id="name" type="varchar" required="false" label="名称" />
+	<custom-validator classname="dinamica.validators.SQLPatternTransformer" parameter="name" rule="like" ifnull="%" />
+	<custom-validator classname="dinamica.validators.SQLPatternTransformer" parameter="namespace" rule="like" ifnull="%" />
+</validator>

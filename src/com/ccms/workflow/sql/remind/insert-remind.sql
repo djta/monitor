@@ -1,0 +1,42 @@
+INSERT INTO cc_remind
+(
+	tuid,
+	incident_code,
+	campaign_id,
+	cust_code,
+	subject_name,
+	content,
+	status,
+	created,
+	createdby,
+	template_id,
+	cs_task_id,
+	cs_job_id,
+	cs_node_id,
+	cs_bz_type,
+	cs_pk_value,
+	cs_bz_pk_value,
+	data_owner,
+	subject_id
+) 
+VALUES
+(
+	${seq:nextval@seq_cc_remind},
+	null,
+	null,
+	${p_pk_value},
+	'${subject}',
+	'${body}',
+	'0', 
+	{ts '${def:timestamp}'},
+	'workflow',
+	${template_id},
+	null,
+	${wfm_id},
+	${action_id},
+	null,
+	${pk_value},
+	null,
+	'${receiver}',
+	1001
+)

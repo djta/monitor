@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Invalid Form</title>
+    <LINK REL="stylesheet" type="text/css" href="${def:context}/default.css" />
+</head>
+
+<body>
+
+<center>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+		<table cellspacing="1" class="grid" width="400px">
+		<rows>
+			<tr ${fld:_rowStyle}>
+				<td align="center"><img src="${def:context}/images/alert.gif"/></td>
+				<td>${fld:message}</td>
+			</tr>
+		</rows>
+		</table>
+
+</center>
+
+</body>
+
+</html>
+<script language="javascript">
+	parent.jorSearchValidator();
+</script>

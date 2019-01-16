@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-table.sql" source="sql" scope="transaction" />
+		<recordset id="query-fields.sql" source="sql" scope="transaction" />
+		<recordset id="query-ib_job.sql" source="sql" scope="transaction" />
+		<recordset id="query-ib_skill.sql" source="sql" scope="transaction" />
+		<recordset id="query-ib_form.sql" source="sql" scope="transaction" />
+		<recordset id="query-ib_inject_field.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>com.ccms.core.engine.ExportFormConfig</classname>
+	</output>
+	
+	<request-ppk>job_id</request-ppk>
+	<xml-category>ibjobs</xml-category>
+	<sequences>seq_table,seq_field,seq_cc_ib_job</sequences>
+
+	<export-tables>
+		<table name="t_table" recordset="query-table.sql"/>
+		<table name="t_field" recordset="query-fields.sql"/>
+		<table name="cc_ib_job" recordset="query-ib_job.sql"/>
+		<table name="cc_ib_doc" recordset="query-ib_form.sql"/>
+		<table name="cc_ib_inject_field" recordset="query-ib_inject_field.sql"/>
+	</export-tables>
+
+</config>

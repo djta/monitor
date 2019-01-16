@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+	<summary>
+		增加用户
+	</summary>
+
+	<log>false</log>
+
+	<audit>
+		<recordset>query.sql</recordset>
+		<cols>
+			<colname>userlogin</colname>	
+			<colname>lname</colname>		
+			<colname>fname</colname>
+		</cols>
+		<table>s_user</table>
+		<oper>增加</oper>
+		<area>用户</area>
+		<pkey>user_id</pkey>
+	</audit>
+
+	<colname>role_id</colname>
+	<sql-template>insert-roles.sql</sql-template>
+	
+	<transaction>
+		<classname>com.ccms.dinamica.domain.admin.InsertMaster</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<query>insert.sql</query>
+	<query>insert-staff.sql</query>
+	<query>insert-passlog.sql</query>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+</config>

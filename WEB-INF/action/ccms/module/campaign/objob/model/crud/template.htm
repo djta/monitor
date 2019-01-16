@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>CS模型信息</title>
+${inc:/action/ccms/pub}
+</head>
+
+<body>
+ <div class="panel panel-default col_mainInner">
+        <div class="panel-heading col_main_body_title text-center">
+            <h2 class="panel-title">查询CS主题模型</h2>
+        </div>
+        <div class="panel-body col_main_body">
+            <form class="form-horizontal" role="form" method="post" id="searchForm" name="searchForm">
+                <input name="sort" type="hidden" value="created" preserve="true" />
+                <input name="order" type="hidden" value="desc" preserve="true" /> 
+                <input name="pageNo" type="hidden" value="" preserve="true" /> 
+                <input name="totalPages" type="hidden" value="" preserve="true" />
+                
+                <input name="campaign_id"  value="" type="hidden" preserve="true">
+    
+                <div class="form-group">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 clearright clearleft">
+                        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+                            <input name="model_name" placeholder="请输入模型名称" class="form-control" type="text" size="20" value="" />
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+                        <button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+                        <button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+                    </div>
+                </div>
+            </form>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>操作</th>
+                        <th class="sortable" code="tuid">模型代码</th>
+                        <th class="sortable" code="model_name">模型名称</th>
+                        <th class="sortable" code="is_enabled">是否启用</th>
+                    </tr>
+                </thead>
+                <tbody id="datagridTemplate" style="display: none">
+                    <tr>
+                        <td align="center">
+                            <button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">编辑</button>
+                            <button class="btn btn-primary btn-md delete_btn" type="button" code="#tuid#">删除</button>
+                        </td>
+                        <td align="center">#tuid#</td>
+                        <td align="center">#model_name#</td>
+                        <td align="center">#is_enabled#</td>
+                    </tr>
+                </tbody>
+                <tbody id="datagrid">
+                </tbody>
+            </table>
+            <div class="pageDiv">
+                <ul class="pagination">
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="formTitle">CS模型信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+                        <input type="hidden" id="tuid" name="tuid" value="" />
+                        <div class="row clearfix">
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">模型名称</label>
+                                <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+                                    <input type="text" class="form-control" id="model_name" name="model_name" size="30" maxlength="32" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">专题名称</label>
+                                <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+                                    <input name="subject_id" type="hidden" value="${fld:subject_id}" preserve="true">
+                                    <input type="text" class="form-control" id="subject_name" name="subject_name" size="30" readonly  class="readonly" value="${fld:subject_name}"   maxlength="32"  preserve="true" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">检索业务</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input type="hidden" id="search_table_id" name="search_table_id" required />
+                                    <input type="text" class="form-control" id="search_table_name" name="search_table_name" value="" readonly />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <img src="${def:context}/images/search.gif" class="tool" id="select_search_table" title="查询"/>
+                                    <img src="${def:context}/images/clear.gif" code="search_table" class="tool2" title="清除选择的内容" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">检索表单</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input type="hidden" id="search_form_id" name="search_form_id" value="" required />
+                                    <input type="text" class="form-control" id="search_form_name" name="search_form_name" value="" readonly />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <img src="${def:context}/images/search.gif" class="tool" id="select_search_form" title="查询"/>
+                                    <img src="${def:context}/images/clear.gif" code="search_form" class="tool2" title="清除选择的内容" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">检索语句</label>
+                                <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+                                    <textarea type="text" name="search_sql" class="form-control" cols="40" rows="5" maxlength="200" ></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+                                                                                                 业务类型
+                                </label>
+                                <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+                                    <select type="text" class="form-control"  id="bz_type" name="bz_type">
+                                        <option value=""></option>
+		                                <option value="0">客户信息</option>
+		                                <option value="1">销售线售</option>
+		                                <option value="2">投诉信息</option>
+		                                <option value="3">问询信息</option>
+		                                <option value="4">活动注册</option>
+		                                <option value="5">数据修复</option>
+		                                <option value="6">数据除重</option>
+		                                <option value="9">车辆信息</option>
+		                                <option value="10">提醒信息</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">子CASE编号对应的字段(例如线索编码)</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input type="hidden" id="bz_pk_value_id" name="bz_pk_value_id" value=""  />
+                                    <input type="text" class="form-control" id="bz_pk_value_name" name="bz_pk_value_name" value="" readonly />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <img src="${def:context}/images/search.gif" class="tool" id="select_bz_pk" title="查询"/>
+                                    <img src="${def:context}/images/clear.gif" code="bz_pk_value" class="tool2" title="清除选择的内容" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">CASE编号对应字段(例如客户ID)</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input type="hidden" id="pk_value_id" name="pk_value_id" value=""  />
+                                    <input type="text" class="form-control" id="pk_value_name" name="pk_value_name" value="" readonly />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <img src="${def:context}/images/search.gif" class="tool" id="select_pk_value" title="查询"/>
+                                    <img src="${def:context}/images/clear.gif" code="pk_value" class="tool2" title="清除选择的内容" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">客户编号字段</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input type="hidden" id="cust_code_id" name="cust_code_id" value=""  />
+                                    <input type="text" class="form-control" id="cust_code_name" name="cust_code_name" value="" readonly />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <img src="${def:context}/images/search.gif" class="tool" id="select_cust_code" title="查询"/>
+                                    <img src="${def:context}/images/clear.gif" code="cust_code" class="tool2" title="清除选择的内容" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">客户名称字段</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input type="hidden" id="cust_name_id" name="cust_name_id" value=""  />
+                                    <input type="text" class="form-control" id="cust_name_name" name="cust_name_name" value="" readonly />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <img src="${def:context}/images/search.gif" class="tool" id="select_cust_name" title="查询"/>
+                                    <img src="${def:context}/images/clear.gif" code="cust_name" class="tool2" title="清除选择的内容" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">客户性别字段</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input type="hidden" id="cust_sex_id" name="cust_sex_id" value=""  />
+                                    <input type="text" class="form-control" id="cust_sex_name" name="cust_sex_name" value="" readonly />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <img src="${def:context}/images/search.gif" class="tool" id="select_cust_sex" title="查询"/>
+                                    <img src="${def:context}/images/clear.gif" code="cust_sex" class="tool2" title="清除选择的内容" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">客户电话号码字段1（手机号码）</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input type="hidden" id="phone_number1_id" name="phone_number1_id" value=""  />
+                                    <input type="text" class="form-control" id="phone_number1_name" name="phone_number1_name" value="" readonly />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <img src="${def:context}/images/search.gif" class="tool" id="select_phone_number1" title="查询"/>
+                                    <img src="${def:context}/images/clear.gif" code="phone_number1" class="tool2" title="清除选择的内容" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">客户电话号码字段2</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input type="hidden" id="phone_number2_id" name="phone_number2_id" value=""  />
+                                    <input type="text" class="form-control" id="phone_number2_name" name="phone_number2_name" value="" readonly />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <img src="${def:context}/images/search.gif" class="tool" id="select_phone_number2" title="查询"/>
+                                    <img src="${def:context}/images/clear.gif" code="phone_number2" class="tool2" title="清除选择的内容" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">客户电话号码字段3</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input type="hidden" id="phone_number3_id" name="phone_number3_id" value=""  />
+                                    <input type="text" class="form-control" id="phone_number3_name" name="phone_number3_name" value="" readonly />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <img src="${def:context}/images/search.gif" class="tool" id="select_phone_number3" title="查询"/>
+                                    <img src="${def:context}/images/clear.gif" code="phone_number3" class="tool2" title="清除选择的内容" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">客户电话号码字段4</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input type="hidden" id="phone_number4_id" name="phone_number4_id" value=""  />
+                                    <input type="text" class="form-control" id="phone_number4_name" name="phone_number4_name" value="" readonly />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <img src="${def:context}/images/search.gif" class="tool" id="select_phone_number4" title="查询"/>
+                                    <img src="${def:context}/images/clear.gif" code="phone_number4" class="tool2" title="清除选择的内容" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">客户电话号码字段5</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input type="hidden" id="phone_number5_id" name="phone_number5_id" value=""  />
+                                    <input type="text" class="form-control" id="phone_number5_name" name="phone_number5_name" value="" readonly />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <img src="${def:context}/images/search.gif" class="tool" id="select_phone_number5" title="查询"/>
+                                    <img src="${def:context}/images/clear.gif" code="phone_number5" class="tool2" title="清除选择的内容" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">客户电话号码字段6</label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input type="hidden" id="phone_number6_id" name="phone_number6_id" value=""  />
+                                    <input type="text" class="form-control" id="phone_number6_name" name="phone_number6_name" value="" readonly />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <img src="${def:context}/images/search.gif" class="tool" id="select_phone_number6" title="查询"/>
+                                    <img src="${def:context}/images/clear.gif" code="phone_number6" class="tool2" title="清除选择的内容" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">
+                                                                                            发送短信用到的号码字段
+                                </label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input type="hidden" id="sms_number_id" name="sms_number_id" value=""  />
+                                    <input type="text" class="form-control" id="sms_number_name" name="sms_number_name" value="" readonly />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <img src="${def:context}/images/search.gif" class="tool" id="select_sms_number" title="查询"/>
+                                    <img src="${def:context}/images/clear.gif" code="sms_number" class="tool2" title="清除选择的内容" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">
+                                                                                            发送EMAIL用到的字段
+                                </label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input type="hidden" id="email_id" name="email_id" value=""  />
+                                    <input type="text" class="form-control" id="email_name" name="email_name" value="" readonly />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <img src="${def:context}/images/search.gif" class="tool" id="select_email" title="查询"/>
+                                    <img src="${def:context}/images/clear.gif" code="email" class="tool2" title="清除选择的内容" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">
+                                                                                            感兴趣车系字段<br>(活动里有发DM任务,则需要选择)
+                                </label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input type="hidden" id="interested_series_id" name="interested_series_id" value=""  />
+                                    <input type="text" class="form-control" id="interested_series_name" name="interested_series_name" value="" readonly />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <img src="${def:context}/images/search.gif" class="tool" id="select_interested_series" title="查询"/>
+                                    <img src="${def:context}/images/clear.gif"  code="interested_series" class="tool2" title="清除选择的内容" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">
+                                                                                            数据导入批次字段
+                                </label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input type="hidden" id="import_data_batch_id" name="import_data_batch_id" value=""  />
+                                    <input type="text" class="form-control" id="import_data_batch_name" name="import_data_batch_name" value="" readonly />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <img src="${def:context}/images/search.gif" class="tool" id="select_import_data_batch" title="查询"/>
+                                    <img src="${def:context}/images/clear.gif"  code="import_data_batch" class="tool2" title="清除选择的内容" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">
+                                                                                            数据专属人字段
+                                </label>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <input type="hidden" id="data_owner_id" name="data_owner_id" value=""  />
+                                    <input type="text" class="form-control" id="data_owner_name" name="data_owner_name" value="" readonly />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <img src="${def:context}/images/search.gif" class="tool" id="select_data_owner" title="查询"/>
+                                    <img src="${def:context}/images/clear.gif"  code="data_owner" class="tool2" title="清除选择的内容" />
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+                        <button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+</body>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	//检索字段
+    $(".tool").unbind().on("click",function(){
+        var code = $(this).attr("id").substring(7);
+        var url = "${def:context}${def:actionroot}/pick/field/crud?id="+code+"_id&name="+code+"_name&pickId=dialogPic&table_id="+document.formEditor.search_table_id.value+'&form_id='+document.formEditor.search_form_id.value;
+        ccms.dialog.open({url:url,id:"dialogPic",width:700,height:500});
+    });
+	
+	//检索业务
+    $("#select_search_table").unbind().on("click",function(){
+        var url = "${def:context}${def:actionroot}/pick/table?id=search_table_id&name=search_table_name&pickId=dialogPic&subject_id="+document.formEditor.subject_id.value;
+        ccms.dialog.open({url:url,id:"dialogPic",width:700,height:500});
+    });
+    
+	//检索表单
+    $("#select_search_form").unbind().on("click",function(){
+        var url = "${def:context}${def:actionroot}/pick/form?id=search_form_id&name=search_form_name&pickId=dialogPic&table_id="+document.formEditor.search_table_id.value;
+        ccms.dialog.open({url:url,id:"dialogPic",width:700,height:500});
+    });
+	
+    
+    //清除
+    $(".tool2").unbind().on("click",function(){
+        var code = $(this).attr("code");
+        if( undefined != code && "" != code ){
+            $("#" + code + "_id").val("");
+            $("#" + code + "_name").val("");
+        }
+    });
+	
+    var searchObj=null;
+    var obj = $Crud({
+        formId : "formEditor",
+        button : "save_btn",
+        insertBack : function() {
+            searchObj.searchData(1);
+        },
+        updateBack : function() {
+            searchObj.searchData(1);
+        },
+        deleteBack : function() {
+            searchObj.searchData(1);
+        },
+        addNewBack : function() {
+            $("#formTitle").html("新增CS模型");
+        },
+        editBack : function() {
+            $("#formTitle").html("修改CS模型");
+        },
+        validate : function() {
+            var flag = $("#formEditor").validate({
+                rules : {
+                	subject_id : {
+                        required : true,
+                    },
+                    search_table_name : {
+                        required : true,
+                    },
+                    search_form_name: {
+                        required : true,
+                    },
+                    model_name: {
+                        required : true,
+                    },
+                    bz_type: {
+                        required : true,
+                    },
+                    phone_number1_name: {
+                        required : true,
+                    }
+                },
+                messages : {
+                	subject_id : {
+                        required : "请选择主题",
+                    },
+                    search_table_name : {
+                        required : "请选择业务",
+                    },
+                    search_form_name : {
+                        required : "请选择表单",
+                    },
+                	model_name : {
+                        required : "请输入模型名称",
+                    },
+                    bz_type: {
+                        required : "请选择业务类型",
+                    },
+                    phone_number1_name: {
+                        required : "手机号码不能为空",
+                    }
+                }
+            });
+            return flag;
+        },
+        check:function(){
+            return true;
+        }
+    }).init();
+
+    this.searchObj=searchObj;
+    searchObj=$Search({datagrid : "datagrid",formId : "searchForm",success : function() {
+        $(".edit_btn").unbind().on("click",function() {
+            if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+            obj.edit({id : $(this).attr("code")});
+            }});
+        $(".delete_btn").unbind().on("click",function() {
+            var obthis = $(this);
+            $Dialog().confirm("确定要删除吗?",function() {
+            if (obthis.attr("code") != undefined && obthis.attr("code") != "") {
+                obj.del({id : obthis.attr("code")});}
+                });
+        });
+    }}).initSearchBtn().searchData(1);
+
+});
+</script>
+
+</html>
+
+<SCRIPT LANGUAGE="JavaScript">
+
+
+function enabled(id,status)
+{
+    //llamada Ajax...
+    return ajaxCall(httpMethod="GET", 
+                    uri="${def:actionroot}/enable" + "?id=" + id + "&enabled_status=" + status, 
+                    divResponse="divEditorResponse", 
+                    divProgress="divStatus", 
+                    formName=null, 
+                    afterResponseFn=null, 
+                    onErrorFn=null);		
+	
+}
+
+</SCRIPT>

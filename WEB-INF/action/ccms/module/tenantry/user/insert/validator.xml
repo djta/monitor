@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="userlogin" type="varchar" required="true"
+		label="Login" maxlen="32" regexp="^[a-zA-Z][a-zA-Z0-9_@.]{3,32}$"
+		regexp-error-label="帐号最少3位最大32位,首位字母，可包括数字字母下划线@符及小数点." />
+
+	<parameter id="passwd" type="varchar" required="true" label="Password" maxlen="15" regexp="\w{3,}?" regexp-error-label="密码最少3位." />
+	<parameter id="confirm" type="varchar" required="true" label="confirm" maxlen="15" />
+	<parameter id="name" type="varchar" required="true" label="Nombre" maxlen="32" />
+	<parameter id="sex" type="varchar" required="true" label="sex" maxlen="6" />
+	<parameter id="tenantry_id" type="integer" required="true" label="tenantry_id" maxlen="32" />
+	<parameter id="mobile" type="varchar" required="false" label="mobile" maxlen="32" />
+	<parameter id="email" type="varchar" required="false" label="Email"
+		maxlen="256" regexp="^([\w-]+\.)*?[\w-]+@[\w-]+\.([\w-]+\.)*?[\w]+$"
+		regexp-error-label="电子邮件格式错误, 请使用 xxxx@xxxxxx.xxx 格式" />
+
+	<custom-validator 	
+		classname="dinamica.validators.DuplicatedKeyValidator" 
+		on-error-label="登录名已存在"
+		id="userlogin" sql="nodup.sql"/>
+
+	<custom-validator 	
+		classname="dinamica.validators.ArrayNotEmptyValidator" 
+		on-error-label="没有添加用户角色，无法进行保存."
+		parameter-name="role_id" id="role_id"/>
+	
+	<custom-validator 	
+		classname="dinamica.validators.MatchEqualValidator" 
+		on-error-label="两次输入的密码不一致."
+		value1="passwd" value2="confirm" id="passwd" />
+	
+	<custom-validator 	
+		classname="dinamica.security.PasswordEncryptor" 
+		on-error-label="Error generando el hash MD5."/>
+</validator>

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+    <summary>
+        Update Record
+    </summary>
+    
+    <log>false</log>
+    
+    <request-encoding>UTF-8</request-encoding>
+	<on-error>/action/error/alert</on-error>
+
+    <transaction>
+        <classname>com.ccms.workflow.UpdateDoActionWorkflow</classname>
+        <validator>true</validator>
+        <transaction>false</transaction>
+        <jdbc-log>false</jdbc-log>
+		<recordset id="query-next-step.sql" source="sql" scope="transaction" />
+    </transaction>
+	
+	<query>insert-comment.sql</query>
+	
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+		<print mode="form" recordset="query-next-step.sql" />
+	</output>
+
+</config>

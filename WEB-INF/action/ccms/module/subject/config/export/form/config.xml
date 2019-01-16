@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-table.sql" source="sql" scope="transaction" />
+		<recordset id="query-fields.sql" source="sql" scope="transaction" />
+		<recordset id="query-form.sql" source="sql" scope="transaction" />
+		<recordset id="query-form_item.sql" source="sql" scope="transaction" />
+		<recordset id="query-form_show_field.sql" source="sql" scope="transaction" />
+		<recordset id="query-form_pdf_field.sql" source="sql" scope="transaction" />
+		<recordset id="query-form_filter_field.sql" source="sql" scope="transaction" />
+		<recordset id="query-form_excel_field.sql" source="sql" scope="transaction" />
+		<recordset id="query-form_grid_field.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>com.ccms.core.engine.ExportFormConfig</classname>
+	</output>
+	
+	<request-ppk>form_id</request-ppk>
+	<xml-category>forms</xml-category>
+	<sequences>seq_table,seq_field,seq_form,seq_form_item</sequences>
+
+	<export-tables>
+		<table name="t_table" recordset="query-table.sql"/>
+		<table name="t_field" recordset="query-fields.sql"/>
+		<table name="t_form" recordset="query-form.sql"/>
+		<table name="t_form_item" recordset="query-form_item.sql"/>
+		<table name="t_form_show_field" recordset="query-form_show_field.sql"/>
+		<table name="t_form_pdf_field" recordset="query-form_pdf_field.sql"/>
+		<table name="t_form_filter_field" recordset="query-form_filter_field.sql"/>
+		<table name="t_form_excel_field" recordset="query-form_excel_field.sql"/>
+		<table name="t_form_grid_field" recordset="query-form_grid_field.sql"/>
+	</export-tables>
+
+</config>

@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		签出工单
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>com.ccms.workflow.CheckoutWorkflow</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-step.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<print mode="form" recordset="query-step.sql" />
+
+		<print mode="form" recordset="result_recordset" />
+		<print mode="form" recordset="_request" />
+	</output>
+
+</config>

@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator  onerror="/action/ccms/validate">
+
+    <parameter id="tuid" type="varchar" required="true" label="TUID"/>
+    <parameter id="form_id" type="integer" required="true" label="form_id"/>
+    <parameter id="item_name_cn" type="varchar" required="true" label="分类名称(中文)" />
+    <parameter id="item_name_en" type="varchar" required="true" label="分类名称(英文)" />
+    <parameter id="col_num" type="integer" required="true" label="显示列数"/>
+    <parameter id="show_order" type="integer" required="false" label="显示顺序"/>
+    <parameter id="remark" type="varchar" required="false" label="备注" />
+    <parameter id="item_code" type="varchar" required="false" label="分类层代码" />
+    <parameter id="linkage_document_id" type="integer" required="false" label="同显文档代码" />
+    <parameter id="fieldset_style" type="varchar" required="false" label="样式" />
+    <parameter id="plugin_top" type="varchar" required="false" label="上方扩展代码" />
+    <parameter id="plugin_bottom" type="varchar" required="false" label="下方扩展代码" />
+
+</validator>
+
+

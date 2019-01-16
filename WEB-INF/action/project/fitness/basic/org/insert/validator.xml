@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<parameter id="pid" type="integer" required="false" label="Pid" />
+	<parameter id="p_org_path" type="varchar" required="false" label="p_org_path" />
+	<parameter id="org_name" type="varchar" required="true" label="位置名称" maxlen="128" />
+	<parameter id="remark" type="varchar" required="false" label="备注" maxlen="256" />
+	<parameter id="show_order" type="integer" required="true" label="显示顺序" />
+	<parameter id="short_name" type="varchar" required="false" label="位置简称" maxlen="64" />
+	<parameter id="business_hours_begin" type="varchar" required="false" label="business_hours_begin" maxlen="32" />
+	<parameter id="business_hours_end" type="varchar" required="false" label="business_hours_end" maxlen="32" />
+	<parameter id="upload_id" type="varchar" required="false" label="upload_id" />
+	<parameter id="contact_phone" type="varchar" required="false" label="电话" maxlen="64" />
+	<parameter id="province" type="varchar" required="false" label="省" maxlen="64" />
+	<parameter id="city" type="varchar" required="false" label="市" maxlen="64" />
+	<parameter id="district" type="varchar" required="false" label="区" maxlen="64" />
+
+
+</validator>

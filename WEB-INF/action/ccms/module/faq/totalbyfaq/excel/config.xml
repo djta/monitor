@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		题目点击统计
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>false</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-faq-total.sql" source="session" scope="transaction" />		
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericExcelOutput</classname>
+	</output>
+	
+	<excel recordset="query-faq-total.sql" sheetname="题目点击统计" filename="t_faq.xls">
+
+		<col id="show_name" label="FAQ标题" width="100" align="center" />
+		<col id="total" label="点击次数"  width="100" align="center" />
+	</excel>
+
+</config>

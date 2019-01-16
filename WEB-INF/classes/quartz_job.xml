@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='utf-8'?>
+<job-scheduling-data xmlns="http://www.quartz-scheduler.org/xml/JobSchedulingData"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.quartz-scheduler.org/xml/JobSchedulingData http://www.quartz-scheduler.org/xml/job_scheduling_data_1_8.xsd"
+  version="1.8">
+    <!-- copy syn  -->
+    <!-- schedule>
+        <job>
+            <name>job_syncOrg</name>
+	      	<group>group1</group>
+	      	<job-class>transactions.project.rofine.shciq.SyncOrg</job-class>
+        </job>
+        <trigger>
+            <cron>
+                <name>syncOrg</name>
+	        	<group>group1</group>
+	        	<job-name>job_syncOrg</job-name>
+	        	<job-group>group1</job-group>
+                <cron-expression>0/30 * * * * ?</cron-expression>
+            </cron>
+        </trigger>
+        
+        <job>
+            <name>job_syncStaff</name>
+	      	<group>group2</group>
+	      	<job-class>transactions.project.rofine.shciq.SyncStaff</job-class>
+        </job>
+        <trigger>
+            <cron>
+                <name>syncStaff</name>
+	        	<group>group2</group>
+	        	<job-name>job_syncStaff</job-name>
+	        	<job-group>group2</job-group>
+                <cron-expression>* 0/5 * * * ?</cron-expression>
+            </cron>
+        </trigger>
+    </schedule>
+    -->
+    
+    <!--
+    <schedule>
+		<job>
+			<name>job_sendSMS</name>
+			<group>group1</group>
+			<job-class>transactions.project.rofine.job.SendSMSJob</job-class>
+		</job>
+		<trigger>
+			<cron>
+				<name>con_sendSMS</name>
+				<group>group1</group>
+				<job-name>job_sendSMS</job-name>
+				<job-group>group1</job-group>
+				<cron-expression>0/2 * * * * ?</cron-expression>
+			</cron>
+		</trigger>
+	</schedule>
+	-->
+	
+	<schedule>
+        <!-- 会籍部个人数据统计 -->
+        <job>
+            <name>job_mcDataStatistics</name>
+	      	<group>group1</group>
+	      	<job-class>transactions.project.fitness.job.McDataStatistics</job-class>
+        </job>
+        <trigger>
+            <cron>
+                <name>mcDataStatistics</name>
+	        	<group>group1</group>
+	        	<job-name>job_mcDataStatistics</job-name>
+	        	<job-group>group1</job-group>
+                <cron-expression>0 0 1 1 * ?</cron-expression>
+            </cron>
+        </trigger>
+        
+        <!-- 私教部个人数据统计 -->
+        <job>
+            <name>job_ptDataStatistics</name>
+	      	<group>group1</group>
+	      	<job-class>transactions.project.fitness.job.PtDataStatistics</job-class>
+        </job>
+        <trigger>
+            <cron>
+                <name>ptDataStatistics</name>
+	        	<group>group1</group>
+	        	<job-name>job_ptDataStatistics</job-name>
+	        	<job-group>group1</job-group>
+                <cron-expression>0 0 1 1 * ?</cron-expression>
+            </cron>
+        </trigger>
+        
+        
+        <!-- 卡相关处理 -->
+        <job>
+            <name>job_CardJob</name>
+	      	<group>group1</group>
+	      	<job-class>transactions.project.fitness.job.CardJob</job-class>
+        </job>
+        <trigger>
+            <cron>
+                <name>CardJob</name>
+	        	<group>group1</group>
+	        	<job-name>job_CardJob</job-name>
+	        	<job-group>group1</job-group>
+                <cron-expression>0 0 1 * * ?</cron-expression>
+            </cron>
+        </trigger>
+        
+        
+        <!-- 场地预约处理 -->
+        <job>
+            <name>job_SiteuseDetailJob</name>
+	      	<group>group1</group>
+	      	<job-class>transactions.project.fitness.job.SiteuseDetailJob</job-class>
+        </job>
+        <trigger>
+            <cron>
+                <name>SiteuseDetailJob</name>
+	        	<group>group1</group>
+	        	<job-name>job_SiteuseDetailJob</job-name>
+	        	<job-group>group1</job-group>
+                <cron-expression>0 0/5 * * * ?</cron-expression>
+            </cron>
+        </trigger>
+        
+    </schedule>
+	
+</job-scheduling-data>

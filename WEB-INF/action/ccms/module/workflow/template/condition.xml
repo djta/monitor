@@ -1,0 +1,7 @@
+<conditions type="AND">
+	<condition type="class">
+		<arg name="class.name">${class}</arg>
+		<arg name="stepId">${step_id}</arg>
+		<arg name="authority">${authority}</arg>
+	</condition>
+</conditions>

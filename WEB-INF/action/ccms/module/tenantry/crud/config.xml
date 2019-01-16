@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		商户管理
+	</summary>
+	
+	<log>false</log>
+
+	<set-request-attribute id="header.title" value="商户管理" />
+    <set-request-attribute id="formTitleAddNew" value='新增商户'/>
+    <set-request-attribute id="formTitleEdit" value='修改商户'/>
+    <set-request-attribute id="formTitleFilter" value='查询商户'/>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>false</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>		
+		<recordset id="app.sql" source="sql" scope="transaction" />
+		<recordset id="subject.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<print mode="table" recordset="app.sql" tag="rows-app" />
+		<print mode="table" recordset="subject.sql" tag="rows-subject" />
+	</output>
+
+</config>

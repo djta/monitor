@@ -1,0 +1,160 @@
+﻿<script type="text/javascript">
+var contextPath = "${def:context}";
+var $HomeHash = "";
+</script>
+<script type="text/javascript" src="${def:context}/js/jquery/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="${def:context}/js/ccms/jquery.validate.min.js"></script>
+<script type="text/javascript" src="${def:context}/js/bootstrap/js/icheck/jquery.icheck.min.js"></script>
+<script type="text/javascript" src="${def:context}/js/ccms/ccms.js"></script>
+<script type="text/javascript" src="${def:context}/js/ccms/common.js"></script>
+<script language="javascript">
+$(document).ready(function() {
+	var bodyContent = $("#body_content");
+	if( "" != "${fld:template_uri}" ){
+		ajaxCall(contextPath+"${fld:template_uri}",{
+			response: bodyContent.attr("id"),
+			progress: false,
+			async: false,
+			dataType: "html",
+			success: function(){
+			}
+		});
+		bodyContent = $("#document_content");
+	}
+	//如果定义了跳转地址,则页面跳转
+	var url = "${fld:url}";
+	if(url == ""){
+		var action_type = "${fld:action_type}";
+		url = "";
+		if(action_type == "0"){	//表单
+			url = "/action/ccms/formgen/crud";
+		}else if(action_type == "3"){//报表
+			url = "/action/ccms/reportgen/crud";
+		}
+		
+		if(action_type != "3"){
+			url += "?form_id=${fld:form_id}&document_id=${fld:document_id}";
+		}else{	/*报表*/
+			url += "?report_id=${fld:report_id}";
+		}
+		
+		var p_pk_value = "${fld:__p_pk_value__}";
+		var pk_value = "${fld:__pk_value__}";
+		var __buttype__ = "${fld:__buttype__}";
+		var v = "";
+		<rows-filter>
+			v = "${fld:params_value@js}";
+			if(v != ""){
+				url += "&${fld:params_code}="+v;
+			}
+		</rows-filter>
+		
+		if(action_type != "3"){
+			url += "&__buttype__="+__buttype__+"&__p_pk_value__="+p_pk_value+"&__pk_value__="+pk_value+"&__form_action__=${fld:__form_action__}&__search_action__=${fld:__search_action__}";
+			//流程处理
+			var wfm_id = "${fld:__wfm_id__}";
+			if(wfm_id != ""){
+				url += "&__wfm_id__="+wfm_id+"&__wfentry_id__=${fld:__wfentry_id__}&__current_step_id__=${fld:__current_step_id__}";
+			}
+			//不管是否有流程编号都把父流程编号和父节点传下去（会签情况处理）
+			url += "&__parent_wfentry_id__=${fld:__parent_wfentry_id__}&__parent_node_id__=${fld:__parent_node_id__}";
+		}
+	}
+	if(url != ""){
+		//var bodyContent = $("#body_content");
+		if("${fld:nav_url_top}" != "" || "${fld:nav_url}" != "" || "${fld:nav_url_right}" != "" || "${fld:nav_url_bottom}" != ""){
+			if("${fld:nav_url_top}" != ""){/*顶部*/
+				bodyContent.append($("<iframe class='iframeClass doc' border='0' id='navTop_${fld:document_id}' style='width:100%;height:${fld:nav_url_hight};border:none;overflow-x:hidden;'/>"));
+				loadIframePage("navTop_${fld:document_id}","${fld:nav_url_top}",false);
+			}
+			if("${fld:nav_url}" != ""){/*左边*/
+				bodyContent.append($("<iframe class='iframeClass doc' border='0' id='navLeft_${fld:document_id}' style='width:${fld:nav_url_width};height:${fld:doc_hight};float:left;border:none;overflow-x:hidden;'/>"));
+				loadIframePage("navLeft_${fld:document_id}","${fld:nav_url}",false);
+			}
+			/*中部*/
+			bodyContent.append($("<div id='navCenter_${fld:document_id}' class='doc' style='width:${fld:doc_width};height:${fld:doc_hight};float:left;'/>"));
+			loadDivPage("navCenter_${fld:document_id}",url,false);
+
+			if("${fld:nav_url_right}" != ""){/*右边*/
+				bodyContent.append($("<iframe class='iframeClass doc' border='0' id='navRight_${fld:document_id}' style='width:${fld:nav_right_width};height:${fld:doc_hight};float:left;border:none;overflow-x:hidden;'/>"));
+				loadIframePage("navRight_${fld:document_id}","${fld:nav_url_right}",false);
+			}
+			if("${fld:nav_url_bottom}" != ""){/*底部*/
+				bodyContent.append($("<iframe class='iframeClass doc' border='0' id='navBottom_${fld:document_id}' style='width:100%;height:${fld:nav_bottom_hight};float:left;border:none;overflow-x:hidden;'/>"));
+				loadIframePage("navBottom_${fld:document_id}","${fld:nav_url_bottom}",false);
+			}
+		}else{
+			if(typeof(loadDivPage) == "function"){
+				window.location.href = "${def:context}" + url;
+				//loadDivPage("body_content",url);
+			}else{
+				gotoPage(url);
+			}
+		}
+		if( "" != "${fld:template_uri}" ){
+			bodyContent.css("height","auto");
+		}
+	}
+});
+function loadIframePage(id,url){
+	if(url==undefined || url=="") return;
+	var hash = $Base64.encode(url);
+	var tabObj = $("#menuTab a[href=\"#"+hash+"\"]");
+	if(tabObj.length > 0){
+		$(".menu_on").removeClass("menu_on");
+		tabObj.addClass("menu_on");
+	}
+	if(!url.startsWith("/")){
+		url = unescape($Base64.decode(url));
+	}
+	if( url.indexOf("?") >= 0 ){
+		url += "&backflag=parent";
+	}else{
+		url += "?backflag=parent";
+	}
+	$("#"+id).attr("src", contextPath+"/action/ccms/redirect?url="+url);
+}
+function reportSearch(map){
+	$("#"+map["id"]).find("form[id^=formFilter]").each(function(idx,ele){
+		setSearchFormValue(map, $(ele), function(){
+			reportgenSearch();
+		});
+		if( $("iframe.doc").length > 0 ){
+			$("iframe.doc").each(function(i2,e2){
+				setSearchFormValue(map, $(e2), function(){
+					e2.contentWindow.reportgenSearch();
+				});
+			});
+		}else if( $("div.doc").length > 0 ){
+			$("div.doc").each(function(i2,e2){
+				setSearchFormValue(map, $(e2), function(){
+					e2.contentWindow.reportgenSearch();
+				});
+			});
+		}
+	});
+	$("#"+map["id"]).show();
+}
+
+function setSearchFormValue(map, formobj, callback){
+	formobj.find("input").not("[type=hidden]").each(function(idx,ele){
+		var fieldname = $(ele).attr("name");
+		if( undefined != fieldname ){
+			var tempfieldname = fieldname.replace("_filter", "");
+			var fieldvalue = "";
+			if( undefined != map[tempfieldname] ){
+				fieldvalue = map[tempfieldname];
+			}
+			var fieldtype = $(ele).attr("type");
+			if( "text" == fieldtype ){
+				$(ele).val(fieldvalue);
+			}else if( "radio" == fieldtype || "checkbox" == fieldtype ){
+				formobj.find("input[name="+fieldname+"][value="+fieldvalue+"]").iCheck("check");
+			}
+		}
+	});
+	if(undefined != callback){
+		callback();
+	}
+}
+</script>

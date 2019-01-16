@@ -1,0 +1,12 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"tuid":"${fld:tuid}"
+		,"field_code":"${fld:field_code@js}"
+		,"col_name":"${fld:col_name@js}"
+		,"namespace":"${fld:namespace}"
+		,"field_type":"${fld:field_type}"
+	},
+	</rows>
+	{}
+]}

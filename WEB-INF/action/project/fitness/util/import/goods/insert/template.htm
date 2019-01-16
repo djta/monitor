@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/newpub}
+</head>
+<body>
+	<script language="javascript">
+		var failedRow = "";
+		<failed-rows>
+			failedRow += '<tr><td class="text-center">${fld:row_number}</td><td class="text-center">${fld:validate_error}</td></tr>';
+		</failed-rows>
+		var resultcode = "${fld:resultcode}";
+		if( "1" == resultcode ){
+			parent.tClass.uploadOk(failedRow);
+		}else{
+			parent.tClass.uploadError("${fld:resulterror}");
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+﻿<TABLE class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0 style="display:none;">
+<!-- 页面内容标签：如“新增记录”、“修改记录” -->
+<tr>
+<td>
+<div id="tabs">
+    <ul id="nav">
+    <div id="test" >
+        <li onclick="changeLiStyle(this);" id="tabsl"><b></b>
+            <a  
+                onmouseover="javascript:window.status='';return true;" 
+                onmouseout="javascript:window.status='';return true;" 
+                href='#' 
+                onclick=''>
+                <span id="formTitleSearch">查询结果</span>
+            </a><p></p>
+        </li>
+        
+    </div>
+    </ul>
+    <div id='hline'></div>
+</div>
+</td>
+</tr>
+</table>
+
+<center>
+<form name="formView">
+<!--data grid-->
+<table class="grid" width="100%" cellspacing="1">
+	<tr>
+		<th NOWRAP>
+			<input type="checkbox" onclick="followselectAll('entry_id','formView',this.checked);">
+		</th>
+		<th NOWRAP>
+			序号
+		</th>
+		<th NOWRAP>
+			<a href="javascript:onclick=sortBy('step_name','query-wfm-search.sql')" >
+				标题
+			</a>
+		</th>
+		<th NOWRAP>
+			<a href="javascript:onclick=sortBy('createdby','query-wfm-search.sql')" >
+				拟稿人
+			</a>
+		</th>
+		<th NOWRAP>
+			<a href="javascript:onclick=sortBy('created','query-wfm-search.sql')" >
+				拟稿时间
+			</a>
+		</th>
+		<th NOWRAP>
+			<a href="javascript:onclick=sortBy('wfm_name','query-wfm-search.sql')" >
+				流程名称
+			</a>
+		</th>
+	</tr>
+	
+	<rows>
+	<tr ${fld:_rowStyle}>
+		<td  align="center" NOWRAP>
+			<input type="checkbox" name="entry_id" value="${fld:entry_id}">
+		</td>
+		<td  align="center" NOWRAP>
+			<a href="javascript:void(0);" onclick="javascript:showWfmStatus('${fld:entry_id}')" title="查看流程图">${fld:_rowNumber}</a>
+		</td>
+		
+		<td  align="center" NOWRAP>
+			${fld:step_name}
+		</td>
+		<td  align="center" NOWRAP>
+			${fld:createdby}
+		</td>
+		<td  align="center" NOWRAP>
+			${fld:created@yyyy-MM-dd HH:mm:ss}
+		</td>
+		<td  align="center" NOWRAP>
+			${fld:wfm_name}
+		</td>
+	</tr>
+	</rows>
+
+</table>
+${inc:/action/pagecontrols}
+</form>
+</center>

@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+    <parameter id="group_id" type="integer" required="true" label="group_id" />
+	<parameter id="access_type" type="varchar" required="true" label="access_type" />
+</validator>
+

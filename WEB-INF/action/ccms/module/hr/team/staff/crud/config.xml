@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config nodb="true">
+	
+	<log>false</log>
+	
+	<set-request-attribute id="header.title" value="人员信息管理" />
+    <set-request-attribute id="formTitleAddNew" value='新增人员信息'/>
+    <set-request-attribute id="formTitleFilter" value='查询人员信息'/> 
+	
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>	
+	</transaction>
+	
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<print mode="form" recordset="_request" />
+	</output>
+
+</config>

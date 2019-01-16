@@ -1,0 +1,42 @@
+INSERT INTO cc_email
+(
+	tuid,
+	incident_code,
+	cust_code,
+	receiver,
+	mail_subject,
+	content,
+	status,
+	created,
+	createdby,
+	account_id,
+	template_id,
+	cs_task_id,
+	cs_job_id,
+	cs_node_id,
+	cs_bz_type,
+	cs_pk_value,
+	cs_bz_pk_value,
+	subject_id
+) 
+VALUES
+(
+	${seq:nextval@seq_cc_email},
+	null,
+	${p_pk_value},
+	'${receiver}',
+	'${subject}',
+	'${body}', 
+	'0', 	--email待发送状态
+	{ts '${def:timestamp}'},
+	'workflow',
+	'${account_id}',
+	${template_id},
+	null,
+	${wfm_id},
+	${action_id},
+	null,
+	'${pk_value}',
+	null,
+	1001
+)

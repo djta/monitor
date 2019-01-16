@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="tuid_m" type="varchar" required="true" label="tuid_m" />
+	<parameter id="address" type="varchar" required="false"
+		label="address" />
+	<parameter id="contacts" type="varchar" required="false"
+		label="contacts" />
+	<parameter id="contact_phone" type="varchar" required="false"
+		label="contact_phone" />
+	<parameter id="province" type="varchar" required="false"
+		label="province" />
+	<parameter id="category_label" type="varchar" required="false"
+		label="category_label" />
+	<parameter id="city" type="varchar" required="false" label="city" />
+	<parameter id="featured_products" type="varchar" required="false"
+		label="featured_products" />
+	<parameter id="features" type="varchar" required="false"
+		label="features" />
+	<parameter id="business_hours" type="varchar" required="false"
+		label="business_hours" />
+
+</validator>

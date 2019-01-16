@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<parameter id="app_id" type="integer" required="true" label="Aplicaci�n" maxlen="10" />
+	<parameter id="rolename" type="varchar" required="true" label="Nombre del Rol" maxlen="64" />
+	<parameter id="description" type="varchar" required="false" label="Descripci�n" maxlen="64" />
+	
+	<custom-validator 	
+		classname="dinamica.validators.DuplicatedKeyValidator" 
+		on-error-label="该角色名称已经存在，请输入其它名称." id="rolename"
+		sql="nodup.sql" />
+
+</validator>
+

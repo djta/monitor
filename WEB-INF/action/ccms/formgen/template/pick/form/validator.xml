@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="pickup_field" type="integer" required="true" label="pickup_field" />
+	<parameter id="pick-id" type="varchar" required="true" label="pick-id" />
+	<parameter id="pick-alias" type="varchar" required="true" label="pick-alias" />
+</validator>

@@ -1,0 +1,1 @@
+﻿webflowClass.loadData("${fld:xml_value@js}");

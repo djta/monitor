@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/admin/hr/error">
+
+	<parameter id="id" type="varchar" required="true" label="id" />
+	<custom-validator classname="dinamica.validators.DuplicatedKeyValidator"
+		on-error-label="该名额下已经存在人员，请解除关系后再删除!" sql="dupkey.sql" />
+
+</validator>

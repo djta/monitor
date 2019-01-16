@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="display" type="varchar" required="false" label="Atributo de estilo display"/>
+	<parameter id="tab_id" type="integer" required="false" label="tab_id"/>
+	<parameter id="imp_id" type="integer" required="false" label="imp_id"/>
+</validator>

@@ -1,0 +1,71 @@
+<form id="formFilter_${fld:form_id}" name="formFilter_${fld:form_id}" class="form-horizontal" role="form" method="post">
+	<input name="sort" type="hidden" value="" preserve="true"/>
+	<input name="order" type="hidden" value="" preserve="true" /> 
+	<input name="pageNo" type="hidden" value="" preserve="true" /> 
+	<input name="totalPages" type="hidden" value="" preserve="true" />
+	<input name="total" type="hidden" value="" preserve="true" />
+	<input name="form_id"  value="${fld:form_id}" type="hidden" preserve="true">
+	<input name="__p_pk_value__"  value="${fld:__p_pk_value__}" type="hidden" preserve="true">
+	<input name="__search_type__"  value="0" type="hidden" preserve="true">
+	<div class="form-group">
+		${controls}
+	</div>
+	<div class="form-group">
+		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-right">
+			<div style="display:${fld:is_can_page_size}">
+				<select name="__page_size__">
+					<option value=""></option>
+					<option value="5">5</option>
+					<option value="10">10</option>
+					<option value="20">20</option>
+					<option value="30">30</option>
+					<option value="50">50</option>
+					<option value="100">100</option>
+					<option value="200">200</option>
+					<option value="500">500</option>
+				</select>
+				行/页
+			 </div>
+		</div>
+		<div class="col-xs-8 col-sm-8 col-md-7 col-lg-7 col-md-offset-1 col-lg-offset-1">
+			<div style="display:${fld:is_can_query}">
+				<button class="btn btn-primary btn-md" id="search_btn_${fld:form_id}">查询</button>
+			</div>
+			<button class="btn btn-primary btn-md" id="search_reset_btn_${fld:form_id}">清空</button>
+			<div style="display:${fld:is_can_create}">
+				<button class="btn btn-primary btn-md" id="addnew_btn_${fld:form_id}">新增</button>
+			</div>
+			<div style="display:${fld:is_can_excel}">
+				<button class="btn btn-primary btn-md" name="excel_btn">Excel导出</button>
+			</div>
+			<div style="display:${fld:is_can_pdf}">
+				<button class="btn btn-primary btn-md" name="pdf_btn">Pdf导出</button>
+			</div>
+		</div>
+	</div>
+</form>
+<table class="table table-bordered" id="searchResultTable_${fld:form_id}">
+	<thead>
+		<tr>
+			<th>操作</th>
+			${view_title}
+		</tr>
+	</thead>
+	<tbody id="datagrid_${fld:form_id}Template" style="display: none">
+		<tr>
+			<td align="center">
+				<div align="center" style="display:${fld:is_can_show}">
+					<button class="btn btn-primary btn-md edit_btn" code="#${fld:bpk_field}#">编辑</button>
+					<button class="btn btn-primary btn-md attachment_btn" style="display:${fld:is_can_attachment}" table_code="${fld:table_code}" code="#${fld:bpk_field}#">附件</button>
+				</div>
+			</td>
+			${view_field}
+		</tr>
+	</tbody>
+	<tbody id="datagrid_${fld:form_id}">
+	</tbody>
+</table>
+<div class="pageDiv">
+	<ul class="pagination" data-target="datagrid_${fld:form_id}">
+	</ul>
+</div>

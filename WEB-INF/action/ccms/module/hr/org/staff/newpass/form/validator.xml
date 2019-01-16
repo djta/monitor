@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="user_id" type="integer" required="true" label="user_id" />
+</validator>

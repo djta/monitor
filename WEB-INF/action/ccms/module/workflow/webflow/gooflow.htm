@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+<head>
+<title>GooFlow</title>
+<script language="JavaScript" type="text/javascript" src="${def:context}/action/pub/dtree"></script>
+
+</head>
+<body>
+<div style="padding-top:5px;padding-left:5px;">
+	<table cellSpacing=0 cellPadding=0 width="100%">
+		<tr>
+			<td valign="top" nowrap width="200px">
+			${inc:/action/ccms/config_type?search_subject_id=${def:subject}}
+			</td>
+		</tr>
+	</table>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}"/>
+</div>
+
+<script type="text/javascript">
+
+/*点击左边树节点  */
+function typeOperate(t,n){
+	var url="${def:context}${def:actionroot}/webflow/flowview?wfm_type="+t;
+	ccms.dialog.open({url:url,id:"treeForm",width: 1366,height: 800});
+}
+
+</script>
+</body>
+</html>

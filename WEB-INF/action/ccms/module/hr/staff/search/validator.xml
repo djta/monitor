@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="org_id" type="integer" required="false" label="组织机构" />
+	<parameter id="name" type="varchar" required="false" label="姓名" /> 
+	<parameter id="enabled" type="integer" required="false" label="状态" /> 
+	<custom-validator 
+		classname="dinamica.validators.SQLPatternTransformer" 
+		parameter="name" 
+		rule="contains"  
+		/>  
+</validator>

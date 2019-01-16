@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		Calendario popup de din醡ica
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>com.ccms.util.calendar.DinamicaCalendar</classname>
+		<validator>false</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<expiration>0</expiration>
+		<print mode="table" recordset="years" tag="years"/>
+		<print mode="combo" recordset="calconfig" control="month"/>
+		<print mode="combo" recordset="calconfig" control="year"/>
+	</output>
+
+</config>

@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		保存问卷成绩
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>com.ccms.term.SaveTermScore</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-conclusion.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<query>delete-matrix.sql</query>
+	<query>delete-list.sql</query>
+	<query>delete-item.sql</query>
+	<query>delete-type.sql</query>
+	<query>delete-term.sql</query>
+	
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+		<print mode="table" recordset="query-conclusion.sql" tag="rows" />
+	</output>
+
+</config>

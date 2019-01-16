@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="id" type="integer" required="true" label="id" maxlen="10"/>
+	<!-- 0:下载;1:预览图片; -->
+	<parameter id="type" type="varchar" required="false" label="类型" maxlen="2"/>
+	<parameter id="scale_size" type="varchar" required="false" label="类型" maxlen="50"/>
+</validator>

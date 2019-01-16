@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>修改报表</title>
+${inc:/action/ccms/pub}
+</head>
+<body style="overflow-y: auto;">
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">新增报表</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+				<input type="hidden" id="tuid" name="tuid" value="" preserve="true" />
+				<input name="subject_id" id="subject_id" type="hidden" value="${fld:subject_id}" preserve="true" />
+				
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">业务</label>
+					<div class="col-xs-3 col-sm-3 col-md-3col-lg-3">
+						<input id="table_id" name="table_id" type="hidden" value="" />
+						<input id="table_alias" name="table_alias" class="form-control" type="text" readonly="readonly" value="" />
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3col-lg-3">
+						<img src="${def:context}/images/search.gif" style="cursor: pointer;" id="pickOpenNotCenter" title="查询表名" />
+						<img src="${def:context}/images/clear.gif" style="cursor: pointer;" id="pickClear" title="清除选择的内容" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">报表中文名称</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input id="report_name_cn" name="report_name_cn" type="text" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">报表英文名称</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input id="report_name_en" name="report_name_en" type="text" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">自定义页面</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input name="url" id="url" type="text" value="" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">报表引擎</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input name="engine_type" type="radio" value="0" />琴棋报表&nbsp;
+						<input name="engine_type" type="radio" value="1" />简表 &nbsp;
+						<input name="engine_type" type="radio" value="2" />图表 &nbsp;
+					</div>
+				</div>
+				<div class="form-group" id="reportTypeTr">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">报表类型</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input name="report_type" type="radio" value="0" />平面报表&nbsp;
+						<input name="report_type" type="radio" value="1" />分组报表 &nbsp;
+						<input name="report_type" type="radio" value="2" />交叉报表 &nbsp;
+					</div>
+				</div>
+				<div class="form-group" id="reportIpTr">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">Cognos Ip</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input name="congnos_ip" id="congnos_ip" type="text" value="" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group" id="reportPathTr">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">报表路径</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input name="jor_file_name" id="jor_file_name" type="text" value="" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group" id="reportConfig1">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">是否合并空行及零行</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input name="is_merge_zero" type="radio" value="0" />不合并 &nbsp;
+						<input name="is_merge_zero" type="radio" value="1" />合并 &nbsp;
+					</div>
+				</div>
+				<div class="form-group" id="reportConfig2">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">零是否显赤为空</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input name="is_show_zero" type="radio" value="0" />显示为空 &nbsp;
+						<input name="is_show_zero" type="radio" value="1" />显示为零 &nbsp;
+					</div>
+				</div>
+				<div class="form-group" id="reportConfig3">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">是否垂直合并表头</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input name="is_merge_vertical" type="radio" value="0" />不合并 &nbsp;
+						<input name="is_merge_vertical" type="radio" value="1" />合并 &nbsp;
+					</div>
+				</div>
+				<div class="form-group" id="reportConfig4">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">是否显示汇总</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input name="show_total_type" type="radio" value="0" />不汇总 &nbsp;
+						<input name="show_total_type" type="radio" value="1" />列汇总 &nbsp;
+						<input name="show_total_type" type="radio" value="2" />行汇总 &nbsp;
+						<input name="show_total_type" type="radio" value="3" />都汇总 &nbsp;
+					</div>
+				</div>
+				<div class="form-group" id="reportConfig5">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">是否显示小计汇总</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input name="show_sub_total_type" type="radio" value="0" />不汇总 &nbsp;
+						<input name="show_sub_total_type" type="radio" value="1" />列汇总 &nbsp;
+						<input name="show_sub_total_type" type="radio" value="2" />行汇总 &nbsp;
+						<input name="show_sub_total_type" type="radio" value="3" />都汇总 &nbsp;
+					</div>
+				</div>
+				<div class="form-group" id="reportConfig6">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">是否显示百分比</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input name="show_percent_type" type="radio" value="0" />不显示 &nbsp;
+						<input name="show_percent_type" type="radio" value="1" />列显示 &nbsp;
+						<input name="show_percent_type" type="radio" value="2" /> 行显示 &nbsp;
+						<input name="show_percent_type" type="radio" value="3" />都显示 &nbsp;
+					</div>
+				</div>
+				<div class="form-group" id="reportConfig7">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">是否客户自定义条件</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input name="if_customer_design" type="radio" value="0" />否 &nbsp;
+						<input name="if_customer_design" type="radio" value="1" />是 &nbsp;
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">查询显示列数</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input name="col_num_filter" type="text" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">界面JS代码(调用界面时执行)</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<textarea type="text" name="form_js" id="form_js" cols="80" rows="4" class="form-control"></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">加载条件界面后JS代码(完成加载条件界面后执行)</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<textarea type="text" name="loadfilter_js" id="loadfilter_js" cols="80" rows="4" class="form-control"></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">查询前JS代码(查询前执行)</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<textarea type="text" name="searchpre_js" id="searchpre_js" cols="80" rows="4" class="form-control"></textarea>
+					</div>
+				</div>
+				<div class="form-group" id="reportSearchBackTr">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">查询后JS代码(完成查询后执行)</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<textarea type="text" name="searchback_js" id="searchback_js" cols="80" rows="4" class="form-control"></textarea>
+					</div>
+				</div>
+				<div class="form-group" id="reportConfig8">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">SQL语句</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<textarea type="text" name="report_sql" id="report_sql" cols="80" rows="4" class="form-control"></textarea>
+					</div>
+				</div>
+				<div class="form-group" id="reportConfig9">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">SQL语句类型</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input id="is_sql_phrase" name="is_sql_phrase" type="radio" value="0" />存储过程 &nbsp;
+						<input id="is_sql_phrase" name="is_sql_phrase" type="radio" value="1" />SQL语句 &nbsp;
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">备注</label>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<textarea type="text" name="remark" id="remark" cols="80" rows="4" class="form-control"></textarea>
+					</div>
+				</div>
+				<div class="form-group text-center">
+					<button type="button" class="btn btn-primary btn-md" id="save_btn">保存</button>
+					<button type="button" class="btn btn-primary btn-md" id="cancel_btn" style="margin-left: 2%;">返回</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+function InsertReportClass(){
+	var obthis = this;
+	
+	this.init = function(){
+		$("#save_btn").unbind().on("click", function(){
+			var url = "${def:actionroot}/insert";
+			ajaxCall(url, {
+				method : "post",
+				progress : true,
+				form: "formEditor",
+				button: "save_btn",
+				dataType : "script",
+				success : function() {
+					$Dialog().notice("新增成功！",1500,function(){
+						gotoBack();
+				});
+				}
+			});
+		});
+		
+		$("#cancel_btn").unbind().on("click", function(){
+			gotoBack();
+		});
+		
+		//选择业务
+		$("#pickOpenNotCenter").unbind().on("click", function(){
+			var url = "${def:context}/action/ccms/pub/pick/table/crud?id=table_id&name=table_alias&pickId=pickOpen&subject_id="+$("#subject_id").val();
+			ccms.dialog.open({url:url,id:"pickOpen",width:800,height:600});
+		});
+		//清除选择的内容
+		$("#pickClear").unbind().on("click", function(){
+			$("#table_id").val("");
+			$("#table_alias").val("");
+		});
+		
+		$("input[type=radio][name='engine_type']").unbind().on("ifClicked",function(){
+			obthis.showHiddenColumn($(this).val());
+		});
+	}
+	
+	this.showHiddenColumn = function(type){
+		if(type == "0"){
+			for(var i=1;i<10;i++){
+				document.getElementById("reportConfig"+i).style.display = "";
+			}
+			document.getElementById("reportSearchBackTr").style.display = "";
+			document.getElementById("reportTypeTr").style.display = "";
+			document.getElementById("reportIpTr").style.display = "none";
+			document.getElementById("reportPathTr").style.display = "none";
+		}else{
+			for(var i=1;i<10;i++){
+				document.getElementById("reportConfig"+i).style.display = "none";
+			}
+			document.getElementById("reportTypeTr").style.display = "none";
+			if(type == "1"){
+				document.getElementById("reportSearchBackTr").style.display = "";
+				document.getElementById("reportIpTr").style.display = "none";
+				document.getElementById("reportPathTr").style.display = "";
+			}else if(type == "2"){
+				document.getElementById("reportSearchBackTr").style.display = "none";
+				document.getElementById("reportIpTr").style.display = "";
+				document.getElementById("reportPathTr").style.display = "";
+			}
+		}
+	}
+}
+
+var insertReportClass = null;
+$(document).ready(function(){
+	insertReportClass = new InsertReportClass();
+	insertReportClass.init();
+});
+</script>
+</body>
+</html>
+

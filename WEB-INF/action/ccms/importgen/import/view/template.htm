@@ -1,0 +1,60 @@
+
+
+<center>
+<!--data grid-->
+<table class="grid" width="100%" >
+
+
+	
+	<tr>
+		<th>
+		    
+		</th>
+		<th>
+			<a href="javascript:onclick=sortBy('imp_name','query_import.sql')" >
+				导入名称
+			</a>
+		</th>
+		
+		<th>
+			<a href="javascript:onclick=sortBy('subject_name','query_import.sql')" >
+				专题
+			</a>
+		</th>
+		<th>
+			<a href="javascript:onclick=sortBy('remark','query_import.sql')" >
+				备注
+			</a>
+		</th>		
+	</tr>
+	
+	<rows>
+	<tr ${fld:_rowStyle}>
+		<td  align="center" nowrap>
+			<a href="javascript:void(0)" onclick="uploadExcel('${fld:tuid}')">导入</a>
+			<a href="javascript:void(0)" onclick="uploadExcelLog('${fld:tuid}')">导入日志</a>
+			<a href="javascript:void(0)" onclick="uploadErrorMapping()">数据映射</a>
+			<a href="javascript:void(0)" onclick="WinOpen('${def:context}/action/subject/config/export/template?imp_id=${fld:tuid}',11)">下载模板</a>
+		</td>
+		
+		<td  align="center">
+			${fld:imp_name}
+		</td>	
+		
+		<td  align="center">
+			${fld:subject_name}
+		</td>
+		
+		<td  align="center">
+			${fld:remark}
+		</td>
+	</tr>
+	</rows>
+
+</table>
+${inc:/action/pagecontrols?is_can_query=inline}
+</center>
+
+
+
+

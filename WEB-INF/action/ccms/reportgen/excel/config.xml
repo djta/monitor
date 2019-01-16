@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		Exportar documento excel directo al browser
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>false</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>	
+		<recordset id="query_rowhead_field.sql" source="session" scope="transaction"/>
+		<recordset id="query_colhead_field.sql" source="session" scope="transaction"/>
+		<recordset id="query_crossvalue_field.sql" source="session" scope="transaction"/>
+		<recordset id="query_report.sql" source="session" scope="transaction"/>
+		<recordset id="query_css.sql" source="sql" scope="transaction" />
+		<recordset id="query-report-result.sql" source="session" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>com.ccms.report.ReportExcelOutput</classname>
+	</output>
+	
+</config>

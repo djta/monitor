@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="subject_id" type="varchar" required="false" label="subject_id"/>
+	<parameter id="control_type" type="varchar" required="false" label="control_type"/>
+	<parameter id="id" type="varchar" required="true" label="ID" />
+	<parameter id="name" type="varchar" required="true" label="Name" />
+	<parameter id="pickId" type="varchar" required="true" label="pickId" />
+	
+</validator>

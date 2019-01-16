@@ -1,0 +1,13 @@
+select
+   tuid,
+   comments
+ from 
+   os_entry_comment
+ where 
+  entry_id=${fld:entry_id}
+  and 
+  node_id=${fld:node_id}
+  and 
+  createdby='${def:user}'
+  and 
+  is_deleted='0'

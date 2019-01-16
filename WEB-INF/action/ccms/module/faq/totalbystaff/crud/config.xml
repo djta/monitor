@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		FAQ点击统计
+	</summary>
+	
+	<log>false</log>
+
+	<set-request-attribute id="help.msg" value="Online help for VIEW page..." />
+	<set-request-attribute id="header.title" value="FAQ点击统计" />
+	<set-request-attribute id="header.url" value='123'/>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>false</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>		
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+	</output>
+
+</config>

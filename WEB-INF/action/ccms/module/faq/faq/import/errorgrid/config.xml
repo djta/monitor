@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		Muestra en un grid los errores del archivo Excel
+	</summary>
+
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>false</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="error.excel" source="session" scope="transaction" /> 
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>message.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/plain;charset=UTF-8</content-type>
+		<expiration>0</expiration>
+		<print mode="table" recordset="error.excel" tag="rows" alternate-colors="true"/> 
+	</output>
+		
+</config>

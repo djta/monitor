@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		更新用户
+	</summary>
+	
+	<log>false</log>
+	
+	<audit>
+		<recordset>query.sql</recordset>
+		<cols>
+			<colname>lname</colname>		
+			<colname>fname</colname>
+		</cols>
+		<table>s_user</table>
+		<oper>更新</oper>
+		<area>用户</area>
+		<pkey>user_id</pkey>
+	</audit>
+
+	<colname>role_id</colname>
+	<sql-template>insert-roles.sql</sql-template>
+
+	<transaction>
+		<classname>com.ccms.dinamica.domain.admin.InsertMaster</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<query>delete-roles.sql</query>
+	<query>update.sql</query>
+	<query>update-user.sql</query>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

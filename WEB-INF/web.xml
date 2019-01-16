@@ -1,0 +1,544 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+   version="2.5">
+
+  <display-name>ccc</display-name>
+  <description>Manager of Safety framework Dinamica</description>
+	
+	<!--configuracion de conexion LDAP-->
+	<context-param>
+		<description>DN of the user to do searches on LDAP</description>
+		<param-name>ldap-login</param-name> 
+		<param-value>uid=Admin,ou=system</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Password user searches for LDAP</description>
+		<param-name>ldap-pass</param-name>
+		<param-value>basica</param-value>
+	</context-param>
+
+	<context-param>
+		<description>URL base para buscar datos de usuarios LDAP</description>
+		<param-name>ldap-search-url</param-name>
+		<param-value>ldap://localhost:10389/ou=users,ou=system</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Filter to locate attributes of a user</description>
+		<param-name>ldap-search-filter</param-name>
+		<param-value>(uid=${userlogin})</param-value>
+	</context-param>
+		
+	<context-param>
+		<description>URL for logins against LDAP server</description>
+		<param-name>ldap-url</param-name>
+		<param-value>ldap://localhost:10389/DC=example,DC=com</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Mode authentication against LDAP server</description>
+		<param-name>ldap-authentication</param-name>
+		<param-value>simple</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Filename to save Requests and JDBC performance logs</description>
+		<param-name>log-file</param-name>
+		<param-value>dinamica.log</param-value>
+	</context-param>
+
+	<context-param>
+		<description>JNDI prefix for DataSource lookup (may be empty for many servers)</description>
+		<param-name>jndi-prefix</param-name>
+		<param-value>java:comp/env/</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Default DataSource name</description>
+		<param-name>def-datasource</param-name>
+		<param-value>jdbc/ccms</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Default language for dynamic labels</description>
+		<param-name>def-language</param-name>
+		<param-value>cn</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Default format for dates</description>
+		<param-name>def-format-date</param-name>
+		<param-value>yyyy-MM-dd</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Default format to parse and validate dates</description>
+		<param-name>def-input-date</param-name>
+		<param-value>yyyy-MM-dd</param-value>
+	</context-param>
+
+	<context-param>
+		<description>for deal Blob type data</description>
+		<!--postgresql,oracle,sqlserver,mysql-->
+		<param-name>db</param-name>
+		<param-value>postgresql</param-value>
+	</context-param>
+
+	<context-param>
+		<!-- oracle ${seq}.NEXTVAL  postgresql  NEXTVAL('${seq}') -->
+		<description>SQL expression to obtain the next sequence value - sequence name will be ${seq}</description>
+		<param-name>sequence-nextval</param-name>
+		<param-value>NEXTVAL('${seq}')</param-value>
+	</context-param>
+	
+	<context-param>
+		<!-- oracle ${seq}.CURRVAL  postgresql  CURRVAL('${seq}') -->
+		<description>SQL expression to obtain the current sequence value - sequence name will be ${seq}</description>
+		<param-name>sequence-currval</param-name>
+		<param-value>CURRVAL('${seq}')</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Default action to forward when a request validation error is triggered by the generic validator</description>
+		<param-name>on-validation-error</param-name>
+		<param-value>/action/error/validation</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Color #1 for alternate row color in tables</description>
+		<param-name>def-color1</param-name>
+		<param-value>class='altColor'</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Color #2 for alternate row color in tables</description>
+		<param-name>def-color2</param-name>
+		<param-value>class='normalColor'</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Default header for PDF reports</description>
+		<param-name>pdf-header</param-name>
+		<param-value>DeSoft PDF Report</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Default footer for PDF reports</description>
+		<param-name>pdf-footer</param-name>
+		<param-value>德胜信诚软件 Tel:13910836424</param-value>
+	</context-param>
+
+  	<context-param>
+		<description>Default date format for PDF report footer</description>
+		<param-name>pdf-dateformat</param-name>
+		<param-value>yyyy-MM-dd HH:mm</param-value>
+	</context-param>
+
+	<context-param>
+		<description>OPTIONAL: Custom encoding for reading request parameters</description>
+		<param-name>request-encoding</param-name>
+		<param-value>UTF-8</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Default encoding for reading templates and generating response</description>
+		<param-name>file-encoding</param-name>
+		<param-value>UTF-8</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Default security schema if any is being used</description>
+		<param-name>security-schema</param-name>
+		<param-value>security</param-value>
+	</context-param>
+	
+	<context-param>
+		<description>Route of the container</description>
+		<param-name>base-dir</param-name>
+		<param-value>/home/desoft/project/club</param-value>
+	</context-param>
+	
+	<context-param>
+		<description>Indicates whether the trace of auditor should be compatible SQLServer record using SQL / MySQL</description>
+        <param-name>audit-sqlserver</param-name>
+        <param-value>false</param-value>
+    </context-param>
+
+	<context-param>
+		<description>access the upload file</description>
+		<param-name>upload-dir</param-name>
+		<param-value>D:/test</param-value>
+	</context-param>
+
+	<context-param>
+		<description>total size of the upload file</description>
+		<param-name>upload-size</param-name>
+		<param-value>1024</param-value>
+	</context-param>
+
+	<context-param>
+		<description>system user for do timeout action</description>
+		<param-name>system-user</param-name>
+		<param-value>system</param-value>
+	</context-param>
+	
+	<context-param>
+		<description>factory for openjms</description>
+		<param-name>jms-factory</param-name>
+		<param-value>org.exolab.jms.jndi.InitialContextFactory</param-value>
+	</context-param>
+	
+	<context-param>
+		<description>url for openjms server</description>
+		<param-name>jms-url</param-name>
+		<param-value>tcp://localhost:61616</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Servidor de correo por defecto</description>
+		<param-name>mail-server</param-name>
+		<param-value>smtp.gmail.com</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Servidor port de correo por defecto</description>
+		<param-name>mail-port</param-name>
+		<param-value>465</param-value>
+	</context-param>
+
+	<context-param>
+		<description>mail-from</description>
+		<param-name>mail-from</param-name>
+		<param-value>bjdesoft@gmail.com</param-value>
+	</context-param>
+
+	<context-param>
+		<description>mail-from-pass</description>
+		<param-name>mail-from-pass</param-name>
+		<param-value>desoft@2010</param-value>
+	</context-param>
+
+	<context-param>
+		<description>mail-user</description>
+		<param-name>mail-user</param-name>
+		<param-value>bjdesoft@gmail.com</param-value>
+	</context-param>
+	<context-param>
+		<description>mail-password</description>
+		<param-name>mail-password</param-name>
+		<param-value>pass</param-value>
+	</context-param>
+	
+	<context-param>
+		<description>Nombre del remitente por defecto</description>
+		<param-name>mail-from-displayname</param-name>
+		<param-value>Dinamica Framework</param-value>
+	</context-param>
+		
+	<context-param>
+		<description>Indica si se imprime traza http por STDERR</description>
+		<param-name>httpclient-debug</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+	<context-param>
+		<description>upload-progress</description>
+		<param-name>upload-progress</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Intervalo en milisegunos que indica cada cuanto correr la tarea de monitoreo</description>
+		<param-name>jmx-timer</param-name>
+		<param-value>20000</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Indica si se notifica por email cuando se disparan alertas</description>
+		<param-name>jmx-send-mail</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Asunto del email enviado en caso de alerta</description>
+		<param-name>jmx-mail-subject</param-name>
+		<param-value>ALERTA en el servidor Tomcat</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Indica si se notifica por email cuando se disparan alertas</description>
+		<param-name>jmx-mail-recipient</param-name>
+		<param-value>martin.cordova@gmail.com</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Tiempo en minutos que debe esperar antes de enviar otro email de alerta</description>
+		<param-name>jmx-send-mail-interval</param-name>
+		<param-value>10</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Prefijo para las trazas dejadas en el log de Tomcat</description>
+		<param-name>jmx-log-prefix</param-name>
+		<param-value>[ALERT]: </param-value>
+	</context-param>
+
+	<context-param>
+		<description>Por encima de esta cantidad threads en estado runnable se dispara alerta</description>
+		<param-name>jmx-max-runnable</param-name>
+		<param-value>25</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Por debajo de esta cantidad de memoria (MB) se dispara alerta</description>
+		<param-name>jmx-min-freemem</param-name>
+		<param-value>20</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Por encima de esta cantidad de conexiones a BD en el pool indicado se dispara alerta</description>
+		<param-name>jmx-max-db-connections</param-name>
+		<param-value>100</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Nombre JMX del pool de conexiones a BD a monitorear</description>
+		<param-name>jmx-db-pool</param-name>
+		<param-value>Catalina:type=DataSource,path=/devel,host=localhost,class=javax.sql.DataSource,name="jdbc/dinamica"</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Por encima de esta cantidad de sesiones se dispara alerta</description>
+		<param-name>jmx-max-sessions</param-name>
+		<param-value>250</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Nombre JMX del manager de sesiones</description>
+		<param-name>jmx-session-manager</param-name>
+		<param-value>Catalina:type=Manager,path=/devel,host=localhost</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Nombre JMX de la aplicacion web para medir rendimiento promedio</description>
+		<param-name>jmx-webapp</param-name>
+		<param-value>Catalina:j2eeType=WebModule,name=//localhost/devel,J2EEApplication=none,J2EEServer=none</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Por encima de este rendimiento promedio se dispara alerta</description>
+		<param-name>jmx-average</param-name>
+		<param-value>2500</param-value>
+	</context-param>
+
+	<context-param>
+		<description>
+			StuckThreadListener: interval in milliseconds to indicate how often
+			run the task of monitoring
+		</description>
+		<param-name>stl-timer</param-name>
+		<param-value>2000</param-value>
+	</context-param>
+	<context-param>
+		<description>
+			StuckThreadListener: Prefix for traces left in the log
+			Tomcat
+		</description>
+		<param-name>stl-log-prefix</param-name>
+		<param-value>[SlowThreadAlert]</param-value>
+	</context-param>
+	<context-param>
+		<description>
+			StuckThreadListener: Over this time running skyrocket
+			alert (milliseconds)
+		</description>
+		<param-name>stl-threshold</param-name>
+		<param-value>5000</param-value>
+	</context-param>
+	
+	<context-param>
+		<description>图片不存在时，默认图片</description>
+		<param-name>picture-not-found</param-name>
+		<param-value>D:\Java\workspace\ccms\trunk\images\project\pension\o2o\tp.jpg</param-value>
+	</context-param>
+	
+	<filter>
+		<description>Dinamica custom security filter</description>
+       	<filter-name>SecurityFilter</filter-name>
+       	<filter-class>com.ccms.dinamica.SecurityFilter</filter-class>
+   		<init-param>
+   			<description>Application alias used to lookup security model in DB</description>
+   			<param-name>app-alias</param-name>
+   			<param-value>ccc</param-value>
+   		</init-param>
+   		<init-param>
+   			<description>Database containing security data</description>
+   			<param-name>datasource</param-name>
+   			<param-value>jdbc/ccms</param-value>
+   		</init-param>
+   		<init-param>
+   			<description>Location of the login form</description>
+   			<param-name>loginform</param-name>
+   			<param-value>/</param-value>
+   		</init-param>
+   		<init-param>
+   			<description>Location of the login form</description>
+   			<param-name>reloginform</param-name>
+   			<param-value>/</param-value>
+   		</init-param>
+   		<init-param>
+   			<description>Force the use of SSL for protected resources</description>
+   			<param-name>ssl</param-name>
+   			<param-value>false</param-value>
+   		</init-param>
+		<init-param>
+			<description>Enable debug output to STDERR</description>
+			<param-name>debug</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<description>Clean registers orphans of active sessions</description>
+			<param-name>clear-sessions</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<description>Exclude check urls</description>
+			<param-name>exclude-urls</param-name>
+			<param-value>;/action/security/login;/action/security/autologin;/action/security/autologin/validate;/action/security/loginDialog;/action/security/forcenewpass/update;/action/ccms/attachment/download;</param-value>
+		</init-param>
+		<init-param>
+			<description>Exclude check full urls</description>
+			<param-name>exclude-full-urls</param-name>
+			<param-value>/action/project/fitness/wx/cust/center/tice/duibi/duibipic;/action/project/fitness/wx/cust/tiyanka/lingka;/action/project/fitness/wx/cust/tiyanka;/action/project/fitness/register/apply;/action/project/fitness/guestget/util/validatecaptchacode;/action/project/fitness/public;/action/project/fitness/guestget/util/getdomain;/action/project/fitness/guestget/register;/action/project/fitness/guestget/util/validateverifycode;/action/project/fitness/guestget/util/validation/alert;/action/project/fitness/xinfuweb;/action/project/fitness/wx/site;</param-value>
+		</init-param>
+   	</filter>
+   	
+  <servlet>
+    <description>Request INTERFACE for the Service</description>
+    <servlet-name>WeixinInterface</servlet-name>
+    <servlet-class>transactions.project.weixin.service.WeixinServiceInterface</servlet-class>
+    <init-param>
+      <description>request encoding</description>
+      <param-name>request-encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WeixinInterface</servlet-name>
+    <url-pattern>/action/wx/service</url-pattern>
+  </servlet-mapping>
+		<!--file upload filter-->
+    <filter>
+    	<description>File Upload Filter</description>
+        <filter-name>UploadFilter</filter-name>
+        <filter-class>dinamica.upload.MultipartRequestFilter</filter-class>
+    </filter>
+
+	<!--Stuck Thread Filter-->
+		<filter>
+			<description>
+				Registra los threads para que un listener los diagnostique por si tardan
+				demasiado
+			</description>
+			<filter-name>StuckThreadFilter</filter-name>
+			<filter-class>dinamica.StuckThreadFilter</filter-class>
+		</filter>
+
+    <!--security filter mapping-->
+    <filter-mapping>
+       	<filter-name>SecurityFilter</filter-name>
+       	<url-pattern>/action/*</url-pattern>
+    </filter-mapping>
+
+    
+    <!--upload filter mapping-->
+    <filter-mapping>
+        <filter-name>UploadFilter</filter-name>
+        <url-pattern>/action/ccms/attachment/insert</url-pattern>
+    </filter-mapping>
+    
+    <filter-mapping>
+        <filter-name>UploadFilter</filter-name>
+        <url-pattern>/action/ccms/importgen/excel/upload</url-pattern>
+    </filter-mapping>
+
+	
+
+	<!--Stuck Thread Mapping-->
+	<filter-mapping>
+		<filter-name>StuckThreadFilter</filter-name>
+		<url-pattern>/action/*</url-pattern>
+	</filter-mapping>
+
+	<!--session listener para eliminar sesiones activas en la BD de seguridad-->
+	<listener>
+		<listener-class>
+			dinamica.security.SessionListener
+		</listener-class>
+	</listener>
+	
+	<!-- init servlet start (for get jndi and email config)-->
+	<servlet>
+		<servlet-name>initializerServlet</servlet-name>
+		<servlet-class>com.ccms.context.InitializerServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<!-- init servlet end -->
+
+	<!--Controller Servlet to intercept requests-->
+	<servlet>
+		<description>Request Controller for the MVC mechanism</description>
+		<servlet-name>Controller</servlet-name>
+    	<servlet-class>dinamica.Controller</servlet-class>
+    	<init-param>
+    		<description>Base string to build path starting from /WEB-INF/ to search for the action configuration file</description>
+    		<param-name>base-dir</param-name>
+    		<param-value>/action</param-value>
+    	</init-param>
+    	<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<!--URLs intercepted by the Controller-->
+	<servlet-mapping>
+		<servlet-name>Controller</servlet-name>
+		<url-pattern>/action/*</url-pattern>
+	</servlet-mapping>
+
+
+	<!--session timeout-->
+	<session-config>
+		<session-timeout>100</session-timeout>
+	</session-config>
+
+	<!--welcome page-->
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+	<!--error pages-->
+
+	<!--servlet exception-->
+	<error-page>
+		<error-code>500</error-code>
+		<location>/action/error/general</location>
+	</error-page>
+
+	<!--access denied-->
+	<error-page>
+		<error-code>403</error-code>
+		<location>/action/error/403</location>
+	</error-page>
+
+    <resource-ref>
+        <res-ref-name>jdbc/ccms</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+	
+
+</web-app>

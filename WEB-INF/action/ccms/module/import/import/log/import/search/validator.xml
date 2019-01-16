@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="createdby" type="varchar" required="false" label="创建人" />
+	<parameter id="import_batch" type="varchar" required="false" label="导入批次" />
+	<parameter id="start_time" type="date" required="false" label="开始时间" />
+	<parameter id="end_time" type="date" required="false" label="结束时间" />
+
+	<parameter id="imp_id" type="integer" required="false" label="imp_id" />
+	
+	<custom-validator 
+		classname="dinamica.validators.SQLPatternTransformer" 
+		parameter="createdby" 
+		rule="contains" />
+	<custom-validator 
+		classname="dinamica.validators.SQLPatternTransformer" 
+		parameter="import_batch" 
+		rule="contains" />
+		
+	<custom-validator classname="dinamica.validators.DateRangeValidator"
+	on-error-label="结束日期必须大于起始日期" date1="start_time" date2="end_time" id="end_time" />
+		
+</validator>
+

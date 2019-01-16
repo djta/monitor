@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="userlogin" type="varchar" required="false" label="Login de Usuario" />
+	<parameter id="role_id" type="integer" required="false" label="Rol" />
+	<parameter id="name" type="varchar" required="false" label="Nombre" />
+	<parameter id="mobile" type="varchar" required="false" label="Apellido" />
+	<parameter id="tenantry_id" type="integer" required="true" label="tenantry_id" />
+
+	<custom-validator 	
+		classname="dinamica.validators.SQLPatternTransformer" 
+		on-error-label="SQL LIKE transformer."
+		parameter="userlogin" rule="like" />
+	
+	<custom-validator 	
+		classname="dinamica.validators.SQLPatternTransformer" 
+		on-error-label="SQL LIKE transformer."
+		parameter="name" rule="like" />
+	
+	<custom-validator 	
+		classname="dinamica.validators.SQLPatternTransformer" 
+		on-error-label="SQL LIKE transformer."
+		parameter="mobile" rule="like" />
+
+</validator>
+

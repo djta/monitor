@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="42px" height="18px" viewBox="0 0 42 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Bar</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="首页-前台" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-334.000000, -742.000000)">
+        <path d="M343.845847,742 L370,742 C373.313708,742 376,744.686292 376,748 L376.000001,754 C376.000001,757.313708 373.31371,760 370.000001,760 C370.000001,760 370,760 370,760 L343.845861,760 C342.263768,759.999999 340.745704,759.375132 339.622051,758.261389 C335.874017,754.546413 334,752.125949 334,750.999996 C334,749.874044 335.874013,747.453583 339.62204,743.738614 L339.622036,743.73861 C340.745689,742.624868 342.263754,742 343.845847,742 Z" id="Bar" fill="#FF3A52"></path>
+    </g>
+</svg>

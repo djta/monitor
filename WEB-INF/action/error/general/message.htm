@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>系统发生错误</title>
+<style type="text/css">
+*{ padding: 0; margin: 0; }
+body{ background: #fff; font-family: '微软雅黑'; color: #333; font-size: 16px; }
+.system-message{ padding:0 0 48px;margin:150px auto;width:486px;border:1px solid #ccc}
+.system-message h3{ font-size: 50px; font-weight: normal; line-height: 120px; margin-bottom: 12px;border:1px solid #ccc}
+.system-message .jump{ padding-top: 10px}
+.system-message .jump a{ color: #333;}
+.system-message .success,.system-message .error{ font-size: 12px ;text-align: left; word-break:break-all;}
+.system-message .detail{ font-size: 12px; line-height: 20px; margin-top: 12px; display:none}
+.system-message h1{height:55px;background:#0d85d9;padding-left:10px;line-height:55px;color:white; text-align:center; letter-spacing:8px; font-size:24px; font-weight:normal; font-family:"微软雅黑";}
+</style>
+<script language="javascript">
+	function goBack()
+	{
+		if (window.opener==null)
+			window.history.back();
+		else
+			window.close();
+	}
+	function showHiddenDiv(){
+		var obj = document.getElementById("stackInfo");
+		if(obj.style.display == "none"){
+			obj.style.display = "";
+		}else{
+			obj.style.display = "none";
+		}
+	}
+</script>
+</head>
+<body>
+<div class="system-message">
+	<h1>系统发生错误</h1>
+	<div style="padding:24px;text-align:center" class="jump">
+		<a href="javascript:void(0)" onclick="goBack();">${lbl:button_back}</a>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="showHiddenDiv();">Stack</a>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="javascipt:location.href='/';">返回首页</a>
+	</div>
+	<div id="stackInfo" style="padding-left:10px;display:none;" class="error">
+		${req:dinamica.error.stacktrace@html}
+	</div>
+</div>
+</body>
+</html>

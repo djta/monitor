@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		show indexDetails
+	</summary>
+
+	<log>false</log>
+
+ 	<transaction>
+		<classname>com.ccms.faq.SnapshotTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query_attachment.sql" source="sql" scope="transaction" />
+		<recordset id="query.sql" source="sql" scope="transaction" />
+		</transaction> 	
+ 
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html;charset=UTF-8</content-type>
+		<expiration>1</expiration> 
+		<print mode="table" recordset="query_snapshot.sql" tag="rows-snapshot" />
+        <print mode="table" recordset="query_attachment.sql" tag="rows-attachment" />
+		<print mode="form" recordset="query.sql"/>
+		<print mode="form" recordset="_request"/>
+	 </output>
+	
+		 
+
+</config>

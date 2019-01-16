@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+    <parameter id="subject_id" type="integer" required="true" label="专题名称"/>
+    <parameter id="document_type" type="varchar" required="true" label="服务类型" />
+    <parameter id="action_type" type="varchar" required="true" label="动作类型" />
+    <parameter id="document_name" type="varchar" required="true" label="服务名称" />
+    <parameter id="table_id" type="integer" required="false" label="服务业务" />
+    <parameter id="form_id" type="integer" required="false" label="服务界面"/>
+	<parameter id="report_id" type="integer" required="false" label="服务报表"/>
+    <parameter id="remark" type="varchar" required="false" label="备注" />
+	<parameter id="nav_url" type="varchar" required="false" label="侧边栏地址" maxlen="256"/>
+	<parameter id="nav_url_width" type="varchar" required="false" label="侧边栏地址宽度" maxlen="32"/>
+
+	<parameter id="nav_url_right" type="varchar" required="false" label="右侧边栏地址" maxlen="256"/>
+	<parameter id="nav_right_width" type="varchar" required="false" label="右侧边栏地址宽度" maxlen="32"/>
+	<parameter id="nav_url_bottom" type="varchar" required="false" label="底边栏地址" maxlen="256"/>
+	<parameter id="nav_bottom_hight" type="varchar" required="false" label="底边栏地址宽度" maxlen="32"/>
+
+    <parameter id="url" type="varchar" required="false" label="跳转地址" maxlen="256"/>
+
+    <parameter id="nav_url_top" type="varchar" required="false" label="底边栏地址" maxlen="256"/>
+    <parameter id="nav_url_hight" type="varchar" required="false" label="底边栏高度" maxlen="32"/>
+    <parameter id="doc_width" type="varchar" required="false" label="文档宽度" maxlen="32"/>
+    <parameter id="doc_hight" type="varchar" required="false" label="文档高度" maxlen="32"/>
+
+    <parameter id="template_uri" type="varchar" required="false" label="模板地址" maxlen="256"/>
+</validator>

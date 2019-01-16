@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>选取数据</title>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div
+			class="panel-heading col_main_body_title text-centercol-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="col-xs-10 col-sm-10 col-md-11 col-lg-11">
+				<h1 class="panel-title" id="formTitle">选取用户</h1>
+			</div>
+			<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1"
+				style="margin-top: -4px;">
+				<button class="btn btn-primary btn-md" type="button" id="save_btn">保存</button>
+			</div>
+			</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post"
+				id="searchForm" name="searchForm">
+				<input name="sort" type="hidden" value="userlogins" preserve="true" />
+				<input name="order" type="hidden" value="desc" preserve="true" /> <input
+					name="pageNo" type="hidden" value="" preserve="true" /> <input
+					name="totalPages" type="hidden" value="" preserve="true" />
+				<div class="form-group" style="margin-top:10px;">
+					<div
+						class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+						<input id="names" class="form-control" placeholder="请输入员工姓名"
+							name="names" type="text" size="30" value="" maxlength="35" /> <input
+							id="team_id" name="team_id" type="hidden" value="${fld:team_id}"  preserve="true" />
+					</div>
+					<div
+						class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+						<button class="btn btn-primary btn-md" type="button"
+							id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button"
+							id="search_reset_btn">清空</button>
+					</div>
+
+				</div>
+			</form>
+			<form method="post" name="formEditor" id="formEditor">
+				<input id="team_id" type="hidden" name="team_id"
+					value="${fld:team_id}" preserve="true" />
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th style="width: 25%" id="cc">
+								<button type="button"
+									class="btn btn-primary btn-md" id="selectAll">全选</button>
+								<button type="button"
+									class="btn btn-primary btn-md" id="unselectAll">反选</button>
+							</th>
+							<th class="sortable" code="names">员工姓名</th>
+							<th class="sortable" code="org_name">部门</th>
+						</tr>
+					</thead>
+					<tbody id="datagridTemplate" style="display: none">
+						<tr>
+							<td align="left">#check_user#</td>
+							<td align="center">#names#</td>
+							<td align="center">#org_name#</td>
+						</tr>
+					</tbody>
+					<tbody id="datagrid"></tbody>
+				</table>
+			</form>
+			<div class="pageDiv">
+				<ul class="pagination"></ul>
+			</div>
+		</div>
+	</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$Search({datagrid:"datagrid",formId:"searchForm",rowpackage:function(obj){
+		if(obj.check_user != null){
+			obj.check_user = '<input  name="userlogin_id" type="checkbox" value="'+obj.userlogins+'" />&nbsp;'+obj.userlogins;
+		}
+	},success:function(){
+		$('input[type=checkbox]').iCheck({
+	    		checkboxClass: 'icheckbox_square-blue',
+				increaseArea: '20%'
+	    });
+		$("#save_btn").unbind().on("click",function(){
+			var url = "/action/ccms/module/hr/team/staff/insert";
+			ajaxCall(url,{
+		        method: "post",
+		        progress: true,
+		        form: "formEditor",
+		        dataType: "script",
+		        success: function(data) {
+		        	parent.window.location.reload();
+		        	//parent.$("#_dlg${fld:pickId}").modal("hide");//关闭此弹出窗口
+		        	ccms.dialog.close();
+		        }
+		    });
+		});
+		
+	 	$("#selectAll").unbind().on("click",function(){
+	 		$('input[name=userlogin_id]').iCheck('check');
+		});
+		$("#unselectAll").unbind().on("click",function(){
+			$('input[name=userlogin_id]').iCheck('uncheck');
+		});  
+		
+	}}).initSearchBtn().searchData(1);
+});
+</script>
+</body>
+</html>

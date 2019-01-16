@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>FAQ detail</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center" id="backButton">
+		<h2 class="panel-title">详细信息</h2>
+	</div>
+	<div class="panel-body">
+		<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">  		    
+    		<div class="form-group">
+				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">标题:</label>
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+					  ${fld:show_name} &nbsp; 
+		              <a href="javascript:void(0);" id="favorite" code="${fld:faq_id}" title="收藏FAQ">收藏</a>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">创建日期:</label>
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+					 ${fld:create_date@yyyy-MM-dd HH:mm:ss}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">标签:</label>
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+					${fld:lable}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">是否过期:</label>
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+					${fld:is_expired}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">附件:</label>
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+					<TABLE>
+						<rows-attachment>
+						<TR>
+							<TD>
+								<a href="javascript:void(0);" code="${fld:attachment_id}" name="download"
+									title="打开附件">${fld:file_name}
+								</a> &nbsp;&nbsp;&nbsp; 
+								<a
+									href="javascript:void(0);" code="${fld:attachment_id}" name="download"
+									title="下载附件">下载
+								</a>
+							</td>
+						</TR>
+						</rows-attachment>
+					</TABLE>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">内容:</label>
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+					 ${fld:content}
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+</html>

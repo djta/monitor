@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		Panel
+	</summary>
+
+	<log>false</log>
+     
+	<set-request-attribute id="header.title" value="面板管理" />
+    <set-request-attribute id="formTitleAddNew" value='新增面板'/>
+    <set-request-attribute id="formTitleEdit" value='修改面板'/>
+    <set-request-attribute id="formTitleFilter" value='查询面板'/>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query.sql" source="sql" scope="transaction"/>
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<expiration>0</expiration>
+		<print mode="table" recordset="query.sql" tag="rows" />
+		<print mode="form" recordset="_request" />
+	</output>
+
+</config>

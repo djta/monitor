@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+  	<parameter id="campaign_name" 	 type="varchar" required="false" label="活动名称"/>
+  	<parameter id="dealer_name" 	 type="varchar" required="false" label="经销商名称"/>
+  	<parameter id="area" 	 type="varchar" required="false" label="大区" maxlen="64"/>
+ 	<parameter id="dealer" 	 type="varchar" required="false" label="经销商" maxlen="64"/>
+	<parameter id="interested_brand" type="varchar" required="false" label="品牌" maxlen="64"/>	
+	<parameter id="interested_series" type="varchar" required="false" label="车系" maxlen="64"/>  
+	<parameter id="province" type="varchar" required="false" label="省份" />
+	<parameter id="city" type="varchar" required="false" label="城市" /> 
+	<parameter id="validate_date" type="varchar" required="false" label="有效期内" /> 
+ 	<parameter id="is_recommend" type="varchar" required="false" label="是否推荐" /> 
+ 	
+</validator>

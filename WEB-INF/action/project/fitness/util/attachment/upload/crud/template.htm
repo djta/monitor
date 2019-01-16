@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>上传图片</title>
+${inc:/action/project/fitness/home/pub}
+<style>
+	.custom{}
+	.custom .customTitle{
+		background: #fefbe4;
+		border: 1px solid #f3ecb9;
+		color: #993300;
+	}
+	.custom .customBody{
+		margin-top:20px;
+	}
+	.systemImage{
+		width:180px;
+		height:180px;
+		margin-left:20px;
+	}
+	.systemImage img{
+		width:120px;
+		height:120px;
+		border-radius:20px;
+		cursor: pointer;
+	}
+</style>
+</head>
+<body class="dialogbg">
+	<nav id="menuTabList" class="am-tabs-nav am-nav am-nav-tabs r-tab">
+		<li><a class="three-none" href="javascript:void(0)">拍照</a></li>
+		<li class="am-active"><a class="three-none" href="javascript:void(0)">上传照片</a></li>
+	</nav>
+
+	<br/>
+	<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 customTitle col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+		选中文件后点击上传按钮或者点击“从素材库选择”直接从已上传文件中选择
+	</div>
+	<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 customBody col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+		<form class="form-horizontal" name="form" id="form" action="${def:context}${def:actionroot}/insert" 
+			method="post" enctype="multipart/form-data" onSubmit="return upload()"
+			target="uploadFrame">
+			
+			<label>选择本地文件：</label><br></br>
+			<input type="file" name="file" size="30" />
+			<input type="hidden" name="pk_value" value="${fld:pk_value}" />
+			<input type="hidden" name="table_code" value="${fld:table_code}" />
+			<input type="hidden" id="callback" name="callback" value="${fld:callback}" />
+			<input type="hidden" id="imgid" name="imgid" value="${fld:imgid}" />
+			<input type="hidden" name="upload_file_type" value="" />
+			<input type="hidden" name="image_id" value="" />
+			
+			<br/>
+			<button type="submit" name="submit" >上传</button>
+		</form>
+	</div>
+	
+<iframe name="uploadFrame" style="width:800px;height:800px;display:none;">
+</iframe>
+
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script language="javascript">
+var callback = "${fld:callback}", dialogid = "${fld:id}";
+$(document).ready(function() {
+	// 页面跳转
+	$("#menuTabList").find("li").eq(0).unbind().click(function() {
+		location.href = "${def:context}/action/project/fitness/util/attachment/photo/crud"
+			+"?pk_value=${fld:pk_value}&table_code=${fld:table_code}&callback=${fld:callback}"
+	});
+});
+function upload(){
+	if (document.form.file.value == "") {
+		$Dialog().notice("请选择文件！",1200);
+		document.form.file.focus();
+		return false;
+	}
+}
+</script>
+</body>
+</html>

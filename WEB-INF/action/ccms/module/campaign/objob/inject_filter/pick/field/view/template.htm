@@ -1,0 +1,32 @@
+<!--data grid-->
+<table class="grid" style="width: 100%;">
+	<col width="50%">
+	<col width="50%">
+	<!--toolbar-->
+
+
+	<!--encabezados-->
+	<tr>
+		<th >
+			字段名称
+		</th>
+		<th >
+			字段代码
+		</th>
+	</tr>
+
+	<!--data-->
+	<rows>
+	<tr ${fld:_rowStyle} onmouseover="rowOn(this)" onmouseout="rowOff(this)" onclick="selectItem('${fld:field_name@js}','${fld:field_code@js}','${fld:domain_namespace@js}','${fld:field_type@js}')" >
+		<td>
+			${fld:field_name}
+		</td>	
+		<td>
+			${fld:field_code}
+		</td>	
+	</tr>
+	</rows>
+	
+</table>
+	${inc:/action/pagecontrols}
+	

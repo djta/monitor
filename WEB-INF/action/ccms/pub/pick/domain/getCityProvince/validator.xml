@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="area" type="varchar" required="false" label="area" maxlen="32"/>
+</validator>

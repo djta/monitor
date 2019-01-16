@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="tuid" type="integer" required="true" label="tuid" maxlen="10"/>
+	<parameter id="grade_code" type="varchar" required="true" label="grade_code" maxlen="32"/>
+	<parameter id="grade_name" type="varchar" required="false" label="grade_name" maxlen="128"/>
+
+</validator>
+
+

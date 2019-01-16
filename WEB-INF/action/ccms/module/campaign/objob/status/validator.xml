@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="id" type="integer" required="true" label="ID del producto" maxlen="10"/>
+	<parameter id="enabled_status" type="varchar" required="true" label="enabled_status"/>
+	
+	<custom-validator 	
+		classname="dinamica.validators.NoRecordsFound" 
+		on-error-label="没有定义人群,不能启动活动主题."
+		sql="checkFilter.sql" />
+
+</validator>
+ 

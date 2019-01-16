@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="app_alias" type="varchar" required="true" label="Alias" maxlen="20" />
+	<parameter id="description" type="varchar" required="true" label="Descripci�n" maxlen="80" />
+	<parameter id="pwd_policy" type="integer" required="false" label="Pol�tica de contrase�a" />
+
+	<custom-validator 	
+	classname="dinamica.validators.DuplicatedKeyValidator" 
+	on-error-label="该应用名已经存在，请换一个"
+	id="app_alias" sql="dupkey.sql" />
+
+</validator>
+

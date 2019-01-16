@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+    <parameter id="tuid" type="varchar" required="true" label="TUID" maxlen="10"/>
+    <parameter id="item_id" type="integer" required="true" label="题目编号" maxlen="10"/>
+    <parameter id="item_name" type="varchar" required="true" label="矩阵题目名称" maxlen="100"/>
+	<parameter id="show_order" type="integer" required="true" label="显示顺序"/>
+	<parameter id="show_type" type="varchar" required="true" label="显示类型"/>
+	<parameter id="remark" type="varchar" required="false" label="remark" maxlen="500"/>
+	
+	   <parameter id="item_code" type="varchar" required="true" label="矩阵题目代码" maxlen="12" regexp="^[a-zA-Z][a-zA-Z0-9]{3,12}$"
+		regexp-error-label="最输入少3位最多12位,首位为字母，由数字、字母组成 "/>
+    <custom-validator classname="dinamica.validators.DuplicatedKeyValidator"
+		on-error-label="该矩阵题目代码已经存在，请换一个" id="item_code" sql="nodup.sql" />
+
+</validator>
+
+

@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>技能授权</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+		<div
+			class="panel-heading col_main_body_title text-center col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div
+				class="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-md-offset-1 col-lg-offset-1">
+				<h1 class="panel-title">技能授权</h1>
+			</div>
+			<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1"
+				style="margin-top: -10px;">
+				<button type="button" id="save_btn" class="btn btn-primary btn-md">保存</button>
+			</div>
+		</div>
+
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="panel-body">
+				<form class="form-horizontal" id="formEditor" name="formEditor"
+					role="form" method="post">
+					<input type="hidden" id="tuid" name="tuid" default="0" value="123" />
+					<input type="hidden" id="entity_id" name="entity_id"
+						value="${fld:entity_id}" />
+					<table class="table table-bordered">
+						<tr>
+							<th>
+								授权<button type="button" class="btn btn-primary btn-md yesAll">全选</button>
+								<button type="button" class="btn btn-primary btn-md noAll">取消全选</button>
+							</th>
+							<th>
+								团组名称</th>
+						</tr>
+							<rows>
+							<tr>
+								<td align="center"><input name="skill_id" type="checkbox"
+									value="${fld:skill_id}" /></td>
+								<td align="center">${fld:skill_name}</td>
+							</tr>
+							</rows>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="actionroot" id="actionroot"
+		value="${def:actionroot}" />
+		
+		<script language="javascript">
+	$(document).ready(function() {
+	$(".yesAll").unbind().on("click",function(){
+		selectAll('skill_id','formEditor');
+	});
+	$(".noAll").unbind().on("click",function(){
+		unselectAll('skill_id','formEditor');
+	});
+		
+		$("#save_btn").unbind().on("click", function() {
+			var url = "/action/ccms/module/hr/authority/entity/list/skill/update";
+			ajaxCall(url, {
+				method : "post",
+				progress : true,
+				form : "formEditor",
+				dataType : "script",
+				success : function(data) {
+
+				}
+			});
+		});
+	});
+	
+	</script>
+</body>
+</html>

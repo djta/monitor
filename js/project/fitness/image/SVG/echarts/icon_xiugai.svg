@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="8px" height="8px" viewBox="0 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_xiugai</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0.000670391061 0.00791061453 0.000670391061 7.7877095 7.98948603 7.7877095 7.98948603 0.00791061453 0.000670391061 0.00791061453"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="新增" transform="translate(-168.000000, -257.000000)">
+            <g id="icon_xiugai" transform="translate(168.000000, 257.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Clip-2"></g>
+                <path d="M0,6.12259218 L0,7.7877095 L1.66475978,7.7877095 L5.99192179,3.12661453 L4.32795531,1.46241341 L0,6.12259218 Z M7.32388827,1.79560894 C7.48848045,1.63193296 7.48848045,1.29382123 7.32388827,1.12945251 L6.32475978,0.130625698 C6.15944134,-0.0329944134 5.82372067,-0.0329944134 5.65912849,0.130625698 L4.6607486,1.12940782 L6.32475978,2.79398883 L7.32388827,1.79560894 Z M3.32878212,7.1213743 L2.66318436,7.7877095 L7.98948603,7.7877095 L7.98948603,7.1213743 L3.32878212,7.1213743 Z" id="Fill-1" fill="#C8C8C8" mask="url(#mask-2)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/ccms/pub}
+<script src="${def:context}/js/kindeditor/kindeditor-min.js"></script>
+<script src="${def:context}/js/kindeditor/lang/zh_CN.js"></script>
+<link rel="stylesheet" href="${def:context}/js/kindeditor/themes/default/default.css" />
+<title>收件箱</title>
+<style type="text/css">
+.nav-tabs a{
+	color : #333;
+}
+</style>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">查询收件箱</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<ul id="menuTabList" class="nav nav-tabs">
+				<li class="active"><a href="javascript:void(0)" data-toggle="tab">收件箱</a></li>
+				<li><a href="javascript:void(0)" data-toggle="tab" code="0">草稿箱</a></li>
+				<li><a href="javascript:void(0)" data-toggle="tab" code="1">发件箱</a></li>
+			</ul>
+		
+			<form class="form-horizontal" role="form" method="post" id="searchForm">
+				<input name="sort" type="hidden" value="" preserve="true" />
+				<input name="order" type="hidden" value="desc" preserve="true" /> 
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+
+				<div class="form-group">
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<input name="msg_title" placeholder="请输入标题" class="form-control" type="text" size="20" value="" />
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>操作</th>
+						<th class="sortable" code="msg_title">标题</th>
+						<th class="sortable" code="staff_name">发件人</th>
+						<th class="sortable" code="send_date">发件日期</th>
+						<th class="sortable" code="read_flag">状态</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td align="center">
+							<button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">查看</button>
+						</td>
+						<td align="center">#msg_title#</td>
+						<td align="center">#staff_name#</td>
+						<td align="center">#send_date#</td>
+						<td align="center">#read_flag#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="formTitle">查看信息</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+						<input type="hidden" id="tuid" name="tuid" value="" />
+						<div class="row clearfix">
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">标题:</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<input type="text" class="form-control" id="msg_title" name="msg_title" size="30"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">内容:</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<textarea class="form-control" id="msg_content" name="msg_content" cols="30" rows="2"></textarea>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+						<button type="button" id="delete_btn" class="btn btn-primary btn-md">删除</button>
+						<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+	<script type="text/javascript">
+	var editor = null;
+	$(document).ready(function() {
+		var search1 = null;
+		search1 = $Search({datagrid : "datagrid", formId : "searchForm", success : function() {
+			$(".edit_btn").unbind().on("click", function() {
+				var tuid = $(this).attr("code");
+				if (tuid != undefined && tuid != "") {
+					setEditorValue("");
+					$("#modalAddnew").modal("show");
+					ajaxCall("${def:actionroot}/edit?id=" + tuid, {
+						method : "get",
+						progress : true,
+						dataType : "script",
+						success : function() {
+						}
+					});
+				}
+			});
+			$("#delete_btn").unbind().on("click", function() {
+				var tuid = $("#tuid").val();
+				$Dialog().confirm("确定要删除该条数据吗?", function() {
+					if (tuid != undefined && tuid != "") {
+						ajaxCall("${def:actionroot}/delete?id=" + tuid, {
+							method : "get",
+							progress : true,
+							dataType : "script",
+							success : function() {
+							}
+						});
+					}
+				});
+			});
+		}}).initSearchBtn().searchData(1);
+		createEditor();
+		$("#menuTabList").find("li").not(".active").unbind().on("click", function(){
+			var flag = $(this).find("a").attr("code");
+			if( undefined != flag && "" != flag ){
+				window.location.href = "${def:context}/action/ccms/msg/outbox/crud?send_flag=" + flag;
+			}
+		});
+	});
+
+	function createEditor(){
+		editor = KindEditor.create('textarea[name="msg_content"]', {
+			resizeType : 1,
+			allowPreviewEmoticons : false,
+			allowImageUpload : false,
+			minWidth:300,
+			items : [
+				'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+				'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+				'insertunorderedlist', '|', 'emoticons', 'link']
+		});
+		$("div.ke-container").css("width","100%");
+	}
+	function setEditorValue(data){
+		editor.sync();
+		editor.html(data);
+	}
+	</script>
+</body>
+</html>

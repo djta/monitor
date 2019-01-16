@@ -1,0 +1,15 @@
+SELECT
+    tuid
+    ,domain_value
+    ,domain_text_cn
+    ,domain_text_en
+    ,is_default
+    ,namespace
+    ,parent_namespace
+    ,parent_domain_value
+    ,remark
+    ,show_order
+FROM
+	t_tenantry_domain 
+WHERE
+	tuid=${fld:id}

@@ -1,0 +1,45 @@
+.container {
+	width: 1170px;
+}
+
+qh3 {
+	height: 80px;
+	margin: 0px auto;
+	line-height: 80px;
+	font-size: 21px;
+	color: #000;
+}
+
+h4 {
+	height: 35px;
+	line-height: 35px;
+	margin: 0px auto;
+}
+
+h4 span {
+	color: Red;
+}
+
+
+/**�༭��**/
+.bjq { 
+	padding:20px 40px;
+}
+
+
+/**�����ǩ**/
+.wtbq { height: auto; margin: 0px auto; }
+.wtbq .bt { color: #000; font-size: 15px; float: left; margin: 8px 22px 0 0; }
+.wtbq .bt span { color: Red; }
+
+/**�����ǩ**/
+.wtbq { width: 1090px; height: auto; margin: 0px auto; }
+.wtbq .bt { color: #000; font-size: 15px; float: left; margin: 8px 22px 0 0; }
+.wtbq .bt span { color: Red; }
+
+
+.wtbq button{border:solid 1px #000;border-radius:5px;height:48px;line-height:48px;padding:0 45px;font-size:15px;color:#000;font-family:Microsoft yahei;background:none;float:right;margin-top:60px;}
+
+.title1{
+	display:inline;
+}

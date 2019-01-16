@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>Select Table</title>
+</head>
+<body>
+<table class="table table-bordered">
+	<tr>
+		<th colspan="2" align="center">
+			选择业务
+		</th>
+	</tr>
+	<tr>
+		<th align="center">
+			ID
+		</th>
+		<th align="center">
+			描述
+		</th>
+	</tr>
+	<rows>
+		<tr onclick="selectItem('${fld:id}','${fld:description}')" style="cursor: pointer;">
+			<td align="center">
+				${fld:id}
+			</td>
+			<td align="center">
+				${fld:description}
+			</td>
+		</tr>
+	</rows>
+</table>
+
+<script language="javascript">
+	function selectItem(id,name){
+		$("#linkage_document_id",window.parent.document).val(id);
+		$("#linkage_document_alias",window.parent.document).val(name);
+		
+		//关闭此弹出窗口
+		$("#_dlgpickLink",window.parent.document).find(".dialog-close").click();
+		//父页面显示滚动条
+		$("#modalAddnew",window.parent.document).addClass("modalOverflow");
+	}	
+</script>
+</body>
+</html>

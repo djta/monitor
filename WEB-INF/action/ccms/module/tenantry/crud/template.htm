@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>商户信息</title>
+${inc:/action/ccms/pub}
+</head>
+<body>
+<!--addnew/edit form-->
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="formTitle">新增商户</h4>
+				</div>
+				<div class="modal-body">
+					<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+						<input type="hidden" id="tuid" name="tuid" maxlength="32"/>
+						<div class="row clearfix">
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">应用系统</label>
+								<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+									<rows-app>
+										<input type="radio" id="app_id" class="form-control" name="app_id" value="${fld:app_id}">${fld:description}
+									</rows-app>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">租户名称</label>
+								<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+									<input type="text" id="tenantry_name" class="form-control" name="tenantry_name" value="" maxlength="64">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">是否启用</label>
+								<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+									<input name="enabled" class="form-control" type="radio" value="0">停用
+									<input name="enabled" class="form-control"  type="radio" value="1">启用
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">描述</label>
+								<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+									<textarea type="text" class="form-control" name="description" maxlength="128"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">模式</label>
+								<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+									<table class="table table-bordered">
+										<tr>
+											<th>选择</th>
+											<th>是否默认</th>
+											<th>模式</th>
+										</tr>
+										<rows-subject>
+											<tr>
+												<td align="center">
+													<input type="checkbox" id="subject_${fld:tuid}" class="form-control" name="subject_id" value="${fld:tuid}" />
+												</td>
+												<td align="center">
+													<input type="radio" class="form-control" name="is_default" value="${fld:tuid}"/>
+												</td>
+												<td align="center">
+													${fld:subject_name}
+												</td>
+											</tr>
+										</rows-subject>
+									</table>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+						<button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+						<button type="button" id="reset_btn" class="btn btn-primary btn-md">重&nbsp;置</button>
+						<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">商户管理</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm">
+				<div class="form-group">
+					<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+						<input type="text" class="form-control" id="tenantry_name" name="tenantry_name" placeholder="请输入商户名称">
+					</div>
+					<div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+						<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+						<button class="btn btn-primary btn-md" type="button" id="addnew_btn">新增</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>操作</th>
+						<th class="sortable" code="app_alias">商户名称</th>
+						<th>状态</th>
+						<th>描 述</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td align="center">
+							<button class="btn btn-primary btn-md edit_btn" type="button" code="#tenantry_id#">编辑</button>
+							<button class="btn btn-primary btn-md delete_btn" type="button" code="#tenantry_id#">删除</button>
+							<button class="btn btn-primary btn-md user_btn" type="button" code="#tenantry_id#">用户</button>
+						</td>
+						<td align="center">#tenantry_name#</td>
+						<td align="center">#tenantry_state#</td>
+						<td align="center">#description#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}">
+</div>
+<script LANGUAGE="JavaScript">
+$(document).ready(function() {
+	var search=null;
+	var obj = $Crud({
+		formId:"formEditor",
+		button:"save_btn",
+		insertBack:function(){
+			search.searchData();
+		},
+		updateBack:function(){
+			search.searchData();
+		},
+		deleteBack:function(){
+			search.searchData();
+		},
+		addNewBack:function(){
+			setCheckboxValue("enabled","1","formEditor");
+			$("input[name='app_id']").each(function(i){
+				if(i==0){
+					$(this).iCheck("check");
+				}
+			});
+			$("#formTitle").html("新增商户");
+		},
+		editBack:function(){
+			$("#formTitle").html("修改商户");
+		},
+		validate:function(){
+			var flag=$("#formEditor").validate({
+				rules: {
+					app_id:{
+						required: true
+					},
+					tenantry_name:{
+						required: true,
+						rangelength: [1,20]
+					},
+					enabled:{
+						required: true
+					},
+					description: {
+						rangelength: [1,128]
+					}
+				},
+				messages: {
+					app_id:{
+						required: "请勾选"
+					},
+					tenantry_name:{
+						required: "请输入租户名称",
+						rangelength: "租户名称的长度为1到20位"
+					},
+					enabled:{
+						required: "请勾选"
+					},
+					description:{
+						rangelength: "商户描述的长度为1到128位"
+					}
+				}
+			});
+			return flag;
+		},
+		check:function(){
+			var radioVal = GetCheckboxValue("is_default","formEditor");
+			if(radioVal==null || radioVal==''){
+				$Dialog().notice("必须选择一个默认的模式!",1500);
+				return false;
+			}else{
+				if($("#subject_"+radioVal)[0].checked){
+					
+				}else{
+					ccms.dialog.notice("该默认的模式必须被选中!",1500);
+					return false;
+				}
+			}
+			return true;
+		}
+	}).init();
+	this.search=search;
+	search=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		$(".edit_btn").unbind().on("click", function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				obj.edit({id:$(this).attr("code")});
+			}
+		});
+		$(".delete_btn").unbind().on("click", function(){
+			var obthis = $(this);
+			$Dialog().confirm("确定要删除该条数据吗?", function(){
+				if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+					obj.del({id:obthis.attr("code")});
+				}
+			});
+		});
+		$(".user_btn").unbind().on("click", function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				gotoPage("${def:actionroot}/user/crud?tenantry_id="+$(this).attr("code"));
+			}
+		});
+	}}).initSearchBtn().searchData(1);
+});
+</script>
+</body>
+</html>
+

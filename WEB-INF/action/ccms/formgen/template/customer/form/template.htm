@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>客户管理</title>
+${inc:/action/ccms/pub}
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">查询客户</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm">
+				<!-- sql排序字段 -->
+				<input name="sort" type="hidden" value="created" preserve="true" />
+				<!-- sql排序类型 -->
+				<input name="order" type="hidden" value="desc" preserve="true" /> 
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+				<input name="cust_code1" type="hidden" value="${fld:cust_code}" preserve="true" />
+				<div class="form-group">
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+						<input name="cust_code" placeholder="请输入客户编号" class="form-control" type="text" size="20" value="" />
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+						<input name="cust_name" placeholder="请输入客户姓名" class="form-control" type="text" size="20" value="" />
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+						<input name="mobile" placeholder="请输入手机号" class="form-control" type="text" size="20" value="" />
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th class="sortable" code="cust_code">客户编号</th>
+						<th class="sortable" code="cust_name">客户姓名</th>
+						<th class="sortable" code="mobile">手机号</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr onclick="selectItem('#cust_code#','#cust_name#')">
+						<!-- script.js字段 -->
+						<td align="center">#cust_code#</td>
+						<td align="center">#cust_name#</td>
+						<td align="center">#mobile#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script type="text/javascript">
+$(document).ready(function(){
+	var searchObj=null;
+
+	this.searchObj=searchObj;
+	searchObj=$Search({datagrid : "datagrid",formId : "searchForm",success : function() {
+	}}).initSearchBtn().searchData(1);
+
+});
+
+function selectItem(cust_code, cust_name){
+	parent.$("#relation_cust_code").val(cust_code);
+	parent.$("#relation_cust_code_alias").val(cust_name);
+	ccms.dialog.close();
+}
+</script>
+</body>
+</html>

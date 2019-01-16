@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>场次信息</title>
+${inc:/action/ccms/pub}
+</head>
+
+<body>
+
+    <div class="panel panel-default col_mainInner">
+        <div class="panel-heading col_main_body_title text-center">
+            <h2 class="panel-title">查询场次信息</h2>
+        </div>
+        <div class="panel-body col_main_body">
+            <form class="form-horizontal" role="form" method="post" id="searchForm" name="searchForm">
+                <input name="sort" type="hidden" value="created" preserve="true" />
+                <input name="order" type="hidden" value="desc" preserve="true" /> 
+                <input name="pageNo" type="hidden" value="" preserve="true" /> 
+                <input name="totalPages" type="hidden" value="" preserve="true" />
+                
+                <input name="campaign_id"  value="" type="hidden" preserve="true">
+    
+                <div class="form-group">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 clearright clearleft">
+                        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+                            <input name="changci_name" placeholder="请输入场次名称" class="form-control" type="text" size="20" value="" />
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+                        <button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+                        <button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+                    </div>
+                </div>
+            </form>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>操作</th>
+                        <th class="sortable" code="changci_name">场次名称</th>
+                        <th class="sortable" code="changci_time">活动时间</th>
+                        <th class="sortable" code="start_time">活动开始时间</th>
+                        <th class="sortable" code="end_time">活动结束时间</th>
+                        <th class="sortable" code="event_city">活动城市</th>
+                        <th class="sortable" code="car_series">活动车系</th>
+                    </tr>
+                </thead>
+                <tbody id="datagridTemplate" style="display: none">
+                    <tr>
+                        <td align="center">
+                            <button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">编辑</button>
+                            <button class="btn btn-primary btn-md delete_btn" type="button" code="#tuid#">删除</button>
+                        </td>
+                        <td align="center">#changci_name#</td>
+                        <td align="center">#changci_time#</td>
+                        <td align="center">#start_time#</td>
+                        <td align="center">#end_time#</td>
+                        <td align="center">#event_city#</td>
+                        <td align="center">#car_series#</td>
+                    </tr>
+                </tbody>
+                <tbody id="datagrid">
+                </tbody>
+            </table>
+            <div class="pageDiv">
+                <ul class="pagination">
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="formTitle">场次信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+                        <input type="hidden" id="tuid" name="tuid" value="" />
+                        <div class="row clearfix">
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+                                                                                            选择活动
+                                </label>
+                                <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+                                    <input type="hidden"  class="form-control"  id="campaign_id" name="campaign_id" value="" maxlength="32" preserve="true">
+                                    <input type="text"  class="form-control"  id="campaign_name" name="campaign_name" value="" maxlength="32" readOnly preserve="true">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+                                                                                                    站点名称
+                                </label>
+                                <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+                                    <input type="text" class="form-control"  id="changci_name" name="changci_name"  maxlength="32" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+                                                                                                 活动时间
+                                </label>
+                                <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+                                    <input type="text" class="form-control"  id="changci_time" name="changci_time" maxlength="20" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+                                                                                                站点开始时间
+                                </label>
+                                <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+						            <input type="text" class="form-control"  id="regist_from_time" name="regist_from_time" placeholder="请输入时间，例如: 09:30" value="" maxlength="20" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+                                                                                                站点结束时间
+                                </label>
+                                <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+						            <input type="text" class="form-control"  id="regist_to_time" name="regist_to_time"  placeholder="请输入时间，例如: 17:30" value="" maxlength="20" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+                                                                                                    举办城市
+                                </label>
+                                <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+                                    <select id="province" name="province">
+                                        <option></option>
+                                        <_provinces>
+                                            <option value="${fld:domain_value}">${fld:domain_text_cn}</option>
+                                        </_provinces>
+                                    </select>&nbsp;
+                                    <select id="event_city" name="event_city"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+                                                                                                    活动车系
+                                </label>
+                                <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+                                    <select id="car_series" name="car_series">
+						                <option></option>
+						                <car_series>
+						                    <option value="${fld:domain_value}">${fld:domain_text_cn}</option>
+						                </car_series>
+						            </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+                                                                                                   顺序编号
+                                </label>
+                                <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+                                    <input type="text" class="form-control"  id="show_order" name="show_order"  maxlength="32" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+                                                                                                     配额
+                                </label>
+                                <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+                                    <input type="text" class="form-control"  id="changci_quota" name="changci_quota"  maxlength="32" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+                                                                                                    备注
+                                </label>
+                                <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+                                    <input type="text" class="form-control"  id="remark" name="remark"  maxlength="200" />
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+                        <button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+</body>
+
+</html>
+
+<SCRIPT LANGUAGE="JavaScript">
+
+$(document).ready(function(){
+	
+	$Dialog().datetime($("#regist_from_time"));
+	$Dialog().datetime($("#regist_to_time"));
+
+	document.searchForm.campaign_id.value = "${fld:campaign_id}";
+	document.formEditor.campaign_id.value = "${fld:campaign_id}";
+    document.formEditor.campaign_name.value = "${fld:campaign_name}";
+    
+    var searchObj=null;
+    var obj = $Crud({
+        formId : "formEditor",
+        button : "save_btn",
+        insertBack : function() {
+            searchObj.searchData(1);
+        },
+        updateBack : function() {
+            searchObj.searchData(1);
+        },
+        deleteBack : function() {
+            searchObj.searchData(1);
+        },
+        addNewBack : function() {
+            $("#formTitle").html("新增场次");
+        },
+        editBack : function() {
+            $("#formTitle").html("修改场次");
+        },
+        validate : function() {
+            var flag = $("#formEditor").validate({
+                rules : {
+                	changci_name : {
+                        required : true,
+                        rangelength: [1,32]
+                    },
+                    regist_from_time : {
+                        required : true,
+                    },
+                    regist_to_time : {
+                        required : true,
+                    },
+                    event_city: {
+                        required : true,
+                    }
+                },
+                messages : {
+                	changci_name : {
+                        required : "请输入场次名称",
+                    },
+                    regist_from_time: {
+                        required : "请输入站点开始时间",
+                    },
+                    regist_to_time: {
+                        required : "请输入站点结束时间",
+                    },
+                    event_city: {
+                        required : "请选择举办城市",
+                    }
+                }
+            });
+            return flag;
+        },
+        check:function(){
+            return true;
+        }
+    }).init();
+    
+    $("#province").change(function(){
+        getSelectDomain("event_city", "City", "Province", $(this).val(),function(){
+        	if(init_event_city != null){
+        		document.formEditor.event_city.value = init_event_city;
+        	}
+        });
+    });
+    
+    this.searchObj = searchObj;
+    searchObj = $Search({
+        datagrid : "datagrid",
+        formId : "searchForm",
+        success : function() {
+            $(".edit_btn").unbind().on("click", function() {
+                if ($(this).attr("code") != undefined
+                        && $(this).attr("code") != "") {
+                    obj.edit({
+                        id : $(this).attr("code")
+                    });
+                }
+            });
+            $(".delete_btn").unbind().on("click", function() {
+                var obthis = $(this);
+                $Dialog().confirm("确定要删除吗?", function() {
+                    if (obthis.attr("code") != undefined
+                            && obthis.attr("code") != "") {
+                        obj.del({
+                            id : obthis.attr("code")
+                        });
+                    }
+                });
+            });
+        }
+    }).initSearchBtn().searchData(1);
+
+});
+
+//获取域值
+function getSelectDomain(objid, namespace, parent_namespace, parent_domain_value, callback){
+    if( undefined == objid || "" == objid ){
+        ccms.dialog.notice("Parameter id can not be null.");
+        return false;
+    }else if( undefined == namespace || "" == namespace ){
+        ccms.dialog.notice("Parameter namespace can not be null.");
+        return false;
+    }
+    parent_namespace = (undefined != parent_namespace ? parent_namespace : "");
+    parent_domain_value = (undefined != parent_domain_value ? parent_domain_value : "");
+    var uri = "/action/ccms/module/campaign/changci/getdomain";
+    uri += "?id=" + objid + "&namespace=" + namespace + "&parent_namespace=" + parent_namespace + "&parent_domain_value=" + parent_domain_value;
+    return ajaxCall(uri,{
+        method: "get",
+        progress: true,
+        dataType: "script",
+        success: function() {
+            if( undefined != callback ){
+                callback();
+            }
+        }
+    });
+}
+
+function openExcel()
+	{
+		var features = "height=500,width=800,status=no,toolbar=no,menubar=no,location=no,scrollbars=yes,resizable=yes";
+		var url = "${def:context}${def:actionroot}/excel?random=" + Math.random();
+		var w = window.open(url, null, features);
+	}
+
+</SCRIPT>

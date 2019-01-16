@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>数据诊断跟踪</title>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">审计控制</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post"
+				id="searchForm">
+				<input name="sort" type="hidden" value="userlogin" preserve="true" />
+				<input name="order" type="hidden" value="desc" preserve="true" /> <input
+					name="pageNo" type="hidden" value="" preserve="true" /> <input
+					name="totalPages" type="hidden" value="" preserve="true" />
+				<div class="form-group">
+					<div class="col-sm-4 clearright clearleft">
+						<label class="col-sm-4 clearright text-right">起始日期</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+							<input type="text" class="form-control" id="fdesde" name="fdesde"
+								value="" maxlength="10" />
+						</div>
+					</div>
+
+					<div class="col-sm-4 clearright clearleft">
+						<label class="col-sm-4 clearright text-right">结束日期</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+							<input type="text" class="form-control" id="fhasta" name="fhasta"
+								value="" maxlength="10" />
+						</div>
+					</div>
+
+					<div class="col-sm-4 clearright clearleft">
+						<label class="col-sm-4 clearright text-right">系统应用</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+							<select id="contexto" class="form-control" name="contexto"
+								style="width: 200px">
+								<option value=""></option>
+								<rows3>
+								<option value="${fld:app_alias}">${fld:description}</option>
+								</rows3>
+							</select>
+						</div>
+					</div>
+
+				</div>
+				<div class="form-group">
+					<div class="col-sm-4 clearright clearleft">
+						<label class="col-sm-4 clearright text-right">业务操作</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+							<select id="operation" class="form-control" name="operation"
+								style="width: 200px">
+								<option value=""></option>
+								<rows2>
+								<option value="${fld:oper}">${fld:oper}</option>
+								</rows2>
+							</select>
+						</div>
+					</div>
+
+					<div class="col-sm-4 clearright clearleft">
+						<label class="col-sm-4 clearright text-right">登录帐号</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+							<input type="text" class="form-control" id="userlogin"
+								name="userlogin" value="" maxlength="32" />
+						</div>
+					</div>
+					<div class="col-sm-4 clearright clearleft">
+						<label class="col-sm-4 clearright text-right">操作区域</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+							<select id="area" name="area" class="form-control"
+								style="width: 200px">
+								<option value=""></option>
+								<rows>
+								<option value="${fld:area}">${fld:area}</option>
+								</rows>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="text-center">
+						<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+					</div>
+				</div>
+			</form>
+
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th class="sortable" code="userlogin">登录帐号</th>
+						<th class="sortable" code="context_alias">应用系统</th>
+						<th class="sortable" code="operation">业务操作</th>
+						<th class="sortable" code="area">区域</th>
+						<th class="sortable" code="op_date">日期</th>
+						<th class="sortable" code="op_time">时间</th>
+						<th class="sortable" code="extra_info">备注信息</th>
+						<th>详细信息</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td align="center">#userlogin#</td>
+						<td align="center">#context_alias#</td>
+						<td align="center">#operation#</td>
+						<td align="center">#area#</td>
+						<td align="center">#op_date#</td>
+						<td align="center">#op_time#</td>
+						<td align="center">#extra_info#</td>
+						<td align="center">
+							<button class="btn btn-primary btn-md detail_btn" type="button"
+								code="#detail#">详细信息</button>
+						</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+	<input type="hidden" name="actionroot" id="actionroot"
+		value="${def:actionroot}" />
+	<SCRIPT LANGUAGE="JavaScript">
+		$(document).ready(function() {
+			$Search({
+				datagrid : "datagrid",
+				formId : "searchForm",
+				success : function() {
+				/* $(".btn_detail").unbind().on("click", function(){
+				if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+					ccms.dialog.open({url:"${def:context}${def:actionroot}/../operationdetail/crud?"+$(this).attr("code")+"&random=" + Math.random(),id:"detail"});
+							}
+				}); */
+			$(".detail_btn").unbind().on("click",function() {
+					var obthis = $(this);
+					if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+					var url = "${def:actionroot}/../operationdetail/crud?"+ obthis.attr("code")+ "&random="+ Math.random();
+					gotoPage(url);
+						}
+					});
+				}
+			}).initSearchBtn().searchData(1);
+			$Dialog().date($('#fdesde'));
+			$Dialog().date($('#fhasta'));
+
+
+});
+
+</script>
+</body>
+</html>

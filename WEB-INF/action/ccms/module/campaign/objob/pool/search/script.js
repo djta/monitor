@@ -1,0 +1,11 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"cust_count":"${fld:cust_count}"
+		<rows2>
+		,"${fld:colname}":"${fld:colname_mark}"
+		</rows2>
+	},
+	</rows>
+	{}
+]}

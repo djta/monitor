@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		界面展示
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>com.ccms.core.formengine.DocumentCrudEngine</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-doc.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<print mode="table" recordset="query_filter_field.sql" tag="rows-filter" null-value=""/>
+		<print mode="form" recordset="query-document.sql"/>
+		<print mode="form" recordset="query-doc.sql"/>
+		<print mode="form" recordset="_request"/>
+	</output>
+
+</config>

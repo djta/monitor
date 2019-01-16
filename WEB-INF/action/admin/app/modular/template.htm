@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>安全管理</title>
+${inc:/action/ccms/pub}
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading text-center col_main_body_title">
+		<h2 class="panel-title">${fld:description}</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		${group}
+	</div>
+</div>
+
+<script language="javascript">
+function openPDF(id)
+{
+	var features = "height=500,width=800,status=no,toolbar=no,menubar=no,location=no,scrollbars=yes,resizable=yes";
+	var url = "${def:context}${def:actionroot}/modular/pdf?app_id=" + id + "&random=" + Math.random();
+	var w = window.open(url, "PDF", features);
+}
+$(document).ready(function() {
+});
+</script>
+</body>
+</html> 
+ 

@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="vc_name" type="varchar" required="false" label="商品名称" />
+</validator>

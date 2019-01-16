@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+	</summary>
+
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-city.sql" source="sql" scope="transaction"/>
+		<recordset id="query-dealer.sql" source="sql" scope="transaction"/>
+		<recordset id="query-area.sql" source="sql" scope="transaction"/>
+		<recordset id="query-province.sql" source="sql" scope="transaction"/>
+		<recordset id="query-interested_brand.sql" source="sql" scope="transaction"/>
+		<recordset id="query-interested_series.sql" source="sql" scope="transaction"/>	
+		<!-- <recordset id="query-cust_province_city.sql" source="sql" scope="transaction"/>  -->
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>		
+		<print mode="table" recordset="query-area.sql" tag="row-area"/>
+	  <print mode="table" recordset="query-dealer.sql" tag="row-dealer"/>
+		<print mode="table" recordset="query-city.sql" tag="row-city"/>
+		<print mode="table" recordset="query-province.sql" tag="row-province"/>		
+	  <print mode="table" recordset="query-interested_brand.sql" tag="row-brand"/>
+    <print mode="table" recordset="query-interested_series.sql" tag="row-series"/>
+    <!-- <print mode="form" recordset="query-cust_province_city.sql" /> -->
+    <print mode="form" recordset="_request" />
+	</output>
+
+</config>

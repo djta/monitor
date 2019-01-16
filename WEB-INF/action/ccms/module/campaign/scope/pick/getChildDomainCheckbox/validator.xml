@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="child_namespace" type="varchar" required="true" label="child_namespace" maxlen="64"/>
+	<parameter id="parent_namespace" type="varchar" required="true" label="parent_namespace" maxlen="64"/>
+	<parameter id="parent_value" type="varchar" required="false" label="parent_value" maxlen="64"/>
+	<parameter id="child_name" type="varchar" required="false" label="child_name" maxlen="128"/>
+	<parameter id="field_id" type="varchar" required="true" label="field_id" maxlen="128"/>
+</validator>

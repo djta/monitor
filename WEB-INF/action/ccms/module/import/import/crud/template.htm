@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>导入信息</title>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">数据导入</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post"
+				id="searchForm" name="searchForm">
+				<input name="sort" type="hidden" preserve="true" /> <input
+					name="order" type="hidden" value="desc" preserve="true" /> <input
+					name="pageNo" type="hidden" value="" preserve="true" /> <input
+					name="totalPages" type="hidden" value="" preserve="true" /> <input
+					id="subject_id" name="subject_id" type="hidden" value=""
+					preserve="true" />
+				<div class="form-group">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+							<input class="form-control" id="imp_name_filter"
+								name="imp_name_filter" placeholder="导入名称" type="text" size="35"
+								value="" />
+						</div>
+						<button type="button" id="search_btn"
+							class="btn btn-primary btn-md">查询</button>
+						<button type="button" id="search_reset_btn"
+							class="btn btn-primary btn-md">重置</button>
+						<button class="btn btn-primary btn-md" type="button"
+							id="addnew_btn">新增</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>操作</th>
+						<th></th>
+						<th class="sortable" code="imp_name">导入名称</th>
+						<th class="sortable" code="title_line_num">标题启始行</th>
+						<th class="sortable" code="created">创建时间</th>
+						<th class="sortable" code="createdby">创建人</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+
+						<td align="center">
+							<button class="btn btn-primary btn-xs edit_btn" type="button" code="#tuid#">修改</button>
+							<button class="btn btn-primary btn-xs delete_btn" type="button" code="#tuid#">删除</button>
+						</td>
+						<td align="center">
+							<button class="btn btn-primary btn-xs jobIFrame_btn" type="button" code="#tuid#">业务表</button>
+							<button class="btn btn-primary btn-xs uploadExcelLog_btn" type="button" code="#tuid#">导入日志</button>
+							<button class="btn btn-primary btn-xs uploadExcel_btn" type="button" code="#tuid#">导入</button>
+							<button class="btn btn-primary btn-xs exportImp_btn" type="button" code="#tuid#" title="导出配置信息">导出配置</button>
+							<button class="btn btn-primary btn-xs exportTemplate_btn" type="button" code="#tuid#">下载模板</button>
+						</td>
+						<td align="center">#imp_name#</td>
+						<td align="center">#title_line_num#</td>
+						<td align="center">#created#</td>
+						<td align="center">#createdby#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+		<div class="modal-dialog  modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="formTitle">新增数据导入</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form" method="post"
+						id="formEditor" name="formEditor">
+						<input type="hidden" id="tuid" name="tuid" value="${fld:id}"
+							preserve="true" /> <input name="subject_id" type="hidden"
+							value="${fld:subject_id}" preserve="true" />
+						<div class="row clearfix">
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<div class="form-group">
+									  <label class="col-xs-3 col-sm-4 col-md-4 col-lg-4 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1  required">导入名称</label>
+									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+										<input class="form-control" type="text" id="imp_name"
+											name="imp_name" value="" maxlength="200" />
+									</div>
+								</div>
+								<div class="form-group">
+									   <label class="col-xs-3 col-sm-4 col-md-4 col-lg-4  control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">单条记录前置类</label>
+									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+										<input class="form-control" type="text" id="pre_class_name"
+											name="pre_class_name" value="" maxlength="200" />
+									</div>
+								</div>
+								<div class="form-group">
+									 <label class="col-xs-3 col-sm-4 col-md-4 col-lg-4  control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">是否预览数据</label>
+									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+										<input type="radio" name="is_previwe_flag" value="0">否</input>
+										<input type="radio" name="is_previwe_flag" value="1">是</input>
+									</div>
+								</div>
+								<div class="form-group">
+									 <label class="col-xs-3 col-sm-4 col-md-4 col-lg-4 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">验证不通过是否继续导入</label>
+									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+										<input type="radio" name="is_error_continue" value="0">否</input>
+										<input type="radio" name="is_error_continue" value="1">是</input>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<div class="form-group">
+								 <label class="col-xs-3 col-sm-4 col-md-4 col-lg-4 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1  required">标题启始行</label>
+									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+										<input class="form-control" type="text" id="title_line_num"
+											name="title_line_num" value="" maxlength="200" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									 <label class="col-xs-3 col-sm-4 col-md-4 col-lg-4 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">单条记录后置类</label>
+									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+										<input class="form-control" type="text" id="post_class_name"
+											name="post_class_name" value="" maxlength="200" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									 <label class="col-xs-3 col-sm-4 col-md-4 col-lg-4 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">前置扩展类名</label>
+									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+										<input class="form-control" type="text" id="before_class_name"
+											name="before_class_name" value="" maxlength="200" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									 <label class="col-xs-3 col-sm-4 col-md-4 col-lg-4 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">校验类名称</label>
+									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+										<input class="form-control" type="text"
+											id="validator_class_name" name="validator_class_name"
+											value="" maxlength="200" />
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<div class="form-group">
+									 <label class="col-xs-3 col-sm-4 col-md-4 col-lg-4  control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">备注</label>
+										<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+											<input class="form-control" type="text" id="remark"
+												name="remark" value="" maxlength="200" />
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<div class="form-group">
+									 <label class="col-xs-3 col-sm-4 col-md-4 col-lg-4  control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">单条后处理SQL</label>
+										<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+											<textarea type="text" id="after_sql" name="after_sql"  class="form-control" rows="3" maxlength="4000"></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div
+						class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+						<button type="button" id="save_btn" class="btn btn-primary btn-md">保&nbsp;存</button>
+						<button type="button" class="btn btn-primary btn-md"
+							data-dismiss="modal">取&nbsp;消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<input type="hidden" name="actionroot" id="actionroot"
+	value="${def:actionroot}">
+	 <script type="text/javascript">
+$(document).ready( function() {
+	$("#subject_id").val("${fld:subject_id}");
+    var search=null;
+	 var obj = $Crud({
+         formId: "formEditor",
+         button: "save_btn",
+         insertBack: function () {
+         	$(".error").empty();
+         	search.searchData();
+         },
+         updateBack: function () {
+        	 search.searchData();
+         },
+         deleteBack: function () {
+        	 search.searchData();
+         },
+         addNewBack: function () {
+             $("#formTitle").html("新增数据导入信息");
+             setCheckboxValue("is_previwe_flag","0","formEditor");
+         },
+         editBack: function () {
+             $("#formTitle").html("修改数据导入信息");
+         },
+         validate: function () {
+             var flag = $("#formEditor").validate({
+                 rules: {
+                	 imp_name: {
+                         required: true
+                     },
+                     title_line_num:{
+                    	 required:true
+                     }
+                 },
+                 messages: {
+                	 imp_name: {
+                         required: "值不能为空"
+                     },
+                     title_line_num:{
+                    	 required: "值不能为空"
+                     }
+                 }
+             });
+             return flag;
+         }
+     }).init();
+	 search=$Search({
+			datagrid : "datagrid",
+			formId : "searchForm",
+			success : function() {
+			//编辑按钮
+			$(".edit_btn").unbind().on("click", function () {
+				  if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+	                    obj.edit({id: $(this).attr("code")});
+	                }
+            });
+			 //删除按钮
+	         $(".delete_btn").unbind().on("click", function () {
+	        	var obthis = $(this);
+				$Dialog().confirm("确定要删除吗？",function(){
+				if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+					var url = "/action/ccms/module/import/import/delete?id="+obthis.attr("code");
+					ajaxCall(url,{
+							method: "post",
+							progress: true,
+							dataType: "script",
+							success: function() {
+								
+							}
+						});
+					}
+				});
+	           });
+			//业务跳转按钮
+			$(".jobIFrame_btn").unbind().on("click", function () {
+                if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+                	var url = "/action/ccms/module/import/table/crud?imp_id="+$(this).attr("code");
+    				gotoPage(url);
+                }
+            });
+			//导入日志
+			$(".uploadExcelLog_btn").unbind().on("click", function () {
+                if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+    				ccms.dialog.open({url:"${def:context}/action/ccms/module/import/import/log/import/crud?imp_id="+$(this).attr("code"),id:"uploadExcelLog_id",width:1100,height:600});
+                }
+            });
+			//导入
+			$(".uploadExcel_btn").unbind().on("click", function () {
+                if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+    				ccms.dialog.open({url:"${def:context}/action/ccms/importgen/excel/form?imp_id="+$(this).attr("code"),id:"uploadExcelLog_id",width:900,height:600});
+                }
+            });
+			
+			//导出配置信息
+			$(".exportImp_btn").unbind().on("click", function () {
+                if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+                	window.open("${def:context}/action/ccms/module/subject/config/export/imp?imp_id="+$(this).attr("code"),"_blank","width=500,height=300","true");
+                }
+            });
+			//下载模板
+			$(".exportTemplate_btn").unbind().on("click", function () {
+                if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+                	window.open("${def:context}/action/ccms/module/subject/config/export/template?imp_id="+$(this).attr("code"),"_blank","width=500,height=300","true");
+                }
+            });
+			
+			}
+		}).initSearchBtn().searchData(1);
+	});
+</script>
+</body>
+</html>

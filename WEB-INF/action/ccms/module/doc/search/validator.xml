@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="subject_id1" type="integer" required="true" label="subject_id" />
+	<parameter id="document_name" type="varchar" required="false" label="document_name" />
+	<parameter id="document_type" type="varchar" required="false" label="document_type" />
+	<parameter id="wfm_name" type="varchar" required="false" label="wfm_name" />
+
+	<custom-validator
+		classname="dinamica.validators.SQLPatternTransformer"
+		parameter="document_name"
+		rule="contains" />
+
+	<custom-validator
+		classname="dinamica.validators.SQLPatternTransformer"
+		parameter="wfm_name"
+		rule="contains" />
+
+</validator>
+

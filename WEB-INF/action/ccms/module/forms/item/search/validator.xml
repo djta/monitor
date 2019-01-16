@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="form_id" type="integer" required="true" label="界面ID" />
+	<parameter id="item_name_cn" type="varchar" required="false" label="分类名称" />
+
+	<custom-validator
+		classname="dinamica.validators.SQLPatternTransformer"
+		parameter="item_name_cn"
+		rule="contains" />
+
+</validator>
+

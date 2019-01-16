@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+${inc:/action/ccms/pub}
+<title>FAQ 电子表格导入</title>
+</head>
+
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">FAQ导入Excel</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="formImport" name="formImport">
+				<input type="hidden" name="superior_id" id="superior_id" value="${fld:tuid}" />
+				<div class="form-group">
+					<label class="col-xs-5 col-sm-5 col-md-5 col-lg-5 control-label required">选择Excel文件:</label>
+					<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+						<input type="file" id="file" name="file" class="form-control">
+					</div>
+				</div>
+				<div class="form-group text-center">
+					<label class="col-xs-5 col-sm-5 col-md-5 col-lg-5 control-label"></label>
+					<label class="col-xs-7 col-sm-7 col-md-7 col-lg-7 text-left">格式为 Microsoft Office Excel 2003<br>第一列为标题,第二列为标签,第三列为内容<br>首行为标签行</label>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-5 col-sm-5 col-md-5 col-lg-5 control-label required">对应技能</label>
+					<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+						<span ><a href="javascript:void(0);" id="skill-all">全选</a>-<a href="javascript:void(0);" id="skill-reverse">反选</a></span>
+						<check-skill>
+							<input type="checkbox" id="skill_id" name="skill_id" value="${fld:skill_id}" class="form-control" >${fld:skill_name}
+						 </check-skill>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-5 col-sm-5 col-md-5 col-lg-5 control-label required">开始日期</label>
+					<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+						<input id="start_date" name="start_date" type="text" maxlength="10" class="form-control date">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-5 col-sm-5 col-md-5 col-lg-5 control-label required">结束日期</label>
+					<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+						<input id="end_date" name="end_date" type="text" maxlength="10" class="form-control date">
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary btn-md" type="button" id="save_btn">导入</button>
+		</div>
+	</div>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+	
+
+
+<iframe name="uploadFrame" style="display:none">
+</iframe>
+
+<div id="responseError" style="display:none;width:100%;">
+</div>
+
+
+<script language="javascript">
+function importClass(){
+	this.upload = function(){
+		if ($("#formImport #file").val()=="") {
+			$Dialog().alert("请选择Excel文件！");
+			$("#formImport #file").focus();
+			return false;
+		}
+		$("#save_btn").attr("disabled",true);
+		$("#responseError").hide();
+		return true;	
+	}
+	this.uploadOK = function(total){
+		$("#formImport #file").val("");
+		$("#save_btn").attr("disabled",false);
+		$Dialog().alert("共导入成功 " + total + " 条记录！");
+		$("#formImport #file").focus();
+		parent.document.location.reload();
+	}
+	this.uploadError = function(msg){
+		$("#save_btn").attr("disabled",false);
+		$Dialog().alert(msg);
+	}
+	this.uploadErrorGrid = function(msg){
+		$("#save_btn").attr("disabled",false);
+		$Dialog().alert(msg);
+		ajaxCall("${def:context}${def:actionroot}/errorgrid",
+    			{method:"get",
+				response:"responseError"});
+	}
+	this.init = function(){
+		$("#save_btn").unbind().on("click", function () {
+			ajaxCall("${def:context}${def:actionroot}/insert",
+        			{method:"post",
+					form:"formImport",
+        			dataType:"script"});
+        });
+		$(".date").each(function(){
+			$Dialog().date($(this));
+		});
+		$("#skill-all").unbind().on("click",function(){
+			selectAll("skill_id","formImport");
+		});
+		$("#skill-reverse").unbind().on("click",function(){
+			reverseselectAll("skill_id","formImport");
+		});
+	}
+}
+var importObj = null;
+$(document).ready(function () {
+	$("#formImport #file").focus();
+	importObj = new importClass();
+	importObj.init();
+});
+
+</script>
+
+</body>
+</html>

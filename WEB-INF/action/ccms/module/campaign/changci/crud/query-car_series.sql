@@ -1,0 +1,1 @@
+select domain_value,domain_text_cn from t_domain where namespace='VehicleSeries' order by domain_text_cn;

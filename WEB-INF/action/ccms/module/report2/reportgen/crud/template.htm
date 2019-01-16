@@ -1,0 +1,525 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<script language="JavaScript" type="text/javascript" src="${def:context}/js/ccms/reportold.js"></script>
+
+<title>${fld:report_name}</title>
+<style type="text/css">
+	#msg_win{
+		border: 1px solid #ddd;
+		width: 360px;
+		position: absolute;
+		left: 0;
+		font-size: 12px;
+		font-family: Arial;
+		margin: 0px;
+		display: none;
+		overflow: hidden;
+		z-index: 99;
+	}
+	#msg_win .icos{
+		position: absolute;
+		right: 2px;
+		z-index: 9;
+		top: 0;
+		height: 25px;
+		line-height: 25px;
+	}
+	.icos a{
+		float:left;color: black;text-align:center;font-weight:bold;
+		width:14px;height:25px;line-height:25px;
+		text-decoration:none;font-family:webdings;
+	}
+	.icos a:visited{
+		float:left;color:black;text-align:center;font-weight:bold;
+		width:14px;height:25px;line-height:25px;
+		text-decoration:none;font-family:webdings;
+	}
+	#msg_title{
+		background-color:#f5f5f5;color: black;height:25px;
+		line-height:25px;text-indent: 6px;font-weight:bold;
+	}
+	#msg_content{
+		margin:5px;margin-right:0;width:350px;height:280px;overflow:auto;
+	}
+	
+	.border-none{border: none !important;}
+	.border-none tr{border: none !important;}
+	.border-none td{border: none !important;font-size: 14px;}
+	.border-none th{border: none !important;font-size: 16px;}
+	.border-none .th20{text-align: right;}
+	.border-none .td20left{ }
+	.errormsg{color: red;}
+	.panel{box-shadow: none;-webkit-box-shadow: none;}
+	.panel-default{border: none;}
+	.not-found-data{margin-top: 100px; font-size: 24px;}
+	.tool{height: 24px; margin-top: 5px;cursor: pointer;}
+</style>
+</head>
+
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">${fld:report_name}</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="divFilter" style="display: none;"></div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="response" style="display: none;"></div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="divEditor" style="display: none;"></div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="divEditorResponse" style="display: none;"></div>
+	</div>
+</div>
+
+<!--show linked grid-->
+<iframe id="detail" name="detail" marginwidth="0" scrolling="no" frameborder="0" style="height:0%;width:100%;visibility:hidden"></iframe>
+
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}">
+
+${inc:${def:actionroot}/header}
+</body>
+
+</html>
+
+<SCRIPT LANGUAGE="JavaScript">
+    ${fld:form_js}
+</SCRIPT>
+
+<SCRIPT LANGUAGE="JavaScript">
+//如果定义了跳转地址,则页面跳转
+var new_url = "${fld:url}";
+if(new_url != ""){
+	window.location= "${def:context}"+new_url;
+}
+
+//设置界面元素数据验证逻辑
+function setKeyPress(){
+    return true;
+}
+
+//字段校验
+function checkFields(){
+    return true;
+}
+</SCRIPT>
+
+<script type="text/javascript">
+//多选赋值
+function beforeSearch(){
+	//处理多选的值,拼成x,y,z的形式.
+	<rows>
+		setCheckBoxValues("${fld:field_code_alias}_filter_check","${fld:field_code_alias}_filter");
+	</rows>
+	console.info("执行了search");
+	search();
+}
+
+function changeOrder(){
+	$("#gridBody").find("tr").each(function(index){
+		$(this).find("td").find("input[type='text']").val(index+1);
+	});
+}
+
+function searchBack(){
+    document.getElementById("divFilter").style.display = "";
+    ${fld:searchback_js}
+    return true;
+}
+
+function openReport(){
+	var features = "height=500,width=800,status=no,toolbar=no,menubar=no,location=no,scrollbars=yes,resizable=yes";
+	var url = "${def:context}${def:actionroot}/html?random=" + Math.random();
+	var w = window.open(url, null, features);
+}
+
+//invoca la generacion de un PDF en un popup
+function openPDF(){
+	var features = "height=500,width=800,status=no,toolbar=no,menubar=no,location=no,scrollbars=yes,resizable=yes";
+	var url = "${def:context}${def:actionroot}/pdf?random=" + Math.random();
+	var w = window.open(url, null, features);
+}
+
+//invoca la generacion de un Excel en un popup
+function openExcel(){
+	var features = "height=500,width=800,status=no,toolbar=no,menubar=no,location=no,scrollbars=yes,resizable=yes";
+	var url = "${def:context}${def:actionroot}/excel?random=" + Math.random();
+	var w = window.open(url, null, features);
+}	
+
+//mostrar imagen y esconder su indicador de progreso de carga
+function displayChart(chartID){
+	document.getElementById(chartID + "_wait").style.display='none';
+	document.getElementById(chartID).style.display='';
+}
+
+function reportError(msg){
+	ccms.util.loadClass.hideLoad();
+	ccms.dialog.alert(msg);
+}
+
+function loadFilterBack(){
+	//从传过来的参数中给查询条件赋值
+	<rows-filter>
+		if (typeof(document.formFilter.${fld:field_code_alias}_filter) != "undefined") {
+			switch ("${fld:show_type}"){
+				case "0"://text
+					document.formFilter.${fld:field_code_alias}_filter.value = "${fld:field_value@js}";
+					break;
+				case "1"://combo
+					setComboValue("${fld:field_code_alias}_filter","${fld:field_value@js}","formFilter");
+					break;
+				case "3"://radio
+					setCheckboxValue("${fld:field_code_alias}_filter","${fld:field_value@js}","formFilter");
+					break;
+				case "4"://readonly
+					document.formFilter.${fld:field_code_alias}_filter.value = "${fld:field_value@js}";
+					break;
+				case "5"://date
+					document.formFilter.${fld:field_code_alias}_filter.value = "${fld:field_value@js}";
+					break;
+				case "6"://textarea
+					document.formFilter.${fld:field_code_alias}_filter.value = "${fld:field_value@js}";
+					break;
+				case "9"://hidden
+					document.formFilter.${fld:field_code_alias}_filter.value = "${fld:field_value@js}";
+					break;
+			}
+		}
+	</rows-filter>
+	
+	showFilter();
+	changeRequiredStyle();
+	if(document.getElementById("msg_win").style.display == ""){
+		Message.init();
+		Message.set("—");
+		//拖动排序
+		dragTrByOrder("dragTable");
+	}
+
+	${fld:loadfilter_js}
+
+	//判断如果是Cognos Report需要校验一下Group CRM权限
+	if("${fld:engine_type}" == "2"){
+		validateCognosGroupCRM();
+	}
+}
+
+function reportSearch(){
+	 ${fld:searchpre_js}
+	 
+	if("${fld:engine_type}" == "1"){
+		return jorReportSearch();
+	}else if("${fld:engine_type}" == "2"){
+		return cognosReportSearch();
+	}else{
+		clearErrorMessages_report();
+		return ajaxCall_report(
+				httpMethod="POST", 
+				uri=$("#actionroot").val()+"/update", 
+				divResponse="divEditorResponse", 
+				formName="formFilter", 
+				afterResponseFn=beforeSearch,
+				onErrorFn=null
+			);
+	}
+}
+
+function jorReportSearch(){
+	if(document.formFilter.file.value == ""){
+		ccms.dialog.alert("该报表未配置报表文件，请检查！");
+		return false;
+	}
+
+	//处理多选的值,拼成x,y,z的形式.
+	<rows>
+		setCheckBoxValues("${fld:field_code_alias}_filter_check","${fld:field_code_alias}_filter");
+	</rows>
+	
+	document.formFilter.searchBtn.disabled = true;
+	ccms.util.loadClass.showLoad();
+	document.getElementById('detail').style.visibility = "hidden"; 
+	document.getElementById('detail').style.height = "0%";
+	document.getElementById("response").style.display="none";
+
+	document.formFilter.as.value = "dhtml";
+
+	//隐藏导出按钮
+	document.formFilter.exportBtn.style.display = "none";
+
+	document.formFilter.action = "${def:context}${def:actionroot}/jorsearch";
+	document.formFilter.submit();
+}
+
+var is_groupcrm = "0";//是否是groupcrm
+//获取当前报表类型
+function getEngineType(){
+	return "${fld:engine_type}";
+}
+function cognosReportSearch(){
+	//处理多选的值,拼成x,y,z的形式.
+	<rows>
+		setCheckBoxValues("${fld:field_code_alias}_filter_check","${fld:field_code_alias}_filter");
+	</rows>
+
+	//将品牌disable变为可用
+	if(typeof(document.formFilter.p_brand_filter) != "undefined"){
+		document.formFilter.p_brand_filter.disabled = false;
+	}
+	//隐藏导出按钮
+	document.formFilter.exportBtn.style.display = "none";
+	document.formFilter.action = "${def:context}${def:actionroot}/cognossearch";
+	document.formFilter.submit();
+	doReSize();
+}
+
+function validateCognosGroupCRM(){
+	ajaxCall_report(
+		httpMethod="GET", 
+		uri="/action/portal/cognosReport/controlBrand", 
+		divResponse="divEditorResponse", 
+		formName=null, 
+		afterResponseFn=null,
+		onErrorFn=null
+	);
+}
+
+function jorReportExport(){
+	var sessionId=window.frames["detail"].document.getElementById("jsettings").getAttribute("jobSessionId");
+	if(sessionId){
+		WinOpen("${def:context}${def:actionroot}/jorexport?_action_type=export&do_export=1&_job_session_id="+sessionId+"&as=xls",11);
+	}
+}
+
+function jorSearchOK(){
+	ccms.util.loadClass.hideLoad();
+	document.getElementById("response").style.display="";
+	document.formFilter.searchBtn.disabled = false;
+	document.getElementById('detail').style.visibility = "visible"; 
+
+	//显示导出按钮
+	document.formFilter.exportBtn.style.display = "";
+
+	//改变iframe的宽度，使之出现滚动条
+	doReSize();
+}
+
+function jorSearchValidator(){
+	ccms.util.loadClass.hideLoad();
+	document.getElementById("response").style.display="";
+	document.formFilter.searchBtn.disabled = false;
+	document.getElementById('detail').style.visibility = "visible"; 
+
+	//改变iframe的宽度，使之出现滚动条
+	doReSize();
+
+	if("${fld:engine_type}" == "2" && is_groupcrm == "0"){//cognos report
+		if(typeof(document.formFilter.p_brand_filter) != "undefined"){
+			document.formFilter.p_brand_filter.disabled = true;
+		}
+	}
+}
+
+function jorSearchError(info){
+	ccms.util.loadClass.hideLoad();
+	document.getElementById("response").style.display="";
+	document.formFilter.searchBtn.disabled = false;
+	document.getElementById('detail').style.visibility = "hidden"; 
+	document.getElementById('detail').style.height = "0%";
+
+	if("${fld:engine_type}" == "2" && is_groupcrm == "0"){//cognos report
+		if(typeof(document.formFilter.p_brand_filter) != "undefined"){
+			document.formFilter.p_brand_filter.disabled = true;
+		}
+	}
+}
+
+loadFilter(loadFilterBack);
+</script>
+
+<script language="javascript">
+var Message={
+	set: function() {//最小化与恢复状态切换
+		var set=this.minbtn.status == 1?[0,1,'block',this.char[0],'最小化']:[1,0,'none',this.char[1],'恢复'];
+		this.minbtn.status=set[0];
+		this.win.style.borderBottomWidth=set[1];
+		this.content.style.display =set[2];
+		this.minbtn.innerHTML =set[3];
+		this.minbtn.title = set[4];
+		this.win.style.top = this.getY().top;
+	},
+	close: function() {//关闭
+		this.win.style.display = 'none';
+		window.onscroll = null;
+	},
+	setOpacity: function(x) {//设置透明度
+		var v = x >= 100 ? '': 'Alpha(opacity=' + x + ')';
+		this.win.style.visibility = x<=0?'hidden':'visible';//IE有绝对或相对定位内容不随父透明度变化的bug
+		this.win.style.filter = v;
+		this.win.style.opacity = x / 100;
+	},
+	show: function() {//渐显
+		clearInterval(this.timer2);
+		var me = this,fx = this.fx(0, 100, 0.1),t = 0;
+		this.timer2 = setInterval(function() {
+			t = fx();
+			me.setOpacity(t[0]);
+			if (t[1] == 0) {
+				clearInterval(me.timer2);
+			}
+		},10);
+	},
+	fx: function(a, b, c) {//缓冲计算
+		var cMath = Math[(a - b) > 0 ? "floor": "ceil"],c = c || 0.1;
+		return function() {return [a += cMath((b - a) * c), a - b]}
+	},
+	getY: function() {//计算移动坐标
+		var d = document,b = document.body, e = document.documentElement;
+		var s = Math.max(b.scrollTop, e.scrollTop);
+		var h = /BackCompat/i.test(document.compatMode)?b.clientHeight:e.clientHeight;
+		var h2 = this.win.offsetHeight;
+		return {foot: (s+h+h2-55)+'px',top: (s+h-h2-55)+'px'}
+	},
+	moveTo: function(y) {//移动动画
+		clearInterval(this.timer);
+		var me = this,a = parseInt(this.win.style.top)||0;
+		var fx = this.fx(a, parseInt(y));
+		var t = 0 ;
+		this.timer = setInterval(function() {
+			t = fx();
+			me.win.style.top = t[0]+'px';
+			if (t[1] == 0) {
+				clearInterval(me.timer);
+				me.bind();
+			}
+		},10);
+	},
+	bind:function (){//绑定窗口滚动条与大小变化事件
+		var me=this,st,rt;
+		window.onscroll = function() {
+			me.win.style.top = me.getY().top;
+			clearTimeout(st);
+			clearTimeout(me.timer2);
+			me.setOpacity(0);
+			st = setTimeout(function() {
+				me.win.style.top = me.getY().top;
+				me.show();
+			},600);
+		};
+		window.onresize = function (){
+			clearTimeout(rt);
+			rt = setTimeout(function() {me.win.style.top = me.getY().top},100);
+		}
+	},
+	init: function() {//创建HTML
+		this.win = document.getElementById('msg_win');
+		var set = {minbtn: 'msg_min',closebtn: 'msg_close',title: 'msg_title',content: 'msg_content'};
+		for (var Id in set) {
+			this[Id] = document.getElementById(set[Id]);
+		};
+		var me = this;
+		this.minbtn.onclick = function() {me.set();this.blur()};
+		this.closebtn.onclick = function() {me.close()};
+		this.char=navigator.userAgent.toLowerCase().indexOf('firefox')>1?['—','::','X']:['0','2','r'];//FF不支持webdings字体
+		this.minbtn.innerHTML=this.char[0];
+		this.closebtn.innerHTML=this.char[2];
+		setTimeout(function() {//初始化最先位置
+			me.win.style.display = 'block';
+			console.info(me.getY().foot);
+			me.win.style.top = me.getY().foot;
+			me.moveTo(me.getY().top);
+		},0);
+		return this;
+	}
+};
+
+//控制iframe 高度，随内容自动改变
+function getDocHeight(doc){ 
+	//在IE中doc.body.scrollHeight的可信度最高 
+	//在Firefox中，doc.height就可以了 
+	var docHei = 0; 
+	var scrollHei;//scrollHeight 
+	var offsetHei;//offsetHeight，包含了边框的高度 
+
+	if(doc.height){ 
+		//Firefox支持此属性，IE不支持 
+		docHei = doc.height; 
+	}else if (doc.body){ 
+		//在IE中，只有body.scrollHeight是与当前页面的高度一致的， 
+		//其他的跳转几次后就会变的混乱，不知道是依照什么取的值！ 
+		//似乎跟包含它的窗口的大小变化有关 
+		if(doc.body.offsetHeight){
+			docHei = offsetHei = doc.body.offsetHeight;
+		}
+		if(doc.body.scrollHeight){
+			docHei = scrollHei = doc.body.scrollHeight;
+		}
+	}else if(doc.documentElement){ 
+		if(doc.documentElement.offsetHeight){
+			docHei = offsetHei = doc.documentElement.offsetHeight;
+		}
+		if(doc.documentElement.scrollHeight){
+			docHei = scrollHei = doc.documentElement.scrollHeight;
+		}
+	} 
+	/* 
+	docHei = Math.max(scrollHei,offsetHei);//取最大的值，某些情况下可能与实际页面高度不符！ 
+	*/ 
+	return docHei; 
+} 
+//控制iframe 宽度，随内容自动改变
+function getDocWidth(doc){ 
+	var docHei = 0; 
+	var scrollHei;
+	var offsetHei;
+
+	if (doc.width){ 
+		//Firefox支持此属性，IE不支持 
+		docHei = doc.width; 
+	}else if (doc.body){ 
+		//在IE中，只有body.scrollHeight是与当前页面的高度一致的， 
+		//其他的跳转几次后就会变的混乱，不知道是依照什么取的值！ 
+		//似乎跟包含它的窗口的大小变化有关 
+		if(doc.body.offsetWidth){
+			docHei = offsetHei = doc.body.offsetWidth;
+		}
+		if(doc.body.scrollWidth){
+			docHei = scrollHei = doc.body.scrollWidth;
+		}
+	}else if(doc.documentElement){ 
+		if(doc.documentElement.offsetWidth){
+			docHei = offsetHei = doc.documentElement.offsetWidth;
+		}
+		if(doc.documentElement.scrollWidth){
+			docHei = scrollHei = doc.documentElement.scrollWidth;
+		}
+	} 
+	/* 
+	docHei = Math.max(scrollHei,offsetHei);//取最大的值，某些情况下可能与实际页面高度不符！ 
+	*/ 
+	return docHei; 
+} 
+function doReSize(){ 
+	var iframeWin = window.frames['detail']; 
+	var iframeEl = window.document.getElementById? window.document.getElementById('detail'): document.all? document.all['detail']: null; 
+	if ( iframeEl && iframeWin ){ 
+		var docHei = getDocHeight(iframeWin.document); 
+		if (docHei != iframeEl.style.height){
+			iframeEl.style.height = docHei + 'px'; 
+		}
+		var docWid = getDocWidth(iframeWin.document); 
+		if (docWid != iframeEl.style.width){
+			iframeEl.style.width = docWid + 'px';
+		} 
+	}else if(iframeEl){ 
+		var docHei = getDocHeight(iframeEl.contentDocument); 
+		if (docHei != iframeEl.style.height){
+			iframeEl.style.height = docHei + 'px';
+		}
+		var docWid = getDocWidth(iframeEl.contentDocument); 
+		if (docWid != iframeEl.style.width){
+			iframeEl.style.width = docWid + 'px';
+		}
+	} 
+}
+</script>

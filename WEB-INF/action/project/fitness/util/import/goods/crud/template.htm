@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>商品信息导入</title>
+${inc:/action/ccms/newpub}
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<!-- 标题 -->
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">商品信息导入</h2>
+	</div>
+	<!-- 上传界面 -->
+	<div class="panel panel-default" style="margin-top:1vh;margin-left:2vw;margin-right:2vw;">
+		<div class="panel-body col_main_body custom" id="workspace1">
+			<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 customTitle col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+				选中本地Excel文件后点击导入按钮
+			</div>
+			<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 customBody col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+				<form action="${def:context}${def:actionroot}/insert" name="form" id="form" class="form-horizontal" 
+					method="post" enctype="multipart/form-data" onsubmit="return tClass.upload()" target="uploadFrame">
+					<label>选择本地文件：</label><br></br>
+					<input type="file" name="file" size="30" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+					<input type="hidden" name="description" size="30" />
+					<input type="hidden" name="pk_value" value="${fld:pk_value}" /> 
+					<input type="hidden" name="table_code" value="${fld:table_code}" />
+					<br></br>
+					<input class="btn btn-info btn-md" type="submit" value="导入" name="submit" />
+					<input class="btn btn-info btn-md" type="button" value="下载导入模板" id="template_btn" />
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="margin-left:1vw;">
+		<label>提示：<span style="color:red;">数据重复导入时，只保留第一次导入记录。</span></label>
+	</div>
+	<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="margin:2vh 0vw 2vh 1vw;">
+		<label>导入错误信息：</label>
+	</div>
+	<div class="panel-body col_main_body"  style="margin-top:10vh;margin-left:1vw;margin-right:1vw;">
+		<table class="table table-bordered" id="failedTable">
+			<thead>
+				<tr>
+					<th class="sortable" width="10vw" code="row_number">行号</th>
+					<th class="sortable" width="90vw" code="resultdesc">错误信息</th>
+				</tr>
+			</thead>
+			<tbody id="datagridTemplate" style="display: none">
+				<tr>
+					<td class="text-center">#row_number#</td>
+					<td class="text-center">#resultdesc#</td>
+				</tr>
+			</tbody>
+			<tbody id="datagrid">
+			</tbody>
+		</table>
+		<div class="pageDiv">
+			<ul class="pagination">
+			</ul>
+		</div>
+	</div>
+</div>
+
+<iframe name="uploadFrame" style="display:none">
+</iframe>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script language="javascript">
+function TranslationClass(){
+	this.init = function(){
+		var obthis = this;
+	},
+	this.upload = function(){
+		$("#datagrid").empty();
+		if (document.form.file.value == "") {
+			$Dialog().notice("请选择文件！", 1500);
+			document.form.file.focus();
+			return false;
+		}
+		return true;
+	},
+	this.uploadOk = function(failedRow){	//上传成功提示
+		if (document.all) {
+			document.form.file.outerHTML += "";
+		}else{
+			document.form.file.value = "";
+		}
+		document.form.description.value = "";
+		document.form.file.value = "";
+		if( "" != failedRow ){
+			$("#datagrid").append($(failedRow));
+		}
+		$Dialog().notice("导入成功！", 1500, function(){
+		});
+	},
+	this.uploadError = function(error){
+		error = (undefined != error && "" != error ? error : "导入失败！");
+		$Dialog().notice(error, 1500);
+	}
+}
+
+var tClass = null;
+$(document).ready(function(){
+	tClass = new TranslationClass();
+	tClass.init();
+	$("#template_btn").unbind().on("click",function(){
+		var features = "height=500,width=800,status=no,toolbar=no,menubar=no,location=no,scrollbars=yes,resizable=yes";
+		var url = "${def:context}${def:actionroot}/template";
+		var w = window.open(url, null, features);
+	});
+});
+</script>
+</body>
+</html>

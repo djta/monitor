@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>CCMS</title>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<button id="go_back_button" style="margin-top: -5px;"
+				class="btn btn-default pull-left btn-goto-back">
+				<span class="glyphicon glyphicon-arrow-left"></span>
+			</button>
+			<h2 class="panel-title">通讯录管理</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 column">
+				<div id="" style="display:">
+
+					<div class="tab-content" style="padding-top: 10px;">
+						<div class="tab-pane active" id="staff">
+							<form class="form-horizontal" role="form" method="post"
+								id="searchForm1" name="searchForm1">
+								<input name="sort" type="hidden" value="userlogin"
+									preserve="true" /> <input type="hidden" name="org_id"
+									value="${fld:org_id}" preserve="true" /> <input name="order"
+									type="hidden" value="desc" preserve="true" /> <input
+									name="pageNo" type="hidden" value="" preserve="true" /> <input
+									name="totalPages" type="hidden" value="" preserve="true" />
+								<div class="form-group">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										<input id="name_search" name="name" type="text"
+											class="form-control" size="20" value=""
+											placeholder="姓名\登录号\手机号\email\部门" />
+									</div>
+								</div>
+							</form>
+							<table class="table table-condensed">
+								<tbody id="datagrid1Template" style="display: none">
+									<tr code="#col3#" code1="#col1#" class="trClass">
+										<td class="text-center"><img style="display: #col4#"
+											src="${def:context}/images/dtree/img/folderopen.gif"
+											class="tool" /> #col1#</td>
+										<td class="text-center">#col2#</td>
+									</tr>
+								</tbody>
+								<tbody id="datagrid1"></tbody>
+							</table>
+							<div class="pageDiv">
+								<ul class="pagination" data-target="datagrid1">
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!--addnew/edit form-->
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="formTitle1">成员信息</h4>
+				</div>
+				<div class="modal-body">
+					<form id="formEditor1" name="formEditor1" class="form-horizontal"
+						role="form" method="post">
+						<input type="hidden" id="tuid" name="tuid" value="" /> <input
+							type="hidden" name="org_id" id="org_id" value="" preserve="true" />
+
+
+							<div class="form-group">
+								<label class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">
+									登陆名 </label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input type="text" class="form-control" id="userlogin"
+										name="userlogin" maxlength="100" value="" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label
+									class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label  ">
+									姓名</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input type="text" class="form-control" id="name" name="name"
+										maxlength="100" value="" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label
+									class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label ">性别</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input type="radio" id="sex" class="form-control" name="sex"
+										checked="checked" value="0" />男 <input type="radio" id="sex"
+										class="form-control" name="sex" value="1" />女
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">出生日期</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input id="birthday" class="form-control" name="birthday"
+										type="text" value="" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">
+									手机号码 </label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input type="text" class="form-control" name="mobile"
+										maxlength="30" value="" size="40" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">Email</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input type="text" id="email" class="form-control" name="email"
+										maxlength="100" value="" size="40" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">通讯地址</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<textarea name="address" cols="30" class="form-control"
+										rows="2" maxlength="256"></textarea>
+								</div>
+							</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div
+						class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+						<button type="button" class="btn btn-primary btn-md"
+							data-dismiss="modal">返&nbsp;回</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<input type="hidden" name="actionroot" id="actionroot"
+		value="${def:actionroot}" />
+	<script language="javascript">
+		function staffClass() {
+			this.org_id = null;
+			this.search1 = null;
+			this.pid = null;
+			this.crud = null;
+
+			this.init = function(org_id) {
+				var obth = this;
+				obth.org_id = org_id;
+				obth.search1 = $Search({
+					datagrid : "datagrid1",
+					formId : "searchForm1",
+					button : "search_btn1",
+					resetButton : "search_reset_btn1",
+					actionroot : "/action/ccms/module/maillist",
+					rowpackage : function(obj) {
+
+					},
+					success : function(data) {
+						obth.pid = data.pid;
+						if (document.searchForm1.org_id.value == obth.org_id) {
+							$('#go_back_button').hide();
+						} else {
+							$('#go_back_button').show();
+						}
+						$(".trClass").unbind().on("click", function() {
+							var obj = $(this);
+							var code = obj.attr("code");
+							var code1 = obj.attr("code1");
+							if (code == "0") {
+								obth.crud.edit({
+									"id" : code1
+								});
+							} else {
+								document.searchForm1.org_id.value = code;
+								obth.search1.searchData();
+							}
+						});
+					}
+				}).initSearchBtn().searchData();
+
+				$("#name_search").unbind().on("blur", function() {
+					obth.search1.searchData();
+				});
+				$('#go_back_button').on("click", function() {
+					document.searchForm1.org_id.value = obth.pid;
+					obth.search1.searchData();
+				}).hide();
+				obth.crud = $Crud({
+					formId : "formEditor1",
+					actionroot : "/action/ccms/module/maillist",
+					validate : function() {
+						return true;
+					}
+				}).init();
+			}
+		}
+
+		$(document).ready(function() {
+			new staffClass().init('${fld:org_id}');
+		});
+	</script>
+</body>
+</html>

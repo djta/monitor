@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="org_id" type="integer" required="false" label="组织架构编号"/>
+	<parameter id="select_type" type="integer" required="true" label="选择类型"/><!-- 1是多选 0 单选 -->
+	<parameter id="from_level" type="integer" required="false" label="起始级别"/>
+	<parameter id="to_level" type="integer" required="false" label="结束级别"/>
+</validator>

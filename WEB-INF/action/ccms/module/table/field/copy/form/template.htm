@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>复制字段</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">复制字段</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post" name="searchForm"id="searchForm">
+		 		 		<input type="hidden" id="tuid" name="tuid" value=""/>
+						<input type="hidden" id="field_id" name="field_id" value="${fld:field_id}"/>
+		 		 			<div class="form-group">
+		 		 				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">待复制字段名</label>
+		 		 				<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+		 		 					<input name="field_old" type="text" size="35" value="${fld:field_name}" class="form-control" readonly/>
+		 		 				</div>
+		 		 			</div>
+		 		 			<div class="form-group">
+		 		 				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">目标业务名</label>
+		 		 				<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+		 		 					<input id="table_alias2" name="table_alias2" class="form-control" value="" type="text" size="30" maxlength="32" readonly/>
+									<input id="table_id2" name="table_id2" type="hidden" value=""/>
+		 		 				</div>
+		 		 				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+		 		 					<img src="${def:context}/images/search.gif" class="tool"
+										id="pickOpenNotCenter"
+										title="查询"/>
+									<img src="${def:context}/images/clear.gif"
+										id="pickClear" class="tool2"
+										title="清除选择的内容" />
+		 		 				</div>
+		 		 			</div>
+		 		 	</form>
+		 		 <div class="modal-footer">
+				    <div class="col-xs-7 col-sm-7 col-md-5 col-lg-7" >
+					  <button type="button" id="save_btn" class="btn btn-primary btn-md" style="margin-left: 140px">保&nbsp;存</button>
+					  <button type="button" class="btn btn-primary btn-md" data-dismiss="modal" id="close_btn">关&nbsp;闭</button>
+				    </div>
+			     	<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="margin-top: 10px">
+				   		 特别标注<font color="red" ><B>*</B></font>为必填信息.
+				    </div>
+			     </div>
+		 	</div>
+		 </div>
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}"/>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#close_btn").unbind().on("click",function(){
+		//parent.$("#_dlgcopysSubject").modal("hide");//关闭此弹出窗口
+		ccms.dialog.close();
+	});
+});
+//查询条件清空图标
+$("#pickClear").unbind().on("click",function(){
+	document.searchForm.table_alias2.value='';
+	document.searchForm.table_id2.value='';
+});
+//查询条件搜索图标
+$("#pickOpenNotCenter").unbind().on("click",function(){
+	var url = "${def:context}/action/ccms/pub/pick/table/crud?id=table_id2&name=table_alias2&pickId=pickOpen&subject_id="+${def:subject};
+	ccms.dialog.open({url:url,id:"pickOpen",width:500,height:300});
+});
+$("#save_btn").unbind().on("click",function(){
+	var field_id = document.searchForm.field_id.value;
+	var table_id = document.searchForm.table_id2.value;
+	var url = "${def:actionroot}/insert?field_id="+field_id+"&table_id="+table_id;
+	//alert(url);
+	ajaxCall(url,{
+			method: "post",
+			progress: true,
+			button: "save_btn",
+			dataType: "script",
+			success: function() {
+			}
+	});
+});
+</script>
+</body>
+</html>

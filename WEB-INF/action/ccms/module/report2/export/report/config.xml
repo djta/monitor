@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-table.sql" source="sql" scope="transaction" />
+		<recordset id="query-fields.sql" source="sql" scope="transaction" />
+		<recordset id="query-report.sql" source="sql" scope="transaction" />
+		<recordset id="query-report_show_field.sql" source="sql" scope="transaction" />
+		<recordset id="query-report_filter_field.sql" source="sql" scope="transaction" />
+		<recordset id="query-report_chart.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>com.ccms.core.engine.ExportFormConfig</classname>
+	</output>
+	
+	<request-ppk>report_id</request-ppk>
+	<xml-category>reports</xml-category>
+	<sequences>seq_table,seq_field,seq_report</sequences>
+
+	<export-tables>
+		<table name="t_table" recordset="query-table.sql"/>
+		<table name="t_field" recordset="query-fields.sql"/>
+		<table name="t_report" recordset="query-report.sql"/>
+		<table name="t_report_show_field" recordset="query-report_show_field.sql"/>
+		<table name="t_report_filter_field" recordset="query-report_filter_field.sql"/>
+		<table name="t_report_chart" recordset="query-report_chart.sql"/>
+	</export-tables>
+
+</config>

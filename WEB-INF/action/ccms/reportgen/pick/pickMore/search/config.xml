@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		查询
+	</summary>
+	
+	<log>false</log>
+
+	<!--configura el control de paginacion-->
+	<set-request-attribute id="paging.recordset" value="query-domain.sql" />
+	<set-request-attribute id="paging.pagesize" value="10" />
+
+	<colname>name</colname>
+	<operator></operator>
+	<sql-template>query-base.sql</sql-template>
+	<sql-template-fk>query-base-fk.sql</sql-template-fk>
+	<paging-recordset>query-domain.sql</paging-recordset>
+
+	<transaction>
+		<classname>com.ccms.report.SearchPickup</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<on-exit return-code="0" forward-to="/action/initview"/>
+	<on-exit return-code="1" forward-to="/action/notfound/withsearch"/>
+
+</config>

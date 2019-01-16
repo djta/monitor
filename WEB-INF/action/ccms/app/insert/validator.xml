@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator id="validator.apk">	
+	<parameter id="app_code" type="varchar" required="false" label="app_code" />
+	<parameter id="version_no" type="varchar" required="true" label="version_no" />
+	<parameter id="file" type="varchar" required="true" label="文件路径" maxlen="500"/>
+	<parameter id="file.filename" type="varchar" required="true" label="文件名" maxlen="400"/>
+	<parameter id="file.content-type" type="varchar" required="true" label="文件类型" maxlen="150"/>
+	
+	<custom-validator classname="dinamica.validators.DuplicatedKeyValidator"
+		on-error-label="该版本号已发布，请换一个" id="version_no" sql="nodup.sql" />
+</validator>

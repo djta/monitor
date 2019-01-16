@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="tuid" type="integer" required="true" label="tuid" maxlen="10"/>
+	<parameter id="bannername" type="varchar" required="true" label="bannername" maxlen="128"/>
+	<parameter id="linkurl" type="varchar" required="false" label="linkurl" maxlen="256"/>
+	<parameter id="showorder" type="integer" required="false" label="showorder" maxlen="10"/>
+	<parameter id="upload_id" type="integer" required="true" label="upload_id" maxlen="10"/>
+
+</validator>
+
+

@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+	</summary>
+
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>false</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-skill.sql" source="sql" scope="transaction" />
+		<recordset id="query-quickmenu.sql" source="sql" scope="transaction" />
+		<recordset id="query-fastquery.sql" source="sql" scope="transaction" />
+		<recordset id="query-charts.sql" source="sql" scope="transaction" />
+	</transaction>
+	
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<expiration>0</expiration>
+		<print mode="table" recordset="query-quickmenu.sql" tag="quick-rows" />
+		<print mode="table" recordset="query-fastquery.sql" tag="fast-rows" />
+		<print mode="table" recordset="query-charts.sql" tag="charts-rows" />
+		<print mode="table" recordset="query-skill.sql" tag="user-rows" />
+	</output>
+</config>

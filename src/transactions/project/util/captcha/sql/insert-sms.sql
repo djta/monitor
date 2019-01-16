@@ -1,0 +1,31 @@
+INSERT INTO cc_sms(
+	tuid,
+	msg_type,
+	receiver,
+	content,
+	sender,
+	send_time,
+	status,
+	status_desc,
+	remark,
+	created,
+	createdby,
+	account_id,
+	template_id,
+	message_id
+) VALUES(
+	${tuid},
+	'1',
+	'${mobile}',
+	'${content}',
+	'sys',
+	'${send_time}',
+	'${status}',
+	'${status_desc}',
+	'${remark}',
+	{ts '${def:timestamp}'},
+	'sys',
+	${fld:account_id},
+	${fld:template_id},
+	'${message_id}'
+)

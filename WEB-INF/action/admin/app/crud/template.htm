@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>系统应用</title>
+</head>
+<body>
+	<!--addnew/edit form-->
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+  	  <div class="modal-dialog">
+   	    <div class="modal-content">
+   	      <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="formTitle">新增应用</h4>
+          </div>
+          <div class="modal-body">
+			<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+				<input type="hidden" id="tuid" name="tuid" value="">
+				<div class="row clearfix">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">名称</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<input type="text" class="form-control" id="app_alias" name="app_alias" value="" maxlength="20"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">描述</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<input type="text" class="form-control" id="description" name="description" value="" maxlength="80"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">密码安全策略</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<select id="pwd_policy" name="pwd_policy" class="form-control">
+									<option value="-1">密码永不过期</option>
+									<option value="15">密码15天后过期</option>
+									<option value="30">密码30天后过期</option>
+									<option value="60">密码60天后过期</option>
+									<option value="90">密码90天后过期</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</form>
+		  </div>
+		  <div class="modal-footer">
+		    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+			  <button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+			  <button type="button" id="reset_btn" class="btn btn-primary btn-md">重&nbsp;置</button>
+			  <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+		    </div>
+	      </div>
+	    </div>
+      </div>
+    </div>
+
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">系统应用管理</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm">
+				<div class="form-group">
+					<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+						<input type="text" class="form-control" id="app_alias" name="app_alias" placeholder="请输入名称">
+					</div>
+					<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+						<input type="text" class="form-control" id="description" name="description" placeholder="请输入描述">
+					</div>
+					<div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+						<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+						<button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>操作</th>
+						<th>菜单与面板</th>
+						<th class="sortable" code="app_alias">系统别名</th>
+						<th>描述</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td class="text-center">
+							<button class="btn btn-primary btn-md edit_btn" type="button" code="#app_id#">编辑</button>
+							<button class="btn btn-primary btn-md delete_btn" type="button" code="#app_id#">删除</button>
+						</td>
+						<td class="text-center">
+							<button class="btn btn-primary btn-md menu_btn" type="button" code="#app_id#">菜单</button>
+							<button class="btn btn-primary btn-md app_alias_btn" type="button" code="#app_id#">模块结构</button>
+							<button class="btn btn-primary btn-md description_btn" type="button" code="#app_id#">面板</button>
+						</td>
+						<td class="text-center">#app_alias#
+						</td>
+						<td class="text-center">#description#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script language="JavaScript">
+$(document).ready(function() {
+	var search=null;
+	var obj = $Crud({
+		formId:"formEditor",
+		button:"save_btn",
+		insertBack:function(){
+			search.searchData();
+		},
+		updateBack:function(){
+			search.searchData();
+		},
+		deleteBack:function(){
+			search.searchData();
+		},
+		addNewBack:function(){
+			$("#formTitle").html("新增应用");
+		},
+		editBack:function(){
+			$("#formTitle").html("修改应用");
+		},
+		validate:function(){
+			var flag=$("#formEditor").validate({
+				rules: {
+					app_alias: {
+						required: true,
+						rangelength: [1,20]
+					},
+					description: {
+						required: true,
+						rangelength: [1,80]
+					}
+				},
+				messages: {
+					app_alias:{
+						required: "请输入应用名称",
+						rangelength: "应用名称的长度为1到20位"
+					},
+					description:{
+						required: "请输入应用描述",
+						rangelength: "应用描述的长度为1到80位"
+					}
+				}
+			});
+			return flag;
+		},
+		check:function(){
+			
+			return true;
+		}
+	}).init();
+		this.search=search;
+		search=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		$(".edit_btn").unbind().on("click", function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				obj.edit({id:$(this).attr("code")});
+			}
+		});
+		$(".delete_btn").unbind().on("click", function(){
+			var obthis = $(this);
+			$Dialog().confirm("确定要删除该条数据吗?", function(){
+				if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+					obj.del({id:obthis.attr("code")});
+				}
+			});
+		});
+		$(".menu_btn").unbind().on("click", function(){
+			var obthis = $(this);
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				var url="/action/admin/menu/crud?app_id=" + +obthis.attr("code");
+				gotoPage(url);
+			}
+		});
+		$(".app_alias_btn").unbind().on("click", function(){
+			var obthis = $(this);
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				var url="${def:actionroot}/modular?app_id=" +obthis.attr("code");
+				gotoPage(url);
+			}
+		});
+		$(".description_btn").unbind().on("click", function(){
+			var obthis = $(this);
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				var url="/action/admin/panel/crud?app_id="+obthis.attr("code");
+				gotoPage(url);
+			}
+		});
+	}}).initSearchBtn().searchData(1);
+
+});
+</script>
+</body>
+</html>

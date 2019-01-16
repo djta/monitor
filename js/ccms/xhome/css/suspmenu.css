@@ -1,0 +1,108 @@
+﻿
+#menuTree {
+	margin-top:0px;
+	width:auto;
+	margin-left:0px;
+	z-index:999;
+	position:absolute;
+}
+#menuTree .navul{
+	display:none;
+	float:left;
+	position:relative;
+	display:none;
+	left:0;
+	z-index: 20;
+	width:115px;
+	min-height:100%;
+	background-color: #354052;
+	FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=##15A216,endColorStr=#6f96bd); /*IE*/
+	background:-moz-linear-gradient(top,#354052,#6f96bd);/*火狐*/
+	background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#354052), to(#6f96bd));/*谷歌*/
+	background-image: -webkit-gradient(linear,left bottom,left top,color-start(0, #354052),color-stop(1, #6f96bd));/* Safari & Chrome*/
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#354052', endColorstr='#6f96bd'); /*IE6 & IE7*/
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#354052', endColorstr='#6f96bd')"; /* IE8 */ 
+}
+#menuTree li{
+	list-style:none;
+	/*height:20px;*/
+}
+#menuTree .nav-li{
+	text-align: -moz-left;
+	text-align: center;
+	line-height: 28px;
+	z-index:999;
+	margin-top:-10px;
+}
+#menuTree .new-nav-tab{
+	display:none;
+    float: left;
+    height: auto;
+    background-color: #6E85AA;
+    z-index:1000;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    list-style: outside none none;
+    margin: 2px 0 0;
+    padding: 5px 0;
+    width:auto;
+}
+#menuTree .new-nav-tab li{
+    width:auto;
+	display:table;
+	text-align: -moz-left;
+	text-align: left;
+	padding-left:30px;
+	padding-right:30px;
+	line-height: 28px;
+	z-index:999;
+	margin-top:10px;
+}
+#menuTree .new-nav-tab span{
+	font-weight: bold;
+	font-size: 16px;
+}
+#menuTree .menu-main{
+	width:115px;
+	height:100px;
+	padding-top: 10px;
+	z-index: 0;
+	border-radius: 6px;
+}
+#menuTree .min-menu-main{
+	width:115px;
+	height:50px;
+	padding-top: 10px;
+	z-index: 0;
+	border-radius: 6px;
+}
+#menuTree .menu-main:hover{
+	background-color: #6E85AA;
+	border-radius: 6px;
+}
+#menuTree .min-menu-main:hover{
+	background-color: #6E85AA;
+	border-radius: 6px;
+}
+#menuTree a{
+	text-decoration:none;
+	color:white;
+	font-size:15px;
+}
+
+#showMenu {
+	position: absolute;
+	width: 60px;
+	height: 26px;
+	text-align: center;
+	right: -60px;
+	top: -10px;
+	padding-top: 0px;
+	border-bottom-right-radius: 6px;
+	border-top-right-radius: 6px;
+	border-bottom-left-radius: 6px;
+	border-top-left-radius: 6px;
+	background-color: #eeeeee;
+	color:white;
+}

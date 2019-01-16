@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/error/validation/ajax">
+
+    <parameter id="job_id" type="integer" required="true" label="job_id"/>
+    <parameter id="form_id" type="integer" required="true" label="form_id"/>
+	<parameter id="is_node" type="varchar" required="true" label="is_node"/>
+    <parameter id="clause_code" type="varchar" required="false" label="clause_code"/>
+	<parameter id="field_type" type="varchar" required="false" label="field_type"/>
+    <parameter id="clause_filter" type="varchar" required="false" label="clause_filter"/>
+    <parameter id="clause_value" type="varchar" required="false" label="clause_value"/>
+    <parameter id="parent_id" type="integer" required="false" label="parent_id" />
+    <parameter id="logic_type" type="varchar" required="false" label="varchar" />
+    <parameter id="namespace" type="varchar" required="false" label="namespace" />
+	<parameter id="phrase_name" type="varchar" required="false" label="phrase_name" />
+	<parameter id="filter_type" type="varchar" required="true" label="filter_type" />
+
+</validator>
+
+

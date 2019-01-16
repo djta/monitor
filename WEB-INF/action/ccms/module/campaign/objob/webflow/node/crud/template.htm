@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/ccms/pub}
+<title>节点信息</title>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">节点信息</h2>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+			    <input type="hidden" id="tuid" name="tuid" value="" />
+				<input id="job_id" name="job_id" type="hidden" value="" preserve="true" />
+				<input id="subject_id" name="subject_id" type="hidden" value="" preserve="true" />
+			
+				<input id="node_width" name="node_width" type="hidden" value="" />
+				<input id="node_height" name="node_height" type="hidden" value="" />
+				<input id="node_x" name="node_x" type="hidden" value="" />
+				<input id="node_y" name="node_y" type="hidden" value="" />
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">任务名称</label>
+					<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+						<input id="node_name" name="node_name" type="text" value="" class="form-control" maxlength="60"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">任务类型</label>
+					<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+						<input name="node_type" type="radio" value="0" />起始节点
+						<input name="node_type" type="radio" value="1" />过程节点
+						<input name="node_type" type="radio" value="2" />结束节点
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">任务配额(成功)</label>
+					<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+						<input id="success_quota" name="success_quota" type="text" value="999999" preserve="true" maxlength="10" class="form-control"  />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">抢占类型(仅对外呼和DM有效)</label>
+					<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+						<input name="grab_flag" type="radio" value="0" />抢占式
+						<input name="grab_flag" type="radio" value="1" checked />非抢占式(一个月内不触碰)
+						<input name="grab_flag" type="radio" value="3" />非抢占式(三个月内不触碰)
+						<input name="grab_flag" type="radio" value="6" />非抢占式(六个月内不触碰)
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">抢占失败处理方法</label>
+					<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+						<input name="grab_skip_flag" type="radio" value="0" checked />等待,直到抢占成功
+						<input name="grab_skip_flag" type="radio" value="1" />跳过,直接到下一任务节点
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">抢占范围</label>
+					<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+						<input name="grab_flag_scope" type="radio" value="0" />按活动
+						<input name="grab_flag_scope" type="radio" value="1" />按主题
+						<input name="grab_flag_scope" type="radio" value="3" />所有活动
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">事件类型</label>
+					<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+						<input id="ob_type" name="ob_type" type="radio" value="0" />外呼&nbsp;&nbsp; 
+						话术:
+						<input id="paper_id" name="paper_id" type="hidden" value="" />
+						<input type="text" id="paper_name" name="paper_name" size="20"  readonly  class="readonly" />
+						<img src="${def:context}/images/search.gif" class="tool"
+							onclick="pickOpen('paper_name','paper_id','${def:context}/action/pub/pick/term?subject_id='+document.formEditor.subject_id.value,'400','350','formEditor')"
+							title="查询话述问卷" />
+						<img src="${def:context}/images/clear.gif"
+							onclick="pickClear('formEditor','paper_id','paper_name');" class="tool2"
+							title="清除选择的内容"  />					
+						<br/>
+						是否自动分配拨打:
+						<input id="is_auto_assign" name="is_auto_assign" type="radio" value="0" checked />否 
+						<input id="is_auto_assign" name="is_auto_assign" type="radio" value="1" />是
+						&nbsp;&nbsp;&nbsp;限制拨打次数:
+						<input type="text" id="limit_dial_count" name="limit_dial_count" size="10" maxlength="2" />
+						<br/><br/>
+						<input id="ob_type" name="ob_type" type="radio" value="1"/>短消息&nbsp;&nbsp;
+						短消息模版:
+						<input id="sms_template_id" name="sms_template_id" type="hidden" value=""/>
+						<input type="text" id="sms_template_name" name="sms_template_name" size="20"  readonly  class="readonly" />
+						<img src="${def:context}/images/search.gif" class="tool"
+							onclick="pickOpen('sms_template_name','sms_template_id','${def:context}/action/pub/pick/sms?subject_id='+document.formEditor.subject_id.value,'600','400','formEditor')"
+							title="查询短信模版"/>
+						<img src="${def:context}/images/clear.gif"
+							onclick="pickClear('formEditor','sms_template_id','sms_template_name');" class="tool2"
+							title="清除选择的内容" />					
+		
+						<br/><br/>
+						<input id="ob_type" name="ob_type" type="radio" value="2"/>电子邮件 &nbsp;&nbsp;
+						<select name="email_send_type" id="email_send_type">
+							<option value="0">系统发送</option>
+							<option value="5">EDM发送</option>
+						</select>
+						邮件模版:
+						<input id="email_template_id" name="email_template_id" type="hidden" value=""/>
+						<input type="text" id="email_template_name" name="email_template_name" size="20"  readonly  class="readonly" />
+						<img src="${def:context}/images/search.gif" class="tool"
+							onclick="pickOpen('email_template_name','email_template_id','${def:context}/action/pub/pick/email?subject_id='+document.formEditor.subject_id.value,'400','350','formEditor','email_subject')"
+							title="查询邮件模版"/>
+						<img src="${def:context}/images/clear.gif"
+							onclick="pickClear('formEditor','email_template_id','email_template_name','email_subject');" class="tool2"
+							title="清除选择的内容" />					
+						<br/>
+						邮件主题:
+						<input type="text" id="email_subject" name="email_subject" size="20"  />
+						<br/><br/>
+						<input id="ob_type" name="ob_type" type="radio" value="3"/>DM&nbsp;&nbsp;
+						DM任务:
+						<input id="dm_job_id" name="dm_job_id" type="hidden" value=""/>
+						<input type="text" id="dm_job_name" name="dm_job_name" size="20"  readonly  class="readonly" />
+						<img src="${def:context}/images/search.gif" class="tool"
+							onclick="pickOpen('dm_job_name','dm_job_id','${def:context}/action/pub/pick/dmjob?subject_id='+document.formEditor.subject_id.value,'400','350','formEditor')"
+							title="查询DM任务"/>
+						<img src="${def:context}/images/clear.gif"
+							onclick="pickClear('formEditor','dm_job_id','dm_job_name');" class="tool2"
+							title="清除选择的内容" />					
+		
+						<br/><br/>
+						<input id="ob_type" name="ob_type" type="radio" value="4"/>提醒 &nbsp;&nbsp;
+						提醒模版:
+						<input id="remind_template_id" name="remind_template_id" type="hidden" value=""/>
+						<input type="text" id="remind_template_name" name="remind_template_name" size="20"  readonly  class="readonly" />
+						<img src="${def:context}/images/search.gif" class="tool"
+							onclick="pickOpen('remind_template_name','remind_template_id','${def:context}/action/pub/pick/remind?subject_id='+document.formEditor.subject_id.value,'400','350','formEditor','remind_subject')"
+							title="查询提醒模版"/>
+						<img src="${def:context}/images/clear.gif"
+							onclick="pickClear('formEditor','remind_template_id','remind_template_name');" class="tool2"
+							title="清除选择的内容" />
+							&nbsp;&nbsp;&nbsp;提醒主题:
+						<input type="text" id="remind_subject" name="remind_subject" size="20"  />
+						<br/><br/>
+		
+						<input id="ob_type" name="ob_type" type="radio" value="7"/>彩信&nbsp;&nbsp;
+						彩信模版:
+						<input id="mms_template_id" name="mms_template_id" type="hidden" value=""/>
+						<input type="text" id="mms_template_name" name="mms_template_name" size="20"  readonly  class="readonly" />
+						<img src="${def:context}/images/search.gif" class="tool"
+							onclick="pickOpen('mms_template_name','mms_template_id','${def:context}/action/pub/pick/mms?subject_id='+document.formEditor.subject_id.value,'600','400','formEditor')"
+							title="查询彩信模版"/>
+						<img src="${def:context}/images/clear.gif"
+							onclick="pickClear('formEditor','mms_template_id','mms_template_name');" class="tool2"
+							title="清除选择的内容" />
+						<br/><br/>
+						<input id="ob_type" name="ob_type" type="radio" value="9"/>等待&nbsp;&nbsp;
+						等待时间<input id="wait_time" name="wait_time" type="hidden" value=""/>
+						天<input id="day_v" name="day_v" type="text" size="4" value="" style="text-align:center"/>
+						小时
+						<select name="hour_v" id="hour_v">
+						</select>
+						分钟
+						<select name="min_v" id="min_v">
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">备注</label>
+					<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+						<textarea id="remark" name="remark" class="form-control"></textarea>
+					</div>
+				</div>
+				<div class="form-group text-center">
+					<button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+					<button type="button" id="cancel_btn" class="btn btn-primary btn-md">取&nbsp;消</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button type="button" id="delete_btn" class="btn btn-primary btn-md" style="display:none;">删&nbsp;除</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script LANGUAGE="JavaScript">
+$(function(){
+	document.formEditor.job_id.value = "${fld:job_id}";
+	document.formEditor.subject_id.value = "${fld:subject_id}";
+	initSelect();
+	var id = "${fld:id}", uri = "";
+	var nodeObj = parent.getNodeConfig(id);
+	if(typeof(nodeObj.node_id) != "undefined"){
+		getAjaxCall("${def:actionroot}/edit?id="+nodeObj.node_id, function(){
+			uri = "${def:actionroot}/update";
+			$("#delete_btn").unbind().on("click",function(){
+				getAjaxCall("${def:actionroot}/delete?id="+nodeObj.node_id);
+			});
+			$("#delete_btn").show();
+		});
+	}else{
+		uri = "${def:actionroot}/insert";
+		addNewBackSetting();
+	}
+	
+	$("#save_btn").unbind().on("click",function(){
+		var obType = ccms.util.getRadioValue("ob_type","formEditor");
+		if(obType == "0"){
+			var dialCount = document.formEditor.limit_dial_count.value;
+			if(dialCount == ""){
+				alert("请输入限制拨打次数！");
+				return false;
+			}
+		}
+
+	    if (!CheckNullNum("day_v")) return false;
+		var wait_time = 0;
+		var dayV = document.formEditor.day_v.value;
+		if(isNaN(dayV)) {
+	       alert ("请输入数字！");
+	       document.formEditor.day_v.focus();
+	       document.formEditor.day_v.select();
+	       return false;
+	    }
+		var hourV = document.formEditor.hour_v.value;
+		var minV = document.formEditor.min_v.value;
+		if(dayV != ""){
+			wait_time += parseInt(dayV)*24*60;
+		}
+		if(hourV != ""){
+			wait_time += parseInt(hourV)*60;
+		}
+		if(minV != ""){
+			wait_time += parseInt(minV);
+		}
+		if(wait_time > 0){
+			document.formEditor.wait_time.value = wait_time;
+		}
+		return ajaxCall(uri, {
+			method : "post",
+			form : "formEditor",
+			button : "save_btn",
+			progress : true,
+			dataType : "script",
+			success : function() {
+			}
+		});
+	});
+	$("#cancel_btn").unbind().on("click",function(){
+		ccms.dialog.close();
+	});
+});
+//检测纯数字(可以为空)
+function CheckNullNum(val,formObj){
+	//表单对象，如果为null，默认为“formEditor”
+	var formTarget=(formObj==null || formObj=="" || typeof(formObj)=="undefined")? "formEditor":formObj;
+
+	if(isNaN(document.forms[formTarget].elements[val].value)){
+		alert ("请输入数字！");
+		document.forms[formTarget].elements[val].focus();
+		document.forms[formTarget].elements[val].select();
+		return false;
+	}
+	return true;
+}
+function initSelect(){
+	var hour = $("#hour_v"), min = $("#min_v"), i;
+	// 小时
+	hour.append('<option value="0"></option>');
+	for(i = 1; i < 24; i++){
+		hour.append('<option value="' + i + '">' + i + '</option>');
+	}
+	// 分钟
+	min.append('<option value="0"></option>');
+	for(i = 1; i < 60; i++){
+		min.append('<option value="' + i + '">' + i + '</option>');
+	}
+}
+function getAjaxCall(uri, callback){
+	return ajaxCall(uri, {
+		method : "get",
+		progress : true,
+		dataType : "script",
+		success : function() {
+			if( undefined != callback && null != callback ){
+				callback();
+			}
+		}
+	});
+}
+
+function addNewBackSetting(){
+	ccms.util.setCheckboxValue("node_type","0","formEditor");
+	ccms.util.setCheckboxValue("ob_type","0","formEditor");
+
+	ccms.util.setCheckboxValue("is_auto_assign","0","formEditor");
+	document.formEditor.limit_dial_count.value = "4";
+
+	ccms.util.setCheckboxValue("grab_flag","0","formEditor");
+	ccms.util.setCheckboxValue("grab_skip_flag","0","formEditor");
+	ccms.util.setCheckboxValue("grab_flag_scope","1","formEditor");
+
+	//获取当前节点真实坐标，并赋值
+	if(typeof(nodeObj) != "undefined"){
+		document.formEditor.node_width.value = nodeObj.width;
+		document.formEditor.node_height.value = nodeObj.height;
+		document.formEditor.node_x.value = nodeObj.left;
+		document.formEditor.node_y.value = nodeObj.top;
+	}
+}
+</script>
+
+</body>
+</html>

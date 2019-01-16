@@ -1,0 +1,15 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"tuid":"${fld:tuid}"
+		,"subject_id":"${fld:subject_id}"
+		,"report_name_cn":"${fld:report_name_cn@js}"
+		,"report_type_alias":"${fld:report_type_alias@js}"
+		,"engine_type_alias":"${fld:engine_type_alias@js}"
+		,"engine_type":"${fld:engine_type@js}"
+		,"table_alias":"${fld:table_alias@js}"
+		,"remark":"${fld:remark@js}"
+	},
+	</rows>
+	{}
+]}

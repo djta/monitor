@@ -1,0 +1,9 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"tenantry_id":"${fld:tenantry_id}"
+		,"app_name":"${fld:app_name@js}","tenantry_name":"${fld:tenantry_name@js}","tenantry_state":"${fld:tenantry_state@js}","description":"${fld:description@js}"
+	},
+	</rows>
+	{}
+]}

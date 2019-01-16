@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror='/action/ccms/validate'>
+	<parameter id='app_id' type='integer' required='true' label='App' maxlen='10'/>
+	<parameter id='service_id' type='integer' required='true' label='Action' maxlen='10'/>
+	<parameter id='icon_path' type='varchar' required='true' label='Imagen' maxlen='200'/>
+	<parameter id='orden' type='integer' required='true' label='Orden' maxlen='10'/>
+</validator>

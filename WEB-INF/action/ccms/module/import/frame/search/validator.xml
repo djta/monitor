@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="tab_id1" type="varchar" required="true" label="tab_id1" />
+	<parameter id="rule_name" type="varchar" required="false" label="导入名称" />
+	
+</validator>
+

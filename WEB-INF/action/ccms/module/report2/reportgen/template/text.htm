@@ -1,0 +1,8 @@
+<th class="th20${fld:is_required_alias}">
+	<label class="control-label">${fld:field_name}</label>
+</th>
+<td class="td20left">
+	<input type="hidden" name="${fld:field_code_alias}_operator" value="${fld:filter_type}" preserve="true" />
+	<input class="form-control" name="${fld:field_code_alias}_filter" id="${fld:field_code_alias}_filter" type="text" size="${fld:show_width}" maxlength="${fld:maxlength}" value="" default="${fld:default_value}" ${fld:plugin_code} />
+	${fld:plugin_control}
+</td>

@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>查询商户</title>
+</head>
+<body>
+<div class="main">
+	<div class="panel panel-default">
+		<div class="panel-heading text-center">
+			<h2 class="panel-title">查询商户</h2>
+		</div>
+	</div>
+	<div class="panel-body">
+		<form class="form-horizontal" role="form" method="post" id="searchForm">
+			<input name="sort" type="hidden" value="tenantry_id" preserve="true"/>
+			<input name="order" type="hidden" value="desc" preserve="true" /> 
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+		</form>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th class="sortable" code="#tenantry_id#">商户ID</th>
+					<th class="sortable" code="#tenantry_name#">商户名称</th>
+				</tr>
+			</thead>
+			<tbody id="datagridTemplate" style="display: none">
+				<tr onclick="parent.selectPic('#tenantry_id#','#tenantry_name#')" style="cursor: pointer;">
+					<td align="center">#tenantry_id#</td>
+					<td align="center">#tenantry_name#</td>
+				</tr>
+			</tbody>
+			<tbody id="datagrid"></tbody>
+		</table>
+		<div class="pageDiv">
+			<ul class="pagination">
+			</ul>
+		</div>
+	</div>
+
+	<!--用于传递当前目录到header模版中-->
+	<input type="hidden" name="actionroot" id="actionroot"	value="${def:actionroot}" />
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		
+	}}).initSearchBtn().searchData(1);
+});
+</script>
+</body>
+</html>

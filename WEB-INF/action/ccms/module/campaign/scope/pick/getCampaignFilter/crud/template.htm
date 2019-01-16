@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/ccms/pub}
+<title>选择信息</title>
+</head>
+<body>
+
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">选择信息</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm">
+			      <div class="form-group" >
+						<label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label">大区</label>
+						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">						
+							<select id="area" name="area"  size="1" style="font-size: 9pt;width:150"  >
+	                        <option value=""></option>
+	                        <row-area>
+	                              <option value="${fld:area_code}">${fld:area_name}</option>
+	                        </row-area>        
+	                    </select>
+						</div>
+						<label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label">活动名称</label>
+						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">						
+							<input type="text" id="campaign_name" name="campaign_name" size="25">
+						</div>
+						<label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label">经销商名称</label>
+						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">						
+							<input type="text" id="dealer_name" name="dealer_name" size="25">
+						</div>
+						<label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label">省份</label>
+						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">						
+							<select id="province" name="province"  size="1" style="font-size: 9pt;width:150" onchange="getChildDomain2('Province',this.value,'City','city','','')">
+		                         <option value=""></option>
+		                         <row-province>
+		                              <option value="${fld:province_code}">${fld:province_name}</option>
+		                         </row-province>        
+		                    </select>
+						</div>
+				   </div>
+				   <div class="form-group" >
+						<label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label">城市</label>
+						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">						
+							<select id="city" name="city"  size="1" style="font-size: 9pt;width:150" onchange="getParentSelectDomain('Province','City',this.value,'province','','')">
+		                         <option value=""></option>
+		                         <row-city>
+		                              <option value="${fld:city_code}">${fld:city_name}</option>
+		                         </row-city>        
+		                    </select>
+						</div>
+						<label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label">经销商</label>
+						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">						
+							<select id="dealer" name="dealer"  size="1" style="font-size: 9pt;width:150" onchange="getChildDomain2('Province',this.value,'City','city','','')">
+		                        <option value=""></option>
+		                        <row-dealer>
+		                             <option value="${fld:dealer_code_a}">${fld:dealer_name}</option>
+		                        </row-dealer>        
+		                    </select>
+						</div>
+						<label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label">品牌</label>
+						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">						
+							<select id="interested_brand" name="interested_brand"  size="1" style="font-size: 9pt;width:150" onchange="getChildDomain2('IntendedBrand',this.value,'IntenedeSeries','interested_series','','')">
+		                         <option value=""></option>
+		                         <row-brand>
+		                             <option value="${fld:brand_code}">${fld:brand_name}</option>
+		                         </row-brand>        
+		                    </select>
+						</div>
+						<label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label">车系</label>
+						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">						
+							<select id="interested_series" name="interested_series"  size="1" style="font-size: 9pt;width:150"  >
+	                	         <option value=""></option>
+		                         <row-series>
+		                              <option value="${fld:series_code}">${fld:series_name}</option>
+		                         </row-series>        
+		                    </select>
+						</div>
+				   </div>
+				   <div class="form-group" >
+						<label class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label">有效期内</label>
+						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">						
+							<select id="validate_date" name="validate_date"  size="1" style="font-size: 9pt;width:50"  >
+		                         <option value="1">是</option>
+	                	         <option value="0">否</option>
+		                    </select>
+						</div>
+					      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						      <button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						      <button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+					      </div>
+				      </div>
+			      </form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th class="sortable" code="campaign_id">代码</th>
+		                <th class="sortable" code="campaign_name">活动</th>
+		                <th class="sortable" code="stu_name">类型</th>
+		                <th class="sortable" code="stu_name">名称</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td class="text-center">#campaign_id#</td>
+			            <td class="text-center">#campaign_name#</td>
+			            <td class="text-center">#event_type#</td>
+			            <td class="text-center">#scope_name#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script language="JavaScript">
+$(document).ready(function() {
+	var search=null;
+		this.search=search;
+		search=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		
+	}}).initSearchBtn().searchData(1);
+});
+</script>
+</body>
+</html>

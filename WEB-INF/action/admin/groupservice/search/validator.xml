@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="app_id" type="integer" required="false" label="系统ID" />
+	<parameter id="group_name" type="varchar" required="false" label="分组名称" />
+
+	<custom-validator
+		classname="dinamica.validators.SQLPatternTransformer"
+		parameter="group_name"
+		rule="contains" />
+</validator>
+

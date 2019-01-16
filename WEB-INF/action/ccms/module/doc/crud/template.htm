@@ -1,0 +1,451 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script language="JavaScript" type="text/javascript"
+	src="${def:context}/action/pub/dtree"></script>
+<title>服务信息</title>
+</head>
+<body>
+<!-- 编辑 -->
+<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="formTitle">修改文档</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form" method="post"	id="formEditor" name="formEditor">
+					<input type="hidden" id="tuid" name="tuid" value="" />
+					<input name="subject_id" id="subject_id" type="hidden" value=""  preserve="true" />
+					<input name="document_type" type="hidden" value="" preserve="true"/>
+					<div class="row clearfix">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">文档名称</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input id="document_name" class="form-control" name="document_name" type="text" value=""/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">关联业务</label>
+								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+									<input id="table_id" name="table_id" type="hidden" value="" />
+									<input type="text" id="table_name" name="table_name" size="30" class="form-control" readonly  value="" />
+								</div>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<img src="${def:context}/images/search.gif" style="cursor: pointer;" id="docTablePick" title="查询表名" />
+									<img src="${def:context}/images/clear.gif" style="cursor: pointer;" id="docTablePickClear" title="清除选择的内容" />
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">文档宽度</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input class="form-control" name="doc_width" type="text" size="35" value="" maxlength="256"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">左侧边栏地址</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input class="form-control" name="nav_url" type="text" size="35" value="" maxlength="256"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">右侧边栏地址</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input class="form-control" name="nav_url_right" type="text" size="35" value="" maxlength="256"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">顶边栏地址</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input class="form-control" name="nav_url_top" type="text" size="35" value="" maxlength="256"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">底边栏地址</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input class="form-control" name="nav_url_bottom" type="text" size="35" value="" maxlength="256"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">跳转地址</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input class="form-control" name="url" type="text" size="35" value="" maxlength="256"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">模板地址</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input class="form-control" name="template_uri" type="text" size="35" value="" maxlength="256"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">文档布局</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input id="action_type" name="action_type" type="radio" size="35" value="0" />表单
+									<input id="action_type" name="action_type" type="radio" size="35" value="3" />报表
+								</div>
+							</div>
+							<div class="form-group" id="formName"  style="display:none;">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">关联表单</label>
+								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+									<input id="form_id" name="form_id" type="hidden" value="" />
+									<input type="text" id="form_name" name="form_name" size="30" readonly class="form-control" value="" />
+								</div>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<img src="${def:context}/images/search.gif" style="cursor: pointer;" id="docFormPick" title="查询表名" />
+									<img src="${def:context}/images/clear.gif" style="cursor: pointer;" id="docFormPickClear" title="清除选择的内容" />
+								</div>
+							</div>
+							<div class="form-group" id="reportName" style="display:none;">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">关联报表</label>
+								<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+									<input id="report_id" name="report_id" type="hidden" value="" /> 
+									<input type="text" id="report_name" name="report_name" size="30" readonly class="form-control" value="" />
+								</div>
+								<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+									<img src="${def:context}/images/search.gif" style="cursor: pointer;" id="docReportPick" title="查询表名" />
+									<img src="${def:context}/images/clear.gif" style="cursor: pointer;" id="docReportPickClear" title="清除选择的内容" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">文档高度</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input class="form-control" name="doc_hight" type="text" size="35" value="" maxlength="32"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">左侧边栏宽度</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input class="form-control" name="nav_url_width" type="text" size="35" value="" maxlength="32"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">右侧边栏宽度</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input class="form-control" name="nav_right_width" type="text" size="35" value="" maxlength="32"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">顶边栏高度</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input class="form-control" name="nav_url_hight" type="text" size="35" value="" maxlength="32"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">底边栏高度</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<input class="form-control" name="nav_bottom_hight" type="text" size="35" value="" maxlength="32"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">备注</label>
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+									<textarea class="form-control" type="text" name="remark" cols="35" rows="1" maxlength="256"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+				<div class="modal-footer">
+					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+						<button type="button" id="save_btn" class="btn btn-primary btn-md">保&nbsp;存</button>
+						<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 查询 -->
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">文档配置<span id="typeTitleSpan"></span></h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+			${inc:/action/ccms/config_type?search_subject_id=${fld:subject_id}}
+		</div>
+		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+			<form class="form-horizontal" role="form" method="post" id="searchForm" name="searchForm">
+				<input name="sort" type="hidden" value="tuid" preserve="true" />
+				<input name="order" type="hidden" value="desc" preserve="true" />
+				<input name="pageNo" type="hidden" value="" preserve="true" />
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+				<input name="document_type" type="hidden" value="" preserve="true"/>
+				<input id="subject_id1" name="subject_id1" type="hidden" value="" preserve="true"/>
+				<div class="form-group">
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<input id="document_name" class="form-control" name="document_name" type="text" value="" placeholder="请输入文档名称" size="30" />
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+						<button class="btn btn-primary btn-md" type="button" id="addnew_btn">新增</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>操作</th>
+						<th></th>
+						<th class="sortable" code="tuid">文档ID</th>
+						<th class="sortable" code="document_name">文档名称</th>
+						<th class="sortable" code="action_type">类型</th>
+						<th class="sortable" code="table_name">关联业务</th>
+						<th class="sortable" code="form_name">关联界面</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td align="center">
+							<button class="btn btn-primary btn-xs edit_btn" type="button" code="#tuid#">修改</button>
+							<button class="btn btn-primary btn-xs delete_btn" type="button" code="#tuid#">删除</button>
+						</td>
+						<td align="center">
+							<button class="btn btn-primary btn-xs reviewDocument_btn" type="button" title="预览" code="#tuid#">预览</button>
+							<button class="btn btn-primary btn-xs showParams_btn" type="button" title="传递参数信息" code="#tuid#">参数</button>
+							<button class="btn btn-primary btn-xs export_btn" type="button" title="导出文档配置" code="#tuid#">导出</button>
+							<button class="btn btn-primary btn-xs publishDocument_btn" type="button" title="加载文档" code="#tuid#">加载</button>
+						</td>
+						<td align="center">#tuid#</td>
+						<td align="center">#document_name#</td>
+						<td align="center">#action_type#</td>
+						<td align="center">#table_name#</td>
+						<td align="center">
+							<button class="btn btn-primary btn-xs showForm_btn" type="button"  code="#subject_id#" code1="#form_id#"  code2="#document_type#" >界面</button>
+						</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid"></tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination"></ul>
+			</div>
+		</div>
+	</div>	
+	<input type="hidden" name="actionroot" id="actionroot"	value="${def:actionroot}"/> 
+</div>
+<script type="text/javascript">
+function DocClass(){
+	this.searchObj = null;
+	this.obj=null;
+	this.init=function(){
+		document.formEditor.subject_id.value = "${fld:subject_id}";
+		document.searchForm.subject_id1.value = "${fld:subject_id}";
+		document.formEditor.document_type.value=defaultTypeVal;
+		document.getElementById("typeTitleSpan").innerHTML = "&nbsp;&nbsp;-&nbsp;&nbsp;"+defaultTypeName;
+		this.initData();
+		this.initEvent();
+},
+this.initData=function(){
+	var obthis=this;
+	var obj = $Crud({
+		formId:"formEditor",
+		button:"save_btn",
+		insertBack:function(){
+			obthis.searchObj.searchData();
+		},
+		updateBack:function(){
+			obthis.searchObj.searchData();
+		},
+		deleteBack:function(){
+			obthis.searchObj.searchData();
+		},
+		addNewBack:function(){
+			$("#formTitle").html("新增文档");
+		}, 
+		editBack:function(){
+			$("#formTitle").html("修改文档");
+		},
+		validate:function(){
+			var flag=$("#formEditor").validate({
+				rules: {
+					document_name: {
+						required: true,
+						rangelength: [1,32]
+					},
+					action_type: {
+						required: true
+					}
+				},
+				messages: {
+					document_name: {
+						required: "请输入文档名称",
+						rangelength: "文档名称长度为1到32位"
+					},
+					action_type: {
+						required: "请选择文档布局"
+					}
+				}
+			});
+			return flag;
+		},
+		check:function(){
+			if(GetCheckboxValue("action_type","formEditor")=='0'){
+				if(document.formEditor.form_id.value==''){
+					setFormErrorMsg("form_name","请选择关联表单");
+					return false;
+				}else{
+					return true;
+				}
+			}else{
+				if(document.formEditor.report_id.value==''){
+					setFormErrorMsg("report_name","请选择关联报表");
+					return false;
+				}else{
+					return true;
+				}
+			}
+		}
+	}).init();
+
+	obthis.searchObj=$Search({datagrid: "datagrid", formId: "searchForm", success: function () {
+		//修改按钮
+		$(".edit_btn").unbind().on("click", function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				obj.edit({id:$(this).attr("code")});
+			}
+		});
+		//删除按钮
+		$(".delete_btn").unbind().on("click", function () {
+			var obthis = $(this);
+			$Dialog().confirm("确定要删除吗？",function(){
+				if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+					var url = "/action/ccms/module/doc/delete?id="+obthis.attr("code");
+					ajaxCall(url,{
+						method: "post",
+						progress: true,
+						dataType: "script",
+						success: function() {
+							$Dialog().notice("删除成功！",1000,function(){
+								gotoBack();
+							});		
+						}
+					});
+				}
+			});
+		});
+		
+		//预览文档
+		$(".reviewDocument_btn").unbind().on("click",function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				var url = "/action/ccms/doc?document_id="+$(this).attr("code");
+				gotoPage(url);
+			}
+		});
+		//调用参数按钮
+		$(".showParams_btn").unbind().on("click",function(){
+			if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+				ccms.dialog.open({url:"${def:context}/action/ccms/module/doc/params/crud?document_id="+$(this).attr("code"),id:"document_id",width:800,height:500});
+			}
+		});
+		//导出按钮 	
+		$(".export_btn").unbind().on("click",function(){
+			if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+				var url = "${def:context}/action/ccms/module/subject/config/export/document?document_id="+$(this).attr("code");
+				window.open(url,"name");
+	        }
+		});
+		//发布按钮
+		$(".publishDocument_btn").unbind().on("click",function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				var url = "${def:actionroot}/publish?document_id="+$(this).attr("code");
+				ajaxCall(url,{
+					method: "GET",
+					progress: true,
+					dataType: "script",
+					success: function() {
+					
+					}
+				});
+			}
+		});
+		//界面按钮
+		$(".showForm_btn").unbind().on("click",function(){
+			if ($(this).attr("code") != undefined && $(this).attr("code") != "" && $(this).attr("code1") != undefined && $(this).attr("code1") != ""
+				&& $(this).attr("code2") != undefined && $(this).attr("code2") != "") {
+				var url = "/action/ccms/module/forms/crud?subject_id="+$(this).attr("code")+"&form_id="+$(this).attr("code1")+"&form_type="+$(this).attr("code2");
+				gotoPage(url);
+			}
+		});
+		
+	}}).initSearchBtn().searchData(1);
+	
+},
+	this.initEvent=function(){
+	//业务选取框
+	$("#docTablePick").unbind().on("click",function(){
+		var subject_id = document.formEditor.subject_id.value;
+		var url = "${def:context}/action/ccms/pub/pick/table/crud?id=table_id&name=table_name&pickId=pickOpen&subject_id="+subject_id;
+		ccms.dialog.open({url:url,id:"pickOpen",width:800,height:600});
+	});
+	$("#docTablePickClear").unbind().on("click",function(){
+		document.formEditor.table_id.value='';
+		document.formEditor.table_name.value='';
+	});
+	//表单选取框
+	$("#docFormPick").unbind().on("click",function(){
+		var table_id = document.formEditor.table_id.value;
+		if(table_id==''){
+			$Dialog().notice("请选择关联业务",1500);
+		}else{
+			var url = "${def:context}/action/ccms/pub/pick/form/crud?pickId=pickOpen&id=form_id&name=form_name&table_id="+table_id;
+			ccms.dialog.open({url:url,id:"pickOpen",width:800,height:600});
+		}
+	});
+	$("#docFormPickClear").unbind().on("click",function(){
+		document.formEditor.form_id.value='';
+		document.formEditor.form_name.value='';
+	});
+	//报表选取框
+	$("#docReportPick").unbind().on("click",function(){
+		var table_id = document.formEditor.table_id.value;
+		if(table_id==''){
+			$Dialog().notice("请选择关联业务",1500);
+		}else{
+			var url = "${def:context}/action/ccms/pub/pick/report/crud?id=report_id&name=report_name&pickId=pickOpen&table_id="+table_id;
+			ccms.dialog.open({url:url,id:"pickOpen",width:800,height:600});
+		}
+	});
+	$("#docReportPickClear").unbind().on("click",function(){
+		document.formEditor.report_id.value='';
+		document.formEditor.report_name.value='';
+	});	
+  }
+}
+
+var docClass=null;
+$(document).ready(function() {
+	docClass=new DocClass();	
+	docClass.init();
+});
+function typeOperate(t,n){
+	document.searchForm.document_type.value = t;
+	document.formEditor.document_type.value = t;
+	document.getElementById("typeTitleSpan").innerHTML = "&nbsp;&nbsp;-&nbsp;&nbsp;"+n;
+	docClass.searchObj.searchData(1);
+}
+
+function changeType(flag){
+	if(flag=='0'){
+		document.getElementById("formName").style.display='';
+		document.getElementById("reportName").style.display='none';
+	}else{
+		document.getElementById("formName").style.display='none';
+		document.getElementById("reportName").style.display='';
+	}
+}
+$('input[name="action_type"]').on('ifChecked', function(event){
+	var _value = $(this).attr("value");
+	changeType(_value);
+});
+</script>
+</body>
+</html>

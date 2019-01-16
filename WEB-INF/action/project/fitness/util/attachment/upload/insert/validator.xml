@@ -1,0 +1,13 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+    <parameter id="file" type="varchar" required="false" label="Archivo temporal" maxlen="500"/>
+    <parameter id="file.content-type" type="varchar" required="false" label="Formato" maxlen="150"/>
+    <parameter id="file.filename" type="varchar" required="false" label="Archivo" maxlen="400"/>
+    <parameter id="file.filerealname" type="varchar" required="false" label="Archivo" maxlen="400"/>
+	<parameter id="file.path" type="varchar" required="false" label="path" maxlen="400"/>
+    <parameter id="file_size" type="integer" required="false" label="file_size"/>
+	<parameter id="description" type="varchar" required="false" label="description" maxlen="1024"/>
+	<parameter id="pk_value" type="varchar" required="false" label="pk_value" maxlen="32"/>
+	<parameter id="table_code" type="varchar" required="false" label="table_code" maxlen="32"/>
+	<parameter id="imgid" type="varchar" required="false" label="imgid"/>
+</validator>

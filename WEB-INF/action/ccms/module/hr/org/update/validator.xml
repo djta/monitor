@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<parameter id="tuid" type="integer" required="true" label="tuid" />
+	<parameter id="org_name" type="varchar" required="true"
+		label="org_name" maxlen="128" />
+	<parameter id="remark" type="varchar" required="false" label="备注"
+		maxlen="200" />
+	<parameter id="org_grade" type="varchar" required="false"
+		label="org_grade" />
+	<parameter id="show_order" type="integer" required="false"
+		label="显示顺序" />
+	<parameter id="org_type" type="integer" required="false"
+		label="显示顺序" />
+	<parameter id="short_name" type="varchar" required="false"
+		label="组织短名" maxlen="64" />
+	<parameter id="business_hours_begin" type="varchar" required="false"
+		label="business_hours_begin" maxlen="32" />
+	<parameter id="business_hours_end" type="varchar" required="false"
+		label="business_hours_end" maxlen="32" />
+	<parameter id="business_hours_type" type="integer" required="false"
+		label="business_hours_type" />
+	<parameter id="upload_id" type="integer" required="false"
+		label="upload_id" />
+
+</validator>

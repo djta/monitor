@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config nodb="true">
+
+	<summary>
+		
+	</summary>
+	
+	<log>false</log>
+
+	<output>
+		<classname>dinamica.CaptchaOutput</classname>
+	</output>
+
+	<!--Configuracion de la imagen CAPTCHA-->
+	<font>Helvetica</font>
+	<fontsize>22</fontsize>
+	<min-width>150</min-width>
+	<padding-x>10</padding-x>
+	<padding-y>10</padding-y>
+
+</config>

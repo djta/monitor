@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>查看会签意见</title>
+</head>
+<body>
+<div class="panel panel-default">
+	<div class="panel-heading text-center">
+		<h2 class="panel-title">会签意见列表</h2>
+	</div>
+	<div class="panel-body">
+		<table class="table table-bordered">
+			<tbody>
+				<rows>
+				<tr>
+					<td>
+						<span>签署人：${fld:createdby} 时间：${fld:created@yyyy-MM-dd HH:mm:ss}</span></br>
+						<span><font color="red">${fld:comments}</font></span>
+					</td>
+				</tr>
+				</rows>
+			</tbody>
+		</table>
+	</div>
+</div>
+</body>
+</html>

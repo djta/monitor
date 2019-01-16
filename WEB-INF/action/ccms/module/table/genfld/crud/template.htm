@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>字段信息</title>
+</head>
+<body>
+<!-- 页眉 -->
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h1 class="panel-title">字段信息</h1>
+	</div>
+</div>
+
+<form id="form1" name="form1" class="form-horizontal" onsubmit="return insertForm()" 
+	action="${def:context}${def:actionroot}/update" method="post" target="insertFrame">
+	
+	<input type="hidden" name="schema" value="${fld:schema}" />
+	<input type="hidden" name="table" value="${fld:table}" />
+	<input type="hidden" name="table_id" value="${fld:table_id}" />
+	
+	<table class="table table-bordered">
+		<tr>
+			<th></th>
+			<th>序号</th>
+			<th>字段名称(中文)</th>
+			<th>字段名称(英文)</th>
+			<th>字段代码</th>
+			<th>字段代码别名</th>
+			<th>字段类型</th>
+			<th>字段长度</th>
+			<th>小数位数</th>
+			<th>可空值</th>
+			<th>显示格式</th>
+			<th>备注</th>
+		</tr>
+		<tbody id="gridBody">
+			<rows>
+				<tr>
+					<td align="center">
+						<img src="${def:context}/images/clear.gif" style="cursor: pointer;"
+							onclick="deleteRow(this.parentNode.parentNode.sectionRowIndex);" 
+							border="0" title="删除" />
+					</td>
+					<td align="center">
+						<input id="show_order" name="show_order" type="text" size="3" value="${fld:_rowNumber}" />
+					</td>
+					<td align="center">
+						<input id="field_name_cn" name="field_name_cn" type="text" size="18" value="${fld:remarks}" />
+					</td>
+					<td align="center">
+						<input id="field_name_en" name="field_name_en" type="text" size="18" value="${fld:remarks}" />
+					</td>
+					<td align="center">
+						<input id="field_code" name="field_code" type="text" size="12" value="${fld:column_name}" maxlength="30" />
+					</td>
+					<td align="center">
+						<input id="field_code_alias" name="field_code_alias" type="text" size="12" value="${fld:column_name}" maxlength="30" />
+					</td>
+					<td align="center">
+						<input id="field_type" name="field_type" type="text" size="10" value="${fld:type_name}" />
+					</td>
+					<td align="center">
+						<input name="field_length"  type="text" size="5" value="${fld:column_size}" />
+					</td>
+					<td align="center">
+						<input name="decimal_length"  type="text" size="5" value="${fld:decimal_digits}" />
+					</td>
+					<td align="center">
+						<input name="is_mandatory"  type="text" size="5" value="${fld:nullable}" class="readOnly"  readonly  class="readonly" />
+					</td>
+					<td align="center">
+						<select name="show_type">
+							<option value="0">文本框</option>
+							<option value="1">下拉框</option>
+							<option value="2">复选框</option>
+							<option value="3">多选一</option>
+							<option value="4">只读</option>
+							<option value="5">日期</option>
+							<option value="6">文本域</option>
+							<option value="7">选取框</option>
+						</select>
+					</td>
+					<td align="center">
+						<input name="remark"  type="text" size="5" value="${fld:remarks}" />
+					</td>
+				</tr>
+			</rows>
+		</tbody>
+		<tr>
+			<td colspan="12" align="center">
+				<button type="submit" name="submit" id="submit" class="btn btn-primary btn-md">提交</button>
+				<button type="button" name="add_btn" id="add_btn" class="btn btn-primary btn-md">添加</button>
+				<button type="button" name="cancel_btn" id="cancel_btn" class="btn btn-primary btn-md">返回</button>
+			</td>
+		</tr>
+	</table>
+</form>
+
+<iframe name="insertFrame" style="display:none">
+</iframe>
+
+<script language="javascript">
+$(document).ready(function(){
+	//返回
+	$("#cancel_btn").unbind().on("click",function(){
+		$("#_dlggenerateField",window.parent.document).find(".dialog-close").click();//关闭此弹出窗口
+	});
+	
+	//添加
+	$("#add_btn").unbind().on("click",function(){
+		var b = document.getElementById("gridBody");
+		var x = b.insertRow(-1);
+		var d = b.rows[0];
+		for (i=0;i<d.cells.length;i++){
+			var c = x.insertCell(-1);
+			c.innerHTML = d.cells[i].innerHTML;
+			c.align = d.cells[i].align;
+			c.valign = d.cells[i].valign;
+		}
+	});
+	
+});
+//字段校验
+function insertForm(){
+	document.form1.submit.disabled = true;
+	document.form1.add_btn.disabled = true;
+	document.form1.cancel_btn.disabled = true;
+	//document.getElementById("divStatus").style.display="";
+	
+	var flag=false;
+	
+	if(document.form1.table_id.value=="" || document.form1.table_id.value==null){
+		document.form1.submit.disabled = false;
+		document.form1.add_btn.disabled = false;
+		document.form1.cancel_btn.disabled = false;
+		return false;
+	}
+	
+	
+	$("input[name='field_name_cn']").each(function(){
+		if($(this).val()==""){
+			var obthis = $(this);
+			$Dialog().notice("字段名称(中文)不能为空！",1000,function(){
+				document.form1.submit.disabled = false;
+				document.form1.add_btn.disabled = false;
+				document.form1.cancel_btn.disabled = false;
+				obthis.focus();
+			});
+			flag=true;
+			return false;
+		}
+	});
+	
+	$("input[name='field_type']").each(function(){
+		if($(this).val()==""){
+			var obthis = $(this);
+			$Dialog().notice("字段类型不能为空！",1000,function(){
+				document.form1.submit.disabled = false;
+				document.form1.add_btn.disabled = false;
+				document.form1.cancel_btn.disabled = false;
+				obthis.focus();
+			});
+			flag=true;
+			return false;
+		}
+	});
+	
+	if(flag==true){
+		return false;
+	}else{
+		return true;
+	}
+}
+
+function insertOK(){
+	document.form1.submit.disabled = false;
+	document.form1.add_btn.disabled = false;
+	document.form1.cancel_btn.disabled = false;
+	$Dialog().notice("保存成功！",1500,function(){
+		$("#_dlggenerateField",window.parent.document).find(".dialog-close").click();//关闭此弹出窗口
+	});
+}
+
+function updateError(msg){
+	document.form1.submit.disabled = false;
+	document.form1.add_btn.disabled = false;
+	document.form1.cancel_btn.disabled = false;
+	$Dialog().alert(msg);
+}
+
+function deleteRow(j){
+	var b = document.getElementById("gridBody");
+	if(b.rows.length==1){
+		$Dialog().notice("至少要保留一条信息！",1500);
+	}else{
+		b.deleteRow(j);
+	}
+}
+
+</script>
+</body>
+</html>

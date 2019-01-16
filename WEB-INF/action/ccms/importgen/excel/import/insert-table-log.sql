@@ -1,0 +1,30 @@
+INSERT INTO t_import_table_history
+(
+	tuid
+	,history_id
+	,tab_id
+	,total_record
+	,remark
+	,created
+	,createdby
+	,import_batch
+	,insert_record
+	,update_record
+	,error_count
+	,subject_id
+)
+VALUES
+(
+	${seq:nextval@seq_import_table_history}
+	,${seq:currval@seq_import_history}
+	,${tab_id}
+	,${total_record}
+	,${fld:remark}
+	,{ts '${def:timestamp}'}
+	,'${def:user}'
+	,${fld:import_batch}
+	,${insert_record}
+	,${update_record}
+	,${error_count}
+	,${def:subject}
+)

@@ -1,0 +1,1 @@
+AND	${owner_field} = '${def:user}'

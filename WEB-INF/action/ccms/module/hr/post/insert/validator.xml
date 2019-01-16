@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<parameter id="post_name" type="varchar" required="true" label="post_name" />
+	<parameter id="show_order"   type="integer" required="false" label="show_order" />
+</validator>

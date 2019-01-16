@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="userlogin" type="varchar" required="true" label="userlogin" maxlen="64" regexp="^[a-zA-Z0-9][a-zA-Z0-9_@.]{3,64}$" regexp-error-label="帐号最少3位最大64位,首位字母，可包括数字字母下划线@符及小数点." />
+	<parameter id="passwd" type="varchar" required="true" label="Password" maxlen="15" regexp="\w{6,}?" regexp-error-label="密码最少6位." />
+	<parameter id="confirm" type="varchar" required="true" label="confirm" maxlen="15" />
+	<parameter id="pwd_policy" type="integer" required="true" label="pwd_policy" />
+	<parameter id="force_newpass" type="integer" required="false" label="force_newpass" />
+
+	<parameter id="name" type="varchar" required="true" label="姓名" maxlen="38" />
+	<parameter id="sex" type="varchar" required="true" label="性别" maxlen="2" />
+	<parameter id="birthday" type="varchar" required="false" label="出生日期" />
+	<parameter id="address" type="varchar" required="false"	label="联系地址" maxlen="180" />
+	<parameter id="contace_info" type="varchar" required="false" label="联系电话" maxlen="32" />
+	<parameter id="card_no" type="varchar" required="false" label="卡号" maxlen="16" />
+	<parameter id="entry_date" type="date" required="false" label="入职日期" />
+	<parameter id="contract_from" type="date" required="false" label="合同起始日" />
+	<parameter id="contract_end" type="date" required="false" label="合同结束日" />
+	<parameter id="remark" type="varchar" required="false" label="备注" maxlen="256" />
+	<parameter id="salary" type="double" required="false" label="salary" />
+
+	<parameter id="email" type="varchar" required="false" label="Email"
+		maxlen="256" regexp="^([\w-]+\.)*?[\w-]+@[\w-]+\.([\w-]+\.)*?[\w]+$"
+		regexp-error-label="电子邮件格式错误, 请使用 xxxx@xxxxxx.xxx 格式" />
+
+	<parameter id="locale" type="varchar" required="false" label="默认语言" />
+	<parameter id="mobile" type="varchar" required="false" label="mobile" />
+	<parameter id="ext_num" type="varchar" required="false" label="ext_num" />
+	<parameter id="org_id" type="integer" required="false" label="org_id" />	
+	<parameter id="hc_id" type="varchar" required="false" label="hc_id" />
+	<parameter id="def_org_post_id" type="varchar" required="false" label="def_org_post_id" />
+	<parameter id="vipuserlogin" type="varchar" required="false" label="vipuserlogin" />
+	<parameter id="user_pinyin" type="varchar" required="false" label="英文姓名" maxlen="38" />
+	<parameter id="remind_type" type="varchar" required="true" label="提醒方式" maxlen="32"/>
+
+	<custom-validator classname="dinamica.validators.DuplicatedKeyValidator"
+		on-error-label="该登录名已经存在，请换一个" id="userlogin" sql="nodup.sql" />
+
+	<custom-validator classname="dinamica.validators.MatchEqualValidator"
+		on-error-label="两个密码不一致" value1="passwd" value2="confirm" id="confirm" />
+
+	<custom-validator classname="dinamica.validators.ArrayNotEmptyValidator"
+		on-error-label="请给用户选择技能" id="skill_id" parameter-name="skill_id" />
+
+	<custom-validator classname="dinamica.security.PasswordEncryptor"
+		on-error-label="MD5加密失败" />
+
+</validator>

@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<parameter id="userlogin" type="varchar" required="false" label="登录名" />
+	<parameter id="name" type="varchar" required="false" label="姓名" />
+
+	<custom-validator 	
+		classname="dinamica.validators.SQLPatternTransformer" 
+		on-error-label="SQL LIKE transformer."
+		parameter="userlogin" rule="like" />
+
+	<custom-validator 	
+		classname="dinamica.validators.SQLPatternTransformer" 
+		on-error-label="SQL LIKE transformer."
+		parameter="name" rule="contains" />
+		
+</validator>
+

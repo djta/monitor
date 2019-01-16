@@ -1,0 +1,523 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>报表信息</title>
+${inc:/action/ccms/pub}
+<style type="text/css">
+.panel_head_container{
+    height: 60px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.panel_head_container .panel_title{
+	height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-size: 24px;
+}
+.panel_head_container .panel_button{
+	padding-top: 10px;
+}
+</style>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center col-xs-12 col-sm-12 col-md-12 col-lg-12 panel_head_container">
+		<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 panel_button">
+			<button type="button" id="cancel_btn" class="btn btn-primary btn-md">返回</button>
+		</div>
+		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 panel_title">报表字段配置</div>
+		<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 panel_button">
+			<button type="button" id="publishBtn" class="btn btn-primary btn-md">保存</button>
+		</div>
+	</div>
+	
+	<div class="panel-body col_main_body">
+		<div>
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#formTable" data-toggle="tab">展示</a></li>
+				<li><a href="#filterTable" data-toggle="tab">查询</a></li>
+			</ul>
+		</div>
+		<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+			<div class="tab-content" style="padding-top: 10px;">
+				<!-- 标签页:列表 -->
+				<div class="tab-pane active" id="formTable">
+					<input type="hidden" id="tuid" name="tuid" value="${fld:tuid}" />
+					<input type="hidden" name="report_id" value="${fld:report_id}" />
+					<table class="table table-bordered">
+						<tr>
+							<td align="right" width="10%">
+								<label class="required">图表标题</label>
+							</td>
+							<td>
+								<input class="form-control" name="title" id="title" type="text" maxlength="35" value="${fld:title}" />
+							</td>
+							<td align="right" width="10%">
+								<label class="required">图表类型</label>
+							</td>
+							<td>
+								<input class="form-control" type="radio" name="chart_type" value="0" checked="checked" />柱状图 
+								<input class="form-control" type="radio" name="chart_type" value="1" />折线图
+								<input class="form-control" type="radio" name="chart_type" value="2" />饼图 
+								<input class="form-control" type="radio" name="chart_type" value="3" />区域图 
+								<input class="form-control" type="radio" name="chart_type" value="4" />复合图
+							</td>
+							<td align="right" width="10%">
+								<label class="required">3D效果展示</label>
+							</td>
+							<td>
+								<input class="form-control" type="radio" name="is_3d" value="0" checked="checked" />否
+								<input class="form-control" type="radio" name="is_3d" value="1" />是
+							</td>
+						</tr>
+						<tr>
+							<td align="right">
+								<label class="required">X轴标题</label>
+							</td>
+							<td>
+								<input class="form-control" name="title_x" id="title_x" type="text" maxlength="128" value="${fld:title_x}" />
+							</td>
+							<td align="right">
+								<label class="required">Y轴标题</label>
+							</td>
+							<td>
+								<input class="form-control" name="title_y" id="title_y" type="text" maxlength="128" value="${fld:title_y}" />
+							</td>
+							<td align="right">Z轴标题</td>
+							<td>
+								<input class="form-control" name="title_z" id="title_z" type="text" maxlength="128" value="${fld:title_z}" />
+							</td>
+						</tr>
+						<tr>
+							<td align="right">
+								<label class="required">X轴字段</label>
+							</td>
+							<td>
+								<select name="field_x" class="form-control" id="field_x">
+									<option value=""></option>
+									<table-field>
+										<option value="${fld:field_id}">${fld:alias}</option>
+									</table-field>
+								</select>
+							</td>
+							<td align="right">
+								<label class="required">Y轴字段</label>
+							</td>
+							<td>
+								<select name="field_y" class="form-control" id="field_y">
+									<option value=""></option>
+									<table-field>
+										<option value="${fld:field_id}">${fld:alias}</option>
+									</table-field>
+								</select>
+							</td>
+							<td align="right">Z轴字段</td>
+							<td>
+								<select name="field_z" class="form-control" id="field_z">
+									<option value=""></option>
+									<table-field>
+										<option value="${fld:field_id}">${fld:alias}</option>
+									</table-field>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td align="right">X轴字段格式化</td>
+							<td>
+								<input class="form-control" name="format_x" id="format_x" type="text" maxlength="50" value="${fld:format_x}" />
+							</td>
+							<td align="right">Y轴字段格式化</td>
+							<td>
+								<input class="form-control" name="format_y" id="format_y" type="text" maxlength="50" value="${fld:format_y}" />
+							</td>
+							<td align="right">Z轴字段格式化</td>
+							<td>
+								<input class="form-control" name="format_z" id="format_z" type="text" maxlength="50" value="${fld:format_z}" />
+							</td>
+						</tr>
+						<tr>
+							<td align="right">回调代 码</td>
+							<td colspan="3">
+								<textarea name="callback_js" id="callback_js" class="form-control">${fld:callback_js}</textarea>
+							</td>
+							<td align="right">备注</td>
+							<td>
+								<textarea name="remark" id="remark" class="form-control" maxlength="256">${fld:remark}</textarea>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="tab-pane" id="filterTable">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<!-- 左侧操作面板 -->
+						<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+							<table class="table table-bordered" isSort="true">
+								<tr>
+									<th colspan="2" align="center">业务字段</th>
+								</tr>
+								<tr>
+									<th align="center" nowrap>字段名</th>
+									<th align="center" nowrap>操作</th>
+								</tr>
+								<table-fields>
+								<tr>
+									<td title="${fld:field_code}">
+										<input type="hidden" name="field_id" id="field_${fld:field_id}" value="${fld:field_id}">
+										<input type="hidden" name="field_name" id="field_name_${fld:field_id}" value="${fld:alias}">${fld:alias}
+									</td>
+									<td align="center">
+										<img src="${def:context}/images/framecontrol/toright.png" title="添加该字段" style="cursor: pointer;"
+											onclick="javascript:copyField('${fld:field_id}','${fld:alias@html}');" />
+									</td>
+								</tr>
+								</table-fields>
+							</table>
+						</div>
+						<!-- 中部操作面板 -->
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<input type="hidden" id="form_id" name="form_id" value="${fld:form_id}" />
+							<div style="padding-top: 10px;">
+								<div>
+									<table class="table table-condensed" isSort="true">
+										<tbody id="filterTableBody">
+											<tr>
+												<th colspan="4" align="center">查询条件字段</th>
+											</tr>
+											<tr>
+												<th align="center" nowrap>操作</th>
+												<th align="center" nowrap>顺序</th>
+												<th align="center" nowrap>字段名</th>
+												<th align="center" nowrap>操作</th>
+											</tr>
+											<filter-field>
+												<tr dragFlag="true" onclick="javascript:showProperty('${fld:field_id}')">
+													<td align="center">
+														<img src="${def:context}/images/framecontrol/toleft.png" title="移除该字段" style="cursor: pointer;" onclick="javascript:removeField(this);" />
+													</td>
+													<td align="center">
+														<input type="hidden" name="filter_field" id="filter_field_${fld:field_id}" value="${fld:field_id}" />
+														<input type="hidden" name="filter_field_name" id="filter_field_name_${fld:field_id}" value="${fld:alias}" />
+														<input type="hidden" name="filter_show_type" id="filter_show_type_${fld:field_id}" value="${fld:show_type}" dependent="filter_field_${fld:field_id}" />
+														<input type="hidden" name="filter_is_mandatory" id="filter_is_mandatory_${fld:field_id}" value="${fld:is_mandatory}" dependent="filter_field_${fld:field_id}" />
+														<input type="hidden" name="filter_width" id="filter_width_${fld:field_id}" value="${fld:width}" dependent="filter_field_${fld:field_id}" />
+														<input type="hidden" name="filter_type" id="filter_type_${fld:field_id}" value="${fld:filter_type}" dependent="filter_field_${fld:field_id}" />
+														<input type="text" size="2" name="filter_show_order" id="filter_show_order_${fld:field_id}" value="${fld:show_order}" dependent="filter_field_${fld:field_id}" />
+													</td>
+													<td>${fld:alias}</td>
+													<td align="center">
+														<img src="${def:context}/images/framecontrol/tofull.png" title="查看字段属性" style="cursor: pointer;"
+															onclick="javascript:showProperty('${fld:field_id}')" />
+													</td>
+												</tr>
+											</filter-field>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+							<div id="filterDiv" style="display: none">
+								<table class="table table-condensed">
+									<tr>
+										<td>字段名称</td>
+										<td>
+											<input name="filter_field_names" id="filter_field_names" type="hidden" />
+											<input class="form-control" name="filter_field_name" id="filter_field_name" type="text" size="35" value="" readOnly="readonly" />
+										</td>
+									</tr>
+									<tr>
+										<td>显示类型</td>
+										<td>
+											<select class="form-control" name="filter_show_type" id="filter_show_type" onchange="setProperty()">
+												<option value="">默认</option>
+												<option value="0">文本框</option>
+												<option value="1">下拉框</option>
+												<option value="2">复选框</option>
+												<option value="3">多选一</option>
+												<option value="4">只读</option>
+												<option value="5">日期</option>
+												<option value="6">文本域</option>
+												<option value="7">选取框</option>
+												<option value="9">HIDDEN</option>
+												<option value="10">日期时间</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>查询条件</td>
+										<td>
+											<select class="form-control" name="filter_type" id="filter_type" onchange="setProperty()">
+												<option value="=">等于</option>
+												<option value="like">包含</option>
+												<option value="llike">左包含</option>
+												<option value="rlike">右包含</option>
+												<option value=">">大于</option>
+												<option value=">=">大于等于</option>
+												<option value="<">小于</option>
+												<option value="<=">小于等于</option>
+												<option value="<>">不等于</option>
+												<option value="is not null">非空</option>
+												<option value="is null">为空</option>
+												<option value="in">任意满足</option>
+												<option value="not in">任意不满足</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>是否非空</td>
+										<td>
+											<select class="form-control" name="filter_is_mandatory" id="filter_is_mandatory" onchange="setProperty()">
+												<option value="1">可以为空</option>
+												<option value="0">非空</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>宽度</td>
+										<td>
+											<input class="form-control" name="filter_width" id="filter_width" type="text" size="35" onchange="setProperty()" />
+										</td>
+									</tr>
+
+									<tr>
+										<td>显示顺序</td>
+										<td>
+											<input class="form-control" name="filter_show_order" id="filter_show_order" type="text" size="35" onchange="setProperty()" />
+										</td>
+									</tr>
+								</table>
+								<table class="table table-condensed">
+									<tr>
+										<td align="center" colspan="1">
+											<button type="button" onclick="hiddenEditDiv()" class="btn btn-primary btn-md">关闭</button>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script language="javascript">
+	var removeStr = "<img src='${def:context}/images/framecontrol/toleft.png' title='移除该字段' style='cursor:pointer;' onclick='javascript:removeField(this);'/>";
+	var detailStr = "<img src='${def:context}/images/framecontrol/tofull.png' title='查看字段属性' style='cursor:pointer;' onclick='javascript:showProperty(\"${field_id}\")'/>";
+	var filterStr = '<input type="hidden" name="filter_field" id="filter_field_${field_id}" value="${field_id}">'
+					+	'<input type="hidden" name="filter_field_name" id="filter_field_name_${field_id}" value="${alias}">'
+					+	'<input type="hidden" name="filter_show_type" id="filter_show_type_${field_id}" value="" dependent="filter_field_${field_id}">'
+					+	'<input type="hidden" name="filter_is_mandatory" id="filter_is_mandatory_${field_id}" value="" dependent="filter_field_${field_id}">'
+					+	'<input type="hidden" name="filter_width" id="filter_width_${field_id}" value="" dependent="filter_field_${field_id}">'
+					+	'<input type="hidden" name="filter_type" id="filter_type_${field_id}" value="" dependent="filter_field_${field_id}">'
+					+	'<input type="text" size="2" name="filter_show_order" id="filter_show_order_${field_id}" value="" dependent="filter_field_${field_id}">';
+
+
+	function removeField(obj){
+		//移除tr的onclick事件，防止事件冒泡调用 showProperty
+		obj.parentNode.parentNode.onclick = function(){};
+		obj.parentNode.parentNode.parentNode.removeChild(obj.parentNode.parentNode);
+		document.getElementById("filterDiv").style.display = "none";
+	}
+
+	function copyField(field_id, field_name){
+		var obj = document.getElementById("filter_field_"+field_id);
+		if(obj && typeof(obj) != "undefined"){
+			ccms.dialog.alert("该字段已选择!");
+			return false;
+		}
+		
+		var bodyObj = document.getElementById("filterTableBody");
+		var x = bodyObj.insertRow(-1);	
+		x.setAttribute("dragFlag","true");
+		x.setAttribute("onclick","javascript:showProperty('"+field_id+"')");
+		var c = x.insertCell(-1);
+		c.align = "center";
+		c.innerHTML = removeStr;
+		
+		var h = filterStr.replace(/\${alias}/g,field_name);
+		var c2 = x.insertCell(-1);
+		c2.align = "center";
+		c2.innerHTML = h.replace(/\${field_id}/g,field_id);
+
+		var c3 = x.insertCell(-1);
+		c3.innerHTML = field_name;
+
+		var c4 = x.insertCell(-1);
+		c4.align = "center";
+		c4.innerHTML = detailStr.replace(/\${field_id}/g,field_id);
+	}
+
+	function showProperty(field_id){
+		document.getElementById("filterDiv").style.display = "";
+		//document.formFilter.reset();
+		$("#filter_field_names").val( field_id);
+		$("#filter_field_name").val($("#filter_field_name_"+field_id).val());
+		$("#filter_show_type").val($("#filter_show_type_"+field_id).val());
+		$("#filter_type").val($("#filter_type_"+field_id).val());
+		$("#filter_is_mandatory").val($("#filter_is_mandatory_"+field_id).val());
+		$("#filter_width").val( $("#filter_width_"+field_id).val());
+		$("#filter_show_order").val($("#filter_show_order_"+field_id).val());
+	}
+
+	function setProperty(){
+		var field_id = $("#filter_field_names").val();
+		$("#filter_show_type_"+field_id).val($("#filter_show_type").val());
+		$("#filter_type_"+field_id).val($("#filter_type").val());
+		$("#filter_is_mandatory_"+field_id).val($("#filter_is_mandatory").val());
+		$("#filter_width_"+field_id).val($("#filter_width").val());
+		$("#filter_show_order_"+field_id).val($("#filter_show_order").val());
+	}
+
+	function setFieldShowOrder(){
+		var showOrders = document.getElementsByName("filter_show_order");
+		if(showOrders){
+			for(var i=0;i<showOrders.length;i++){
+				showOrders[i].value = (i+1);
+			}
+		}
+	}
+
+	function hiddenEditDiv(){
+		document.getElementById("filterDiv").style.display = "none";
+	}
+
+	function openSkill(){
+		WinOpen("${def:context}${def:actionroot}/skill/form?report_id=${fld:report_id}", 13);
+	}
+	
+	function ChartClass(){
+		this.init = function(){
+			//绑定事件   
+		       var addEvent = document.addEventListener ? function(el,type,callback){   
+		         el.addEventListener( type, callback, !1 );   
+		       } : function(el,type,callback){   
+		         el.attachEvent( "on" + type, callback );   
+		       }   
+		       //移除事件   
+		       var removeEvent = document.removeEventListener ? function(el,type,callback){   
+		         el.removeEventListener( type, callback );   
+		       } : function(el,type,callback){   
+		         el.detachEvent( "on" + type, callback);   
+		       }   
+		       //精确获取样式   
+		       var getStyle = document.defaultView ? function(el,style){   
+		         return document.defaultView.getComputedStyle(el, null).getPropertyValue(style)   
+		       } : function(el,style){   
+		         style = style.replace(/\-(\w)/g, function($, $1){   
+		           return $1.toUpperCase();   
+		         });   
+		         return el.currentStyle[style];   
+		       }   
+		       var dragManager = {   
+		         clientY:0,   
+		         draging:function(e){//mousemove时拖动行   
+		           var dragObj = dragManager.dragObj;   
+		           if(dragObj){   
+		             e = e || event;   
+		             if(window.getSelection){//w3c   
+		               window.getSelection().removeAllRanges();   
+		             }else  if(document.selection){   
+		               document.selection.empty();//IE   
+		             }   
+		             var y = e.clientY;   
+		             var down = y > dragManager.clientY;//是否向下移动   
+		             var tr = document.elementFromPoint(e.clientX,e.clientY);   
+					 //限制了只有配置字段才能拖动
+		             if(tr && tr.nodeName == "TD" && tr.parentNode.getAttribute("dragFlag")=="true"){   
+		               tr = tr.parentNode   
+		               dragManager.clientY = y;   
+		               if( dragObj !== tr){   
+		                 tr.parentNode.insertBefore(dragObj, (down ? tr.nextSibling : tr));   
+		               }   
+		             };   
+		           }   
+		         },   
+		         dragStart:function(e){   
+		           e = e || event;   
+		           var target = e.target || e.srcElement;   
+		           if(target.nodeName === "TD" && target.parentNode.parentNode.parentNode.getAttribute("issort")=="true"){   
+		             target = target.parentNode;   
+		             dragManager.dragObj = target;   
+		             if(!target.getAttribute("data-background")){   
+		               var background = getStyle(target,"background-color");   
+		               target.setAttribute("data-background",background);
+		             }   
+		             //显示为可移动的状态   
+		             target.style.backgroundColor = "#ccc";   
+		             target.style.cursor = "move";   
+		             dragManager.clientY = e.clientY;   
+		             addEvent(document,"mousemove",dragManager.draging);   
+		             addEvent(document,"mouseup",dragManager.dragEnd);   
+		           }   
+		         },   
+		         dragEnd:function(){   
+		           var dragObj = dragManager.dragObj  ;
+		           if (dragObj) {   
+		               //dragObj.style.backgroundColor = dragObj.getAttribute("data-background");   
+		               dragObj.style.backgroundColor = "white";  
+		               dragObj.style.cursor = "default";   
+		               dragManager.dragObj = null;   
+		               removeEvent(document,"mousemove",dragManager.draging);   
+		               removeEvent(document,"mouseup",dragManager.dragEnd);   
+
+					   //拖拽结束后排序
+					   setFieldShowOrder();
+		           }   
+		         },   
+		         main:function(el){   
+		           addEvent(el,"mousedown",dragManager.dragStart);   
+		         }   
+		       }   
+				
+				var el = document.getElementById("filterTable");   
+				dragManager.main(el);   
+				
+		}
+	}
+	
+var chartClass=null;
+$(document).ready(function() {
+	setComboValue("field_x","${fld:field_x}","formEditor");
+	setComboValue("field_y","${fld:field_y}","formEditor");
+	setComboValue("field_z","${fld:field_z}","formEditor");
+	setCheckboxValue("chart_type","${fld:chart_type}","formEditor");
+	setCheckboxValue("is_3d","${fld:is_3d}","formEditor");
+	//保存(发布表单)
+	$("#publishBtn").unbind().on("click",function(){
+		 $Dialog().confirm("确定要发布吗？",function(){
+			var url = "${def:actionroot}/";
+			if($("#tuid").val()!=''){
+				url+="update";
+			}else{
+				url+="insert";
+			}
+			ajaxCall(url,{
+					method: "post",
+					progress: true,
+					dataType: "script",
+					form: "formEditor",
+					btn:"publishBtn",
+					success: function() {
+						$Dialog().notice("保存成功！", 1500,function(){
+							gotoBack();
+						});
+					}
+					
+			});
+		}); 
+	});
+	
+	//返回
+	$("#cancel_btn").unbind().on("click", function(){
+		gotoBack();
+	});
+	chartClass = new ChartClass();
+	chartClass.init();
+});
+</script>
+</body>
+</html>

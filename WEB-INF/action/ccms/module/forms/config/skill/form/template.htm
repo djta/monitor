@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>界面技能配置</title>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div
+			class="panel-heading col_main_body_title text-center col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+				<button type="button" id="save_btn" class="btn btn-primary btn-md">保存</button>
+			</div>
+			<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+				<h1 class="panel-title">设置表单权限信息</h1>
+			</div>
+		</div>
+		<div class="panel-body col_main_body">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<form class="form-horizontal" role="form" method="post"
+					id="formEditor" name="formEditor">
+					<input type="hidden" id="form_id" name="form_id"
+						value="${fld:form_id}" /> <input type="hidden"
+						id="oper_priviledge" name="oper_priviledge"
+						value="${fld:oper_priviledge}" />
+					<table class="table table-bordered">
+						<tr>
+							<th colspan="9">设置表单权限信息</th>
+						</tr>
+						<tr>
+							<th>角色</th>
+							<th>新建</th>
+							<th>检索</th>
+							<th>查看</th>
+							<th>修改</th>
+							<th>删除</th>
+							<th>导出Excel</th>
+							<th>导出Pdf</th>
+							<th>每页行数</th>
+							<th>附件</th>
+						</tr>
+						<skill-list>
+						<tr>
+							<td align="center">${fld:skill_name}</td>
+							<td align="center"><input type="checkbox" name="form_skill"
+								value="${fld:skill_id}:A" /></td>
+							<td align="center"><input type="checkbox" name="form_skill"
+								value="${fld:skill_id}:B" /></td>
+							<td align="center"><input type="checkbox" name="form_skill"
+								value="${fld:skill_id}:C" /></td>
+							<td align="center"><input type="checkbox" name="form_skill"
+								value="${fld:skill_id}:D" /></td>
+							<td align="center"><input type="checkbox" name="form_skill"
+								value="${fld:skill_id}:E" /></td>
+							<td align="center"><input type="checkbox" name="form_skill"
+								value="${fld:skill_id}:F" /></td>
+							<td align="center"><input type="checkbox" name="form_skill"
+								value="${fld:skill_id}:G" /></td>
+							<td align="center"><input type="checkbox" name="form_skill"
+								value="${fld:skill_id}:H" /></td>
+							<td align="center"><input type="checkbox" name="form_skill"
+								value="${fld:skill_id}:I" /></td>
+						</tr>
+						</skill-list>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!--用于传递当前目录到header模版中-->
+	<input type="hidden" name="actionroot" id="actionroot"
+		value="${def:actionroot}" />
+
+	<div id="status" class="alert"
+		style="display: none; color: gray; width: 60%; font-weight: normal; font-family: Arial; margin-top: 10px">
+		<img src="${def:context}/images/progress.gif" /> 请稍候...
+	</div>
+
+	<script>
+$(document).ready(function(){
+	var form_skill = "${fld:oper_priviledge@js}";
+	if(form_skill != ""){
+		var p = form_skill.split(",");
+		for(var i=0;i<p.length;i++){
+			setCheckboxValue("form_skill",p[i],"formEditor");
+		}
+	}
+	$("#save_btn").unbind().on("click",function(){
+		document.formEditor.oper_priviledge.value = GetCheckboxValue("form_skill","formEditor");
+		var url = "${def:actionroot}/update";
+		ajaxCall(url,{
+	        method: "post",
+	        progress: true,
+	        form: "formEditor",
+	        dataType: "script",
+	        success: function(data) {
+	        	
+	        }
+	    });
+	});
+});
+</script>
+</body>
+</html>

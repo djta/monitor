@@ -1,0 +1,14 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/project/fitness/home/pub}
+</head>
+<body>
+	<script language="javascript">
+	ccms.dialog.notice("上传成功！", 2000, function(){
+		location.href = "${def:context}${def:actionroot}/crud?pk_value=${fld:pk_value}&table_code=${fld:table_code}"
+				+"&callback=${fld:callback}&"+new Date().getTime()+"&imgid=${fld:imgid}";
+	});
+	</script>
+</body>
+</html>

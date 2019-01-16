@@ -1,0 +1,421 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>授权管理</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#tab1" data-toggle="tab">我的授权单</a></li>
+		<li><a href="#tab2" data-toggle="tab">授权处理日志</a></li>
+		<li><a href="#tab3" data-toggle="tab">被授权处理日志</a></li>
+	</ul>
+	<!-- 我的授权单 -->
+	<div class="panel-body col_main_body">
+		<div class="tab-content">
+			<div class="tab-pane active" id="tab1">
+				<form class="form-horizontal" role="form" method="post" id="searchForm1" name="searchForm1">
+					<input name="sort" type="hidden" value="tuid" preserve="true"/> 
+					<input name="order" type="hidden" value="desc" preserve="true"/> 
+					<input name="pageNo" type="hidden" value="" preserve="true"/>
+					<input name="totalPages" type="hidden" value="" preserve="true"/>
+					<div class="form-group">
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input class="form-control" name="grant_name" type="text" size="35" value="" maxlength="128" placeholder="请输入授权单名称"/>
+						</div>
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<button class="btn btn-primary btn-md" type="button" id="search_btn1">查询</button>
+							<button class="btn btn-primary btn-md" type="button" id="search_reset_btn1">清空</button>
+							<button class="btn btn-primary btn-md " type="button" id="addnew_btn">新增</button>
+						</div>
+					</div>
+				</form>
+				<table class="table table-condensed">
+					<thead>
+						<tr>
+						 	<th>
+								操作
+							</th>
+							<th class="sortable" code="grant_name">
+								授权单名称
+							</th>
+							<th class="sortable" code="authuser">
+								被授权人
+							</th>
+							<th class="sortable" code="start_time"> 
+								授权开始时间
+							</th>
+							<th class="sortable" code="end_time">
+								授权结束时间
+							</th>
+							<th class="sortable" code="status">
+								授权单状态 
+							</th>
+							<th class="sortable" code="terminate_time">
+								授权终止时间
+							</th>
+						</tr>
+					</thead>
+					<tbody id="datagrid1Template" style="display:none">
+						<tr>
+							<td class="text-center">
+								<button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#" style="display:#is_can_update#">修改</button>
+								#stopBtn#
+							</td>
+							<td class="text-center">#grant_name#</td>
+							<td class="text-center">#authuser#</td>
+							<td class="text-center">#start_time#</td>
+							<td class="text-center">#end_time#</td>
+							<td class="text-center">#status#</td>
+							<td class="text-center">#terminate_time#</td>
+						</tr>
+					</tbody>
+					<tbody id="datagrid1">
+					</tbody>
+				</table>
+					<div class="pageDiv" >
+					<ul class="pagination" data-target="datagrid1">
+					</ul>
+				</div>
+			</div>
+				<!-- 我的授权单修改新增 -->
+				<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+					<div class="modal-dialog ">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title" id="formTitle">新增授权</h4>
+							</div>
+							<div class="modal-body">
+								<form id="formEditor" name="formEditor" class="form-horizontal"
+									role="form" method="post">
+									<input type="hidden" id="tuid" name="tuid" value="" />
+									<div class="row clearfix">
+										<div class="form-group">
+											<label
+												class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1   required">授权单名称</label>
+											<div class="col-xs-6 col-sm-5 col-md-5 col-lg-5">
+												<input class="form-control" type="text" id="grant_name" name="grant_name"
+													value="" maxlength="128" size="30" />
+											</div>
+										</div>
+										<div id="user_label" class="form-group">
+						 		 				<label  class="col-xs-5 col-sm-5 col-md-5 col-lg-5 control-label required" >选择授权对象</label>
+						 		 				<div class="col-xs-6 col-sm-5 col-md-5 col-lg-4">
+						 		 					<input id="user_name" name="user_name" class="form-control" value="" type="text" size="30" maxlength="32" />
+													<input id="authuser" name="authuser" type="hidden" value=""/>
+						 		 				</div>
+						 		 				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+						 		 					<img src="${def:context}/images/search.gif" style="display:" class="tool" id="pickOpenNotCenter" title="查询"/>
+													<img src="${def:context}/images/clear.gif" style="display:" id="pickClear" class="tool2" title="清除选择的内容" />
+						 		 				</div>
+						 		 			</div>
+										<div class="form-group">
+											<label
+												class="col-xs-4 col-sm-4 col-md-4 col-lg-4  control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1  required">开始时间</label>
+											<div class="col-xs-6 col-sm-5 col-md-5 col-lg-5">
+												<input class="form-control" id="start_time" name="start_time" type="text"
+													class="form-control" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label
+												class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1   required">结束时间</label>
+										<div class="col-xs-6 col-sm-5 col-md-5 col-lg-5">
+												<input class="form-control" id="end_time" name="end_time" type="text"
+													class="form-control" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label
+												class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1  ">备注</label>
+											<div class="col-xs-6 col-sm-5 col-md-5 col-lg-5">
+												<input class="form-control" type="text" id="remark" name="remark" value=""
+													size="30" maxlength="512" />
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+									<button type="button" id="save_btn1" class="btn btn-primary btn-md">确&nbsp;定</button>
+										<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			<!-- 授权处理日志 -->
+			<div class="tab-pane" id="tab2">
+				<form class="form-horizontal" role="form" method="post" id="searchForm2" name="searchForm2">
+					<input name="sort" type="hidden" value="tuid" preserve="true"/> 
+					<input name="order" type="hidden" value="desc" preserve="true"/> 
+					<input name="pageNo" type="hidden" value="" preserve="true"/>
+					<input name="totalPages" type="hidden" value="" preserve="true"/>
+					<input name="userlogin" value="" type="hidden" preserve="true"/>
+					<input name="authuser" value="" type="hidden" preserve="true"/>
+					<div class="form-group">
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="fdate1" name="fdate1" type="text" class="form-control" placeholder="请输入开始日期"/>
+						</div>
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="tdate1" name="tdate1" type="text" class="form-control" placeholder="请输入结束日期"/>
+						</div>
+						<div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+							<button class="btn btn-primary btn-md" type="button" id="search_btn2">查询</button>
+							<button class="btn btn-primary btn-md" type="button" id="search_reset_btn2">清空</button>
+						</div>
+					</div>
+				</form>
+				<table class="table table-condensed">
+				<thead>
+					<tr>
+							<th class="sortable" code="userlogin">授权人</th>
+							<th class="sortable" code="authuser">被授权人</th>
+							<th class="sortable" code="created">操作时间</th>
+							<th class="sortable" code="op_title">操作对象 </th>
+							<th class="sortable" code="op_action">操作动作</th>
+					 </tr>
+				</thead>
+				<tbody id="datagrid2Template" style="display:none">
+					<tr>
+							<td align="center">#userlogin#</td>
+							<td align="center">#authuser#</td>
+							<td align="center">#created#</td>
+							<td align="center">#op_title#</td>
+							<td align="center">#op_action#</td>
+					</tr>
+				</tbody>	
+				<tbody id="datagrid2">
+				</tbody>
+				</table>
+				<div class="pageDiv" >
+					<ul class="pagination" data-target="datagrid2">
+					</ul>
+				</div>
+			</div>
+			<!-- 被授权处理日志 -->
+		<div class="tab-pane" id="tab3">
+				<form class="form-horizontal" role="form" method="post" id="searchForm3" name="searchForm3">
+					<input name="sort" type="hidden" value="tuid" preserve="true"/> 
+					<input name="order" type="hidden" value="desc" preserve="true"/> 
+					<input name="pageNo" type="hidden" value="" preserve="true"/>
+					<input name="totalPages" type="hidden" value="" preserve="true"/>
+					<input name="userlogin" value="" type="hidden" preserve="true"/>
+					<input name="authuser" value="" type="hidden" preserve="true"/>
+					<div class="form-group">
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="fdate2" name="fdate2" type="text" class="form-control" placeholder="请输入开始日期"/>
+						</div>
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="tdate2" name="tdate2" type="text" class="form-control" placeholder="请输入结束日期"/>
+						</div>
+						<div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+							<button class="btn btn-primary btn-md" type="button" id="search_btn3">查询</button>
+							<button class="btn btn-primary btn-md" type="button" id="search_reset_btn3">清空</button>
+						</div>
+					</div>
+				</form>
+				<table class="table table-condensed">
+				<thead>
+					<tr>
+							<th class="sortable" code="userlogin">授权人</th>
+							<th class="sortable" code="authuser">被授权人</th>
+							<th class="sortable" code="created">操作时间</th>
+							<th class="sortable" code="op_title">操作对象 </th>
+							<th class="sortable" code="op_action">操作动作</th>
+					 </tr>
+				</thead>
+				<tbody id="datagrid3Template" style="display:none">
+					<tr>
+							<td align="center">#userlogin#</td>
+							<td align="center">#authuser#</td>
+							<td align="center">#created#</td>
+							<td align="center">#op_title#</td>
+							<td align="center">#op_action#</td>
+					</tr>
+				</tbody>	
+				<tbody id="datagrid3">
+				</tbody>
+				</table>
+				<div class="pageDiv" >
+					<ul class="pagination" data-target="datagrid3">
+					</ul>
+				</div>
+			</div>
+</div>
+</div>
+</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script language="javascript">
+var myClass=new myClass();
+function myClass(){
+	this.obj1=null;
+	this.page1=function(){
+		var obthis= null;
+		$Dialog().datetime($('#start_time'));
+		$Dialog().datetime($('#end_time'));
+		var obj = $Crud({
+			formId:"formEditor",
+			button:"save_btn",
+			insertBack:function(){
+				obthis.searchData();
+			},
+			updateBack:function(){
+				obthis.searchData();
+			},
+			deleteBack:function(){
+				obthis.searchData();
+			},
+			 addNewBack:function(){
+				$("#formTitle").html("新增授权信息");
+				 $("#user_label").show();
+			}, 
+			editBack:function(){
+				$("#formTitle").html("修改授权信息");
+			    $("#user_label").hide();
+			},
+			validate:function(){
+				var flag=$("#formEditor").validate({
+					rules: {
+						grant_name: {
+							required: true,
+							rangelength: [1,50]
+						},
+						user_name: {
+							required: true,
+						},
+						start_time: {
+							required: true
+						},
+						end_time: {
+							required: true
+						}
+					},
+					messages: {
+						grant_name: {
+							required: "授权单名称不能为空",
+							rangelength: "长度为1到50个字符"
+						},
+						user_name: {
+							required: "选择授权对象不能为空"
+						},
+						start_time: {
+							required: "开始时间不能为空"
+						},
+						end_time: {
+							required: "结束时间不能为空"
+						}
+					}
+				});
+				return flag;
+			}
+			 ,check:function(){
+				 alert();
+				  var startdate = new Date(($("#start_time").val()).replace(/-/g,"/")); 
+			      var enddate = new Date(($("#end_time").val()).replace(/-/g,"/"));  
+			      if(enddate < startdate) 
+			      {
+			    	  setFormErrorMsg("end_time","结束时间不能小于开始时间");
+			          return false;
+			      }
+			      else
+			      {
+			         return true;
+			      } 
+			} 
+		}).init();	
+		obthis=$Search({datagrid:"datagrid1",formId:"searchForm1",button:"search_btn1",resetButton:"search_reset_btn1",
+			rowpackage:function(obj){
+				if(obj.status=="授权中"){
+					obj.stopBtn='<button class="btn btn-primary btn-md stopGrant" type="button" code="'+obj.tuid+'" style="display:" >提前终止</button>';
+				}else{
+					obj.stopBtn="";
+				}
+			}
+			,success:function(){
+			//终止按钮	
+				$(".stopGrant").unbind().on("click",function(){
+					var obthis = $(this);
+					$Dialog().confirm("确定要提前终止吗？",function(){
+						if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+							var url ="/action/ccms/module/hr/grant/grant/stop?id="+obthis.attr("code");
+							ajaxCall(url,{
+								method: "post",
+								progress: true,
+								dataType: "script",
+								success: function() {
+									$Dialog().notice("终止成功！",2000,function(){
+										window.location.reload();
+									});
+								}
+							});
+						}
+					});
+				});
+			//修改按钮
+				$(".edit_btn").unbind().on("click", function(){
+					if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+						obj.edit({id:$(this).attr("code")});
+					}
+				});
+		}}).initSearchBtn().searchData(1);
+	};
+	this.page2=function(){
+		var obth=this;
+		document.searchForm2.userlogin.value = "";
+		document.searchForm2.authuser.value = "";
+		document.searchForm2.userlogin.value = "${def:user}";
+		
+		$Search({datagrid:"datagrid2",formId:"searchForm2",button:"search_btn2",resetButton:"search_reset_btn2",actionroot:"/action/ccms/module/hr/grant/grantlog",
+			success:function(){
+		}}).initSearchBtn().searchData(1);
+	};
+	this.page3=function(){
+		var obth=this;
+		document.searchForm3.userlogin.value = "";
+		document.searchForm3.authuser.value = "";
+		document.searchForm3.authuser.value = "${def:user}";
+		$Search({datagrid:"datagrid3",formId:"searchForm3",button:"search_btn3",resetButton:"search_reset_btn3",actionroot:"/action/ccms/module/hr/grant/grantlog",
+			success:function(){
+		}}).initSearchBtn().searchData(1);	
+	};
+}
+$(document).ready(function() {
+	$Dialog().datetime($('#fdate1'));
+	$Dialog().datetime($('#tdate1'));
+	$Dialog().datetime($('#fdate2'));
+	$Dialog().datetime($('#tdate2'));
+	myClass.page1();
+	myClass.page2();
+	myClass.page3();
+	
+	$("#pickClear").unbind().on("click",function(){
+		document.formEditor.authuser.value='';
+		document.formEditor.user_name.value='';
+	});
+	$("#pickOpenNotCenter").unbind().on("click",function(){
+		var url = "${def:context}/action/ccms/pub/pick/staff/crud?id=authuser&name=user_name&pickId=pickOpen&subject_id="+${def:subject};
+		ccms.dialog.open({url:url,id:"pickOpen",width:800,height:500});
+	});
+	$("#save_btn1").unbind().on("click",function(){
+		var tuid=$("#tuid").val();
+		if(tuid==""){
+			var url = "/action/ccms/module/hr/grant/grant/insert";
+		}else{
+			var url = "/action/ccms/module/hr/grant/grant/update";
+		}
+		ajaxCall(url,{
+	        method: "post",
+	        progress: true,
+	        form: "formEditor",
+	        dataType: "script",
+	        success: function(data) {
+	        }
+		});
+
+	});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body,
+html {
+    width: 7.5rem;
+}
+
+.lt {
+    float: left;
+}
+
+.rt {
+    float: right;
+}
+
+.my_team {
+    overflow: hidden;
+    width: 7.5rem;
+    border-bottom: 0.01rem solid #eeeeee;
+    padding: 0.3rem 0.2rem;
+}
+
+.wrap {
+    position: relative;
+    width: 1.6rem;
+    height: 1.6rem;
+    flex-wrap: wrap;
+    border-radius: 0.09rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    background: #ccc;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.admin {
+    width: 0.4rem;
+    height: 0.4rem;
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #01A9FB;
+    border-top-right-radius: 0.07rem;
+    border-bottom-left-radius: 0.07rem;
+}
+
+.admin img {
+    width: 0.22rem;
+    height: 0.26rem;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+}
+
+.wrap div {
+    /* border:0.01rem solid #000; */
+    float: left;
+    border-radius: 0.07rem;
+    background: #eeeeee;
+    margin: 0.01rem;
+}
+
+.wrap div img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.a {
+    width: 31.5% !important;
+    height: 31.5%;
+}
+
+.b {
+    width: 48.5%;
+    height: 48.5%;
+}
+
+.c {
+    height: 99%;
+    width: 99%;
+}
+
+.m_team_content {
+    width: 5.5rem;
+    height: auto;
+    padding: 0 0.2rem;
+}
+
+.team_name {
+    margin-top: 0.2rem;
+    font-size: 0.32rem;
+    font-family: MicrosoftYaHei;
+    color: rgba(34, 34, 34, 1);
+}
+
+.team_num {
+    font-size: .28rem;
+    font-family: MicrosoftYaHei;
+    color: rgba(34, 34, 34, 1);
+}
+
+.team_num span {
+    color: #01A9FB;
+}
+
+.jiyu {
+    font-size: .24rem;
+    font-family: MicrosoftYaHei;
+    color: rgba(102, 102, 102, 1);
+    margin-top: 0.32rem;
+}
+
+.bao {
+    font-size: .24rem;
+    font-family: MicrosoftYaHei;
+    color: rgba(34, 34, 34, 1);
+    height: 0.4rem;
+    margin-top: 0.25rem;
+}
+
+.bao i {
+    width: 0.34rem;
+    height: 0.34rem;
+    display: inline-block;
+}
+
+.bao i img {
+    width: 100%;
+    height: 100%;
+}
+
+.bao span {
+    width: 4.5rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    margin-left: 0.1rem;
+    vertical-align: middle;
+}
+
+.create_team {
+    width: 4rem;
+    height: 0.9rem;
+    background: rgba(1, 169, 251, 1);
+    border-radius: 0.45rem;
+    font-size: 0.3rem;
+    line-height: 0.9rem;
+    color: rgba(255, 255, 255, 1);
+    text-align: center;
+    bottom: 0.5rem;
+    position: fixed;
+    left: 0;
+    right: 0;
+   
+    margin: auto;
+}

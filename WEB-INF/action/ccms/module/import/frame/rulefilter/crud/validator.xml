@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="tab_id" type="integer" required="true" label="tab_id" />
+	<parameter id="rule_id" type="integer" required="true" label="rule_id" />
+	<parameter id="filter_id" type="integer" required="false" label="filter_id" />
+	<parameter id="p_id" type="integer" required="false" label="p_id" />
+
+</validator>
+

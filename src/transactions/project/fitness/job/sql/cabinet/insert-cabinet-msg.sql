@@ -1,0 +1,30 @@
+INSERT INTO cc_message(
+	tuid,
+	issystem,
+	templateid,
+	senduser,
+	sendusername,
+	sendtime,
+	recuser,
+	recusername,
+	content,
+	status,
+	remind,
+	viewtime,
+	org_id,
+	pk_value
+) VALUES(
+	${seq:nextval@seq_cc_message},
+	3,
+	NULL,
+	'sys',
+	NULL,
+	'${recuser}',
+	'${recusername}',
+	'储物柜${cabinetcode}将于${enddate}到期',
+	1,
+	1,
+	NULL,
+	${fld:org_id},
+	${fld:code}
+);

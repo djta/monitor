@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config nodb="true">
+
+	<summary>
+	  权限单元
+	</summary>
+	
+	<log>false</log>
+
+	<set-request-attribute id="header.title" value="权限定义" />
+	<set-request-attribute id="formTitleAddNew" value='新增'/>
+    <set-request-attribute id="formTitleEdit" value='修改信息'/>
+    <set-request-attribute id="formTitleFilter" value='查询权限单元'/>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+	</output>
+
+</config>

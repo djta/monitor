@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<parameter id="tuid" type="integer" required="true" label="tuid" />
+	<parameter id="pid" type="varchar" required="false" label="pid" />
+	<parameter id="post_id" type="integer" required="true" label="post_id" />
+	<parameter id="org_post_name" type="varchar" required="true"
+		label="org_post_name" maxlen="128" />
+	<parameter id="show_order" type="integer" required="false"
+		label="show_order" />
+</validator>

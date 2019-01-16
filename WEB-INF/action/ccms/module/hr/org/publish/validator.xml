@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="pid" type="varchar" required="true" label="pid" />
+	<parameter id="weixin_org_pid" type="varchar" required="true"
+		label="weixin_org_pid" />
+</validator>   

@@ -1,0 +1,18 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"operator":"${fld:operator@js}"
+		,"tuid":"${fld:tuid}"
+		,"show_order":"${fld:show_order}"
+		,"type_name":"${fld:type_name@js}"
+		,"item_name":"${fld:item_name@js}"
+		,"item_code":"${fld:item_code@js}"
+		,"is_matrix":"${fld:is_matrix@js}"
+		,"is_page_break":"${fld:is_page_break@js}"
+		,"list_show_type":"${fld:list_show_type@js}"
+		,"remark":"${fld:remark@js}"
+		,"tags":"${fld:tags}"
+	},
+	</rows>
+	{}
+]}

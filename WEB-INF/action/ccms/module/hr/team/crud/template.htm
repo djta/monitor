@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>团组信息</title>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">查询团组信息</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post"
+				id="searchForm">
+				<input name="sort" type="hidden" value="team_name" preserve="true" />
+				<input name="order" type="hidden" value="desc" preserve="true" /> <input
+					name="pageNo" type="hidden" value="" preserve="true" /> <input
+					name="totalPages" type="hidden" value="" preserve="true" />
+
+				<div class="form-group">
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 clearright clearleft">
+						<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+							<input name="team_name" placeholder="请输入团组名称" class="form-control" type="text"
+								size="20" value="" />
+						</div>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<button class="btn btn-primary btn-md" type="button"
+							id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button"
+							id="search_reset_btn">清空</button>
+						<button class="btn btn-primary btn-md" type="button"
+							data-toggle="modal" id="addnew_btn">新增</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>操作</th>
+						<th class="sortable" code="team_name">团组名称</th>
+						<th class="sortable" code="team_leader">组长</th>
+						<th>备注</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td align="center">
+							<button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">编辑</button>
+							<button class="btn btn-primary btn-md delete_btn" type="button"	code="#tuid#">删除</button>
+							<button class="btn btn-primary btn-md staff_btn"  type="button"	code="#tuid#">人员管理</button>
+						</td>
+						<td align="center">#team_name#</td>
+						<td align="center">#team_leader#</td>
+						<td align="center">#remark#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="formTitle">团组信息</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form" method="post"
+						id="formEditor" name="formEditor">
+						<input type="hidden" id="tuid" name="tuid" default="0" value="" />
+
+						<div class="row clearfix">
+							<div class="form-group">
+								<label
+									class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">团组名称</label>
+
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<input type="text" class="form-control" id="team_name"
+										name="team_name" size="30" maxlength="100" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label
+									class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">选择组长</label>
+
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<input id="leader_name" type="test" class="form-control"
+										name="leader_name" value="#leader_name#" /> <input
+										id="leader_id" type="hidden" class="form-control"
+										name="leader_id" value="" style="width: 200px;" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label
+									class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">备注:</label>
+
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<textarea name="remark" class="form-control" id="remark"
+										cols="30" rows="2" maxlength="256"></textarea>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div
+						class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+						<button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+						<button type="button" class="btn btn-primary btn-md"
+							data-dismiss="modal">取&nbsp;消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="actionroot" id="actionroot"
+		value="${def:actionroot}" />
+	<script type="text/javascript">
+	$(document).ready(function() {
+		var search1=null;
+		var obj = $Crud({
+			formId : "formEditor",
+			button : "save_btn",
+			insertBack : function() {
+				search1.searchData();
+			},
+			updateBack : function() {
+				search1.searchData();
+			},
+			deleteBack : function() {
+				search1.searchData();
+				},
+				addNewBack : function() {
+				$("#formTitle").html("新增团组信息");
+				},
+				editBack : function() {
+				$("#formTitle").html("修改团组信息");
+				},
+				validate : function() {
+				var flag = $("#formEditor").validate({
+					rules : {
+						skill_name : {
+							required : true
+							}
+					},
+					messages : {
+						skill_name : {
+							required : "请输入客户名称"
+							}
+						}
+					});
+				return flag;
+				}}).init();
+				search1=$Search({
+					datagrid : "datagrid",
+					formId : "searchForm",
+					success : function() {
+					$(".edit_btn").unbind().on("click",function() {
+					if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+					obj.edit({id : $(this).attr("code")});
+					}});
+					$(".staff_btn").unbind().on("click",function() {
+						var obthis = $(this);
+						if (obthis.attr("code") != undefined && obthis.attr("code") != "") {
+							var	url="${def:actionroot}/staff/crud?team_id="+obthis.attr("code");
+							gotoPage(url);
+					}});
+					$(".delete_btn").unbind().on("click",function() {
+					var obthis = $(this);
+					$Dialog().confirm("确定要删除该条数据吗?",function() {
+					if (obthis.attr("code") != undefined && obthis.attr("code") != "") {
+						obj.del({id : obthis.attr("code")});}
+						});
+					});
+					}}).initSearchBtn().searchData(1);
+					$("#leader_name").unbind().on("click",function(){
+						ccms.dialog.open({
+							url : "${def:context}${def:actionroot}/teamleader/crud?id=123",
+							id : "testDialog"
+							});
+					});
+				});
+	</script>
+
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="document_id" type="integer" required="false" label="document_id" />
+	<parameter id="params_code" type="varchar" required="false" label="params_code" />
+
+</validator>

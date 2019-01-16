@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="column_name" type="varchar" required="false" label="字段名称" />
+	<parameter id="form_id" type="integer" required="false" label="form_id" />
+	<parameter id="table_id" type="integer" required="false" label="table_id"/>
+	
+	<custom-validator
+		classname="dinamica.validators.SQLPatternTransformer"
+		parameter="column_name"
+		rule="contains" />
+
+</validator>
+

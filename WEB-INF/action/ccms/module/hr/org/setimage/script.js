@@ -1,0 +1,1 @@
+﻿$("#upload_image").attr("src","${def:context}/action/ccms/attachment/download?id=${fld:upload_id}&&type=1");

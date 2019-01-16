@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="objid" type="varchar" required="false" label="objid" />
+	<parameter id="vc_code" type="varchar" required="false" label="vc_code" />
+</validator>

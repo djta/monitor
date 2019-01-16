@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="subject_id1" type="integer" required="true" label="subject_id" />
+	<parameter id="table_alias" type="varchar" required="false" label="table_alias" />
+	<parameter id="table_name" type="varchar" required="false" label="table_name" />
+	<parameter id="table_type" type="varchar" required="false" label="table_type" />
+
+	<custom-validator
+		classname="dinamica.validators.SQLPatternTransformer"
+		parameter="table_alias"
+		rule="contains" />
+
+	<custom-validator
+		classname="dinamica.validators.SQLPatternTransformer"
+		parameter="table_name"
+		rule="contains" />
+
+</validator>
+

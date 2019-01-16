@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="${def:context}/default.css" />
+	<script language="JavaScript" type="text/javascript" src="${def:context}/action/pub/dtree"></script>
+</head>
+
+<body>
+<div class="pop_title">
+<h2>选择人员或岗位
+<span class="close"><a href="#"><img src="${def:context}/images/ccms/close.jpg" onclick="parent.pickClose()" title="关闭"/></a></span></h2>
+</div>
+<table  width="100%">
+<tr valign="top">
+<td>
+<div class="pop_content" style="overflow-y:auto;height:380px;">
+	<div class="dtree">
+		<script type="text/javascript">
+			//判断是多选还是单选
+			var d = new dTree('d');
+
+			var org_title = "组织架构&nbsp;&nbsp;<a href='javascript: d.openAll();'>展开</a> | <a href='javascript: d.closeAll();'>合并</a>";
+			d.add(0,-1, org_title);
+
+			var pid = 0;
+			var btn = "";
+
+			<rows>
+				if("${fld:pid}" != ""){
+					pid = "${fld:pid}";
+				}else{
+					pid = 0;
+				}
+				if(${fld:select_type} == "1"){//radio box
+					btn = "<a href='javascript:void(0)'><input type='radio' class='radioClick' value='${fld:org_id}' name='staff' userlogin='${fld:org_id}'><span id='org${fld:org_id}'>${fld:org_name@js}</span></a>";
+				}else{
+					btn = "${fld:org_name@js}";
+				}
+				d.add("${fld:org_id}",pid,btn);
+			</rows>
+			$("#assign_user_div").html(d.toString());
+			ccms.util.renderRadio("staff");
+		</script>
+	</div>
+</div>
+</td>
+<!--td style="width:300px">
+
+<table width="100%">
+<tr>
+<td>
+<div class="pop_content" style="overflow-x:hidden;overflow-y:auto;height:100px;">
+<table class="grid" width="100%">
+	<tr>
+		<th>岗位</th>
+	</tr>
+	<tr>
+		<td nowrap>
+			<rows-post>
+				<input type="radio" name="staff" value="${fld:id}" onclick="radioClick('${fld:id}_post','${fld:name}')">${fld:name}</input><br/>
+			</rows-post>
+		</td>
+	</tr>
+</table>
+</div>
+</td>
+</tr>
+
+<tr>
+<td>
+<div class="pop_content" style="overflow-y:auto;height:250px;">
+<table class="grid" width="100%">
+
+	<tr>
+		<th>人员</th>
+	</tr>
+	<tr>
+		<td>
+			<rows-staff>
+				<input type="radio" name="staff" value="${fld:id}" onclick="radioClick('${fld:id}','${fld:name}')">${fld:name}</input><br/>
+			</rows-staff>
+		</td>
+	</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+
+</td-->
+</tr>
+</table>
+<script language="JavaScript" type="text/javascript">
+	function radioClick(id, name){
+		parent.pickSelect(id, name);
+		parent.pickClose();
+	}
+</script>
+</body>
+</html>

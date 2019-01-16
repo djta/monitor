@@ -1,0 +1,60 @@
+body {
+  width:320px;
+  min-height: 100vh;
+  background-color: #F5F5F5;
+}
+.green {
+  background-color: #B8E986;
+}
+.orange {
+  background-color: #FFC444;
+}
+.red {
+  background-color: #FF6A7C;
+}
+.foot-nav {
+  position: fixed;
+  bottom: 0;
+  z-index: 10;
+  width:320px;
+  height:41.81333344px;
+  background-color: #fff;
+}
+.foot-nav li {
+  position: relative;
+  display: block;
+  float: left;
+  width: 20%;
+  height:41.81333344px;
+  line-height:41.81333344px;
+  text-align: center;
+}
+.foot-nav .icon-add {
+  position: absolute;
+  bottom: 8.53333344px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+.foot-nav .icon-bar_menu.active {
+  background-image: url('../../images/bar_caidan_on.png');
+}
+.foot-nav .icon-bar_location.active {
+  background-image: url('../../images/bar_dingwei_on.png');
+}
+.foot-nav .icon-bar_notice.active {
+  background-image: url('../../images/bar_tongzhi_on.png');
+}
+.foot-nav .icon-bar_myhome.active {
+  background-image: url('../../images/bar_wode_on.png');
+}
+.gg-mask {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.3);
+}

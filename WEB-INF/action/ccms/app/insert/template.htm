@@ -1,0 +1,24 @@
+<html>
+
+	<head>
+		<LINK REL="stylesheet" type="text/css" href="${def:context}/default.css" />
+	</head>
+	
+	<body>
+
+	<center>
+	
+	<div class="alert" style="width:50%;color:gray; font-weight:bold">
+	
+	新版本发布完成.<br/>
+	<input type="button" value="继续发布" class="bigcmd" onclick="importAgain();" />
+	</div>
+	</center>
+	
+	</body>
+	<script type="text/javascript">
+		function importAgain(){
+			location.href = "${def:context}${def:actionroot}/crud";
+		}
+	</script>
+</html>

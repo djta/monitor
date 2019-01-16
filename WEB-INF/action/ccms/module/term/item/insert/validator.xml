@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+    <parameter id="type_id" type="integer" required="true" label="类型编号" maxlen="10"/>
+    <parameter id="item_name" type="varchar" required="true" label="题目名称" maxlen="1024"/>
+	<parameter id="item_code" type="varchar" required="true" label="题目代码" maxlen="12"/>
+	<parameter id="show_order" type="integer" required="true" label="显示顺序"/>
+	<parameter id="remark" type="varchar" required="false" label="remark" maxlen="500"/>
+    <parameter id="is_matrix" type="varchar" required="true" label="是否矩阵题目"/>
+    <parameter id="is_matrix_transpose" type="varchar" required="false" label="是否矩阵转置"/>
+    <parameter id="is_page_break" type="varchar" required="true" label="是否分页"/>
+    <parameter id="list_show_type" type="varchar" required="true" label="显示类型"/>
+    <parameter id="is_list_mline" type="varchar" required="true" label="是否多行显示"/>
+    <parameter id="form_item_id" type="integer" required="false" label="业务栏目"/>
+     <parameter id="tags" type="varchar" required="false" label="标签" maxlen="128"/>
+     
+    <parameter id="item_code" type="varchar" required="true" label="题目代码" 
+    	maxlen="12" regexp="^[a-zA-Z][a-zA-Z0-9]{1,12}$"
+		regexp-error-label="最输入少1位最多12位,首位为字母，由数字、字母组成 "/>
+		
+    <custom-validator 	
+		classname="dinamica.validators.DuplicatedKeyValidator" 
+		on-error-label="题目代码已存在"
+		id="item_code" sql="nodup.sql"/>    
+</validator>
+
+

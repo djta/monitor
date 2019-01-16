@@ -1,0 +1,71 @@
+.select_tit {
+    width: 7.5rem;
+    height: 2.3rem;
+    line-height: 2.3rem;
+    font-size: 0.4rem;
+    font-family: PingFang-SC-Medium;
+    text-align: center;
+}
+
+.selected {
+    height: 0.8rem;
+}
+
+.selected_con {
+    width: 5rem;
+    height: 0.8rem;
+    margin: auto;
+    background: rgba(238, 238, 238, 1);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    color: #666666;
+    line-height: 0.82rem;
+}
+.selected_con  .form-control{
+    outline: none;
+    border: none;
+  
+    border-radius: 0.08rem;
+    background: rgba(238, 238, 238, 1);
+}
+.wr_team {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5rem;
+    outline: none;
+    border: none;
+    height: 0.8rem;
+    font-size: 0.28rem;
+    font-family: MicrosoftYaHei;
+    text-align: center;
+    background: rgba(238, 238, 238, 1);
+}
+
+.creat {
+    text-align: center;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    font-size: 0.22rem;
+    font-family: PingFang-SC-Medium;
+    color: rgba(153, 153, 153, 1);
+}
+
+.next {
+    width: 4rem;
+    height: 0.9rem;
+    background: rgba(1, 169, 251, 1);
+    border-radius: 0.5rem;
+    /* position: absolute;
+    left: 0;
+    right: 0; */
+    font-size: 0.3rem;
+    font-family: PingFang-SC-Medium;
+    color: rgba(255, 255, 255, 1);
+    line-height: 0.9rem;
+      /* bottom: 4rem; */
+      /* top: 80%; */
+    margin:4rem  auto;
+    text-align: center;
+}

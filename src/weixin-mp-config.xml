@@ -1,0 +1,23 @@
+ <xml>
+    <appId>wx0016dd49fcbf2133</appId>
+    <secret>b54e9b75fb6fb33bb0c8690d3c21404a</secret>
+    <token>xYC99ug0Q6ZNtq0h</token>
+    <aesKey>nTcgApwUy2tjWeF496EO7pWuK8wvn72TDeZr1d25vjm</aesKey>
+    <accessToken></accessToken>
+    <expiresTime>0</expiresTime>
+    <openId>okY5Ewzx3xX1ahwr5yEJsJ6YD4Z0</openId>
+    <oauth2redirectUri></oauth2redirectUri>
+</xml> 
+
+
+<!--<xml>
+    <appId>wxdeccf1ce0ca7bdbb</appId>
+    <secret>52d5ac91644b5ddde22de75bcb1ca0ea</secret>
+    <token>xYC9asdds9ugukkedk0Q6ZNfstq0h</token>
+    <aesKey>iU5iDsg9wA3ZMNT9AV4Bj9QNbN9zPAZwLNnL9iXNR0J</aesKey>
+    <accessToken></accessToken>
+    <expiresTime>0</expiresTime>
+    <openId></openId>
+    <oauth2redirectUri></oauth2redirectUri>
+</xml>-->
+

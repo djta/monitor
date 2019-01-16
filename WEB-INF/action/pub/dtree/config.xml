@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config nodb="true">
+
+	<summary>
+		Dtree JavaScript Library
+	</summary>
+	
+	<log>false</log>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>dtree.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<expiration>180</expiration>
+	</output>
+
+</config>

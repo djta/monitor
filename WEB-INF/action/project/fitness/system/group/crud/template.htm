@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/project/fitness/home/pub}
+<title>员工分组设置</title>
+</head>
+<body>
+<div class="modal fade" id="modalAddnew"  tabindex="-1" style="display:none;">
+		<div class="basic-information modal-dialog dialogbg" >
+			<header class="header-default">
+				<span id="formTitle">新增</span>
+				<span class="header-close"></span>
+			</header>
+			<div class="b-i-main">
+			<form id="formEditor" name="formEditor" method="post">
+				<input type="hidden" id="team_id" name="team_id" value=""/>
+					<div id="checkedNodesDiv" style="display: none;"></div>
+						<nav>
+						<li>
+						<label>组名：</label>
+							<input type="text" id="team_name" name="team_name" value="" maxlength="80" placeholder="组名"/>
+						</li>
+						<li class="inpRadio">
+						<label>分组类别：</label>
+							会籍<input type="radio" name="skill_scope" checked="checked" value="2" />
+							教练<input type="radio" name="skill_scope" value="1" />		
+							客服<input type="radio" name="skill_scope" value="0" />			
+						</li>
+						<li>
+							<label>组长：</label>
+							<div class="my-selected">
+							<select id="leader_id" name="leader_id">
+							</select>
+							</div>
+						</li>
+						<li  class="inpRadio3">
+						<label>组内权限：</label>
+							组长查看组员业绩<input type="radio"  name="data_limit" checked="checked" value="0" />
+							组内人员互相查看<input type="radio"   name="data_limit" value="1" />		
+						</li>
+						<li class="inpCheck">
+						<label>组员：</label>
+							全选<input type="checkbox"  value=""  id="selectAll" name="selectAll"/>
+							<span>已选中</span><span id="num">0</span><span>人</span>
+						</li>
+						<li></li>
+						<div class="inpCheck" id="emplist"style="max-width:800px ;margin-left:15.5%;color: white;">
+						</div>
+						<li class="to100w" style="margin-left: 6%">
+							<label>备注：</label>
+							<textarea id="remark" name="remark" placeholder="暂无数据" class="my-textarea" rows="" cols="4"></textarea>
+						</li>
+					</nav>
+					</form>
+				</div>
+				<footer class="footer-default">
+					<button id="save_btn" class="my-btn-default active">保存</button>
+				</footer>
+			</div>
+		</div>
+		<form  role="form" method="post" id="searchForm">
+			<input name="sort" type="hidden" value="t.team_id" preserve="true"/>
+            <input name="order" type="hidden" value="desc" preserve="true"/>
+            <input name="pageNo" type="hidden" value="" preserve="true"/> 
+            <input name="totalPages" type="hidden" value="" preserve="true"/>
+				<div class="am-tabs-bd r-tab-cont">
+					<div class="c-n-nav-2 am-tab-panel am-in am-active am-fade three-none" >
+						<div class="tab-cout-nav">
+							<div class="tab-cout-nav-t">
+								<nav class="tab-nav-my">
+									<li class="w-160">
+										<input type="text" id="s_name" name="s_name" placeholder="组长/组长名" class="input-default"/>							
+					 			 	</li>	
+					 			 	
+				 			 		<li style="width: 100px;">
+									 	<select id="s_category" name="s_category" style="display: none;">
+											<option value="">全部类别</option>
+												<option value="2">会籍</option>
+												<option value="1,8">教练</option>
+												<option value="0">客服</option>
+										</select>	
+				 			 		</li>
+			 			 			<li style="width: 100px;">
+			 			 					<select id="s_status" name="s_status" style="display: none;">
+												<option value="">启用/禁用</option>
+												<option value="1">启用</option>
+												<option value="0">禁用</option>
+											</select>	
+									  </li>
+									  <div class="r-c-btnList">
+											<button type="button" class="r-c-3-btn-1" id="search_btn" title="查询"></button>
+											<img src="${def:context}/js/project/fitness/image/SVG/nav/xinzengkecheng.svg" title="新增" alt="" data-toggle="modal" id="addnew_btn">
+											<button type="button"  class="r-c-3-btn-3" id="daochu_list" title="导出"></button>
+										</div>
+								</nav>
+							</div>
+							<div class="tab-cout-nav-b">
+								<nav class="r-c-3-t-b-l">
+									
+								</nav>
+								<nav class="r-c-3-t-b-r">
+									 <li>
+											<img src="${def:context}/js/project/fitness/image/SVG/nav/yulan.svg" title="查看" alt=""id="yulan">
+									</li>
+									<li>
+										<img src="${def:context}/js/project/fitness/image/SVG/btn/kaiqi.svg" title="启用" alt=""id="start_btn">
+									</li>
+									<li>
+										<img src="${def:context}/js/project/fitness/image/SVG/btn/jinyong.svg" title="禁用" alt=""id="disabled_btn">
+									</li>
+									 <li>
+											<img src="${def:context}/js/project/fitness/image/SVG/nav/xiugai.svg" title="修改" alt=""id="edit_btn">
+									</li>
+									<li>
+											<img src="${def:context}/js/project/fitness/image/SVG/nav/shanchu.svg" title="删除" alt=""id="delete_btn">
+									</li>	
+								</nav>
+							</div>
+						</div>
+						<div class="r-tab-cout-3-b">
+							<div class="to-change-background h-43"></div>
+							<table> 
+								<thead>
+									<tr>
+										<th class="table-checkbox">
+											<input id="selectAll1"  name="datalist"  type="checkbox" value="" style="display: none;">
+										</th>
+										<th>组名</th>
+										<th>组类别</th>
+										<th>组长</th>
+										<th>人数</th>
+										<th>成员</th>
+										
+										<th>启用状态</th>										
+										<th>备注</th>	
+									</tr>
+								</thead>
+								
+								<tbody id="datagridTemplate" style="display: none">
+									<tr>
+										 <td class="table-checkbox">#checkboxlist#</td> 
+										<td >#team_name#</td>
+										<td >#type#</td>
+										<td >#leader_name#</td>
+										<td >#num#</td>
+										<td >#member#</td>
+										<td >#status#</td>		
+										<td >#remark#</td>			
+									</tr>
+								</tbody>
+								<tbody id="datagrid">
+								</tbody>
+							</table>
+							<div class="pageDiv">
+								<ul class="pagination">
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			<form action="${def:context}${def:actionroot}/excel" role="form" method="post" id="daochuForm" target="_blank" style="display: none">
+					<input id="daochu_s_name" name="daochu_s_name" type="text" />
+					<input id="daochu_s_category" name="daochu_s_category" type="text" />
+					<input id="daochu_s_status" name="daochu_s_status" type="text" />
+			</form>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script language="JavaScript">
+var search = null;
+this.search = search;
+$(document).ready(function() {
+	ccms.util.renderRadio("skill_scope");
+	ccms.util.renderRadio("data_limit");
+	ccms.util.renderCheckbox("selectAll");
+	loadEmp(2);
+	//类别对应员工
+	searchSelectInit($("#leader_id,#s_category,#s_status"));
+	$("input[name=skill_scope]:eq(0)").on("ifClicked",function () {     
+		loadEmp(2);
+		$('#num').text(0);
+	});
+	
+	$("input[name=skill_scope]:eq(1)").on("ifClicked",function () {     
+		loadEmp("1,8");
+		$('#num').text(0);
+	});
+	
+	$("input[name=skill_scope]:eq(2)").on("ifClicked",function () {     
+		loadEmp(0);
+		$('#num').text(0);
+	});
+	
+	//搜索
+	$("#refresh_btn").unbind().on("click", function(){
+		search.searchData(1);
+	});
+	$(".header-close").unbind().on("click",function(){
+		$("#modalAddnew").modal('hide');
+		ccms.util.clearErrorMessages();
+		ccms.util.clearForm("formEditor");
+		$("input[name=skill_scope]:eq(0)").iCheck('check');
+		$("input[name=data_limit]:eq(0)").iCheck('check');
+		$("#formTitle").text("新增");
+	});
+	//新增
+	$("#addnew_btn").unbind().on("click", function(){
+		ccms.util.clearErrorMessages();
+		ccms.util.clearForm("formEditor");
+		$("input[name=skill_scope]:eq(0)").iCheck('check');
+		$("input[name=data_limit]:eq(0)").iCheck('check');
+		setSelectValue($("#leader_id"), "");
+		$("#formTitle").text("新增");
+		$("#leader_id,#team_name,#remark,input[name=skill_scope],input[name=data_limit],input[name=emplist]").attr("disabled", false);
+		loadEmp(2);
+		$("#save_btn").show();
+		$("#modalAddnew").modal('show');
+	});	
+	
+	//全选   取消全选
+    $("#selectAll").unbind().on("ifChecked",function(){    //点击事件未选中
+		$('input[name=emplist]').iCheck('check');  //
+    }).on("ifUnchecked",function(){    //点击事件未选中
+		$('input[name=emplist]').iCheck('uncheck');  //
+    });
+	
+	//修改
+	$("#edit_btn").unbind().on("click",function() {
+		var userid = $("input[name=datalist]:checked").val();
+		var skill_scope=$("input[name=datalist]:checked").attr('code');
+		var leng=$('input[name="datalist"]:checked').length
+		if(leng!=1||userid==''||userid==null){
+			ccms.dialog.notice("请选择一个组进行修改！", 2000)
+		}else{
+			$("#formTitle").text("修改");
+			ccms.util.clearErrorMessages();
+			$("#leader_id,#team_name,#remark,input[name=skill_scope],input[name=data_limit],input[name=emplist]").attr("disabled", false);
+			edit(userid,skill_scope);
+			$("#emplist").html("");
+			$("#save_btn").show();
+			$("#modalAddnew").modal("show");
+		}
+	});
+	//查看
+	$("#yulan").unbind().on("click",function() {
+		var userid = $("input[name=datalist]:checked").val();
+		var skill_scope=$("input[name=datalist]:checked").attr('code');
+		var leng=$('input[name="datalist"]:checked').length
+		if(leng!=1||userid==''||userid==null){
+			ccms.dialog.notice("请选择一个组进行查看！", 2000)
+		}else{
+			$("#formTitle").text("修改");
+			ccms.util.clearErrorMessages();
+			edit(userid,skill_scope);
+			$("#modalAddnew").modal("show");
+			$("#emplist").html("");
+			$("#save_btn").hide();
+			$("#leader_id,#team_name,#remark,input[name=skill_scope],input[name=data_limit],input[name=emplist]").attr("disabled", true);
+		}
+	});
+	//保存、修改
+	$("#save_btn").unbind().on("click", function(){
+		if(getCheckedMenu()){
+			if($('#team_id').val()!=""){
+				save("${def:context}/action/project/fitness/system/group/update");
+			}else{
+				save("${def:context}/action/project/fitness/system/group/insert");
+			}
+		}
+	});
+	
+	//批量删除
+	$("#delete_btn").unbind().on("click",function(){
+		var obthis=mosaicID();
+		if(obthis!= ""){
+			deletes(obthis);
+		}else{
+			ccms.dialog.alert("请选择组！")
+		}
+	});
+		
+	//启用
+	$("#start_btn").unbind().on("click",function(){
+		updatestatus(1);
+	});
+	//禁用
+	$("#disabled_btn").unbind().on("click",function(){
+		updatestatus(0);
+	}); 
+	//导出
+	$("#daochu_list").unbind().on("click", function(){
+	     $("#daochu_s_name").val($("#s_name").val());
+	     $("#daochu_s_category").val($("#s_category").val());
+	     $("#daochu_s_status").val($("#s_status").val());
+	     $("#daochuForm").submit();
+	});	
+	search=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+			$("#searchForm #s_name").val("");
+			ccms.util.renderCheckbox("datalist");
+			//全选   取消全选
+		    $("#selectAll1").unbind().on("ifChecked",function(){    //点击事件未选中
+				$('input[name=datalist]').iCheck('check');  //
+		    }).on("ifUnchecked",function(){    //点击事件未选中
+				$('input[name=datalist]').iCheck('uncheck');  //
+		    });
+	}}).initSearchBtn().searchData(1);
+});
+
+function loadEmp(index){
+	ajaxCall("${def:context}${def:actionroot}/loademp?group_type="+index+"&types=1",{
+		method: "get",
+		progress: false,
+		dataType: "script",
+		async:false
+	});
+}
+function getCheckedMenu(){
+	var divobj = $("#checkedNodesDiv");
+	var checkbox=$("input[name=emplist]:checked");
+	var leadsid=$('#leader_id').val();
+	divobj.empty();
+	if(checkbox.length==0){
+		ccms.dialog.alert("请选择组员")
+		return  false
+	}
+	if(checkbox.length==1){
+		if(leadsid==checkbox[0].value){
+			ccms.dialog.alert("请选其他组员")
+			return  false
+		}
+	}
+	for(var i = 0; i < checkbox.length; i++){
+		var obj = checkbox[i];
+    	divobj.append('<input type="text" name="member_user" value="' + obj.value + '" />');
+	}
+	return true;
+}
+
+function edit(team_id,skill_scope){
+	var url = "${def:context}${def:actionroot}/loademp?group_type="+skill_scope+"&types=0";
+	ajaxCall(url,{
+		method: "get",
+		progress: true,
+		dataType: "script",
+		success: function() {
+			editCallback(team_id,skill_scope);
+		}
+	});
+}		
+
+function save(uri){
+    ajaxCall(uri,{
+		method: "post",
+		progress: true,
+		form:'formEditor',
+		dataType: "script",
+		success: function() {
+			$("#modalAddnew").modal('hide');
+			ccms.util.clearForm("formEditor");
+			search.searchData(1);
+		 }
+	  }); 
+}
+
+function editCallback(team_id,skill_scope){
+	var url = "${def:context}${def:actionroot}/edit?team_id="+team_id+"&group_type="+skill_scope
+	ajaxCall(url,{
+		method: "get",
+		progress: true,
+		dataType: "script",
+		success: function() {
+		}
+	});
+}
+
+
+function updatestatus(index){
+	var obthis=mosaicID();
+	if(obthis!= ""){
+		$Dialog().confirm("确定要执行操作吗?", function(){
+			var url = "${def:context}${def:actionroot}/updatestatus?id="+obthis+"&status="+index;
+			ajaxCall(url,{
+				method: "get",
+				progress: true,
+				dataType: "script",
+				success: function() {
+					ccms.dialog.alert("操作成功！");
+					search.searchData(1);
+				}
+			});
+		});
+	}else{
+		ccms.dialog.alert("请选择组！")
+	}
+}
+
+function mosaicID(){
+	var obthis="";
+	var chkObjs = document.getElementsByName("datalist");
+	for(var i=0;i<chkObjs.length;i++)
+	{
+		if(chkObjs[i].checked)
+		{
+			obthis += chkObjs[i].value+";";
+			 }
+	}
+	return obthis;
+}
+
+function deletes(obthis){
+	$Dialog().confirm("确定要删除这些数据吗?", function(){
+		var url = "${def:context}${def:actionroot}/delete?id="+obthis;
+		ajaxCall(url,{
+			method: "get",
+			progress: true,
+			dataType: "script",
+			success: function() {
+				ccms.dialog.alert("操作成功！");
+				search.searchData(1);
+			}
+		});
+	});
+}
+</script>
+</body>
+</html>

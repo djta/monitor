@@ -1,0 +1,46 @@
+<center>
+<!--data grid-->
+<table class="grid" width="100%">
+	<tr>
+		<th>
+		    <a>操作</a>
+		</th>
+		
+		<th width="30%">
+			<a href="javascript:onclick=sortBy('document_id')" >
+				文档名称
+			</a>
+		</th>
+		<th width="20%">
+			<a href="javascript:onclick=sortBy('form_type')" >
+				文档类型
+			</a>
+		</th>
+		<th width="20%">
+			<a href="javascript:onclick=sortBy('show_order')" >
+				显示顺序
+			</a>
+		</th>
+	</tr>
+	<rows>
+	<tr ${fld:_rowStyle}>
+		<td align="center">
+			<a href='javascript:void(0)' onclick='javascript:deleteRecord(${fld:tuid});'>删除</a>
+		</td>
+		<td align="center">
+			${fld:document_name}
+		</td>
+		
+		<td align="center">
+			${fld:form_type}
+		</td>	
+
+		<td align="center">
+			${fld:show_order}
+		</td>	
+	</tr>
+	</rows>
+
+</table>
+${inc:/action/pagecontrols?is_can_query=inline&is_can_create=inline&is_can_back=inline}
+</center>

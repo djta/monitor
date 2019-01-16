@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<link rel="stylesheet" type="text/css" href="${def:context}/default.css" />
+
+<!--biblioteca generica JS/Dinamica-->
+<script type="text/javascript" src="${def:context}/action/script">
+</script>
+
+<title>选择信息</title>
+
+</head>
+
+<body>
+
+<!--COMMON HEADER-->
+${inc:/action/pub/header}
+
+<div class="pop_title">
+<h2>选择参数值<span class="close"><a href="#"><img src="${def:context}/images/ccms/close.jpg" onclick="parent.pickClose()" title="关闭"/></a></span></h2>
+</div>
+<div class="pop_content">
+
+<center>
+
+<!--formulario de filtro-->
+<div id="form">
+<form name="form1" onsubmit="return search()" style="margin-top: 5px; margin-bottom: 0px;">
+
+<table width="100%" class="formgrid" style="border-left: none; border-right: none">
+
+	<!--ancho de la columna de etiquetas-->
+	<col width="20%">
+	<col width="20%">
+	<col width="20%">
+	<col width="20%">
+	<col width="20%">
+
+	<!--campos-->
+	<tr>
+		<td class="th20" style="vertical-align: middle">命名空间:</td>
+		<td align="left">
+			<input name="namespace" type="text" size="10" value="" maxlength="35">
+		</td>
+		<td class="th20" style="vertical-align: middle">参数名称:</td>
+		<td align="left">
+			<input name="name" type="text" size="15" value="" maxlength="35"> 
+		</td>
+		<td class="th20" style="vertical-align: middle"><input type="submit" value="查询" class="btn_blue"> </td>
+	</tr>
+
+</table>
+
+</form>
+</div>
+
+<!--indicador de progreso-->
+<div id="status" class="alert"	style="display: none; color: gray; width: 60%; font-weight: normal; font-family: Arial; margin-top: 10px">
+	<img src="${def:context}/images/progress.gif"> 请稍候...
+</div>
+
+<!--panel de respuesta AJAX-->
+<div id="response" style="display: none; width: 100%; margin-top: 7px">
+</div>
+
+</center>
+</div>
+</body>
+
+<!--codigo de soporte del template-->
+<script type="text/javascript">
+
+		var currstyle = "";
+
+		//inicializacion de la pagina cuando carga
+		onload = function()
+		{ 
+			//20110804 document.form1.elements[0].focus();
+			changeRequiredStyle();
+			
+		} 
+	
+		//mostrar filtro de busqueda
+		function showFilter()
+		{
+			//20110804 document.form1.elements[0].focus();			
+		}
+
+		//ejecutar consulta
+		function search()
+		{
+
+			//llamada Ajax...
+			return ajaxCall(	httpMethod="POST", 
+								uri="${def:actionroot}/search", 
+								divResponse="response", 
+								divProgress="status", 
+								formName="form1", 
+								afterResponseFn=showFilter, 
+								onErrorFn=showFilter);
+		
+		}
+	
+		//leer una pagina del grid
+		function viewPage()
+		{
+			var url = "${def:actionroot}/view";
+			gotoPage(url);
+		}
+
+		//resaltar row del grid
+		function rowOn(obj) {
+			currStyle = obj.className;
+			obj.className="hilite";
+		}
+		
+		//restaurar color normal del row del grid
+		function rowOff(obj) {
+			obj.className=currStyle
+		}
+		
+		//retornar el item seleccionado a la pagina que llamo al picklist
+		function selectItem(id,nametext,namespace) {
+			parent.setValueForParam(id, nametext, namespace);
+			parent.pickClose();
+		}	
+</script>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/project/fitness/home/pub}
+<title>选择员工</title>
+</head>
+<body>
+
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm">
+			<input name="sort" type="hidden" value="user_id" preserve="true"/>
+            <input name="order" type="hidden" value="desc" preserve="true"/>
+            <input name="pageNo" type="hidden" value="" preserve="true"/> 
+            <input name="totalPages" type="hidden" value="" preserve="true"/>
+            <input type="hidden" id="vc_name" name="vc_name" value=""/>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th><input type="checkbox" class="selectAll" name="selectAll" id="selectAll"/></th>
+						<th class="sortable" code="team_name">姓名</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr id="list">
+						<td class="text-center" style="color:#8c8c8c;width:50px;">#application_id#</td>
+						<td class="text-center">#name#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+		<div style="margin-left:45%">
+		<button class="btn btn-info btn-sm" type="button" data-toggle="modal" id="save_btn">保存</button>
+		<button class="btn btn-info btn-sm" type="button" data-toggle="modal" id="eq_btn">取消</button>
+		</div>
+	</div>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script language="JavaScript">
+$(document).ready(function() {
+		search=$Search({datagrid:"datagrid",formId:"searchForm", success:function(){
+			//复选框变大20%  此处添加影响功能实现
+			$('input[type=checkbox]').iCheck({
+	    		checkboxClass: 'icheckbox_square-blue',
+				increaseArea: '20%'
+	    	});
+			//全选   取消全选
+			$(document).ready(function() {
+		    $("#selectAll").unbind().on("ifClicked",function(){    //点击事件未选中
+			 if( $(this).prop("checked") ){
+				$('input[name=duoxuan]').iCheck('uncheck');
+			 }else{
+				$('input[name=duoxuan]').iCheck('check');
+			 }
+		    });
+	        });
+			$("#save_btn").unbind().on("click",function(){
+				var obthis="";
+				var obthisuser="";
+				var chkObjs =document.getElementsByName("duoxuan");
+				var member_user
+		
+				for(var i=0;i<chkObjs.length;i++){
+			    	if(chkObjs[i].checked){
+			    		if( member_user.indexOf(";"+chkObjs[i].value+";") < 0 ){
+				    		obthis += chkObjs[i].value+";";
+				    		obthisuser += chkObjs[i].attributes["code"].nodeValue+";";
+			    		}
+			   		 }
+				}
+				if( obthisuser.length > 0 ){
+					obthisuser=obthisuser.substr(0,obthisuser.length-1);
+					obthis=obthis.substr(0,obthis.length-1);
+					member_user = parent.$("#member_user").val();
+					if( undefined != member_user && "" != member_user ){
+						$("#member_user").val(member_user + ";" + obthis);
+					}else{
+						$("#member_user").val(obthis);
+					}
+				}
+			});
+	}}).initSearchBtn().searchData(1);
+});
+</script>
+</body>
+</html>

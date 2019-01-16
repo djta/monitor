@@ -1,0 +1,457 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+<script src="${def:context}/js/ccms/report.js"></script>
+<script src="${def:context}/js/highcharts/js/highcharts.js"></script>
+<script src="${def:context}/js/highcharts/js/highcharts-3d.js"></script>
+<script src="${def:context}/js/highcharts/js/modules/exporting.js"></script> 
+
+<title>Report</title>
+<style type="text/css">
+	#msg_win_${fld:report_id}{border:1px solid #A67901;background:#EAEAEA;width:330px;position:absolute;left:0;font-size:12px;font-family:Arial;margin:0px;display:none;overflow:hidden;z-index:99;}
+	#msg_win_${fld:report_id} .icos{position:absolute;top:2px;*top:0px;right:2px;z-index:9;}
+	.icos a{float:left;color:#fff;margin:1px;text-align:center;font-weight:bold;width:14px;height:22px;line-height:22px;padding:1px;text-decoration:none;font-family:webdings;}
+	.icos a:visited{float:left;color:#fff;margin:1px;text-align:center;font-weight:bold;width:14px;height:22px;line-height:22px;padding:1px;text-decoration:none;font-family:webdings;}
+	#msg_title{background:#094f76;border-bottom:1px solid #A67901;border-top:1px solid #FFF;border-left:1px solid #FFF;color:#FFF;height:25px;line-height:25px;text-indent:5px;font-weight:bold;}
+	#msg_content{margin:5px;margin-right:0;width:320px;height:200px;overflow:auto;}
+</style>
+</head>
+
+<body>
+
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center" style="display:none;">
+		<h2 class="panel-title">${fld:report_name}</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<form id="formFilter_${fld:report_id}" name="formFilter_${fld:report_id}" class="form-horizontal" role="form" onsubmit="return reportObj.reportSearch();" method="post" target="detail_${fld:report_id}" style="display:none;">
+
+<div id="msg_win_${fld:report_id}" style="display:${fld:if_customer_config};visibility:visible;opacity:1;">
+	<div class="icos"><a id="msg_min" title="最小化" href="javascript:void 0">—</a>&nbsp;&nbsp;<a id="msg_close" title="关闭" href="javascript:void 0" style="display:none;">X</a></div>
+	<div id="msg_title">自定义分组</div>
+	<div id="msg_content">
+		<!--这里将填充字段信息列表-->            	
+			<table class='grid' width='100%' id="dragTable">
+			<tr>
+			<th colspan="4" align="left" class="text-left">
+			<input id="is_save" name="is_save" type="checkbox" value="1" align="left" onclicke="this.value=(this.checked?1:0)" preserve="true">保存设置
+			</th>
+			</tr>
+			<tr>
+			<th nowrap> 字段 </th>
+			<th nowrap style="display:${fld:show_row_cross}"> 行 </th>
+			<th nowrap> 列 </th>
+			<!--th nowrap> 值 </th-->
+			<th nowrap>顺序</th>
+			</tr>
+			<tbody id="gridBody_${fld:report_id}">
+			<report-field-list>
+			<tr ${fld:_rowStyle} title="拖动行排序"><td>
+			${fld:alias}<input type='hidden' id='field_report_${fld:_rowIndex}' name='field_report' size='5' value='${fld:id}' preserve="true">
+			</td>
+			<td style="display:${fld:show_row_cross}" align="center">
+			<input name='is_row_head' id='hidis_row_head_${fld:_rowIndex}' type=hidden value="${fld:is_row_head}" preserve="true">
+			<input name='is_col_head' id='hidis_col_head_${fld:_rowIndex}' type=hidden value="${fld:is_col_head}" preserve="true">
+			<input type='checkbox' dependent='field_report_${fld:_rowIndex}' id='is_row_head_${fld:_rowIndex}' name='is_row_headck' size='1' value='${fld:is_row_head}' ${fld:checked9}  preserve="true">
+			</td>
+			<td align="center">
+			<input type='checkbox' dependent='field_report_${fld:_rowIndex}' id='is_col_head_${fld:_rowIndex}' name='is_col_headck' size='1' value='${fld:is_col_head}' ${fld:checked10}  preserve="true">
+			</td>
+			<!--td align="center">
+			<input type='checkbox' dependent='field_report_${fld:_rowIndex}' id='is_cross_value_${fld:_rowIndex}' name='is_cross_value' size='1' value='${fld:is_cross_value}' ${fld:checked11} onclick='this.value=(this.checked?1:0);$("is_col_head_${fld:_rowIndex}").checked=false;$("is_col_head_${fld:_rowIndex}").value="0";$("is_row_head_${fld:_rowIndex}").checked=false;$("is_row_head_${fld:_rowIndex}").value="0";' preserve="true">
+			</td-->
+			<td align="center"><input type='text' dependent='field_report_${fld:_rowIndex}' id='report_order_${fld:_rowIndex}' name='report_order' value='${fld:report_order}' size="1" preserve="true"></td></tr>
+			</report-field-list>
+
+			</tbody>
+			</table>
+			<br/>
+			<div class="text-center"><input type="submit" value="${lbl:report_search}"></div>
+	</div>
+</div>
+			
+			<div class="form-group">
+				${controls}
+			</div>
+			
+			<!--最多显示记录个数-->
+	        <input name="limitedcount"  value="1000" type="hidden" >
+	        <input name="report_id"  value="${fld:report_id}" type="hidden" preserve="true">
+	        <input name="__search_report__"  value="${fld:__search_report__}" type="hidden" preserve="true">
+	
+			<input name="file" value="${fld:jor_file_name}" type="hidden" preserve="true">
+			<input name="as" value="dhtml" type="hidden" preserve="true">
+			<input name="_all_in_one_page" value="true" type="hidden" preserve="true">
+		</form>
+		<div id="btnDiv_${fld:report_id}" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" style="display:none;">
+			<button id="reportSearchBtn_${fld:report_id}" name="searchBtn_${fld:report_id}" class="btn btn-primary btn-md">${lbl:report_search_commit}</button>
+			<button id="clearBtn_${fld:report_id}" class="btn btn-primary btn-md">${lbl:report_search_clear}</button>
+			<button id="exportBtn_${fld:report_id}" name="exportBtn_${fld:report_id}" class="btn btn-primary btn-md" style="display:none">导出</button>
+		</div>
+		<br/>
+<!--grid view response-->
+<div id="response_${fld:report_id}" style="display:none;width:100%">
+</div>
+<div id="jorDiv_${fld:report_id}" style="overflow:auto;display:none">
+<!--show linked grid-->
+<iframe id="detail_${fld:report_id}" name="detail_${fld:report_id}" marginwidth="0" scrolling="no" frameborder="0" style="height:0%;width:100%;visibility:hidden">
+</iframe>
+</div>
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}">
+		
+	</div>
+</div>
+<script src="${def:context}/js/ccms/chart.js"></script>
+<script src="${def:context}/js/ccms/report.js"></script>
+<script language="JavaScript">
+${fld:form_js}
+var reportObj = null;
+var reportJSObj = new reportJS();
+function reportClass(){
+	var objectThis = this;
+	this.search = function (){
+		return ajaxCall("${def:actionroot}/search",
+				{method:"post", 
+				button:"reportSearchBtn_${fld:report_id}", 
+				form:"formFilter_${fld:report_id}", 
+				response:"response_${fld:report_id}",
+				success:function(){
+					objectThis.searchBack();
+					document.getElementById("response_${fld:report_id}").style.display="";},
+				error:null});
+	}
+
+	this.beforeSearch = function (){
+		//处理多选的值,拼成x,y,z的形式.
+		<rows>
+			reportJSObj.setCheckBoxValues("${fld:field_code_alias}_filter_check","${fld:field_code_alias}_filter");
+		</rows>
+
+		clearErrorMessages();
+		return ajaxCall("${def:actionroot}/update",
+				{method:"post", 
+				button:"reportSearchBtn_${fld:report_id}", 
+				form:"formFilter_${fld:report_id}", 
+				response:"response_${fld:report_id}",
+				success:function(){
+					objectThis.search();},
+				error:null});
+	}
+	this.searchBack = function(){
+	    ${fld:searchback_js}
+	    return true;
+	}
+	this.openReport = function(){
+		var features = "height=500,width=800,status=no,toolbar=no,menubar=no,location=no,scrollbars=yes,resizable=yes";
+		var url = "${def:context}${def:actionroot}/html?random=" + Math.random();
+		var w = window.open(url, null, features);
+	}
+	this.openPDF = function(){
+		var features = "height=500,width=800,status=no,toolbar=no,menubar=no,location=no,scrollbars=yes,resizable=yes";
+		var url = "${def:context}${def:actionroot}/pdf?random=" + Math.random();
+		var w = window.open(url, null, features);
+	}
+	this.openExcel = function(){
+		var features = "height=500,width=800,status=no,toolbar=no,menubar=no,location=no,scrollbars=yes,resizable=yes";
+		var url = "${def:context}${def:actionroot}/excel?random=" + Math.random();
+		var w = window.open(url, null, features);
+	}
+	this.reportError = function(msg){
+		$Dialog().alert(msg);
+	}
+	this.formSubmit = function(){
+		$("#formFilter_${fld:report_id}").submit();
+	}
+	this.reportSearch = function(){
+		
+		 ${fld:searchpre_js}
+		 
+		if("${fld:engine_type}" == "1"){
+			return objectThis.jorReportSearch();
+		}else if("${fld:engine_type}" == "2"){
+			return ajaxCall("${def:actionroot}/chartsearch",
+					{method:"post", 
+					button:"reportSearchBtn_${fld:report_id}", 
+					form:"formFilter_${fld:report_id}",
+					success:objectThis.searchBack});
+		}else if("${fld:engine_type}" == "0"){
+			objectThis.beforeSearch();
+		}
+	}
+	this.jorReportSearch = function(){
+
+		if(document.formFilter_${fld:report_id}.file.value == ""){
+			$Dialog().alert("该报表未配置报表文件，请检查！");
+			return false;
+		}
+
+		//处理多选的值,拼成x,y,z的形式.
+		<rows>
+			reportJSObj.setCheckBoxValues("${fld:field_code_alias}_filter_check","${fld:field_code_alias}_filter");
+		</rows>
+		
+		document.getElementById("reportSearchBtn_${fld:report_id}").disabled = true;
+		$("#detail_${fld:report_id}")[0].style.visibility = "hidden"; 
+		$("#detail_${fld:report_id}")[0].style.height = "0%";
+		document.getElementById("response_${fld:report_id}").style.display="none";
+		$("#jorDiv_${fld:report_id}")[0].style.display = "none";
+
+		document.formFilter_${fld:report_id}.as.value = "dhtml";
+
+		//隐藏导出按钮
+		document.getElementById("exportBtn_${fld:report_id}").style.display = "none";
+
+		document.formFilter_${fld:report_id}.action = "${def:context}${def:actionroot}/jorsearch";
+		document.formFilter_${fld:report_id}.submit();
+	}
+	this.jorReportExport = function(){
+		var sessionId=window.frames["detail_${fld:report_id}"].document.getElementById("jsettings").getAttribute("jobSessionId");
+		if(sessionId){
+			window.open("${def:context}${def:actionroot}/jorexport?_action_type=export&do_export=1&_job_session_id="+sessionId+"&as=xls");
+		}
+	}
+	this.jorSearchOK = function(){
+		objectThis.searchBack();
+		document.getElementById("response_${fld:report_id}").style.display="";
+		document.getElementById("reportSearchBtn_${fld:report_id}").disabled = false;
+		$("#detail_${fld:report_id}")[0].style.visibility = "visible"; 
+
+		//显示导出按钮
+		document.getElementById("exportBtn_${fld:report_id}").style.display = "";
+
+		//改变iframe的宽度，使之出现滚动条
+		$("#jorDiv_${fld:report_id}")[0].style.display = "";
+		var offset1 = $('#jorDiv_${fld:report_id}').offset();
+		$("#jorDiv_${fld:report_id}").height($(document).height()-offset1.top-15);
+		$("#jorDiv_${fld:report_id}").width($(document).width()-15);
+		reportJSObj.doReSize('detail_${fld:report_id}');
+	}
+	this.jorSearchValidator = function(){
+		document.getElementById("divStatus").style.display="none";
+		document.getElementById("response_${fld:report_id}").style.display="";
+		document.getElementById("reportSearchBtn_${fld:report_id}").disabled = false;
+		$("#detail_${fld:report_id}")[0].style.visibility = "visible"; 
+
+		//改变iframe的宽度，使之出现滚动条
+		reportJSObj.doReSize();
+		$("#jorDiv_${fld:report_id}")[0].style.display = "";
+	}
+	this.jorSearchError = function(info){
+		$Dialog().alert(info);
+		//document.getElementById("divStatus").style.display="none";
+		document.getElementById("response_${fld:report_id}").style.display="";
+		document.getElementById("reportSearchBtn_${fld:report_id}").disabled = false;
+		$("#detail_${fld:report_id}")[0].style.visibility = "hidden"; 
+		$("#detail_${fld:report_id}")[0].style.height = "0%";
+		$("#jorDiv_${fld:report_id}")[0].style.display = "none";
+	}
+	this.init = function(){
+		var obthis=this;
+		$("#reportSearchBtn_${fld:report_id}").unbind().on("click",obthis.reportSearch);
+		$("#clearBtn_${fld:report_id}").unbind().on("click",function(){
+			clearForm("formFilter_${fld:report_id}");
+		});
+		$("#exportBtn_${fld:report_id}").unbind().on("click",obthis.jorReportExport);
+		
+	}
+
+	this.Message={
+			set: function() {//最小化与恢复状态切换
+				var set=this.minbtn.status == 1?[0,1,'block',this.char[0],'最小化']:[1,0,'none',this.char[1],'恢复'];
+				this.minbtn.status=set[0];
+				this.win.style.borderBottomWidth=set[1];
+				this.content.style.display =set[2];
+				this.minbtn.innerHTML =set[3];
+				this.minbtn.title = set[4];
+				this.win.style.top = this.getY().top;
+			},
+			close: function() {//关闭
+				this.win.style.display = 'none';
+				window.onscroll = null;
+			},
+			setOpacity: function(x) {//设置透明度
+				var v = x >= 100 ? '': 'Alpha(opacity=' + x + ')';
+				this.win.style.visibility = x<=0?'hidden':'visible';//IE有绝对或相对定位内容不随父透明度变化的bug
+				this.win.style.filter = v;
+				this.win.style.opacity = x / 100;
+			},
+			show: function() {//渐显
+				clearInterval(this.timer2);
+				var me = this,fx = this.fx(0, 100, 0.1),t = 0;
+				this.timer2 = setInterval(function() {
+				t = fx();
+				me.setOpacity(t[0]);
+				if (t[1] == 0) {clearInterval(me.timer2) }
+				},10);
+			},
+			fx: function(a, b, c) {//缓冲计算
+				var cMath = Math[(a - b) > 0 ? "floor": "ceil"],c = c || 0.1;
+				return function() {return [a += cMath((b - a) * c), a - b]}
+			},
+			getY: function() {//计算移动坐标
+				var d = document,b = document.body, e = document.documentElement;
+				var s = Math.max(b.scrollTop, e.scrollTop);
+				var h = /BackCompat/i.test(document.compatMode)?b.clientHeight:e.clientHeight;
+				var h2 = this.win.offsetHeight;
+				//return {foot: s + h + h2 + 2+'px',top: s + h - h2 - 2+'px'}
+				return {foot: s+'px',top: s+'px'}
+			},
+			moveTo: function(y) {//移动动画
+				clearInterval(this.timer);
+				var me = this,a = parseInt(this.win.style.top)||0;
+				var fx = this.fx(a, parseInt(y));
+				var t = 0 ;
+				this.timer = setInterval(function() {
+				t = fx();
+				me.win.style.top = t[0]+'px';
+				if (t[1] == 0) {
+				clearInterval(me.timer);
+				me.bind();
+				}
+				},10);
+			},
+			bind:function (){//绑定窗口滚动条与大小变化事件
+				var me=this,st,rt;
+				window.onscroll = function() {
+					me.win.style.top = me.getY().top;
+				clearTimeout(st);
+				clearTimeout(me.timer2);
+				me.setOpacity(0);
+				st = setTimeout(function() {
+				me.win.style.top = me.getY().top;
+				me.show();
+				},600);
+				};
+				window.onresize = function (){
+				clearTimeout(rt);
+				rt = setTimeout(function() {me.win.style.top = me.getY().top},100);
+				}
+			},
+			init: function() {//创建HTML
+				function $(id) {return document.getElementById(id)};
+				this.win=$('msg_win_${fld:report_id}');
+				var set={minbtn: 'msg_min',closebtn: 'msg_close',title: 'msg_title',content: 'msg_content'};
+				for (var Id in set) {this[Id] = $(set[Id])};
+				var me = this;
+				this.minbtn.onclick = function() {me.set();this.blur()};
+				this.closebtn.onclick = function() {me.close()};
+				this.char=navigator.userAgent.toLowerCase().indexOf('firefox')>1?['—','::','X']:['0','2','r'];//FF不支持webdings字体
+				this.minbtn.innerHTML=this.char[0];
+				this.closebtn.innerHTML=this.char[2];
+				setTimeout(function() {//初始化最先位置
+				me.win.style.display = 'block';
+				me.win.style.top = me.getY().foot;
+				me.moveTo(me.getY().top);
+				},0);
+				return this;
+			}
+		}
+	
+}
+$(document).ready(function(){
+	//如果定义了跳转地址,则页面跳转
+	var new_url = "${fld:url}";
+	if(new_url != ""){
+		window.location= "${def:context}"+new_url;
+	}
+	
+	//从传过来的参数中给查询条件赋值
+	<rows-filter_value>
+	if (typeof(document.formFilter_${fld:report_id}.${fld:field_code_alias}_filter) != "undefined") {
+		switch ("${fld:show_type}")
+			{
+				case "0"://text
+					document.formFilter_${fld:report_id}.${fld:field_code_alias}_filter.value = "${fld:field_value@js}";
+					break;
+				case "1"://combo
+					setComboValue("${fld:field_code_alias}_filter","${fld:field_value@js}","formFilter_${fld:report_id}");
+					break;
+				case "3"://radio
+					setCheckboxValue("${fld:field_code_alias}_filter","${fld:field_value@js}","formFilter_${fld:report_id}");
+					break;
+				case "4"://readonly
+					document.formFilter_${fld:report_id}.${fld:field_code_alias}_filter.value = "${fld:field_value@js}";
+					break;
+				case "5"://date
+					document.formFilter_${fld:report_id}.${fld:field_code_alias}_filter.value = "${fld:field_value@js}";
+					break;
+				case "6"://textarea
+					document.formFilter_${fld:report_id}.${fld:field_code_alias}_filter.value = "${fld:field_value@js}";
+					break;
+				case "9"://hidden
+					document.formFilter_${fld:report_id}.${fld:field_code_alias}_filter.value = "${fld:field_value@js}";
+					break;
+				default:
+					document.formFilter_${fld:report_id}.${fld:field_code_alias}_filter.value = "${fld:field_value@js}";
+					if(typeof(document.formFilter_${fld:report_id}.${fld:field_code_alias}_alias_filter) != "undefined"){
+						document.formFilter_${fld:report_id}.${fld:field_code_alias}_alias_filter.value = "${fld:field_value@js}";
+					}
+					break;
+			}
+	}
+	</rows-filter_value>
+
+	${fld:loadfilter_js}
+	
+	reportObj = new reportClass();
+	reportObj.init();
+
+	if(document.getElementById("msg_win_${fld:report_id}").style.display == ""){
+		reportObj.Message.init();
+		reportObj.Message.set("—");
+
+		//拖动排序
+		reportJS().dragTrByOrder("dragTable");
+	}
+	
+	if("${fld:__auto_search__}"=="1"){
+		reportObj.reportSearch();
+	}
+
+	$("input[name=is_row_headck]").unbind().click(function(){
+		var id=$(this).attr("id").replace("row","col");
+		$("#"+id).iCheck("uncheck");
+		$("#"+id).val("0");
+		$(this).val($(this).val()=="0"?"1":"0");
+		var hidid="hid"+$(this).attr("id");
+		var hidid_other = "hid"+$(this).attr("id").replace("row","col");
+		$("#"+hidid).val($("#"+hidid).val()=="0"?"1":"0");
+		$("#"+hidid_other).val("0");
+	});
+	$("input[name=is_col_headck]").unbind().click(function(){
+		var id=$(this).attr("id").replace("col","row");
+		$("#"+id).iCheck("uncheck");
+		$("#"+id).val("0");
+		$(this).val($(this).val()=="0"?"1":"0");
+		var hidid="hid"+$(this).attr("id");
+		var hidid_other = "hid"+$(this).attr("id").replace("col","row");
+		$("#"+hidid).val($("#"+hidid).val()=="0"?"1":"0");
+		$("#"+hidid_other).val("0");
+	});
+	
+	if( "1" != "${fld:filter_showtype}" ){
+		$("#formFilter_${fld:report_id}").show();
+		$("#btnDiv_${fld:report_id}").show();
+		$(".col_main_body_title").show();
+	}
+}
+
+);
+
+
+function changeOrder(){
+	var b = document.getElementById("gridBody_${fld:report_id}");
+	for(var i=0;i<b.rows.length;i++){
+		var rowObj = b.rows[i];
+		var childs = rowObj.childNodes;
+		childs[childs.length-1].childNodes[0].value = i;
+	}
+}
+function reportgenSearch(){
+	reportObj.reportSearch();
+}
+</script>
+</body>
+</html>

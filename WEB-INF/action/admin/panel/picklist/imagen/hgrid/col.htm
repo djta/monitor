@@ -1,0 +1,11 @@
+<td valign="top" align="center" style="width:150px;background-color:#d8d8d8;padding:2px;font-size:8pt;font-family:Arial;cursor: pointer;" onclick="selectItem('/images/panel/${fld:filename}')">
+	<div style="background-color:white; height:60px; padding-top:2px;" align="center">
+		<div id="image_${fld:filename}_wait" class="pimg" style="margin-top:5px;color:gray;width:48px;font-weight:normal;font-family:Arial">
+			<img src="${def:context}/images/progress.gif">
+		</div>
+		<img id="image_${fld:filename}" style="display:none;width:48px;" class="tool" 
+			src="${def:context}/images/panel/${fld:filename}" 
+			border="0" onload="displayImage('image_${fld:filename}')"
+			title="Seleccionar imagen">
+	</div>
+</td>

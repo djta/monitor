@@ -1,0 +1,13 @@
+<action id="${action_id}" name="${action_name}" ${auto}>
+
+	${condition}
+
+	${pre_function}
+
+	<results>
+		<unconditional-result old-status="${old_status}" status="${status}" ${step_type}="${next_step}" owner="${owner}"/>
+	</results>
+
+	${post_function}
+
+</action>

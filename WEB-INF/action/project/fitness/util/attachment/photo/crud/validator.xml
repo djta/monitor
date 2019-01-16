@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="pk_value" type="varchar" required="true" label="pk_value"/>
+	<parameter id="table_code" type="varchar" required="true" label="table_code"/>
+	<parameter id="imgid" type="varchar" required="false" label="imgid"/>
+</validator>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="18px" viewBox="0 0 14 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>down</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="列表页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-1389.000000, -55.000000)">
+        <g id="down" transform="translate(1396.000000, 64.000000) scale(1, -1) translate(-1396.000000, -64.000000) translate(1389.000000, 55.000000)" fill="#D1DCDE" fill-rule="nonzero">
+            <path d="M13.58,5.0946875 L7.945,0.3521875 C7.42,-0.0853125 6.5625,-0.0853125 6.0375,0.3521875 L0.4025,5.0946875 C-0.4375,5.8121875 0.1575,7.0371875 1.3475,7.0371875 L3.5,7.0371875 C3.5,7.0371875 3.5,7.0546875 3.5,7.0546875 L3.5,15.8046875 C3.5,16.7671875 4.2875,17.5546875 5.25,17.5546875 L8.75,17.5546875 C9.7125,17.5546875 10.5,16.7671875 10.5,15.8046875 L10.5,7.0546875 C10.5,7.0546875 10.5,7.0371875 10.5,7.0371875 L12.635,7.0371875 C13.825,7.0371875 14.42,5.8121875 13.58,5.0946875 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>

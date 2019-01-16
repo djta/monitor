@@ -1,0 +1,23 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+			"xuhao":"${fld:_rowNumber}",
+		    "tuid":"${fld:tuid}",
+		    "model_name":"${fld:model_name}",
+		    "template_name":"${fld:template_name}",
+		    "table_id":"${fld:table_id}",
+		    "form_id":"${fld:form_id}",
+		    "search_table_id":"${fld:search_table_id}",
+		    "search_form_id":"${fld:search_form_id}",
+		    "job_name":"${fld:job_name}",
+		    "to_date":"${fld:to_date}",
+		    "is_enabled":"${fld:is_enabled@js}",
+		    "url_enabled":"${fld:url_enabled@js}",
+		    "from_date":"${fld:from_date}",
+		    "show_pool_log":"${fld:show_pool_log@js}",
+		    "url_enabled":"${fld:url_enabled@js}",
+		    "show_pool":"${fld:show_pool@js}"
+	},
+	</rows>
+	{}
+]}

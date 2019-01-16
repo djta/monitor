@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>工作模式</title>
+${inc:/action/ccms/pub}
+</head>
+<body>
+<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+	 <div class="modal-dialog">
+	 	<div class="modal-content">
+	 		 <div class="modal-header">
+	 		 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	 		 	<h4 class="modal-title" id="formTitle"></h4>
+	 		 </div>
+	 		 <div class="modal-body">
+	 		 	<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+	 		 		<input type="hidden" id="tuid" name="tuid" value="" />
+	 		 		<div class="row clearfix">
+	 		 			<div class="form-group">
+	 		 				<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">模式名称</label>
+	 		 				<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">	
+	 		 					<input type="text" id="subject_name" name="subject_name" value="" class="form-control" maxlength="256" />
+	 		 				</div>
+	 		 			</div>
+	 		 			<div class="form-group">
+	 		 				<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">描述</label>
+	 		 				<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">	
+	 		 					<textarea type="text" id="remark" name="remark"  class="form-control" rows="3" maxlength="256"></textarea>
+	 		 				</div>
+	 		 			</div>
+	 		 		</div>
+	 		 	</form>
+	 		 </div>
+	 		 <div class="modal-footer">
+			    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+				  <button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+				  <button type="button" id="reset_btn" class="btn btn-primary btn-md">重&nbsp;置</button>
+				  <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+			    </div>
+		     </div>
+	 	</div>
+	 </div>
+</div>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title" id="formTitle">工作模式</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post" id="searchForm">
+			<input name="sort" type="hidden" value="login_date" preserve="true" />
+			<input name="order" type="hidden" value="desc" preserve="true" />
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+			<div class="form-group">
+				<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+					<input name="subject_name" class="form-control" placeholder="请输入专题名称" id="fdesde" type="text" size="35" value="" />
+				</div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+		            <button class="btn btn-primary btn-md reset_btn" type="button">重置</button>
+		            <button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新建模式</button>
+				</div>
+			</div>
+		</form>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>操作</th>
+					<th></th>
+					<th>模式</th>
+					<th>描述</th>
+				</tr>
+			</thead>
+			<tbody id="datagridTemplate" style="display:none ">
+				<tr>
+					<td align="center">
+						<button class="btn btn-primary btn-xs edit_btn" type="button" code="#tuid#">修改</button>	
+						<button class="btn btn-primary btn-xs delete_btn" type="button" code="#tuid#">删除</button>
+					</td>
+					<td  align="center">
+						<button class="btn btn-primary btn-xs showTable" type="button" code="#tuid#" title="业务表信息">业务配置</button>
+						<button class="btn btn-primary btn-xs showForm" type="button" code="#tuid#" title="界面信息">表单配置</button>
+						<button class="btn btn-primary btn-xs showDocument" type="button" code="#tuid#" title="文档配置">文档配置</button>
+						<button class="btn btn-primary btn-xs showReport" type="button" code="#tuid#" title="报表信息">报表配置</button>
+						<button class="btn btn-primary btn-xs showImportOption" type="button" code="#tuid#" title="数据导入配置">数据导入</button>
+						<button class="btn btn-primary btn-xs CopySubject" type="button" code="#tuid#" title="复制专题">复制专题</button>
+						<button class="btn btn-primary btn-xs WinOpen" type="button" title="配置信息导入">配置导入</button>
+					</td>
+					<td class="text-center">
+						#subject_name#
+					</td>	
+					<td class="text-center">
+						#remark#
+					</td>	
+				</tr>
+			</tbody>
+			<tbody id="datagrid">
+			</tbody>
+		</table>
+		<div class="pageDiv">
+			<ul class="pagination">
+			</ul>
+		</div>
+	</div>
+	<!--用于传递当前目录到header模版中-->
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+</div>
+
+<script language="JavaScript">
+//设置界面元素数据验证逻辑
+function SubjectClass(){
+	this.obj=null;
+	this.search=null;
+	this.init=function(){
+		var obthis=this;
+		this.obj = $Crud({
+			formId:"formEditor",
+			button:"save_btn",
+			insertBack:function(){
+				obthis.search.searchData();
+			},
+			updateBack:function(){
+				obthis.search.searchData();
+			},
+			deleteBack:function(){
+				obthis.search.searchData();
+			},
+			 addNewBack:function(){
+				$("#formTitle").html("新增模式");
+			}, 
+			editBack:function(){
+				$("#formTitle").html("修改模式");
+			},
+			validate:function(){
+				var flag=$("#formEditor").validate({
+					rules: {
+						remark: {
+							required: true,
+							rangelength: [1,128]
+						},
+						subject_name: {
+							required: true,
+							rangelength: [1,128]
+						}
+					},
+					messages: {
+						remark: {
+							required: "请输入描述",
+							rangelength: "描述长度为1到128位"
+						},
+						subject_name: {
+							required: "请输入模式名称",
+							rangelength: "专题长度为1到128位"
+						}
+					}
+				});
+				return flag;
+			},
+			check:function(){
+				return true;
+			}
+		}).init();
+		this.search=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+			$(".edit_btn").unbind().on("click", function(){
+				if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+					obthis.obj.edit({id:$(this).attr("code")});
+				}
+			});
+			$(".reset_btn").unbind().on("click", function() {
+				$('#fdesde').val("");
+			});
+			$(".showForm").unbind().on("click", function(){
+				var obthis = $(this);
+				if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+					var url="/action/ccms/module/forms/crud?subject_id="+obthis.attr("code");
+					gotoPage(url);
+				}
+			});
+			$(".showTable").unbind().on("click", function(){
+				var obthis = $(this);
+				if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+					var url="/action/ccms/module/table/crud?subject_id="+obthis.attr("code");
+					gotoPage(url);
+				}
+			});
+			$(".showDocument").unbind().on("click", function(){
+				var obthis = $(this);
+				if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+					var url="/action/ccms/module/doc/crud?subject_id="+obthis.attr("code");
+					gotoPage(url);
+				}
+			});
+			$(".showReport").unbind().on("click", function(){
+				var obthis = $(this);
+				if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+					var url="/action/ccms/module/report/crud?subject_id="+obthis.attr("code");
+					gotoPage(url);
+				}
+			});
+			$(".showImportOption").unbind().on("click", function(){
+				var obthis = $(this);
+				if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+					var url="/action/ccms/module/import/import/crud?subject_id="+obthis.attr("code");
+					gotoPage(url);
+				}
+			});
+			$(".CopySubject").unbind().on("click", function(){
+				if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+					var url="${def:context}/action/ccms/module/subject/copy/form?subject_id="+$(this).attr("code");
+					ccms.dialog.open({url:url,id:"copysSubject",width:600,height:350});
+				}
+			});
+			$(".WinOpen").unbind().on("click", function(){
+				var url="${def:context}/action/ccms/module/subject/config/import/form";
+				ccms.dialog.open({url:url,id:"winsOpen",width:800,height:500});
+			});
+			$(".delete_btn").unbind().on("click",function(){
+				var obthis = $(this);
+				$Dialog().confirm("确定要删除吗？",function(){
+					if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+						var url = "/action/ccms/module/subject/delete?id="+obthis.attr("code");
+						ajaxCall(url,{
+								method: "post",
+								progress: true,
+								dataType: "script",
+								success: function() {
+									$Dialog().notice("删除成功！",1000, function(){
+										gotoBack();
+									});
+
+								}
+						});
+					}
+				});
+			});
+		}}).initSearchBtn().searchData(1);
+	};
+}
+var subjectClass=null;
+$(document).ready(function() {
+	subjectClass=new SubjectClass();
+	subjectClass.init();
+});
+</script>
+</body>
+</html>

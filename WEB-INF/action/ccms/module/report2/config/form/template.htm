@@ -1,0 +1,716 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>报表信息</title>
+${inc:/action/ccms/pub}
+<style type="text/css">
+.panel_head_container{
+    height: 60px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.panel_head_container .panel_title{
+	height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-size: 24px;
+}
+.panel_head_container .panel_button{
+	padding-top: 10px;
+}
+</style>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center col-xs-12 col-sm-12 col-md-12 col-lg-12 panel_head_container">
+		<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 panel_button">
+			<button type="button" id="cancel_btn" class="btn btn-primary btn-md">返回</button>
+		</div>
+		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 panel_title">报表字段配置</div>
+		<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 panel_button">
+			<button type="button" id="publishBtn" class="btn btn-primary btn-md">保存</button>
+		</div>
+	</div>
+	<div class="panel-body col_main_body">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<!-- 左侧操作面板 -->
+			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+				<table class="table table-bordered">
+					<tr>
+						<th colspan="2" align="center">业务字段</th>
+					</tr>
+					<tr>
+						<th align="center" nowrap>字段名</th>
+						<th align="center" nowrap>操作</th>
+					</tr>
+					<table-field>
+						<tr>
+							<td title="${fld:field_code}">
+								<input type="hidden" name="field_id" id="field_${fld:field_id}" value="${fld:field_id}" />
+								<input type="hidden" name="field_name" id="field_name_${fld:field_id}" value="${fld:alias}" />${fld:alias}</td>
+							<td align="center">
+								<img src="${def:context}/images/framecontrol/toright.png" title="添加该字段" style="cursor: pointer;" onclick="javascript:copyField('${fld:field_id}','${fld:alias@html}');" />
+							</td>
+						</tr>
+					</table-field>
+				</table>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+					<input type="hidden" id="form_id" name="form_id" value="${fld:form_id}" />
+					<div>
+						<ul class="nav nav-tabs">
+							<li class="active">
+								<a href="#formTable" onclick="javascript:return selectTable('formTable');" data-toggle="tab">展示</a>
+							</li>
+							<li>
+								<a href="#filterTable" onclick="javascript:return selectTable('filterTable');" data-toggle="tab">查询</a>
+							</li>
+						</ul>
+					</div>
+					<!-- 标签页对应的表单内容 -->
+					<div class="tab-content" style="padding-top: 10px;">
+						<!-- 标签页:列表 -->
+						<div class="tab-pane active" id="formTable">
+							<table class="table table-condensed">
+								<tbody id="formTableBody">
+									<tr>
+										<th colspan="4" align="center">报表展示字段</th>
+									</tr>
+									<tr>
+										<th align="center" nowrap>操作</th>
+										<th align="center" nowrap>顺序</th>
+										<th align="center" nowrap>字段名</th>
+										<th align="center" nowrap>操作</th>
+									</tr>
+									<form-field>
+										<tr dragFlag="true" onclick="javascript:showProperty('${fld:field_id}')">
+											<td align="center">
+												<img src="${def:context}/images/framecontrol/toleft.png" title="移除该字段" style="cursor: pointer;" onclick="javascript:removeField(this);" />
+											</td>
+											<td align="center">
+												<input type="hidden" name="form_field" id="form_field_${fld:field_id}" value="${fld:field_id}" />
+												<input type="hidden" name="form_field_name" id="form_field_name_${fld:field_id}" value="${fld:alias}" />
+												<input type="hidden" name="cal_type" id="cal_type_${fld:field_id}" value="${fld:cal_type}" dependent="form_field_${fld:field_id}" />
+												<input type="hidden" name="cal_type_show" id="cal_type_show_${fld:field_id}" value="${fld:cal_type_show}" dependent="form_field_${fld:field_id}" />
+												<input type="hidden" name="is_group_by" id="is_group_by_${fld:field_id}" value="${fld:is_group_by}" dependent="form_field_${fld:field_id}" />
+												<input type="hidden" name="is_order_by" id="is_order_by_${fld:field_id}" value="${fld:is_order_by}" dependent="form_field_${fld:field_id}" />
+												<input type="hidden" name="is_row_head" id="is_row_head_${fld:field_id}" value="${fld:is_row_head}" dependent="form_field_${fld:field_id}" />
+												<input type="hidden" name="is_col_head" id="is_col_head_${fld:field_id}" value="${fld:is_col_head}" dependent="form_field_${fld:field_id}" />
+												<input type="hidden" name="is_cross_value" id="is_cross_value_${fld:field_id}" value="${fld:is_cross_value}" dependent="form_field_${fld:field_id}" />
+												<input type="hidden" name="head_name" id="head_name_${fld:field_id}" value="${fld:head_name}" dependent="form_field_${fld:field_id}" />
+												<input type="text" size="2" name="form_show_order" id="form_show_order_${fld:field_id}" value="${fld:show_order}" dependent="form_field_${fld:field_id}" />
+												<input type="hidden" name="document_id" id="document_id_${fld:field_id}" value="${fld:document_id}" dependent="form_field_${fld:field_id}" />
+												<input type="hidden" name="document_name" id="document_name_${fld:field_id}" value="${fld:document_name}" dependent="form_field_${fld:field_id}" />
+												<input type="hidden" name="format" id="format_${fld:field_id}" value="${fld:format}" dependent="form_field_${fld:field_id}" />
+											</td>
+											<td align="center">${fld:alias}</td>
+											<td align="center">
+												<img src="${def:context}/images/framecontrol/tofull.png" title="查看字段属性" style="cursor: pointer;" onclick="javascript:showProperty('${fld:field_id}')" />
+											</td>
+										</tr>
+									</form-field>
+								</tbody>
+							</table>
+						</div>
+						<div class="tab-pane" id="filterTable">
+							<table class="table table-condensed">
+								<tbody id="filterTableBody">
+									<tr>
+										<th colspan="4" align="center">查询条件字段</th>
+									</tr>
+									<tr>
+										<th align="center" nowrap>操作</th>
+										<th align="center" nowrap>顺序</th>
+										<th align="center" nowrap>字段名</th>
+										<th align="center" nowrap>操作</th>
+									</tr>
+									<filter-field>
+										<tr dragFlag="true" onclick="javascript:showProperty('${fld:field_id}')">
+											<td align="center">
+												<img src="${def:context}/images/framecontrol/toleft.png" title="移除该字段" style="cursor: pointer;" onclick="javascript:removeField(this);" />
+											</td>
+											<td align="center">
+												<input type="hidden" name="filter_field" id="filter_field_${fld:field_id}" value="${fld:field_id}" />
+												<input type="hidden" name="filter_field_name" id="filter_field_name_${fld:field_id}" value="${fld:alias}" />
+												<input type="hidden" name="filter_show_type" id="filter_show_type_${fld:field_id}" value="${fld:show_type}" dependent="filter_field_${fld:field_id}" />
+												<input type="hidden" name="filter_is_mandatory" id="filter_is_mandatory_${fld:field_id}" value="${fld:is_mandatory}" dependent="filter_field_${fld:field_id}" />
+												<input type="hidden" name="filter_width" id="filter_width_${fld:field_id}" value="${fld:width}" dependent="filter_field_${fld:field_id}" />
+												<input type="hidden" name="filter_type" id="filter_type_${fld:field_id}" value="${fld:filter_type}" dependent="filter_field_${fld:field_id}" />
+												<input type="text" size="2" name="filter_show_order" id="filter_show_order_${fld:field_id}" value="${fld:show_order}" dependent="filter_field_${fld:field_id}" />
+											</td>
+											<td>${fld:alias}</td>
+											<td align="center">
+												<img src="${def:context}/images/framecontrol/tofull.png" title="查看字段属性" style="cursor: pointer;" onclick="javascript:showProperty('${fld:field_id}')" />
+											</td>
+										</tr>
+									</filter-field>
+								</tbody>
+							</table>
+						</div>
+						<input type="hidden" id="report_id" name="report_id" value="${fld:report_id}" />
+					</div>
+				</form>
+			</div>
+
+			<!-- 右侧:字段属性 -->
+			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+				<div id="formDiv" style="display: none">
+					<form class="form-horizontal" role="form" method="post" name="formForm">
+						<table class="table table-condensed">
+							<tr>
+								<td>字段名称</td>
+								<td>
+									<input name="form_field" type="hidden" />
+									<input class="form-control" name="form_field_name" type="text" size="35" value="" readOnly="readonly" />
+								</td>
+							</tr>
+							<tr>
+								<td>检索计算</td>
+								<td>
+									<select class="form-control" name="cal_type" onchange="setProperty()">
+										<option value="">无</option>
+										<option value="sum">合计</option>
+										<option value="count">计数</option>
+										<option value="avg">均值</option>
+										<option value="max">最大</option>
+										<option value="min">最小</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>显示计算</td>
+								<td>
+									<select class="form-control" name="cal_type_show" onchange="setProperty()">
+										<option value="">无</option>
+										<option value="sum">合计</option>
+										<option value="count">计数</option>
+										<option value="avg">均值</option>
+										<option value="max">最大</option>
+										<option value="min">最小</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>是否分组</td>
+								<td>
+									<select class="form-control" name="is_group_by" onchange="setProperty()">
+										<option value="0">不分组</option>
+										<option value="1">分组</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>是否排序</td>
+								<td>
+									<select class="form-control" name="is_order_by" onchange="setProperty()">
+										<option value="0">不排序</option>
+										<option value="1">排序</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>行头显示</td>
+								<td>
+									<select class="form-control" name="is_row_head" onchange="setProperty()">
+										<option value="0">不显示</option>
+										<option value="1">显示</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>列头显示</td>
+								<td>
+									<select class="form-control" name="is_col_head" onchange="setProperty()">
+										<option value="0">不显示</option>
+										<option value="1">显示</option>
+									</select>
+								</td>
+							</tr>
+
+							<tr>
+								<td>交叉值</td>
+								<td>
+									<select class="form-control" name="is_cross_value" onchange="setProperty()">
+										<option value="0">不显示</option>
+										<option value="1">显示</option>
+									</select>
+								</td>
+							</tr>
+
+							<tr>
+								<td>头名称</td>
+								<td>
+									<input class="form-control" name="head_name" type="text" size="35" value="" onchange="setProperty()" />
+								</td>
+							</tr>
+							<tr>
+								<td>显示格式</td>
+								<td>
+									<input class="form-control" name="form_format" type="text" size="35" value="" onchange="setProperty()" maxlength="32" />
+								</td>
+							</tr>
+							<tr>
+								<td>显示顺序</td>
+								<td>
+									<input class="form-control" name="form_show_order" type="text" size="35" value="" onchange="setProperty()" />
+								</td>
+							</tr>
+							<tr>
+								<td>钻取文档</td>
+								<td>
+									<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="padding: 0;">
+										<input id="document_id" name="document_id" type="hidden" value="" onchange="setProperty()" />
+										<input class="form-control" type="text" id="document_name" name="document_name" size="20" readonly="readonly" value="" onchange="setProperty()" />
+									</div>
+									<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="padding-right: 0">
+										<img src="${def:context}/images/search.gif" style="cursor: pointer;" id="pickOpenNotCenter" title="查询表单"></img>
+										<img src="${def:context}/images/clear.gif" style="cursor: pointer;" id="pickClear" title="清除选择的内容"></img>
+									</div>
+								</td>
+							</tr>
+						</table>
+						<!-- <table class="table table-condensed">
+							<tr>
+								<td align="center" colspan="1">
+									<button type="button" onclick="hiddenEditDiv()" class="btn btn-primary btn-md">关闭</button>
+								</td>
+							</tr>
+						</table> -->
+					</form>
+				</div>
+				<div id="filterDiv" style="display: none">
+					<form class="form-horizontal" role="form" method="post" name="formFilter">
+						<table class="table table-condensed">
+							<tr>
+								<td>字段名称</td>
+								<td>
+									<input name="filter_field" type="hidden" />
+									<input class="form-control" name="filter_field_name" type="text" size="35" value="" readOnly="readonly" />
+								</td>
+							</tr>
+							<tr>
+								<td>显示类型</td>
+								<td>
+									<select class="form-control" name="filter_show_type" onchange="setProperty()">
+										<option value="">默认</option>
+										<option value="0">文本框</option>
+										<option value="1">下拉框</option>
+										<option value="2">复选框</option>
+										<option value="3">多选一</option>
+										<option value="4">只读</option>
+										<option value="5">日期</option>
+										<option value="6">文本域</option>
+										<option value="7">选取框</option>
+										<option value="9">HIDDEN</option>
+										<option value="10">日期时间</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>查询条件</td>
+								<td>
+									<select class="form-control" name="filter_type" onchange="setProperty()">
+										<option value="=">等于</option>
+										<option value="like">包含</option>
+										<option value="llike">左包含</option>
+										<option value="rlike">右包含</option>
+										<option value=">">大于</option>
+										<option value=">=">大于等于</option>
+										<option value="<">小于</option>
+										<option value="<=">小于等于</option>
+										<option value="<>">不等于</option>
+										<option value="is not null">非空</option>
+										<option value="is null">为空</option>
+										<option value="in">任意满足</option>
+										<option value="not in">任意不满足</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>是否非空</td>
+								<td>
+									<select class="form-control" name="filter_is_mandatory" onchange="setProperty()">
+										<option value="1">可以为空</option>
+										<option value="0">非空</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>宽度</td>
+								<td>
+									<input class="form-control" name="filter_width" type="text" size="35" value="" onchange="setProperty()" />
+								</td>
+							</tr>
+							<tr>
+								<td>显示顺序</td>
+								<td>
+									<input class="form-control" name="filter_show_order" type="text" size="35" value="" onchange="setProperty()" />
+								</td>
+							</tr>
+						</table>
+						<!-- <table class="table table-condensed">
+							<tr>
+								<td align="center" colspan="1">
+									<button type="button" onclick="hiddenEditDiv()" class="btn btn-primary btn-md">关闭</button>
+								</td>
+							</tr>
+						</table> -->
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script type="text/javascript">
+var removeStr = "<img src='${def:context}/images/framecontrol/toleft.png' title='移除该字段' style='cursor:pointer;' onclick='javascript:removeField(this);'/>";
+var detailStr = "<img src='${def:context}/images/framecontrol/tofull.png' title='查看字段属性' style='cursor:pointer;' onclick='javascript:showProperty(\"${field_id}\")'/>";
+
+var formStr = '<input type="hidden" name="form_field" id="form_field_${field_id}" value="${field_id}">'
+		+ '<input type="hidden" name="form_field_name" id="form_field_name_${field_id}" value="${alias}">'
+		+ '<input type="hidden" name="cal_type" id="cal_type_${field_id}" value="" dependent="form_field_${field_id}">'
+		+ '<input type="hidden" name="cal_type_show" id="cal_type_show_${field_id}" value="" dependent="form_field_${field_id}">'
+		+ '<input type="hidden" name="is_group_by" id="is_group_by_${field_id}" value="" dependent="form_field_${field_id}">'
+		+ '<input type="hidden" name="is_order_by" id="is_order_by_${field_id}" value="" dependent="form_field_${field_id}">'
+		+ '<input type="hidden" name="is_row_head" id="is_row_head_${field_id}" value="" dependent="form_field_${field_id}">'
+		+ '<input type="hidden" name="is_col_head" id="is_col_head_${field_id}" value="" dependent="form_field_${field_id}">'
+		+ '<input type="hidden" name="is_cross_value" id="is_cross_value_${field_id}" value="" dependent="form_field_${field_id}">'
+		+ '<input type="hidden" name="head_name" id="head_name_${field_id}" value="" dependent="form_field_${field_id}">'
+		+ '<input type="text" size="2" name="form_show_order" id="form_show_order_${field_id}" value="" dependent="form_field_${field_id}">'
+		+ '<input type="hidden" name="document_id" id="document_id_${field_id}" value="" dependent="form_field_${field_id}">'
+		+ '<input type="hidden" name="document_name" id="document_name_${field_id}" value="" dependent="form_field_${field_id}">'
+		+ '<input type="hidden" name="format" id="format_${field_id}" value="" dependent="form_field_${field_id}">';
+
+var filterStr = '<input type="hidden" name="filter_field" id="filter_field_${field_id}" value="${field_id}">'
+		+ '<input type="hidden" name="filter_field_name" id="filter_field_name_${field_id}" value="${alias}">'
+		+ '<input type="hidden" name="filter_show_type" id="filter_show_type_${field_id}" value="" dependent="filter_field_${field_id}">'
+		+ '<input type="hidden" name="filter_is_mandatory" id="filter_is_mandatory_${field_id}" value="" dependent="filter_field_${field_id}">'
+		+ '<input type="hidden" name="filter_width" id="filter_width_${field_id}" value="" dependent="filter_field_${field_id}">'
+		+ '<input type="hidden" name="filter_type" id="filter_type_${field_id}" value="" dependent="filter_field_${field_id}">'
+		+ '<input type="text" size="2" name="filter_show_order" id="filter_show_order_${field_id}" value="" dependent="filter_field_${field_id}">';
+
+var tables = [ "formTable", "filterTable" ];
+var divs = [ "formDiv", "filterDiv" ];
+var fields = [ "form_field", "filter_field" ];
+var htmlStrs = [ formStr, filterStr ];
+
+var nowTable = 0;
+
+function selectTable(table) {
+	for (var i = 0; i < tables.length; i++) {
+		if (tables[i] == table) {
+			document.getElementById(tables[i]).style.display = "";
+			nowTable = i;
+		} else {
+			document.getElementById(tables[i]).style.display = "none";
+		}
+	}
+
+	for (var i = 0; i < divs.length; i++) {
+		document.getElementById(divs[i]).style.display = "none";
+	}
+}
+
+function removeField(obj) {
+	//移除tr的onclick事件，防止事件冒泡调用 showProperty
+	obj.parentNode.parentNode.onclick = function() {
+	};
+	obj.parentNode.parentNode.parentNode
+			.removeChild(obj.parentNode.parentNode);
+	for (var i = 0; i < divs.length; i++) {
+		document.getElementById(divs[i]).style.display = "none";
+	}
+}
+
+function copyField(field_id, field_name) {
+	var obj = document.getElementById(fields[nowTable] + "_" + field_id);
+	if (obj && typeof (obj) != "undefined") {
+		$Dialog().alert("该字段已选择!");
+		return false;
+	}
+
+	var bodyObj = document.getElementById(tables[nowTable] + "Body");
+	var x = bodyObj.insertRow(-1);
+	x.setAttribute("dragFlag", "true");
+	x.setAttribute("onclick", "javascript:showProperty('" + field_id + "')");
+	var c = x.insertCell(-1);
+	c.align = "center";
+	c.innerHTML = removeStr;
+
+	var h = htmlStrs[nowTable].replace(/\${alias}/g, field_name);
+	var c2 = x.insertCell(-1);
+	c2.align = "center";
+	c2.innerHTML = h.replace(/\${field_id}/g, field_id);
+
+	var c3 = x.insertCell(-1);
+	c3.innerHTML = field_name;
+
+	var c4 = x.insertCell(-1);
+	c4.align = "center";
+	c4.innerHTML = detailStr.replace(/\${field_id}/g, field_id);
+}
+
+function showProperty(field_id) {
+	for (var i = 0; i < divs.length; i++) {
+		if (i == nowTable) {
+			document.getElementById(divs[i]).style.display = "";
+		} else {
+			document.getElementById(divs[i]).style.display = "none";
+		}
+	}
+
+	switch (tables[nowTable]) {
+		case "formTable":
+			document.formForm.reset();
+			document.formForm.form_field.value = field_id;
+			document.formForm.form_field_name.value = document.getElementById("form_field_name_" + field_id).value;
+			setComboValue("cal_type", document.getElementById("cal_type_"+ field_id).value, "formForm");
+			setComboValue("cal_type_show", document.getElementById("cal_type_show_" + field_id).value,"formForm");
+			
+			if(document.getElementById("is_group_by_" + field_id).value==""){
+				document.getElementById("is_group_by_" + field_id).value = 0;
+			}
+			setComboValue("is_group_by", document.getElementById("is_group_by_" + field_id).value,"formForm");
+			
+			if(document.getElementById("is_order_by_" + field_id).value==""){
+				document.getElementById("is_order_by_" + field_id).value = 0;
+			}
+			setComboValue("is_order_by", document.getElementById("is_order_by_" + field_id).value,"formForm");
+			
+			if(document.getElementById("is_row_head_" + field_id).value==""){
+				document.getElementById("is_row_head_" + field_id).value = 1;
+			}
+			setComboValue("is_row_head", document.getElementById("is_row_head_" + field_id).value,"formForm");
+			
+			if(document.getElementById("is_col_head_" + field_id).value==""){
+				document.getElementById("is_col_head_" + field_id).value = 1;
+			}
+			setComboValue("is_col_head", document.getElementById("is_col_head_" + field_id).value,"formForm");
+			
+			if(document.getElementById("is_cross_value_" + field_id).value==""){
+				document.getElementById("is_cross_value_" + field_id).value = 0;
+			}
+			setComboValue("is_cross_value", document.getElementById("is_cross_value_" + field_id).value,"formForm");
+			
+			document.formForm.head_name.value = document.getElementById("head_name_" + field_id).value;
+			document.formForm.form_show_order.value = document.getElementById("form_show_order_" + field_id).value;
+			document.formForm.document_id.value = document.getElementById("document_id_" + field_id).value;
+			document.formForm.document_name.value = document.getElementById("document_name_" + field_id).value;
+			document.formForm.form_format.value = document.getElementById("format_" + field_id).value;
+			break;
+		case "filterTable":
+			document.formFilter.reset();
+			document.formFilter.filter_field.value = field_id;
+			document.formFilter.filter_field_name.value = document.getElementById("filter_field_name_" + field_id).value;
+			setComboValue("filter_show_type", document.getElementById("filter_show_type_" + field_id).value,"formFilter");
+			
+			if(document.getElementById("filter_type_" + field_id).value==""){
+				document.getElementById("filter_type_" + field_id).value = "=";
+			}
+			setComboValue("filter_type", document.getElementById("filter_type_" + field_id).value,"formFilter");
+			
+			if(document.getElementById("filter_is_mandatory_"+field_id).value==""){
+				document.getElementById("filter_is_mandatory_"+field_id).value = 1;
+			}
+			setComboValue("filter_is_mandatory",document.getElementById("filter_is_mandatory_"+field_id).value, "formFilter");
+			
+			document.formFilter.filter_width.value = document.getElementById("filter_width_" + field_id).value;
+			document.formFilter.filter_show_order.value = document.getElementById("filter_show_order_" + field_id).value;
+			break;
+	}
+}
+
+function setProperty() {
+	switch (tables[nowTable]) {
+	case "formTable":
+		var field_id = document.formForm.form_field.value;
+		document.getElementById("form_field_name_" + field_id).value = document.formForm.form_field_name.value;
+		document.getElementById("cal_type_" + field_id).value = document.formForm.cal_type.value;
+		document.getElementById("cal_type_show_" + field_id).value = document.formForm.cal_type_show.value;
+		document.getElementById("is_group_by_" + field_id).value = document.formForm.is_group_by.value;
+		document.getElementById("is_order_by_" + field_id).value = document.formForm.is_order_by.value;
+		document.getElementById("is_row_head_" + field_id).value = document.formForm.is_row_head.value;
+		document.getElementById("is_col_head_" + field_id).value = document.formForm.is_col_head.value;
+		document.getElementById("is_cross_value_" + field_id).value = document.formForm.is_cross_value.value;
+		document.getElementById("head_name_" + field_id).value = document.formForm.head_name.value;
+		document.getElementById("form_show_order_" + field_id).value = document.formForm.form_show_order.value;
+		document.getElementById("document_id_" + field_id).value = document.formForm.document_id.value;
+		document.getElementById("document_name_" + field_id).value = document.formForm.document_name.value;
+		document.getElementById("format_" + field_id).value = document.formForm.form_format.value;
+		break;
+	case "filterTable":
+		var field_id = document.formFilter.filter_field.value;
+		document.getElementById("filter_show_type_" + field_id).value = document.formFilter.filter_show_type.value;
+		document.getElementById("filter_type_" + field_id).value = document.formFilter.filter_type.value;
+		document.getElementById("filter_is_mandatory_" + field_id).value = document.formFilter.filter_is_mandatory.value;
+		document.getElementById("filter_width_" + field_id).value = document.formFilter.filter_width.value;
+		document.getElementById("filter_show_order_" + field_id).value = document.formFilter.filter_show_order.value;
+		break;
+	}
+}
+
+function setFieldShowOrder() {
+	var showOrders = null;
+	switch (tables[nowTable]) {
+	case "formTable":
+		showOrders = document.getElementsByName("form_show_order");
+		if (showOrders) {
+			for (var i = 0; i < showOrders.length; i++) {
+				showOrders[i].value = (i + 1);
+			}
+		}
+		break;
+	case "filterTable":
+		showOrders = document.getElementsByName("filter_show_order");
+		if (showOrders) {
+			for (var i = 0; i < showOrders.length; i++) {
+				showOrders[i].value = (i + 1);
+			}
+		}
+		break;
+	}
+}
+/* 
+function hiddenEditDiv() {
+	document.getElementById(divs[nowTable]).style.display = "none";
+}
+ */
+
+function ReportClass() {
+	this.init = function() {
+		//绑定事件   
+		var addEvent = document.addEventListener ? function(el, type,callback) {
+			el.addEventListener(type, callback, !1);
+		} : function(el, type, callback) {
+			el.attachEvent("on" + type, callback);
+		}
+		//移除事件   
+		var removeEvent = document.removeEventListener ? function(el,
+				type, callback) {
+			el.removeEventListener(type, callback);
+		} : function(el, type, callback) {
+			el.detachEvent("on" + type, callback);
+		}
+		//精确获取样式   
+		var getStyle = document.defaultView ? function(el, style) {
+			return document.defaultView.getComputedStyle(el, null)
+					.getPropertyValue(style)
+		} : function(el, style) {
+			style = style.replace(/\-(\w)/g, function($, $1) {
+				return $1.toUpperCase();
+			});
+			return el.currentStyle[style];
+		}
+		var dragManager = {
+			clientY : 0,
+			draging : function(e) {//mousemove时拖动行   
+				var dragObj = dragManager.dragObj;
+				if (dragObj) {
+					e = e || event;
+					if (window.getSelection) {//w3c   
+						window.getSelection().removeAllRanges();
+					} else if (document.selection) {
+						document.selection.empty();//IE   
+					}
+					var y = e.clientY;
+					var down = y > dragManager.clientY;//是否向下移动   
+					var tr = document.elementFromPoint(e.clientX,
+							e.clientY);
+					//限制了只有配置字段才能拖动
+					if (tr
+							&& tr.nodeName == "TD"
+							&& tr.parentNode.getAttribute("dragFlag") == "true") {
+						tr = tr.parentNode
+						dragManager.clientY = y;
+						if (dragObj !== tr) {
+							tr.parentNode.insertBefore(dragObj,
+									(down ? tr.nextSibling : tr));
+						}
+					}
+					;
+				}
+			},
+			dragStart : function(e) {
+				e = e || event;
+				var target = e.target || e.srcElement;
+				if (target.nodeName === "TD") {
+					target = target.parentNode;
+					dragManager.dragObj = target;
+					if (!target.getAttribute("data-background")) {
+						var background = getStyle(target,"background-color");
+						target.setAttribute("data-background",background)
+					}
+					//显示为可移动的状态   
+					target.style.backgroundColor = "#ccc";
+					target.style.cursor = "move";
+					dragManager.clientY = e.clientY;
+					addEvent(document, "mousemove", dragManager.draging);
+					addEvent(document, "mouseup", dragManager.dragEnd);
+				}
+			},
+			dragEnd : function() {
+				var dragObj = dragManager.dragObj
+				if (dragObj) {
+					//dragObj.style.backgroundColor = dragObj.getAttribute("data-background");   
+					dragObj.style.backgroundColor = "white";
+					dragObj.style.cursor = "default";
+					dragManager.dragObj = null;
+					removeEvent(document, "mousemove",dragManager.draging);
+					removeEvent(document, "mouseup",dragManager.dragEnd);
+
+					//拖拽结束后排序
+					setFieldShowOrder();
+				}
+			},
+			main : function(el) {
+				addEvent(el, "mousedown", dragManager.dragStart);
+			}
+		}
+		for (var i = 0; i < tables.length; i++) {
+			var el = document.getElementById(tables[i]);
+			dragManager.main(el);
+		}
+	}
+}
+
+var reportClass = null;
+$(document).ready(function() {
+	//保存(发布表单)
+	$("#publishBtn").on("click",function() {
+		$Dialog().confirm("确定要发布吗？",function() {
+			document.getElementById("publishBtn").disabled = true;
+			var url = "${def:actionroot}/update";
+			ajaxCall(url,{
+				method : "post",
+				progress : true,
+				dataType : "script",
+				form : "formEditor",
+				success : function() { }
+			});
+		});
+	});
+	//返回按钮
+	$("#cancel_btn").unbind().on("click", function(){
+		gotoBack();
+	});
+
+	$("#pickOpenNotCenter").on("click",function() {
+		var url = "${def:context}/action/ccms/module/report/config/document/crud?pickId=document&id=document_id&name=document_name&subject_id=${fld:subject_id}";
+		ccms.dialog.open({url : url,id : "document",width : 800,height : 600});
+	});
+	$("#pickClear").unbind().on("click", function() {
+		$("#document_id").val('');
+		$("#document_name").val('');
+	});
+
+	parent.$("#body_content").addClass("overflow");
+
+	reportClass = new ReportClass();
+	reportClass.init();
+});
+</script>
+</body>
+</html>

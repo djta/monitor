@@ -1,0 +1,57 @@
+.zuming{
+    text-align: center;
+    width:7.5rem;
+height:0.35rem;
+
+font-size:0.36rem;
+font-family:MicrosoftYaHei;
+color:rgba(51,51,51,1);
+
+}
+.saoma div{
+    margin: 0;
+    padding: 0;
+}
+.head_pic{
+width: 1.5rem;
+height: 1.5rem;
+border-radius: 50%;
+overflow: hidden;
+background: #eeeeee;
+}
+.head_pic img{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+.share_code{
+    font-size: 0.19rem !important;
+    font-weight: 500;
+    width: 4rem;
+    height: 0.9rem;
+    color: rgba(255,255,255,1) !important;
+    background: rgba(1,169,251,1);
+    border-radius: 0.45rem;
+    text-align: center;
+    line-height: 0.9rem;
+}
+.wy_name{
+    margin-top: -1.2rem !important;
+}
+.info{
+    width: 7.5rem;
+    height: 2.4rem;
+    padding: 1.24rem;
+}
+.info input{
+    background:rgba(241,241,241,1);
+    border: none;
+    outline: none;
+    text-align: center;
+    width: 100%;
+    font-size:0.28rem;
+    margin-top: 0.5rem;
+color:rgba(153,153,153,1);
+    height: 0.8rem;
+   display: block;
+ }

@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<config>
+
+	<summary>
+		查询报表
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>com.ccms.report.JorReportSearch</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<output>
+		<classname>com.ccms.report.JorReportOutput</classname>
+		<set-http-headers>true</set-http-headers>
+	</output>
+</config>

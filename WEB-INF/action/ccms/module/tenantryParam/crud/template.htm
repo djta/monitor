@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>商户参数管理</title>
+</head>
+<body>
+<!-- addNew/edit form -->
+<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+	 		 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	 		 	<h4 class="modal-title" id="formTitle">新增参数</h4>
+	 		 </div>
+	 		 <div class="modal-body">
+	 		 	<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+	 		 		<input type="hidden" id="tuid" name="tuid" value="" />
+	 		 		<div class="row clearfix">
+	 		 			<div class="form-group">
+	 		 				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">命名空间</label>
+	 		 				<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+	 		 					<input id="namespace" class="form-control" name="namespace" type="text" value="" size="35" maxlength="128"/>
+	 		 				</div>
+	 		 			</div>
+	 		 			<div class="form-group">
+	 		 				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">值</label>
+	 		 				<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+	 		 					<input id="domain_value" class="form-control" name="domain_value" type="text" size="35" value="" maxlength="128"/>
+	 		 				</div>
+	 		 			</div>
+	 		 			<div class="form-group">
+	 		 				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">中文描述</label>
+	 		 				<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+	 		 					<input id="domain_text_cn" class="form-control" name="domain_text_cn" type="text" size="35" value="" maxlength="128" />
+	 		 				</div>
+	 		 			</div>
+	 		 			<div class="form-group">
+	 		 				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">英文描述</label>
+	 		 				<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+	 		 					<input id="domain_text_en" class="form-control" name="domain_text_en" type="text" size="35" value="" maxlength="128" />
+	 		 				</div>
+	 		 			</div>
+	 		 			<div class="form-group">
+	 		 				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">默认值</label>
+	 		 				<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+	 		 					<input name="is_default" class="form-control" type="radio" value="0" />否
+	 		 					<input name="is_default" class="form-control" type="radio" value="1" />是
+	 		 				</div>
+	 		 			</div>
+	 		 			<div class="form-group">
+	 		 				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">父级命名空间</label>
+	 		 				<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+	 		 					<input type="text" id="parent_namespace"  name="parent_namespace" size="30"  class="form-control" maxlength="32" readonly />
+	 		 				</div>
+	 		 				<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+	 		 					<img src="${def:context}/images/search.gif" style="cursor: pointer;"
+									id="pickParent" title="查询父级命名空间" />
+								<img src="${def:context}/images/clear.gif" style="cursor: pointer;"
+									id="clearParent" title="清除选择的内容" />
+	 		 				</div>
+	 		 			</div>
+	 		 			<div class="form-group">
+	 		 				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">父级值</label>
+	 		 				<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+	 		 					<input id="parent_domain_value" class="form-control" name="parent_domain_value" type="text" size="35" value="" maxlength="32" readonly />
+	 		 				</div>
+	 		 			</div>
+	 		 			<div class="form-group">
+	 		 				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">显示顺序</label>
+	 		 				<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+	 		 					<input id="show_order" class="form-control" name="show_order" type="text" size="35" value="" />
+	 		 				</div>
+	 		 			</div>
+	 		 			<div class="form-group">
+	 		 				<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">备注</label>
+	 		 				<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+	 		 					<textarea id="remark" class="form-control" name="remark" type="text" size="35" value="" maxlength="256" ></textarea>
+	 		 				</div>
+	 		 			</div>
+	 		 		</div>
+	 		 	</form>
+	 		 </div>
+	 		 <div class="modal-footer">
+			    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+				  <button type="button" id="save_btn" class="btn btn-primary btn-md">保&nbsp;存</button>
+				  <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+			    </div>
+		     </div>
+		</div>
+	</div>
+</div>
+
+<!-- filter/response form -->
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">商户参数管理</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post" id="searchForm">
+			<input name="sort" type="hidden" value="namespace" preserve="true"/>
+			<input name="order" type="hidden" value="desc" preserve="true" /> 
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+			<div class="form-group">
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+					<input name="namespace" class="form-control" placeholder="请输入命名空间" type="text" value="" size="20"  maxlength="32"/>
+				</div>
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+					<input name="domain_value" class="form-control" placeholder="请输入参数值" type="text" size="20" value=""  maxlength="128"/>
+				</div>
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+					<input name="domain_text_cn" class="form-control" placeholder="请输入中文描述" type="text" size="20" value="" maxlength="128"/>
+				</div>
+				<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+					<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+					<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+					<button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+				</div>
+			</div>
+		</form>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>操作</th>
+					<th class="sortable" code="namespace">命名空间</th>
+					<th class="sortable" code="domain_value">值</th>
+					<th class="sortable" code="domain_text_cn">中文描述</th>
+					<th class="sortable" code="domain_text_en">英文描述</th>
+					<th class="sortable" code="is_default">默认值</th>
+					<th class="sortable" code="parent_namespace">父级命名空间</th>
+					<th class="sortable" code="parent_domain_value">父级值</th>
+					<th class="sortable" code="remark">备注</th>
+				</tr>
+			</thead>
+			<tbody id="datagridTemplate" style="display: none">
+				<tr>
+					<td align="center">
+						<button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">编辑</button>
+						<button class="btn btn-primary btn-md delete_btn" type="button" code="#tuid#">删除</button>
+					</td>
+					<td align="center">
+						#namespace#
+					</td>
+					<td align="center">
+						#domain_value#
+					</td>
+					<td align="center">
+						#domain_text_cn#
+					</td>
+					<td align="center">
+						#domain_text_en#
+					</td>
+					<td align="center">
+						#is_default#
+					</td>
+					<td align="center">
+						#parent_namespace#
+					</td>
+					<td align="center">
+						#parent_domain_value#
+					</td>
+					<td align="center">
+						#remark#
+					</td>
+				</tr>
+			</tbody>
+			<tbody id="datagrid"></tbody>
+		</table>
+		<div class="pageDiv">
+			<ul class="pagination">
+			</ul>
+		</div>
+	</div>
+</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script language="JavaScript">
+$(document).ready(function(){
+	var searchObj = null;
+	var obj = $Crud({
+		formId:"formEditor",
+		button:"save_btn",
+		insertBack:function(){
+			searchObj.searchData(1);
+		},
+		updateBack:function(){
+			searchObj.searchData(1);
+		},
+		deleteBack:function(){
+			searchObj.searchData(1);
+		},
+		addNewBack:function(){
+			$("#formTitle").html("新增参数");
+		},
+		editBack:function(){
+			$("#formTitle").html("修改参数");
+		},
+		validate:function(){
+			var flag=$("#formEditor").validate({
+				rules: {
+					namespace: {
+						required: true,
+						rangelength: [1,128]
+					},
+					domain_value: {
+						required: true,
+						rangelength: [1,128]
+					},
+					domain_text_cn: {
+						required: true,
+						rangelength: [1,128]
+					}
+				},
+				messages: {
+					namespace: {
+						required: "请输入命名空间",
+						rangelength:"域值空间长度为1到128位"
+					},
+					domain_value: {
+						required: "请输入值",
+						rangelength: "值长度为1到32位"
+					},
+					domain_text_cn: {
+						required: "请输入中文描述",
+						rangelength: "中文描述长度为1到128位"
+					}
+				}
+			});
+			return flag;
+		},
+		check:function(){
+			return true;
+		}
+	}).init();
+	
+	this.searchObj=searchObj;
+	searchObj=$Search({datagrid: "datagrid", formId: "searchForm",success: function () {
+        $(".edit_btn").unbind().on("click", function () {
+            if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+                obj.edit({id: $(this).attr("code")});
+            }
+        });
+        $(".delete_btn").unbind().on("click", function () {
+            var obthis = $(this);
+            $Dialog().confirm("确定要删除吗?", function () {
+                if (obthis.attr("code") != undefined && obthis.attr("code") != "") {
+                    obj.del({id: obthis.attr("code")});
+                }
+            });
+        });
+    }}).initSearchBtn().searchData(1);
+	
+	//查询父级命名空间
+	$("#pickParent").unbind().on("click",function(){
+		var url = "${def:context}/action/ccms/module/tenantryParam/pub/pickNamespace/crud?id=parent_domain_value&name=parent_namespace&pickId=pickOpen";
+		ccms.dialog.open({url:url,id:"pickOpen",width:750,height:500});
+	});
+	
+	$("#clearParent").unbind().on("click",function(){
+		document.formEditor.parent_namespace.value="";
+	});
+	
+});
+</script>
+</body>
+</html>

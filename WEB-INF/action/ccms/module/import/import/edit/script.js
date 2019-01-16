@@ -1,0 +1,12 @@
+clearForm("formEditor");
+document.formEditor.tuid.value = "${fld:id}";
+document.formEditor.imp_name.value = "${fld:imp_name@js}";
+document.formEditor.before_class_name.value="${fld:before_class_name@js}";
+document.formEditor.pre_class_name.value = "${fld:pre_class_name@js}";
+document.formEditor.post_class_name.value = "${fld:post_class_name@js}";
+document.formEditor.title_line_num.value = "${fld:title_line_num}";
+document.formEditor.validator_class_name.value = "${fld:validator_class_name@js}";
+setCheckboxValue("is_previwe_flag","${fld:is_previwe_flag@js}","formEditor");
+setCheckboxValue("is_error_continue","${fld:is_error_continue@js}","formEditor");
+document.formEditor.remark.value = "${fld:remark@js}";
+document.formEditor.after_sql.value = "${fld:after_sql@js}";

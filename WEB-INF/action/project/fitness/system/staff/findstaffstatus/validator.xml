@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="user_id" type="varchar" required="true" label="用户id拼接字符串"/>
+	<parameter id="status" type="varchar" required="true" label="状态"/>
+	<parameter id="len" type="varchar" required="true" label="要离职或复职员工个数"/>
+</validator>

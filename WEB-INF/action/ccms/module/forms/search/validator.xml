@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<parameter id="subject_id1" type="varchar" required="false" label="subject_id" />
+	<parameter id="table_id1" type="varchar" required="false" label="table_id" />
+	<parameter id="form_name" type="varchar" required="false" label="form_name" />
+	<parameter id="form_type" type="varchar" required="false" label="form_type" />
+	<parameter id="form_id" type="integer" required="false" label="form_id" />
+
+	<custom-validator
+		classname="dinamica.validators.SQLPatternTransformer"
+		parameter="form_name"
+		rule="contains" />
+
+</validator>
+

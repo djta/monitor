@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+    <parameter id="form_id" type="integer" required="true" label="form_id" maxlen="10"/>
+    <parameter id="form_name" type="varchar" required="true" label="表单名" maxlen="100"/>
+</validator>
+
+

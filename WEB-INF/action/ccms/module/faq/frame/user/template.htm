@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>FAQ</title>
+<script type="text/javascript" src="${def:context}/action/pub/dtree"></script>
+<link rel="StyleSheet" href="${def:context}/js/faq/jquery.autocomplete.css" type="text/css" />
+<script type="text/javascript" src="${def:context}/js/faq/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="${def:context}/js/faq/search.autocomplete.js"></script>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">FAQ</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-5 column"  id="searchFaqDiv">
+			<form class="form-horizontal" role="form" method="post">
+				<div class="form-group">
+					<div class="col-xs-6 col-sm-5 col-md-5 col-lg-4">
+						<button class="btn btn-primary btn-md" type="button" onclick="javascript: d.openAll();">展开</button>
+						<button class="btn btn-primary btn-md" type="button" onclick="javascript: d.closeAll();">合并</button>
+					</div>
+					<div class="col-xs-6 col-sm-7 col-md-7 col-lg-8">
+						<div class="col-xs-8 col-sm-6 col-md-6 col-lg-6">
+							<input type="text" class="form-control" id="show_name" name="show_name" placeholder="请输入" />
+						</div>
+						<div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+							<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+							<button class="btn btn-primary btn-md" type="button" id="reset_btn">清空</button>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="dtree">
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-7 column" id="showFaqDiv" >
+			<div id="faqContent">
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+var d = null;
+var faqObj = null;
+function faqClass(){
+	this.faqOperate = function(type,id){
+		var thisObj = this;
+        var url = "";
+        if(type == "detail"){
+            url = "/action/ccms/module/faq/faq/detail?faq_id="+id+"&random="+Math.random();
+            ajaxCall(url,
+        			{method:"get", 
+        			response:"faqContent", 
+        			dataType:"html",
+	     			success:function(){
+	    				$("a[name='download']").unbind().on("click",function(){
+	    					if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+	    						thisObj.downloadBlob($(this).attr("code"));
+	    					}
+	    				});
+	    				$("#favorite").unbind().on("click",function(){
+	    					if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+	    						thisObj.faqFavorite($(this).attr("code"));
+	    					}
+	    				});
+	    				if($Mobile.Android() || $Mobile.BlackBerry() || $Mobile.iOS()){
+	    					$("#searchFaqDiv").hide();
+	    					$("#showFaqDiv").show();
+	    					$("#faqContent .col_main_body_title").prepend($("<button>").addClass("btn btn-primary pull-left btn-goto-faq").html("关闭"));
+	    					$("#faqContent .btn-goto-faq").css("margin-top", "-5px").unbind().on("click",function(){
+	    						$("#searchFaqDiv").show();
+		    					$("#showFaqDiv").hide();
+	    					});
+	    				}
+	    			}});
+        }else if(type == "cancle"){
+        	$Dialog().confirm("确定要取消收藏吗？",function(){
+            ajaxCall("/action/ccms/module/faq/favorite/delete?faq_id="+id+"&random="+Math.random(),
+        			{method:"get", 
+	    			dataType:"script",
+	    			success:function(){
+	    				document.location.reload();
+	    			}});
+        	});
+        }
+    }
+	this.faqClick = function(id){
+		ajaxCall("/action/ccms/module/faq/click?tuid=" + id,{method:"get"});
+	}
+	this.downloadBlob = function(id){
+		window.open("${def:context}/action/ccms/attachment/download?id="+id,"附件");
+	}
+	this.faqFavorite = function(id){
+	    var url = "${def:context}/action/ccms/module/faq/favorite/category/form?id="+id;
+		var w = ccms.dialog.open({url:url,id:"favorite",width:750,height:520});
+	}
+	this.divClick = function(id,flag){
+		if(flag == 1){
+			$("#div"+id).show();
+			$("#img"+id).hide();
+		}else{
+			$("#div"+id).hide();
+			$("#img"+id).show();
+		}
+	}
+}
+$(document).ready(function() {
+	faqObj = new faqClass();
+	$("#search_btn").unbind().on("click",function(){
+		gotoPage("/action/ccms/module/faq/faq/crud?show_name="+encodeURI(encodeURI($("#show_name").val())));
+	});
+	$("#reset_btn").unbind().on("click",function(){
+		$("#show_name").val("");
+	});
+	
+	searchAutoComplete("show_name",'${def:context}/action/ccms/module/faq/auto?random='+Math.random(),function(){});
+	
+	d = new dTree('d');
+
+    //获得是否显示按钮参数
+    var show_flag = "false";
+    
+    var faq_title = "FAQ资料库";
+    
+	d.add(0,-1,faq_title);
+    
+    var tuid = "";
+    var superior_id = "";
+    var show_name = "";
+
+    var blankStr = "&nbsp;";
+    var buttonAddNode = "";
+    var buttonEdit = "";
+    var buttonAddNode = "";
+    var buttonDelete = "";
+    var buttonUpload = "";
+	var buttonHeadline = "";
+
+    var allBtn = "";
+    var herf = "";
+	d.add(1,0,"我的收藏");
+	<combo-category>
+	    tuid = "${fld:tuid}";
+	    superior_id = "1";
+	    show_name = "${fld:category_name}";
+	    d.add(tuid,superior_id,show_name);
+	</combo-category>
+	
+	<combo-favorite>
+	    tuid = "${fld:tuid}";
+	    tuid1 = "10${fld:tuid}";
+	    superior_id = "${fld:category_id}";
+	    show_name = "<a href='javascript:faqObj.faqOperate(\"detail\","+tuid+");faqObj.faqClick("+tuid+");'>${fld:show_name}</a>";
+	
+	    buttonCancleFavorite = "<span class='glyphicon glyphicon-plus' id='img"+tuid+"' onclick='faqObj.divClick("+tuid+",1)' title='展开按钮组'></span><span id='div"+tuid+"' style='display:none;'><span class='glyphicon glyphicon-minus' onclick='faqObj.divClick("+tuid+",2)' title='收缩按钮组'></span>&nbsp;<input type=button name=addFolder value='取消收藏' class='btn btn-primary btn-xs' style='MARGIN: 0px;' onclick=javascript:faqObj.faqOperate('cancle','"+tuid+"')>"+blankStr;
+	    allBtn = buttonCancleFavorite + "</span>";
+	    herf = blankStr + allBtn;
+	    d.add(tuid1,superior_id,show_name+herf);
+	</combo-favorite>
+	
+	herf = "";
+	allBtn = "";
+	
+	d.add(2,0,"热点排行");
+	
+	
+	d.add(3,2,"本日排行");
+	<combo-today>
+	    tuid = "${fld:tuid}";
+	    tuid1 = "20${fld:tuid}";
+	    superior_id = "3";
+	    show_name = "<a href='javascript:faqObj.faqOperate(\"detail\","+tuid+");faqObj.faqClick("+tuid+");'>${fld:show_name}(${fld:total})</a>";
+	    d.add(tuid1,superior_id,show_name);
+	</combo-today>
+	
+	d.add(4,2,"3日排行");
+	<combo-3day>
+	    tuid = "${fld:tuid}";
+	    tuid1 = "20${fld:tuid}";
+	    superior_id = "4";
+	    show_name = "<a href='javascript:faqObj.faqOperate(\"detail\","+tuid+");faqObj.faqClick("+tuid+");'>${fld:show_name}(${fld:total})</a>";
+	    d.add(tuid1,superior_id,show_name);
+	</combo-3day>
+	
+	d.add(5,2,"7日排行");
+	<combo-7day>
+	    tuid = "${fld:tuid}";
+	    tuid1 = "20${fld:tuid}";
+	    superior_id = "5";
+	    show_name = "<a href='javascript:faqObj.faqOperate(\"detail\","+tuid+");faqObj.faqClick("+tuid+");'>${fld:show_name}(${fld:total})</a>";
+	    d.add(tuid1,superior_id,show_name);
+	</combo-7day>
+	
+	d.add(6,2,"30日排行");
+	<combo-30day>
+	    tuid = "${fld:tuid}";
+	    tuid1 = "20${fld:tuid}";
+	    superior_id = "6";
+	    show_name = "<a href='javascript:faqObj.faqOperate(\"detail\","+tuid+");faqObj.faqClick("+tuid+");'>${fld:show_name}(${fld:total})</a>";
+	    d.add(tuid1,superior_id,show_name);
+	</combo-30day>
+	
+	<combo-faqs>
+	    tuid = "${fld:tuid}";
+	    superior_id = "${fld:superior_id}";
+	    show_name = "<a href='javascript:faqObj.faqOperate(\"detail\","+tuid+");faqObj.faqClick("+tuid+");'>${fld:show_name}</a>";
+		herf = blankStr + allBtn;
+	    d.add(tuid,superior_id,show_name+herf);
+	</combo-faqs>
+	
+    $(".dtree").html(d.toString());
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="70px" height="20px" viewBox="0 0 70 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49 (51002) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 43</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-43" transform="translate(0.000000, 1.000000)" fill="#D1DCDE">
+            <text id="定义价格" font-family="PingFangSC-Regular, PingFang SC" font-size="13" font-weight="normal">
+                <tspan x="18" y="14">定义价格</tspan>
+            </text>
+            <g id="+" transform="translate(0.000000, 2.725000)" fill-rule="nonzero">
+                <path d="M11.2073438,6.80267188 L6.77679688,6.80267188 L6.77679688,11.2339375 C6.77679688,11.6657657 6.42657812,12.015625 5.9946875,12.015625 C5.56285937,12.015625 5.21264063,11.6657657 5.21264063,11.2339375 L5.21264063,6.80267188 L0.782046878,6.80267188 C0.349859375,6.80267188 0,6.45275 0,6.02092187 C0,5.58928125 0.349921875,5.23925 0.782046878,5.23925 L5.21264063,5.23925 L5.21264063,0.807921878 C5.21264063,0.37628125 5.56285937,0.026234375 5.9946875,0.026234375 C6.42651563,0.026234375 6.77673437,0.37628125 6.77673437,0.807921878 L6.77673437,5.23925 L11.2073438,5.23925 C11.6395313,5.23925 11.989375,5.58928125 11.989375,6.02092187 C11.989375,6.45275 11.6395313,6.80260937 11.2073438,6.80260937 L11.2073438,6.80267188 Z"></path>
+            </g>
+        </g>
+    </g>
+</svg>

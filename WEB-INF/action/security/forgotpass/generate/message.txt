@@ -1,0 +1,18 @@
+按照您的要求,您的密码已经重新生成了.
+To your request your password has just been regenerated. 
+
+您的临时登录密码是:
+ Your temporary password to enter to the System of Expenses is: 
+  
+ ${fld:passwd_clear} 
+  
+ 当您使用本密码登录系统后,出于安全原因,系统会要求您马上更改您的密码.
+ When you enter using this password, for safety measurements 
+ immediately it will be requested you that you change it. 
+  
+
+ 德胜信诚软件
+ www.desoft.cn
+
+ 提示: 本信息自动发送,请勿回复. 谢谢.
+ IT NOTICES: This is a message generated automatically, please do not answer it. Thank you.

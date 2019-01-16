@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="skill_id" type="integer" required="true" label="角色编号" />
+
+</validator>

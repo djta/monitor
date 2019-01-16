@@ -1,0 +1,358 @@
+<!doctype html>
+<html>
+<head>
+${inc:/action/project/fitness/home/pub}
+<title>分组任务设定</title>
+</head>
+<body >
+	<div>
+		<div class="">
+	<!--addnew/edit form-->
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog" style="display:none;">
+  	  <div class="modal-dialog basic-information dialogbg" style="width:900px;">
+   	      <header class="header-default">
+				<span id="formTitle">新增</span>
+				<span class="header-close" onclick="$('.close').click()"></span> <!--关闭按钮无效，调用函数触发旧按钮点击事件-->
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style='display:none;'>&times;</button>
+			</header>
+			<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+				<input type="hidden" id="vc_code" name="vc_code" value=""/>
+				<div class="modal-body b-i-main">
+					<nav>
+						<li>
+							<label for="" style="width: 120px">组名：</label>
+							<select id="pk_value" name="pk_value">	
+								<option value="">请选择</option>				
+								<rows-teamtwo>
+									<option value="${fld:team_id}" code="${fld:skill_scope}">${fld:team_name}</option>
+								</rows-teamtwo>	
+							</select>	
+						</li>	
+							<li></li>
+						<li>
+							<label for="" style="width: 120px">组类别：</label>
+							<span id="zutype"></span>
+						</li>	
+						<li>
+							<label for="" style="width: 120px">组员：</label>
+							<span id="zytype"></span>
+						</li>
+						<li style="margin-left:22.5%;">
+							<div style="height: 30px"></div>
+							<div  style="color:#848588;position: absolute;top:78px;left:9.7%">上月任务完成情况：</div>
+							<div id="yuedetail" style="color: white;width: 300px">
+							</div>
+						</li>
+						<li></li>
+						<li><label for="" style="width: 120px">本期目标：</label>跟上月相比</li>	
+						<li>
+							<label for="" style="width: 120px">任务月份：</label>	
+							<input type="text" id="yearmonth" name="yearmonth" value="" maxlength="80" placeholder="任务月份"/>
+							<input type="hidden" id="target_year" name="target_year"/>		
+							<input type="hidden" id="target_month" name="target_month"/>	
+						</li>	
+						<li>
+							<label for="" style="width: 120px">资源获取量：</label>	
+							<input type="text" placeholder="资源获取量" id="guest_target" name="guest_target" value="" maxlength="80" onblur="targetjs(this, 'guest_targetjs', 1)" /><span id="guest_targetjs"></span>				
+						</li>	
+						<li>
+							<label for="" style="width: 120px">跟进量：</label>	
+							<input type="text" placeholder="跟进量" id="follow_target" name="follow_target" value="" maxlength="80" onblur="targetjs(this, 'follow_targetjs', 2)"/>	<span id="follow_targetjs"></span>
+						</li>
+						<li>
+							<label for="" style="width: 120px">预约量：</label>
+							<input type="text" placeholder="预约量" id="prepare_target" name="prepare_target" value="" maxlength="80" onblur="targetjs(this, 'prepare_targetjs', 3)"/>		<span id="prepare_targetjs"></span>
+						</li>	
+						<li>
+							<label for="" style="width: 120px">实际到访量：</label>
+							<input type="text" placeholder="实际到访量" id="visit_target" name="visit_target" value="" maxlength="80" onblur="targetjs(this, 'visit_targetjs', 4)"/><span id="visit_targetjs"></span>
+						</li>
+						<li>
+							<label for="" style="width: 120px">成单量：</label>
+							<input type="text" placeholder="成单量" id="ordernum_target" name="ordernum_target" value="" maxlength="80" onblur="targetjs(this, 'ordernum_targetjs', 5)"/>		<span id="ordernum_targetjs"></span>
+						</li>	
+						<li>
+							<label for="" style="width: 120px">成单额：</label>
+							<input type="text" placeholder="成单额" id="orderfee_target" name="orderfee_target" value="" maxlength="80" onblur="targetjs(this, 'orderfee_targetjs', 6)"/>		<span id="orderfee_targetjs"></span>			
+						</li>
+						<li>
+							<label for="" style="width: 120px">回访量：</label>
+							<input type="text" placeholder="回访量" id="call_target" name="call_target" value="" maxlength="80" onblur="targetjs(this, 'call_targetjs', 7)"/>		<span id="call_targetjs"></span>
+						</li>	
+						<li>
+							<label for="" style="width: 120px">回访预约会籍量：</label>
+							<input type="text" placeholder="回访预约会籍量" id="call_mc_target" name="call_mc_target" value="" maxlength="80" onblur="targetjs(this, 'call_mc_targetjs', 8)"/>	<span id="call_mc_targetjs"></span>			
+						</li>
+						<li>
+							<label for="" style="width: 120px">回访预约私教量：</label>
+							<input type="text" placeholder="回访预约私教量" id="call_pt_target" name="call_pt_target" value="" maxlength="80" onblur="targetjs(this, 'call_pt_targetjs', 9)"/>	<span id="call_pt_targetjs"></span>
+						</li>	
+						<li>
+							<label for="" style="width: 120px">体测量：</label>
+						<input type="text" placeholder="体测量" id="test_target" name="test_target" value="" maxlength="80" onblur="targetjs(this, 'test_targetjs', 10)"/><span id="test_targetjs"></span>			
+						</li>
+						<li>
+							<label for="" style="width: 120px">体验课上课量：</label>
+							<input type="text" placeholder="体验课上课量" id="unpayclass_target" name="unpayclass_target" value="" maxlength="80" onblur="targetjs(this, 'unpayclass_targetjs', 11)"/><span id="unpayclass_targetjs"></span>
+						</li>	
+						<li>
+							<label for="" style="width: 120px">总上课量：</label>
+							<input type="text" placeholder="总上课量" id="allclass_target" name="allclass_target" value="" maxlength="80" onblur="targetjs(this, 'allclass_targetjs', 12)"/>	<span id="allclass_targetjs"></span>			
+						</li>
+						<li>
+							<label for="" style="width: 120px">场开量：</label>
+							<input type="text" placeholder="场开量" id="site_target" name="site_target" value="" maxlength="80" onblur="targetjs(this, 'site_targetjs', 13)"/>		<span id="site_targetjs"></span>
+						</li>	
+						<li class="to100w" style="margin-left: 6%">
+							<label for="" style="width: 100px">介绍：</label>
+							<textarea rows="2" placeholder="介绍" class="my-textarea" cols="50" id="remark" name="remark"></textarea>					
+						</li>
+					</nav>
+				</div>
+			<footer class="footer-default">
+			  <button type="button" id="save_btn">确&nbsp;定</button>
+			</footer>
+				</form>
+		</div>
+	</div>
+</div>    
+	
+<div class="leftstaff">
+	<form role="form" method="post" id="searchForm" name="searchForm">
+			<input name="sort" type="hidden" value="tg.created" preserve="true"/>
+			<input name="order" type="hidden" value="desc" preserve="true" /> 
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="pageSize" type="hidden" value="200" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" /><div class="am-tabs-bd r-tab-cont">
+		<div class="r-tab-cout-1 am-tab-panel am-in am-active am-fade three-none" id="rw-tab1">
+			<article class="r-tab-cout-1-l">
+				<nav class="r-tab-cout-1-l-t">
+					<li class="w-85"  style="font-size: 14px">
+						<input type="text" id="target_date" name="target_date" class="input-default" />
+					</li>
+					<li class="se-w-80">
+						<div class="" style="font-size: 14px">
+							<select id="team_id" name="team_id" class="normal-select">
+								<option value="">请选择</option>
+								<rows-team>
+									<option value="${fld:team_id}">${fld:team_name}</option>
+								</rows-team>
+							</select>
+						</div>
+					</li>
+					<li class="search">
+						<button id="search_btn" title="查询"></button>
+					</li>
+					<li class="w-35">
+							<i class="am-icon-plus" id="addnew_btn" title="新增"></i>
+					</li>
+				</nav>
+			<div class="r-tab-cout-3-b mt-0">
+				<div class="to-change-background h-43"></div>
+					<table class="">
+						<thead>
+							<tr>
+							    <th>分组任务名称</th>
+							    <th>操作</th>
+							</tr>
+						</thead>
+						<tbody id="datagridTemplate" style="display: none">
+							<tr>
+				                <td class="menucolor" onclick="info(#tuid#,#team_id#,#yearmonth#,#skill_scope#, #target_type#, this)">#val#</td>
+				                <td class="menucolor">
+									<button class="write edit_btn" code="#tuid#" type="button" title="修改"></button>
+									<button class="delete delete_btn" code="#tuid#" type="button" title="删除"></button>
+								</td>
+							</tr>
+						</tbody>
+						<tbody id="datagrid">
+						</tbody>
+					</table>
+				<!-- <div class="pageDiv">
+					<ul class="pagination">
+					</ul>
+				</div> -->
+			</div>
+				</article>
+				<section class="r-tab-cout-1-r">
+					<article class="r-tab-cout-1-r-t yg-rwsd">
+					<!-- <div> -->
+			     		<div id="target_info">
+			      		</div>
+					<!-- </div> -->
+					</article>
+				</section>
+		</div></div>
+	</form>
+			</div>
+	</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script language="JavaScript">
+var search = "";
+$(document).ready(function() {
+	selectInit($("#pk_value"));
+	searchSelectInit($("#team_id"));
+	$(".btn-group.bootstrap-select.normal-select").css("width",'100%'); //修改渲染宽度
+	$("#target_date").val(new Date().format("yyyy-MM"));
+	$Dialog().yearmonth($('#target_date'), function() {});
+	$("#yearmonth").val(new Date().format("yyyy-MM"));
+	$Dialog().yearmonth($('#yearmonth'), function() {});
+
+	var obj = $Crud({
+		formId:"formEditor",
+		button:"save_btn",
+		bpkField:"vc_code",
+		insertBack:function(){
+			search.searchData();
+		},
+		updateBack:function(){
+			search.searchData();
+		},
+		deleteBack:function(){
+			search.searchData();
+		},
+		addNewBack:function(){
+			hidetarget();
+			$("#guest_targetjs,#follow_targetjs,#prepare_targetjs,#visit_targetjs,#ordernum_targetjs"
+					+",#orderfee_targetjs,#call_targetjs,#call_mc_targetjs,#call_pt_targetjs,#test_targetjs"
+					+",#unpayclass_targetjs,#allclass_targetjs,#site_targetjs").html("");
+			$("#zytype,#zutype,#yuedetail").html("");
+			setSelectValue($("#pk_value"), "");
+			$("#formTitle").html("新增");	
+		},
+		editBack:function(){
+			
+			$("#formTitle").html("修改");
+		},
+		validate:function(){
+		   var flag=$("#formEditor").validate({
+			   	rules : {
+			   		pk_value : { required : true},	
+			   		yearmonth : { required : true}
+				},
+			messages: {
+				pk_value:{
+					required:"请选择！"
+				},
+				yearmonth:{
+					required:"请选择！"
+				}
+			}
+			});
+		   //拆分年月
+		   var val = $("#yearmonth").val();
+		   var yearmonth = val.split("-");
+		   $("#target_year").val(yearmonth[0]);
+		   $("#target_month").val(yearmonth[1]);
+			return flag; 
+		},
+		check:function(){
+			return true;			
+		}
+	}).init();
+	this.search=search;
+	search=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+
+		$(".edit_btn").unbind().on("click", function () {
+			$("#guest_targetjs,#follow_targetjs,#prepare_targetjs,#visit_targetjs,#ordernum_targetjs"
+					+",#orderfee_targetjs,#call_targetjs,#call_mc_targetjs,#call_pt_targetjs,#test_targetjs"
+					+",#unpayclass_targetjs,#allclass_targetjs,#site_targetjs").html("");
+			$("#zytype,#zutype,#yuedetail").html("");
+            if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+                obj.edit({id: $(this).attr("code")});
+            }
+        });
+        $(".delete_btn").unbind().on("click", function () {
+        	var code = $(this).attr("code");
+            if (code != undefined && code != "") {
+                $Dialog().confirm("确定要删除吗?", function () {
+                	obj.del({id: code});
+                });
+            }
+        });
+        //判断该月是否有任务，如果有加载第一个现在右侧数据
+        if($('#datagrid tr:eq(0) td:eq(0)').html()==undefined){
+        	$("#target_info").html("");
+        }else{
+            $('#datagrid tr:eq(0) td:eq(0)').click()
+        }
+	}}).initSearchBtn().searchData(1); 
+	hidetarget();
+	//岗位选择
+	$("#pk_value").change(function(){
+		$("#guest_targetjs,#follow_targetjs,#prepare_targetjs,#visit_targetjs,#ordernum_targetjs"
+				+",#orderfee_targetjs,#call_targetjs,#call_mc_targetjs,#call_pt_targetjs,#test_targetjs"
+				+",#unpayclass_targetjs,#allclass_targetjs,#site_targetjs").html("");
+		if($(this).val()!=""){
+			var code = $(this).find("option:selected").attr("code");
+			//0客服 1私教 2会籍
+			if(code=="0"){
+				hidetarget();
+				//客服
+				$("#call_target,#call_mc_target,#call_pt_target")
+				.parent().show();
+				$("#zutype").html("客服");
+			}else if(code=="1"){
+				hidetarget();
+				//私教
+				$("#follow_target,#ordernum_target,#orderfee_target,#test_target,#unpayclass_target,#allclass_target,#site_target")
+				.parent().show();
+				$("#zutype").html("私教");
+			}else if(code=="2"){
+				hidetarget();
+				//会籍
+				$("#guest_target,#follow_target,#prepare_target,#visit_target,#ordernum_target,#orderfee_target,#call_target")
+				.parent().show();
+				$("#zutype").html("会籍");
+			}
+			var url="${def:context}${def:actionroot}/teamsearch?skill_scope="+code;
+		   	ajaxCall(url,{
+			   	method: "get",
+		   		progress: true,
+		   		dataType: "script",
+			   	success: function() {
+		   		}
+		   	});
+		}else{
+			$("#zytype,#zutype,#yuedetail").html("");
+			hidetarget();
+		}
+	});
+});
+//设置市场调研
+function info(tuid, team_id, yearmonth, skill_scope, target_type, val){
+	$(".menucolor").css("background", "");
+	$(val).css("background", "rgba(240, 238, 238, 0.2)");
+	$(val).next().css("background", "rgba(240, 238, 238, 0.2)");
+	$("#target_info").load("${def:context}/action/project/fitness/system/target/targetstaff/crud?tuid="+tuid+"&skill_id="+team_id
+			+"&yearmonth="+yearmonth+"&skill_scope="+skill_scope+"&target_type="+target_type+'&ispubload=true');
+}
+
+//隐藏所有量
+function hidetarget(){
+	$("#guest_target,#follow_target,#prepare_target,#visit_target,#ordernum_target,#orderfee_target,#call_target,#call_mc_target,#call_pt_target,#test_target,#unpayclass_target,#allclass_target,#site_target")
+		.parent().hide();
+}
+function station(){
+	location.href="${def:context}/action/project/fitness/system/target/crud";
+}
+function grouping(){
+	location.href="${def:context}/action/project/fitness/system/target/team/crud";
+}
+function targetjs(val, id, type){
+	if($(val).val()!=''){
+		var code = $("#pk_value").find("option:selected").attr("code");
+		var url="${def:context}${def:actionroot}/querycompare?num="+$(val).val()+
+				"&skill_scope="+code+"&id="+id+"&type="+type;
+	   	ajaxCall(url,{
+		   	method: "get",
+	   		progress: true,
+	   		dataType: "script",
+		   	success: function() {
+	   		}
+	   	});
+	}
+}
+</script>
+</body>
+</html>

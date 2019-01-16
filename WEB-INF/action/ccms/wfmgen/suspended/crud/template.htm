@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<!--COMMON :include style and javascript code-->
+${inc:/action/pub/common}
+
+<title>工单信息</title>
+
+</head>
+
+<body onmouseup="hidInputValidatorTip(3);">
+<!--a name="A0" id="A0"></a-->
+
+<!--COMMON HEADER-->
+${inc:/action/pub/header}
+
+<center>
+<div class="tabs">
+    <ul>
+        <li><b></b>
+            <a  
+                onmouseover="javascript:window.status='';return true;" 
+                onmouseout="javascript:window.status='';return true;" 
+                href='#' 
+                onclick='JavaScript:return showMyWfm();'>
+                <span id="formTitleFilter">待办件</span>
+            </a><p></p>
+        </li>
+		<li><b></b>
+            <a  
+                onmouseover="javascript:window.status='';return true;" 
+                onmouseout="javascript:window.status='';return true;" 
+                href='#' 
+                onclick='JavaScript:return showProcessWfm();'>
+                <span id="formTitleFilter">办理中文件</span>
+            </a><p></p>
+        </li>
+		<li><b></b>
+            <a  
+                onmouseover="javascript:window.status='';return true;" 
+                onmouseout="javascript:window.status='';return true;" 
+                href='#' 
+                onclick='JavaScript:showHistoryWfm();'>
+                <span id="formTitlePan">已结件</span>
+            </a><p></p>
+        </li>
+		<li id="tabsl"><b></b>
+            <a  
+                onmouseover="javascript:window.status='';return true;" 
+                onmouseout="javascript:window.status='';return true;" 
+                href='#' 
+                onclick='JavaScript:return showSuspendedWfm();'>
+                <span id="formTitleFilter">挂起件</span>
+            </a><p></p>
+        </li>
+    </ul>
+    <div id='hline'></div>
+</div>
+<div id="tabmain">
+<!--filter form-->
+<div id="divFilter" style="display:none;width:100%">
+</div>
+
+<!--addnew/edit form-->
+<div id="divEditor" style="display:none;width:100%">
+</div>
+
+<!--insert/update response-->
+<div id="divEditorResponse" style="display:none;width:100%">
+</div>
+
+<!--grid view response-->
+<div id="response" style="display:none;width:100%">
+</div>
+
+<!--progress indicator-->
+<div id="divStatus" class="alert" style="text-align:left; display:none;color:gray;width:150px;font-weight:bold;font-family:Arial">
+	<img src="${def:context}/images/progress.gif"> 请稍候...
+</div>
+
+<!--show linked grid-->
+<iframe id="detail" name="detail" marginwidth="0" scrolling="no" frameborder="0" style="height:0%;width:100%;visibility:hidden">
+</iframe>
+
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}">
+</div>
+</center>
+
+</body>
+
+</html>
+
+<script type="text/javascript">
+
+
+function searchBack(){
+    document.getElementById("divFilter").style.display = "";
+    return true;
+}
+
+function formHidden()
+{
+	$("#detail")[0].style.visibility = "hidden"; 
+	$("#detail")[0].style.height = "0%"; 
+	search();
+}
+
+function showMyWfm(){
+	var url = "${def:context}${def:actionroot}/../owner/crud";
+	document.location.href = url;
+}
+
+function showProcessWfm(){
+	var url = "${def:context}${def:actionroot}/../processing/crud";
+	document.location.href = url;
+}
+
+function showHistoryWfm(){
+	var url = "${def:context}${def:actionroot}/../historywfm/crud";
+	document.location.href = url;
+}
+
+function showWfmStatus(entry_id){
+	var url = "${def:context}/action/ccms/wfmgen/show_status?entry_id="+entry_id;
+	WinOpen(url,99);
+}
+
+function showHistory(entry_id){
+	var url ='${def:context}${def:actionroot}/../history/crud?entry_id='+entry_id;
+	WinOpen(url,14);
+}
+
+function recoverEntry(){
+	var flag = false;
+	if(!CheckCheckbox("entry_id","请选择要恢复的挂起件？",null,"formView")){
+		return false;
+	}
+	if(window.confirm("确定要恢复这些挂起件？")){
+		return ajaxCall(	httpMethod="POST", 
+                            uri=$("#actionroot").val()+"/update", 
+                            divResponse="divEditorResponse", 
+                            divProgress="divStatus", 
+                            formName="formView", 
+                            afterResponseFn=search, 
+                            onErrorFn=null);
+	}
+}
+
+//查询结果加载后执行
+function afterSearchBackSetting(){
+	$("#viewButtonDiv").html("<input type='button' class='btn_gray' value='恢复' onclick='recoverEntry()'>&nbsp;");
+}
+
+function beforeSearch(){
+	search(searchBack);
+}
+
+loadFilter(beforeSearch);
+</script>
+    

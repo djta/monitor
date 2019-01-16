@@ -1,0 +1,14 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"tuid":"${fld:tuid}"
+		,"tab_id":"${fld:tab_id}"
+		,"rule_name":"${fld:rule_name@js}"
+		,"rule_order":"${fld:rule_order}"
+		,"remark":"${fld:remark@js}"
+		,"version":"${fld:version@js}"
+		,"filter_type":"${fld:filter_type@js}"
+	},
+	</rows>
+	{}
+]}

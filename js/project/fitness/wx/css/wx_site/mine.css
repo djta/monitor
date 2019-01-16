@@ -1,0 +1,78 @@
+.list_mine {
+    width: 100%;
+    height: 2.6rem;
+    color: #FFFFFF !important;
+    border-top: 0.2rem #eeeeee solid;
+    background: -webkit-linear-gradient(#2ED4FD, #00A4E9);
+    /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#2ED4FD, #00A4E9);
+    /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#2ED4FD, #00A4E9);
+    /* Firefox 3.6 - 15 */
+    background: linear-gradient(#2ED4FD, #00A4E9);
+    /* 标准的语法 */
+}
+
+.f1 {
+    float: left;
+}
+
+.touxiangpic {
+    display: block;
+    width: 1.2rem;
+    border-radius: 50%;
+    margin-top: 0.67rem;
+    margin-left: 0.4rem;
+    height: 1.2rem;
+}
+
+.list_mine .content {
+    width: 75%;
+    height: 1.2rem;
+    margin-top: 0.9rem;
+    margin-left: 0.2rem;
+}
+
+.mark_name {
+    width: 0.24rem;
+    display: inline-block;
+    height: 0.24rem;
+    margin-right: 0.1rem;
+    vertical-align: inherit;
+    margin-top: 0.1rem;
+}
+
+.nicheng {
+    font-size: 0.28rem;
+}
+
+.my_name {
+    line-height: 0.5rem;
+    font-size: 0.24rem;
+}
+.cont{
+    margin-top: 0.3rem;
+    width: 100%;
+    background: #eeeeee;
+    font-size: 0.3rem;
+    height: auto;
+}
+.cont .cont_list{
+    width: 100%;
+    background: #fff;
+    height: 1rem;
+    border-bottom: 0.001rem solid #D5D5D5
+}
+.cont .cont_list img{
+    width: 0.5rem;
+    height: 0.5rem;
+    display: block;
+    margin-top: -0.05rem;
+    display: block;
+}
+.cont .cont_list div{
+  float: left;
+  margin-top: 0.3rem;
+  margin-left: 0.44rem;
+ 
+}

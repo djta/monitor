@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/ccms/pub}
+<title>选取数据</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+    <div class="panel-heading col_main_body_title text-center">
+        <h2 class="panel-title">选取业务</h2>
+    </div>
+    <div class="panel-body col_main_body">
+        <table class="table table-bordered">
+            <tbody id="datagrid">
+                <rows>
+		        <tr onclick="selectItem('${fld:id}','${fld:description}')" style="cursor:pointer;" title="选择">
+                     <td align="center">${fld:description}</td>
+                </tr>
+		        </rows>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script type="text/javascript">
+$(document).ready(function(){
+});
+function selectItem(id, name){
+    //界面配置中查询条件用到
+    parent.$("#${fld:id}").val(id);
+    parent.$("#${fld:name}").val(name);
+    if( undefined != parent.pickcallback ){
+        parent.pickcallback();
+    }
+    ccms.dialog.close();
+}
+</script>
+</body>
+</html>

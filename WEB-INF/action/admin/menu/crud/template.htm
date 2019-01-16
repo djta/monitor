@@ -1,0 +1,272 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>系统菜单</title>
+</head>
+<body>
+<!--addnew/edit form-->
+<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="formTitle">系统菜单信息</h4>
+			</div>
+			<div class="modal-body">
+				<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+					<input type="hidden" id="tuid" name="tuid" value="" />
+					<input name="app_id" type="hidden" value="${fld:app_id}" preserve="true" />
+					<div class="row clearfix">
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label required">菜单项名称(中文)</label>
+							<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+								<input type="text" class="form-control" id="title_cn" name="title_cn" value="" maxlength="60" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label required">菜单项名称(英文)</label>
+							<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+								<input type="text" class="form-control" id="title_en" name="title_en" value="" maxlength="60" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">图标</label>
+							<div class="col-xs-5 col-sm-5 col-md-4 col-lg-4">
+								<input type="text" class="form-control"  name="logo_path" id="logo_path" readonly /> 
+							</div>
+							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+								<img src="${def:context}/images/search.gif" style="cursor: pointer;" id="openPicList"title="上传" />
+								<img src="${def:context}/images/preView.gif" style="cursor: pointer;" id="preViewImg"title="预览" /> 
+								<img src="${def:context}/images/clear.gif" style="cursor: pointer;" id="pickClear"
+									title="清除选定值" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label required">序号</label>
+							<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+								<input type="text" class="form-control" id="position" name="position" value="" maxlength="10" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">服务</label>
+							<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+								<input type="hidden" name="service_id" id="service_id" /> 
+								<input type="text" class="form-control" name="service_name" id="service_name" readonly /> 
+							</div>
+							<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+								<img src="${def:context}/images/search.gif" style="cursor: pointer;" code="${fld:app_id}" id="pickService" title="选择" /> 
+								<img src="${def:context}/images/clear.gif" style="cursor: pointer;" id="clearService" title="清除选定值" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">上级菜单项</label>
+							<div class="col-xs-5 col-sm-5 col-md-4 col-lg-4">
+								<input class="form-control"  id="p_menu_name"	name="p_menu_name" value="" type="text" size="30" class="readonly" /> 
+								<input id="parentmenu_id" name="parentmenu_id" type="hidden" value="" /> 
+							</div>
+							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+								<img src="${def:context}/images/search.gif" style="cursor: pointer;" id="pickMenu" title="查询" /> 
+								<img src="${def:context}/images/clear.gif" style="cursor: pointer;" id="clear_btn" 	title="清除选择的内容" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">角色授权</label>
+							<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+								<role-list> 
+									<input id="role_id" name="role_id" type="checkbox" value="${fld:role_id}" /> ${fld:description}<br/>
+								</role-list>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+					<button type="button" id="reset_btn" class="btn btn-primary btn-md">重&nbsp;置</button>
+					<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+			    </div>
+		    </div>
+		</div>
+	</div>
+</div>
+
+
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">系统菜单信息</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post" id="searchForm">
+			<input name="app_id" type="hidden" value="${fld:app_id}" preserve="true" />
+			<input name="sort" type="hidden" value="position" preserve="true"/>
+			<input name="order" type="hidden" value="desc" preserve="true" /> 
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+			<div class="form-group">
+				<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+					<input type="text" class="form-control" id="title" name="title" placeholder="请输入菜单名称">
+				</div>
+				<div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+					<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+					<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+					<button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+				</div>
+			</div>
+		</form>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>操作</th>
+					<th>菜单条目</th>
+					<th class="sortable" code="position">序号</th>
+					<th class="sortable" code="title">菜单名称</th>
+					<th class="sortable" code="parenttitle">上级菜单名称</th>
+				</tr>
+			</thead>
+			<tbody id="datagridTemplate" style="display: none">
+				<tr>
+					<td align="center">
+						<button class="btn btn-primary btn-md edit_btn" type="button" code="#menu_id#">编辑</button>
+						<button class="btn btn-primary btn-md delete_btn" type="button" code="#menu_id#">删除</button>
+					</td>
+					<td align="center">
+						<button class="btn btn-primary btn-md menu_item_btn" type="button" code="#menu_id#">菜单条目</button>
+					</td>
+					<td align="center">#position#</td>
+					<td align="center">#title#</td>
+					<td align="center">#parenttitle#</td>
+				</tr>
+			</tbody>
+			<tbody id="datagrid">
+			</tbody>
+		</table>
+		<div class="pageDiv">
+			<ul class="pagination">
+			</ul>
+		</div>
+	</div>
+</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script type="text/javascript">
+$(document).ready(function() {
+	var search=null;
+	var obj = $Crud({
+		formId:"formEditor",
+		button:"save_btn",
+		insertBack:function(){
+			search.searchData();
+		},
+		updateBack:function(){
+			search.searchData();
+		},
+		deleteBack:function(){
+			search.searchData();
+		},
+		addNewBack:function(){
+			$("#formTitle").html("新增菜单");
+		},
+		editBack:function(){
+			$("#formTitle").html("修改菜单");
+		},
+		validate:function(){
+			var flag=$("#formEditor").validate({
+				rules: {
+					title_cn: {
+						required: true
+					},
+					title_en: {
+						required: true
+					}
+				},
+				messages: {
+					title_cn:{
+						required: "请输入菜单项名称(中文)"
+					},
+					title_en:{
+						required: "菜单项名称(英文)"
+					}
+				}
+			});
+			return flag;
+		},
+		check:function(){
+			
+			return true;
+		}
+	}).init();
+	this.search=search;
+	search=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		$(".edit_btn").unbind().on("click", function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				obj.edit({id:$(this).attr("code")});
+			}
+		});
+		$(".delete_btn").unbind().on("click", function(){
+			var obthis = $(this);
+			$Dialog().confirm("确定要删除该条数据吗?", function(){
+				if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+					obj.del({id:obthis.attr("code")});
+				}
+			});
+		});
+		$(".menu_item_btn").unbind().on("click", function(){
+			var obthis = $(this);
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				var url="/action/admin/menuitem/crud?app_id=${fld:app_id}&menu_id="+obthis.attr("code");
+				gotoPage(url);
+			}
+		});
+		$("#pickMenu").unbind().on("click", function(){
+			var url = "${def:context}${def:actionroot}/pickMenu?app_id=${fld:app_id}";
+			var tuid = document.formEditor.tuid.value;
+			if(tuid != ""){
+				url += "&menu_id="+tuid;
+			}
+			ccms.dialog.open({url:url,id:"parent",width:300,height:400});
+		});
+		$("#openPicList").unbind().on("click", function(){
+			var url = "${def:context}/action/ccms/attachment/crud?id=logo_path&pickId=dialogPic";
+			ccms.dialog.open({url:url,id:"dialogPic",width:800,height:500});
+		});
+		$("#preViewImg").unbind().on("click",function(){
+			if($("#logo_path").val()==''){
+				$Dialog().notice("请选择图片",1200);
+				return;
+			}
+			var id="${def:context}/action/ccms/attachment/preView?id="+encodeURIComponent($("#logo_path").val());
+			ccms.dialog.open({url:id,id:"aaaa",width:600,height:400});
+		});
+		$("#pickClear").unbind().on("click",function(){
+			document.formEditor.logo_path.value='';
+		});
+		$("#clear_btn").unbind().on("click",function(){
+			document.formEditor.p_menu_name.value='';
+			document.formEditor.parentmenu_id.value='';
+		});
+		$("#pickService").unbind().on("click",function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				var app_id = $(this).attr("code");
+				ccms.dialog.open({url:"${def:context}${def:actionroot}/services/crud?app_id=" + app_id,id:"dialogService",width:800,height:550});
+			}
+		});
+		$("#clearService").unbind().on("click",function(){
+			document.formEditor.service_id.value='';
+			document.formEditor.service_name.value='';
+		});
+
+	}}).initSearchBtn().searchData(1);
+
+});
+	function pickSelectMenu(id, name){
+		document.formEditor.p_menu_name.value = name;
+		document.formEditor.parentmenu_id.value = id;
+	}
+	function selectService(s_id,s_name){
+		document.formEditor.service_id.value=s_id;
+		document.formEditor.service_name.value=s_name;
+	}
+</script>
+</body>
+</html>

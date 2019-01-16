@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="namespace" type="varchar" required="false" label="namespace" />
+	<parameter id="checkname" type="varchar" required="true" label="checkname" />
+	<parameter id="showid" type="varchar" required="true" label="showid" />
+	<parameter id="parent_namespace" type="varchar" required="false" label="parent_namespace" />
+	<parameter id="parent_value" type="varchar" required="false" label="parent_value" />
+	<parameter id="field_id" type="integer" required="true" label="field_id" />
+</validator>
+

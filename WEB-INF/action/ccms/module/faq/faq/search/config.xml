@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		FAQ
+	</summary>
+	
+	<log>false</log>
+
+	<colname>show_name</colname>
+	<operator></operator>
+	<sql-template>query-base.sql</sql-template>
+	<paging-recordset>query_faq.sql</paging-recordset>
+	<query>insert_search_word.sql</query>
+	<total-recordset>query-count.sql</total-recordset>
+	<paging-pagesize>5</paging-pagesize>
+
+	<transaction>
+		<classname>com.ccms.faq.SearchFaqByIndex</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript;charset=UTF-8</content-type>
+		<expiration>1</expiration>
+		<print mode="table" recordset="query_faq.sql" tag="rows"/>
+		<print mode="form" recordset="query-count.sql"/>
+	</output>
+	
+</config>

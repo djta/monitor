@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>信息池</title>
+</head>
+<body>
+	<!--addnew/edit form-->
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="formTitle">新增</h4>
+				</div>
+				<div class="modal-body">
+					<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+						<input type="hidden" id="tuid" name="tuid" value="" />
+						<div class="form-group" style="display: none">
+							<!--业务专题picklist-->
+							<input name="subject_id" type="hidden" value="" preserve="true" /> 
+							<input type="text" id="subject_name" name="subject_name" size="35" readonly class="readonly" value="" preserve="true" />
+							<!--业务-->
+							<input name="schema_code" type="hidden" value="" preserve="true" /> 
+							<input name="table_code" type="hidden" value="" preserve="true" /> 
+							<input name="table_id" type="hidden" value="" preserve="true" /> 
+							<input type="text" id="table_name" name="table_name" size="35" readonly class="readonly" value="" preserve="true" />
+							<!--表单-->
+							<input name="form_id" type="hidden" size="35" value="" preserve="true" /> 
+							<input name="form_access_type" type="hidden" size="35" value="" preserve="true" /> 
+							<input name="form_name" type="text" size="35" readonly class="readonly" value="" preserve="true" />
+							<!--外拨任务-->
+							<input name="job_id" type="hidden" value="" preserve="true" /> 
+							<input type="text" id="job_alias" name="job_alias" size="35" readonly class="readonly" value="" preserve="true" />
+							<!--首节点名称-->
+							<input name="first_node" type="hidden" value="" preserve="true" /> 
+							<input type="text" id="first_node_alias" name="first_node_alias" size="35" readonly class="readonly" value="" preserve="true" />
+							<!--首节点任务类型-->
+							<input name="first_node_ob_type" type="hidden" value="" preserve="true" /> 
+							<input type="text" id="first_node_ob_type_alias" name="first_node_ob_type_alias" size="35" readonly class="readonly" value="" preserve="true" />
+							<!--客户免扰时间段1-->
+							<input name="free_time1_from" value="" type="text" size="16" preserve="true" /> 
+							<input name="free_time1_to" value="" type="text" size="16" preserve="true" />
+							<!--客户免扰时间段2-->
+							<input name="free_time2_from" value="" type="text" size="16" preserve="true" /> 
+							<input name="free_time2_to" value="" type="text" size="16" preserve="true" />
+							<!--客户免扰时间段3-->
+							<input name="free_time3_from" value="" type="text" size="16" preserve="true" /> 
+							<input name="free_time3_to" value="" type="text" size="16" preserve="true" />
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label required">优先级</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input name="priority" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label required">子CASE编号对应的字段(例如线索+更新时间)</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input id="bz_pk_value" name="bz_pk_value" value="" type="text" readonly size="20" preserve="true" /> 
+								字段描述 <input id="bz_pk_value_lable" name="bz_pk_value_lable" value="" type="text" readonly class="readonly" size="20" preserve="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label required">CASE编号对应字段(例如线索ID)</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input id="pk_value" name="pk_value" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+								字段描述 <input id="pk_value_lable" name="pk_value_lable" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label required">客户编号字段</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input id="cust_code" name="cust_code" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+								字段描述 <input id="cust_code_lable" name="cust_code_lable" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label required">客户名称字段</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input id="cust_name" name="cust_name" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+								字段描述 <input id="cust_name_lable" name="cust_name_lable" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">客户性别字段</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input id="cust_sex" name="cust_sex" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+								字段描述 <input id="cust_sex_lable" name="cust_sex_lable" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label required">客户电话号码字段1（手机号码）</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input id="phone_number1" name="phone_number1" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" /> 
+								字段描述 <input id="number_lable1" name="number_lable1" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">客户电话号码字段2</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input id="phone_number2" name="phone_number2" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" /> 
+								字段描述 <input id="number_lable2" name="number_lable2" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">客户电话号码字段3</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input id="phone_number3" name="phone_number3" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" /> 
+								字段描述 <input id="number_lable3" name="number_lable3" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">客户电话号码字段4</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input id="phone_number4" name="phone_number4" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" /> 
+								字段描述 <input id="number_lable4" name="number_lable4" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">客户电话号码字段5</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input id="phone_number5" name="phone_number5" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" /> 
+								字段描述 <input id="number_lable5" name="number_lable5" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">客户电话号码字段6</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input id="phone_number6" name="phone_number6" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" /> 
+								字段描述 <input id="number_lable6" name="number_lable6" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">发送短信用到的号码字段</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input id="sms_number" name="sms_number" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" /> 
+								字段描述 <input id="sms_number_lable" name="sms_number_lable" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">发送EMAIL用到的字段</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input id="email" name="email" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" /> 
+								字段描述 <input id="email_lable" name="email_lable" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">感兴趣车系字段(活动里有发DM任务,则需要选择)</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input id="interested_series" name="interested_series" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" /> 
+								字段描述 <input id="interested_series_lable" name="interested_series_lable" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">导入批次字段(使用到导入批次号时,则需要选择)</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input id="import_data_batch" name="import_data_batch" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" /> 
+								字段描述 <input id="import_data_batch_lable" name="import_data_batch_lable" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">数据专属人字段</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input id="data_owner" name="data_owner" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" /> 
+								字段描述 <input id="data_owner_lable" name="data_owner_lable" value="" type="text" readonly class="ReadOnly" size="20" preserve="true" />
+							</div>
+						</div>
+					</form>
+				</div>
+
+				<div class="modal-footer">
+					<div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+						<button type="button" id="save_btn" class="btn btn-primary btn-md">传输数据</button>
+						<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm" style="display:none;">
+				<input name="sort" type="hidden" value="" preserve="true" />
+				<input name="order" type="hidden" value="" preserve="true" />
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+				<input name="table_id" value="${fld:table_id}" type="hidden" preserve="true" />
+				<input name="form_id" value="${fld:form_id}" type="hidden" preserve="true" />
+				<input name="job_id" value="${fld:job_id}" type="hidden" preserve="true" />
+				<div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+					<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+					<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr class="pageColor">
+						<th id="table-title" colspan="">
+							<span style="float: left; margin-left: 21px">
+								总客户数：<b id="cust_count"></b>
+							</span>
+							<span style="float: left; margin-left: 60px">
+								<a href="javascript:void(0);" id="addnew_btn" title="向活动管理系统传输">传输数据</a> 
+							</span>
+						</th>
+					</tr>
+					<tr class="rows1">
+
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr class="rows2">
+
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script language="JavaScript">
+var search = null;
+var custnum = 0;
+$(document).ready(function() {
+	search1 = $Search({datagrid: "datagrid", formId: "searchForm", rowpackage : function(obj){
+		if( undefined != obj.cust_count && "" != obj.cust_count ){
+			custnum = obj.cust_count;
+		}
+    }, success: function () {
+    	$("#cust_count").html(custnum);
+    	custnum = 0;
+    	$("table").css("table-layout","auto");
+    }}).initSearchBtn();
+	loadfield(function(){
+		search1.searchData(1);
+	});
+	$("#addnew_btn").unbind().on("click",function(){
+		$("#formTitle").html("传输到活动管理系统");
+    	ajaxCall("${def:actionroot}/loaddata",{
+    		method: "post",
+    		form: "searchForm",
+    		progress: true,
+    		dataType: "script",
+    		success: function() {
+    		}
+    	});
+	});
+	$("#save_btn").unbind().on("click",function(){
+		ajaxCall("${def:actionroot}/insert",{
+    		method: "post",
+    		form: "formEditor",
+    		progress: true,
+    		dataType: "script",
+    		success: function() {
+    		}
+    	});
+	})
+});
+function loadfield(callback){
+	ajaxCall("${def:actionroot}/loadfield",{
+		method: "post",
+		form: "searchForm",
+		progress: true,
+		dataType: "script",
+		success: function() {
+			if( undefined != callback ){
+				callback();
+			}
+		}
+	});
+}
+</script>
+</body>
+</html>

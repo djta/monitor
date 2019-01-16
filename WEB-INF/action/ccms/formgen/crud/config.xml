@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config nodb="true">
+
+	<summary>
+		界面展示
+	</summary>
+	
+	<log>false</log>
+
+	<filter-recordset>filter_recordset</filter-recordset>
+	<show-recordset>show_recordset</show-recordset>
+	<form-recordset>query-form.sql</form-recordset>
+	<cascade-recordset>query_cascade_field.sql</cascade-recordset>
+	<priviledge-recordset>query_priviledge.sql</priviledge-recordset>
+	<form-id>form_id</form-id>
+
+	<transaction>
+		<classname>com.ccms.core.formengine.FormCrudEngine</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<output>
+		<classname>com.ccms.core.formengine.FormCrudOutputEngine</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<print mode="table" recordset="filter_recordset" tag="rows-filter"/>
+		<print mode="table" recordset="show_recordset" tag="rows-form"/>
+		<print mode="table" recordset="query_cascade_field.sql" tag="rows-cascade"/>
+		<print mode="table" recordset="query_cascade_field.sql" tag="rows-cascade-addnew"/>
+		<print mode="table" recordset="query_cascade_field.sql" tag="rows-cascade-edit"/>
+		<print mode="form" recordset="query-form.sql"/>
+		<print mode="form" recordset="query_priviledge.sql"/>
+		<print mode="form" recordset="newInputParames"/>
+		<print mode="form" recordset="_request"/>
+	</output>
+
+</config>

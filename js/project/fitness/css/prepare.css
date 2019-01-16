@@ -1,0 +1,80 @@
+#monitor{
+    width: 80%;
+    font-size: 6px;
+    text-align: center;
+    margin-left: -12%;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+.tab-cout-nav {
+    margin: 0px;
+    padding: 3px;
+}
+.cd_top_cont_wrap  tr {
+  
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
+}
+.cd_data {
+    font-size: 3px;
+    width: 20%;
+    height: 20px;
+    background: #282E34;
+    border-radius: 1px;
+    color: #Fff;
+    margin-left: 2px;
+}
+.cd_to {
+    width: 10px;
+    height: 20px;
+    background: #282E34;
+    position: absolute;
+    cursor: pointer;
+    border-radius: 1px;
+}
+
+.cd_to img {
+    width: 5px;
+    height: 11px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    display: block;
+}
+
+.cd_top_left {
+    left: 3px;
+}
+
+.cd_top_right {
+   right: 3%;
+    transform: rotate(180deg);
+}
+
+.cd_top_jin {
+    width: 25px;
+    height: 20px;
+    position: absolute;
+    right: 3px;
+    border-radius: 1px;
+    background: #282E34;
+}
+
+.cd_top_jin img {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+width: 3%;
+height: 3%;}

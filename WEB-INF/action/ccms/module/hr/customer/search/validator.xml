@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<!-- crud下template.xml页面的查询条件input的名称 -->
+	<parameter id="cust_name" type="varchar" required="false" label="cust_name" />
+	<parameter id="cust_code" type="varchar" required="false" label="cust_code" />
+
+
+</validator>

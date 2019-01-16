@@ -1,0 +1,19 @@
+INSERT INTO
+cc_sms_template
+(
+    tuid
+    ,template_name
+    ,template_content
+    ,is_enabled,
+    account_id,
+    subject_id
+)
+VALUES
+(
+     ${seq:nextval@seq_cc_sms_template}
+    ,${fld:template_name}
+    ,${fld:template_content}
+    ,'1'
+    ,${fld:account_id}
+    ,'${def:subject}'
+)

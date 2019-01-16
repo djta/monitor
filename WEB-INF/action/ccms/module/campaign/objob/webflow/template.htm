@@ -1,0 +1,62 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml">
+<HEAD>
+<TITLE> WebFlow 2005 Designer </TITLE>
+<link href="${def:context}/js/csflow/inc/style.css" type="text/css" rel="stylesheet" />		
+<SCRIPT LANGUAGE="JavaScript">
+var BasicName = "${def:context}/js/csflow/";
+var DefContext = "${def:context}";
+function getBasicName(){
+	return BasicName;
+}
+function getDefContext(){
+	return DefContext;
+}
+</SCRIPT>
+<script language=JavaScript src="${def:context}/js/csflow/inc/contextMenu/context.js"></script>
+<script language=JavaScript src="${def:context}/js/csflow/inc/webflow.js"></script>
+<script language=JavaScript src="${def:context}/js/csflow/inc/function.js"></script>
+<script language=JavaScript src="${def:context}/js/csflow/inc/movestep.js"></script>
+<script language=JavaScript src="${def:context}/action/script"></script>
+
+<SCRIPT LANGUAGE="JavaScript">
+
+function loadJobNode(){
+	var job_id = document.getElementById("job_id").value;
+	return ajaxCall(httpMethod="GET", 
+                        uri="${def:actionroot}/webflow/loadData" + "?job_id=" + job_id, 
+                        divResponse=null, 
+                        divProgress=null, 
+                        formName=null, 
+                        afterResponseFn=null, 
+                        onErrorFn=null);
+}
+
+</SCRIPT>
+<STYLE>
+v\:* { Behavior: url(#default#VML) }
+</STYLE>
+</HEAD>
+
+<BODY onload="loadJobNode()" oncontextmenu="cleancontextMenu();return false;" scroll="auto">
+<br/>
+<input type="hidden" name="job_id" id="job_id" value="${fld:job_id}">
+<input type="hidden" name="subject_id" id="subject_id" value="${fld:subject_id}">
+<INPUT TYPE="hidden" name="FlowXML" id="FlowXML" onpropertychange='if(AUTODRAW) redrawVML();'>
+<TABLE border=0>
+<caption>${fld:job_name}-节点流程图</caption>
+<TR>
+	<td width="20"></td>
+	<TD width="800" height="500">
+		<TABLE cellspacing="0" cellpadding="0" class="panel_style">
+			<TR>
+				<TD colspan=2 width="800" height="500" onclick="cleancontextMenu();return false;" oncontextmenu='flowContextMenu();return false;' valign=top align=left>
+					<v:group ID="FlowVML"  style="left:30;top:50;width:800px;height:500px;position:absolute;" coordsize="2000,2000">
+					</v:group>
+				</TD>
+			</TR>			
+		</TABLE>
+	</TD>
+</TR>
+</TABLE>
+</BODY>
+</HTML>

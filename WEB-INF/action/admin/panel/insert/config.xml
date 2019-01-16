@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		Insertar valores de un formulario en una tabla
+	</summary>
+
+	<log>false</log>
+
+	<audit>
+		<recordset>query.sql</recordset>
+		<cols>	
+			<colname>orden</colname>
+			<colname>icon_path</colname>
+			<colname>service_id</colname>
+		</cols>
+		<table>s_panel</table>
+		<oper>新增</oper>
+		<area>面板</area>
+		<pkey>panel_id</pkey>
+	</audit>
+
+	<transaction>
+		<classname>com.ccms.dinamica.domain.admin.AfterTransaction</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+	
+	<query>insert.sql</query>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript;charset=UTF-8</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

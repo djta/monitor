@@ -1,0 +1,475 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script language="JavaScript" type="text/javascript" src="${def:context}/action/pub/dtree"></script>
+<title>业务信息</title>
+</head>
+<body>
+<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+		 <div class="modal-dialog modal-lg">
+		 	<div class="modal-content">
+		 		 <div class="modal-header">
+		 		 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		 		 	<h4 class="modal-title" id="formTitle">修改表</h4>
+		 		 </div>
+		 		 <div class="modal-body">
+		 		 	<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+		 		 		<input type="hidden" id="tuid" name="tuid" value="" />
+		 		 		<input name="subject_id" type="hidden" value="" preserve="true" />
+						<input name="table_type" type="hidden" value="" preserve="true" />
+		 		 		<div class="row clearfix">
+		 		 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+		 		 				<div class="form-group">
+			 		 				<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label  required">业务名</label>
+			 		 				<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+			 		 					<input name="table_alias" type="text" size="35" value="" class="form-control" id="table_alias" maxlength="128" />
+			 		 				</div>
+			 		 			</div>
+			 		 			<div class="form-group">
+			 		 				<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label required">表名</label>
+			 		 				<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+			 		 					<input name="table_name" class="form-control" type="text" size="35" value="" id="table_name" maxlength="32" />
+			 		 				</div>
+			 		 			</div>
+			 		 			<div class="form-group">
+			 		 				<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label  ">主键生成前缀</label>
+			 		 				<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+			 		 					<input name="bpk_field_prefix"  value="" type="text" class="form-control" size="30" maxlength="30"/>
+			 		 				</div>
+			 		 			</div>
+			 		 			<div class="form-group">
+			 		 				<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label  ">主键生成序列</label>
+			 		 				<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+			 		 					<input name="bpk_field_seq"  value="" type="text" class="form-control" size="30" maxlength="30"/>
+			 		 				</div>
+			 		 			</div>
+			 		 			<div class="form-group">
+			 		 				<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label ">备注</label>
+			 		 				<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+			 		 					<textarea type="text" name="remark"  class="form-control" rows="3" maxlength="200"></textarea>
+			 		 				</div>
+			 		 			</div>
+		 		 			</div>
+		 		 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+		 		 				<div class="form-group">
+			 		 				<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label required">Schema名称</label>
+			 		 				<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+			 		 					<input id="schema_name" name="schema_name" class="form-control" value="" type="text" size="30" maxlength="32"/>
+										<input id="fk_schema_hidden" name="fk_schema_hidden" type="hidden" value=""/>
+			 		 				</div>
+			 		 				<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+			 		 					<img src="${def:context}/images/search.gif" class="tool" id="pickOpenNotCenter" title="查询"/>
+										<img src="${def:context}/images/clear.gif" id="pickClear" class="tool2" title="清除选择的内容" />
+			 		 				</div>
+			 		 			</div>
+			 		 			<div class="form-group">
+			 		 				<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label required">表代码</label>
+			 		 				<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+			 		 					<input id="table_code" name="table_code" class="form-control" value="" type="text" size="30" maxlength="128"/>
+										<input id="table_code_hidden" name="table_code_hidden" type="hidden" value=""/>
+			 		 				</div>
+			 		 				<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+			 		 					<img src="${def:context}/images/search.gif" class="tool"
+											id="pickOpenNotCenter1"
+											title="查询"/>
+										<img src="${def:context}/images/clear.gif"
+											id="pickClear1" class="tool2"
+											title="清除选择的内容" />
+			 		 				</div>
+			 		 			</div>
+			 		 			<div class="form-group">
+			 		 				<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label ">业务主键字段</label>
+			 		 				<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+			 		 					<input id="bpk_field" name="bpk_field"  value="" type="text" size="30" readonly value="" class="form-control"  class="readonly"/>
+										<input id="bpk_field_hidden" name="bpk_field_hidden" type="hidden" value=""/>
+			 		 				</div>
+			 		 				<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+			 		 					<img src="${def:context}/images/search.gif" class="tool"
+											id="pickOpenNotCenter2"
+											title="查询"/>
+										<img src="${def:context}/images/clear.gif"
+											id="pickClear2" class="tool2"
+											title="清除选择的内容" />
+			 		 				</div>
+			 		 			</div>
+			 		 			<div class="form-group">
+			 		 				<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label  ">业务主键类型</label>
+			 		 				<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+			 		 					<input id="bpk_field_type" name="bpk_field_type"  size="20" type="hidden" value=""/>
+										<input type="text" id="type_alias" name="type_alias" size="30"  readonly class="form-control"/>
+			 		 				</div>
+			 		 				<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+			 		 					<img src="${def:context}/images/search.gif" class="tool"
+												id="pickOpenNotCenter3"
+												title="查询字段类型"/>
+										<img src="${def:context}/images/clear.gif"
+											id="pickClear3" class="tool2"
+											title="清除选择的内容" />
+			 		 				</div>
+			 		 			</div>
+			 		 			<div class="form-group">
+			 		 				<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label  ">删除标识字段</label>
+			 		 				<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+			 		 					<input id="delete_field" name="delete_field"  value="" type="text" size="30" readonly value="" class="form-control"  class="readonly"/>
+										<input id="delete_field_hidden" name="delete_field_hidden" type="hidden" value=""/>
+										(不指定删除标识字段,业务表数据将物理删除)
+			 		 				</div>
+			 		 				<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+			 		 					<img src="${def:context}/images/search.gif" class="tool"
+											id="pickOpenNotCenter4"
+											title="查询"/>
+										<img src="${def:context}/images/clear.gif"
+											id="pickClear4" class="tool2"
+											title="清除选择的内容" />
+			 		 				</div>
+			 		 			</div>
+		 		 			</div>
+		 		 		</div>
+		 		 	</form>
+		 		</div>
+		 		<div class="modal-footer">
+				    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+					  <button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+					  <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+				    </div>
+			     </div>
+		 </div>
+		 </div>
+</div>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">业务配置<span id="typeTitleSpan"></span></h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2">
+			${inc:/action/ccms/config_type?search_subject_id=${fld:subject_id}}
+		</div>
+		<div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+			<form class="form-horizontal" role="form" method="post" id="searchForm" name="searchForm">
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+				<input type="hidden" id="table_type" name="table_type" value=""  preserve="true"/>
+				<input name="subject_id1" type="hidden" value="${fld:subject_id}" preserve="true" />
+				<div class="form-group">
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+						<input name="table_alias" id="fdesde" class="form-control" type="text" size="35" value="" placeholder="业务名称(例如:客户表)"/>
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+						<input name="table_name" id="fdesde1" class="form-control" type="text" size="35" value="" placeholder="物理表名(例如:T_ABC)"/>
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<input type="submit" class="btn btn-primary btn-md" value="查询" id="search_btn"/>
+						<input type="button" class="btn btn-primary btn-md reset_btn" id="search_reset_btn" value="重置" />
+						<input type="button" class="btn btn-primary btn-md" value="
+							新增表" id="addnew_btn"/>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>
+							操作
+						</th>
+						<th>
+							字段
+						</th>
+						<th>
+							 生成
+						</th>
+						<th>
+							复制
+						</th>
+						<th>
+							ID
+						</th>
+						<th>
+							业务名称
+						</th>
+						<th>
+							表代码
+						</th>
+						<th>
+							表名
+						</th>
+						<th>
+							备注
+						</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display:none ">
+					<tr>
+						<td align="center">
+							<button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">修改</button>
+							<button class="btn btn-primary btn-md delete_btn" type="button" code="#tuid#">删除</button>
+						</td>
+						<td align="center">
+							<button class="btn btn-primary btn-md showField1" type="button" title="字段信息" code="#tuid#">字段信息</button>
+						</td>
+						<td align="center">
+							<button class="btn btn-primary btn-md createField" type="button" title="生成字段" code="#tuid#" code1="#schema_name#" code2="#table_code#">生成字段</button>
+						</td>
+						<td align="center">
+							<button class="btn btn-primary btn-md CopyTable" type="button" title="复制业务" code="#tuid#">复制业务</button>
+						</td>
+						<td align="left">
+							#tuid#
+						</td>
+						<td align="left">
+							#table_alias#
+						</td>	
+				
+						<td align="left">
+							#table_code#
+						</td>	
+				
+						<td align="left">
+							#table_name#
+						</td>	
+				
+						<td align="left">
+							#remark#
+						</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+</div>
+</div>
+
+<SCRIPT LANGUAGE="JavaScript">
+function TableClass(){
+	this.searchObj=null;
+	this.obj=null;
+	this.init=function(){
+		document.formEditor.subject_id.value = "${fld:subject_id}";
+		document.formEditor.table_type.value = defaultTypeVal;
+		document.getElementById("typeTitleSpan").innerHTML = "&nbsp;&nbsp;-&nbsp;&nbsp;"+defaultTypeName;
+		this.initData();
+		this.initEvent();
+	},
+	this.initData=function(){
+		var obthis=this;
+		var obj = $Crud({
+			formId:"formEditor",
+			button:"save_btn",
+			insertBack:function(){
+				obthis.searchObj.searchData();
+			},
+			updateBack:function(){
+				obthis.searchObj.searchData();
+			},
+			deleteBack:function(){
+				obthis.searchObj.searchData();
+			},
+			 addNewBack:function(){
+				$("#formTitle").html("新增业务信息");
+			}, 
+			editBack:function(){
+				$("#formTitle").html("修改业务信息");
+			},
+			validate:function(){
+				var flag=$("#formEditor").validate({
+					rules: {
+						table_alias: {
+							required: true,
+							rangelength: [1,50]
+						},
+						table_name: {
+							required: true,
+							rangelength: [1,50]
+						},
+						schema_name: {
+							required: true,
+							rangelength: [1,50]
+						},
+						table_code: {
+							required: true,
+						}
+					},
+					messages: {
+						table_alias: {
+							required: "请输入业务名",
+							rangelength: [1,50]
+						},
+						table_name: {
+							required: "请输入表名",
+							rangelength: [1,50]
+						},
+						schema_name: {
+							required: "请选择Schema名称",
+							rangelength: [1,50]
+						},
+						table_code: {
+							required: "请选择表代码",
+						}
+					}
+				});
+				return flag;
+			},
+			check:function(){
+				if(document.formEditor.bpk_field_type.value == "integer" && document.formEditor.bpk_field_prefix.value != "" ){
+					$Dialog().alert("主键类型为整型时，主键生成前缀必须为空!");
+					return false;
+				}
+				return true;
+			}
+		}).init();
+
+		obthis.searchObj=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+			/*  编辑按钮*/
+			 $(".edit_btn").unbind().on("click", function(){
+					if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+						obj.edit({id:$(this).attr("code")});
+					}
+				});
+			/*  字段信息 */
+			 $(".showField1").unbind().on("click", function(){
+					var obthis = $(this);
+					if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+						var url="${def:actionroot}/field/crud?table_id="+obthis.attr("code");
+						gotoPage(url);
+					}
+				});
+			/* 复制业务 */
+			 $(".CopyTable").unbind().on("click", function(){
+					var obthis = $(this);
+					if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+						var url="${def:actionroot}/copy/form?table_id="+obthis.attr("code");
+						gotoPage(url);
+					}
+				});
+			/* 生成字段 */
+			 $(".createField").unbind().on("click", function(){
+					var table_id = $(this).attr("code");
+					var schema = $(this).attr("code1");
+					var table = $(this).attr("code2");
+					if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+						var url="${def:context}/action/ccms/module/table/genfld/crud?table_id="+table_id+"&schema="+schema+"&table="+table;
+						ccms.dialog.open({url:url,id:"generateField"});
+					}
+				});
+			/* 删除 */
+			 $(".delete_btn").unbind().on("click",function(){
+					var obthis = $(this);
+					$Dialog().confirm("确定要删除吗？",function(){
+						if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+							var url = "/action/ccms/module/table/delete?id="+obthis.attr("code");
+							ajaxCall(url,{
+									method: "post",
+									progress: true,
+									dataType: "script",
+									success: function() {
+										$Dialog().notice("删除成功！",1000, function(){
+		 									gotoBack();
+		 								});
+									}
+							});
+						}
+					});
+				});
+		}}).initSearchBtn().searchData(1);
+	},
+	this.initEvent=function(){
+		$(".reset_btn").unbind().on("click", function() {
+			$('#fdesde').val("");
+		});
+		$(".reset_btn").unbind().on("click", function() {
+			$('#fdesde1').val("");
+		});
+		//查询条件清空图标Schema名
+		$("#pickClear").unbind().on("click",function(){
+			document.formEditor.fk_schema_hidden.value='';
+			document.formEditor.schema_name.value='';
+		});
+		//查询条件搜索图标Schema名
+		$("#pickOpenNotCenter").unbind().on("click",function(){
+			var subject_id = document.formEditor.subject_id.value;
+			var url = "${def:context}/action/ccms/pub/pick/db_schema?id=schema_name&pickId=pickOpen&name=fk_schema_hidden&subject_id="+subject_id;
+			ccms.dialog.open({url:url,id:"pickOpen",width:500,height:300});
+		});
+		//查询条件清空图标表代码
+		$("#pickClear1").unbind().on("click",function(){
+			document.formEditor.table_code.value='';
+			document.formEditor.table_code_hidden.value='';
+		});
+		//查询条件搜索图标表代码
+		$("#pickOpenNotCenter1").unbind().on("click",function(){
+			var schema = document.formEditor.fk_schema_hidden.value;
+			if (schema=="" || schema==null){
+				$Dialog().notice("请选择Schema名称!",1500);
+				return;
+			}
+			var url = "${def:context}/action/ccms/pub/pick/db_table?pickId=pickOpen&id=table_code_hidden&name=table_code&schema="+schema;
+			ccms.dialog.open({url:url,id:"pickOpen",width:500,height:300});
+		});
+		//查询条件清空图标业务主键字段
+		$("#pickClear2").unbind().on("click",function(){
+			document.formEditor.bpk_field.value='';
+			document.formEditor.bpk_field_hidden.value='';
+		});
+		//查询条件搜索图标业务主键字段
+		$("#pickOpenNotCenter2").unbind().on("click",function(){
+			var schema = document.formEditor.schema_name.value;
+			var table = document.formEditor.table_code.value;
+			if (schema=="" || schema==null||table=="" || table==null){
+				$Dialog().notice("请选择代码表!",1500);
+				return;
+			}
+			if (schema!=""&&table!=""){
+				var url = "${def:context}/action/ccms/pub/pick/db_column5?pickId=pickOpen&id=bpk_field_hidden&name=bpk_field&schema="+schema+'&table='+table;
+				ccms.dialog.open({url:url,id:"pickOpen",width:500,height:300});
+			}
+		});
+		//查询条件清空图标业务主键类型
+		$("#pickClear3").unbind().on("click",function(){
+			document.formEditor.type_alias.value='';
+			document.formEditor.bpk_field_type.value='';
+		});
+		//查询条件搜索图标业务主键类型
+		$("#pickOpenNotCenter3").unbind().on("click",function(){
+			var url = "${def:context}/action/ccms/pub/pick/pk_fieldtype?pickId=pickOpen&id=bpk_field_type&name=type_alias";
+			ccms.dialog.open({url:url,id:"pickOpen",width:500,height:300});
+		});
+		//查询条件清空图标删除标识字段
+		$("#pickClear4").unbind().on("click",function(){
+			document.formEditor.delete_field.value='';
+			document.formEditor.delete_field_hidden.value='';
+		});
+		//查询条件搜索图标删除标识字段
+		$("#pickOpenNotCenter4").unbind().on("click",function(){
+			var schema = document.formEditor.schema_name.value;
+			var table = document.formEditor.table_code.value;
+			if (schema=="" || schema==null||table=="" || table==null){
+				$Dialog().notice("请选择代码表!",1500);
+				return;
+			}
+			if (schema!=""&&table!=""){
+				var url = "${def:context}/action/ccms/pub/pick/db_column?pickId=pickOpen&id=delete_field_hidden&name=delete_field&schema="+schema+'&table='+table;
+				ccms.dialog.open({url:url,id:"pickOpen",width:500,height:300});
+			}
+		});
+	}
+}
+//字段校验
+var tableClass=null;
+$(document).ready(function() {
+	 tableClass=new TableClass();	
+	 tableClass.init();
+});
+function typeOperate(t,n){
+	document.searchForm.table_type.value=t;
+	document.formEditor.table_type.value = t;
+	document.getElementById("typeTitleSpan").innerHTML = "&nbsp;&nbsp;-&nbsp;&nbsp;"+n;
+	tableClass.searchObj.searchData(1);
+}
+</SCRIPT>
+</body>
+</html>

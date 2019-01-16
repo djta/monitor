@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="fdate" type="date" required="false" label="开始日期" />
+	<parameter id="tdate" type="date" required="false" label="结束日期" />
+	<parameter id="entry_id" type="integer" required="true" label="entry_id" />
+
+	<custom-validator
+		classname="dinamica.validators.DateRangeValidator"
+		on-error-label="[起始日期] 不能晚于 [结束日期]."
+		date1="fdate" date2="tdate" />
+</validator>

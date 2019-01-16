@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<parameter id="item_id" type="integer" required="true" label="item_id" />
+	<parameter id="list_name" type="varchar" required="false" label="list_name" />
+	
+	<custom-validator classname="dinamica.validators.SQLPatternTransformer" 
+	parameter="list_name" 
+	rule="contains" />
+</validator>

@@ -1,0 +1,1 @@
+$("#preview_sql").html("${fld:preview_sql@js}")

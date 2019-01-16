@@ -1,0 +1,59 @@
+.yyc_basic-dialog{/*background: rgba(47,49,52,90);padding: 0;padding-bottom: 20px;color:#FFF;*/}
+.yyc_modal-body nav li{margin-top: 20px;}
+.yyc_modal-body nav li>label{width:132px;}
+/*.yyc_modal-body nav li input{background-color: #282E34;}*/
+.yyc_modal-body nav li .normal-select{margin-left:20px!important;}
+
+
+/*弹窗*/
+.pup-more{position: fixed;top:0;left:0;right:0;bottom: 0;z-index: 9999;background: rgba(0,0,0,0.5)}
+.pup-more-1{background: #2A3038;z-index:1000;position: absolute;left:50%;top:20%;/*top:50%;margin-top: -105px;*/margin-left: -180px;}
+.pup-more-2{background: #2A3038;z-index:1000;position: absolute;left:50%;top:20%;/*top:50%;margin-top: -105px;*/margin-left: -180px;}
+
+/*客户资源列表*/
+.yyc_tab-cout-nav-t li.dateTime{width:100px;padding: 0 5px!important;}
+.yyc_tab-cout-nav-t li.inputName{width:110px;padding: 0 0px!important;}
+.yyc_tab-cout-nav-t li.inputName input{width:110px;margin-left: 5px;}
+.yyc_tab-cout-nav-t .yyc_select{width:90px!important;padding: 0;}
+.yyc_tab-cout-nav-t .yyc_select .btn{padding: 0;}
+.yyc_tab-cout-nav-t .yyc_select .filter-option{width:76px!important;}
+.yyc_tab-cout-nav-t .yyc_select .btn .caret{right:6px;}
+
+.yyc_tab-cout-nav-t .yyc_select2{width:60px!important;padding: 0;}
+.yyc_tab-cout-nav-t .yyc_select2 .btn{padding: 0;}
+.yyc_tab-cout-nav-t .yyc_select2 .filter-option{width:46px!important;}
+.yyc_tab-cout-nav-t .yyc_select2 .btn .caret{right:6px;}
+
+.yyc_tab-cout-nav-t .yyc_select3{width:110px!important;padding: 0;}
+.yyc_tab-cout-nav-t .yyc_select3 .btn{padding: 0;}
+.yyc_tab-cout-nav-t .yyc_select3 .filter-option{width:96px!important;}
+.yyc_tab-cout-nav-t .yyc_select3 .btn .caret{right:6px;}
+
+
+/*客户资源分配与跟进*/
+.yyc_r-tab-cout-3-t-t nav li{padding:0 4px;}
+.yyc_r-tab-cout-3-t-t li.inputName{width:110px;padding: 0 5px!important;}
+.yyc_r-tab-cout-3-t-t .yyc_select1{width:90px!important;padding: 0;}
+.yyc_r-tab-cout-3-t-t .yyc_select1 .btn{padding: 0;}
+.yyc_r-tab-cout-3-t-t .yyc_select1 .filter-option{width:76px!important;}
+.yyc_r-tab-cout-3-t-t .yyc_select1 .btn .caret{right:6px;}
+
+
+/*客户--会员管理*/
+.yyc_tab-cout-nav-t li.dateTime{width:100px;padding: 0 5px!important;}
+.yyc_tab-cout-nav-t .yyc_select4{width:100px!important;padding: 0;}
+.yyc_tab-cout-nav-t .yyc_select4 .btn{padding: 0;}
+.yyc_tab-cout-nav-t .yyc_select4 .filter-option{width:86px!important;}
+.yyc_tab-cout-nav-t .yyc_select4 .btn .caret{right:6px;}
+
+
+/*客户--私教分配与跟进*/
+.yyc_tab-cout-nav-t li.w-200{width:130px;padding: 0 5px!important;}
+
+
+/*客户--会员分配与跟进*/
+.yyc_tab-cout-nav-t .yyc_select5{width:70px!important;padding: 0;}
+.yyc_tab-cout-nav-t .yyc_select5 .btn{padding: 0;}
+.yyc_tab-cout-nav-t .yyc_select5 .filter-option{width:56px!important;}
+.yyc_tab-cout-nav-t .yyc_select5 .btn .caret{right:6px;}
+.yyc_b-i-main nav li>label{width:78px;}

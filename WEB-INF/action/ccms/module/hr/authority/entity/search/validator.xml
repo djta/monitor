@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	
+	<parameter id="entity_name" type="varchar" required="false" label="entity_name" />
+	<parameter id="authority_id_filter" type="integer" required="false" label="authority_id_filter" />
+	
+	<custom-validator
+		classname="dinamica.validators.SQLPatternTransformer"
+		parameter="entity_name"
+		rule="contains" />
+</validator>
+

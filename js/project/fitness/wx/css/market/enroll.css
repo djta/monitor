@@ -1,0 +1,62 @@
+.go-back{
+	width:100%;
+	height:3rem;
+	background:white;
+}
+.go-back img{
+	margin-left:5%;
+	height:1.4rem;
+	margin-top:0.8rem;
+}
+.bg{
+	background-color:#F5F5F5;
+}
+.form-info{
+	margin-top: 0.6rem;
+	border-top:1px solid #E5E5E5;
+	border-bottom:1px solid #E5E5E5;
+	background-color:white;
+}
+.form-info .form-control{
+	margin:0 5%;
+	width:90%;
+	border-bottom:1px solid #E5E5E5;
+}
+.form-info .form-control.no-border{
+	border:none;
+}
+.form-info .form-control label{
+	display: inline-block;
+	width:30%;
+	font-size:1.7rem;
+	line-height:4.4rem;
+	height:4.4rem;
+	color:black;
+}
+.form-info .form-control .form-input{
+	display: inline-block;
+	width:70%;
+	height:4.4rem;
+	padding:0;
+	font-size:1.7rem;
+	line-height:4.4rem;
+	color:black;
+}
+.form-info .form-control textarea{
+	border:none;
+	font-size:1.7rem;
+	line-height:2.4rem;
+	width:100%;
+	height:7rem;
+	color:black;
+	padding:1rem 0;
+}
+
+.upload{
+	display:inline-block;
+	width:5.8rem;
+	height:5.8rem;
+	margin:1rem 0;
+	background:url(../../image/cx/btn-upload.png) no-repeat;
+	background-size:100% 100%;
+}

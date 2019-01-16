@@ -1,0 +1,13 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"tuid":"${fld:tuid}"
+		,"document_id":"${fld:document_id}"
+		,"params_code":"${fld:params_code@js}"
+		,"pfield_name":"${fld:params_url@js}"
+		,"params_value":"${fld:params_value@js}"
+		,"remark":"${fld:remark@js}"
+	},
+	</rows>
+	{}
+]}

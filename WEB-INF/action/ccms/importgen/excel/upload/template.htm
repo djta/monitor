@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ImportExcel</title> ${inc:/action/ccms/pub}
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title">
+			<h2 class="panel-title">导入信息</h2>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal" method="post" id="formEditor"
+				name="formEditor">
+				<input type="hidden" id="imp_id" name="imp_id" value="${fld:imp_id}"
+					preserve="true"> <input type="hidden" id="file_name"
+					name="file_name" value="${fld:file.filename}" preserve="true">
+				<div class="panel-body col_main_body">
+					<div class="form-group">
+						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+							<label
+								class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">导入批次:</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<input type="text" class="form-control" id="import_batch"
+									name="import_batch" value="" maxlength="50" />
+							</div>
+						</div>
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+							<div
+								class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+								<button type="button" id="submitBtn"
+									onclick="myClass.importData()" class="btn btn-primary btn-md">导&nbsp;入</button>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+							<label
+								class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">备注:</label>
+							<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+								<textarea class="form-control" type="text" name="remark"
+									id="remark" cols="50" rows="2" maxlength="256"></textarea>
+							</div>
+						</div>
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+							<div
+								class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+								<button type="button" class="btn btn-primary btn-md"
+									onclick="myClass.AgainImp()">重新导入</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post"
+				id="searchForm" style="display: none">
+				<input name="sort" type="hidden" value="created" preserve="true" />
+				<input name="order" type="hidden" value="desc" preserve="true" /> <input
+					name="pageNo" type="hidden" value="" preserve="true" /> <input
+					name="totalPages" type="hidden" value="" preserve="true" />
+				<div class="form-group">
+					<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3"></div>
+
+					<div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+						<button class="btn btn-primary btn-md" type="button"
+							id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button"
+							id="search_reset_btn">清空</button>
+
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<trows>
+						<th>${fld:col_name}</th>
+						</trows>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<trows2>
+						<td>#${fld:col_fld2}#</td>
+						</trows2>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination" data-target="datagrid" id="dddd">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="formTitle">ImportExcel</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<input type="hidden" name="actionroot" id="actionroot"
+		value="${def:actionroot}">
+</body>
+<script>
+var myClass=new myClass();;
+
+function myClass(){
+	this.importData=function(){
+				$Dialog().confirm("确定导入数据？", function(){
+					var import_batch=document.formEditor.import_batch.value;
+					if(""==import_batch){
+						$Dialog().alert("请输入批次号");
+						return false;
+					}
+					document.formEditor.submitBtn.disabled = true;
+					var url = "${def:actionroot}/import";
+					ajaxCall(url,{
+						method: "POST",
+						form:"formEditor",	
+						progress: true,
+						dataType: "script",
+						success: function(){
+							$Dialog().confirm("导入成功,点击确定关闭窗口",function(){
+								//parent.$("#_dlguploadExcelLog_id").modal("hide");//关闭此弹出窗口
+								ccms.dialog.close();
+							});
+							//document.location.href = "${def:context}${def:actionroot}/form?imp_id=${fld:imp_id}";
+							//document.location.href = "${def:context}/action/subject/import/import/log/import/crud?imp_id=${fld:imp_id}";
+						}
+					});
+				});
+		};
+	this.AgainImp=function(){
+		document.location.href = "${def:context}${def:actionroot}/form?imp_id=${fld:imp_id}";
+	}
+}
+
+$(document).ready(function() {
+	$Search({datagrid:"datagrid",formId:"searchForm",button:"search_btn",resetButton:"search_reset_btn",actionroot:"/action/ccms/importgen/excel",
+		success:function(){
+	}}).initSearchBtn().searchData(1);
+});
+
+</script>
+</html>

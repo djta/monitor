@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		删除菜单
+	</summary>
+	
+	<log>false</log>
+	
+	<audit>
+		<recordset>query.sql</recordset>
+		<cols>	
+			<colname>title</colname>		
+		</cols>
+		<table>s_menu</table>
+		<oper>删除</oper>
+		<area>菜单</area>
+		<pkey>id</pkey>
+	</audit>
+
+	<transaction>
+		<classname>dinamica.audit.AuditableTransaction</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<query>delete-menu_role.sql</query>
+	<query>delete.sql</query>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

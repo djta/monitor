@@ -1,0 +1,532 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>矩阵题目信息</title>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11" style="margin-top:-8px;">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#tab1" data-toggle="tab">矩阵题目定义</a></li>
+					<li><a href="#tab2" data-toggle="tab">矩阵题目选择项定义</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- 矩阵题目定义 -->
+		<div class="panel-body col_main_body">
+			<div class="tab-content">
+				<div class="tab-pane active" id="tab1">
+					<form class="form-horizontal" role="form" method="post"
+						id="searchForm1" name="searchForm1">
+						<input name="sort" type="hidden" value="tuid" preserve="true" />
+						<input name="order" type="hidden" value="desc" preserve="true" />
+						<input name="pageNo" type="hidden" value="" preserve="true" /> <input
+							name="totalPages" type="hidden" value="" preserve="true" /> <input
+							name="item_id1" type="hidden" value="${fld:item_id}"
+							preserve="true" />
+						<div class="form-group">
+							<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+								<input class="form-control" id="item_name" name="item_name"
+									type="text" size="35" value="" maxlength="128"
+									placeholder="请输入矩阵题目名称" />
+							</div>
+							<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+								<button class="btn btn-primary btn-md" type="button"
+									id="search_btn1">查询</button>
+								<button class="btn btn-primary btn-md" type="button"
+									id="search_reset_btn1">清空</button>
+								<button class="btn btn-primary btn-md " type="button"
+									id="addnew_btn1">新增</button>
+							</div>
+						</div>
+					</form>
+					<table class="table table-condensed">
+						<thead>
+							<tr>
+								<th>操作</th>
+								<th class="sortable" code="item_name1">题目名称</th>
+								<th class="sortable" code="item_name">矩阵题目名称</th>
+								<th class="sortable" code="item_code">矩阵题目代码</th>
+								<th class="sortable" code="show_order">显示顺序</th>
+								<th class="sortable" code="show_type">显示类型</th>
+							</tr>
+						</thead>
+						<tbody id="datagrid1Template" style="display: none">
+							<tr>
+								<td class="text-center">
+									<button class="btn btn-primary btn-md edit_btn1" type="button"
+										code="#tuid#">修改</button>
+									<button class="btn btn-primary btn-md delete_btn1"
+										type="button" code="#tuid#">删除</button>
+								</td>
+								<td class="text-center">#item_name1#</td>
+								<td class="text-center">#item_name#</td>
+								<td class="text-center">#item_code#</td>
+								<td class="text-center">#show_order#</td>
+								<td class="text-center">#show_type#</td>
+							</tr>
+						</tbody>
+						<tbody id="datagrid1">
+						</tbody>
+					</table>
+					<div class="pageDiv">
+						<ul class="pagination" data-target="datagrid1">
+						</ul>
+					</div>
+				</div>
+
+				<!-- 矩阵题目定义 修改新增 -->
+				<div class="modal fade" id="modalAddnew1" tabindex="-1"
+					role="dialog">
+					<div class="modal-dialog ">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title" id="formTitle1">修改记录</h4>
+							</div>
+							<div class="modal-body">
+								<form id="formEditor1" name="formEditor1"
+									class="form-horizontal" role="form" method="post">
+									<input type="hidden" id="tuid" name="tuid" value="" /> <input
+							name="item_id" type="hidden" value="${fld:item_id}" preserve="true" />
+									<div class="row clearfix">
+										<div class="form-group">
+											<label
+												class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">矩阵题目名称</label>
+											<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+												<input class="form-control" id="item_name" name="item_name"
+													type="text" size="35" value="" />
+											</div>
+										</div>
+										<div id="user_label" class="form-group">
+											<label
+												class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">题目代码</label>
+											<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+												<input class="form-control" id="item_code" name="item_code"
+													type="text" size="35" value="" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label
+												class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">选择项显示类型</label>
+											<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+												<input id="show_type" name="show_type" type="radio"
+													value="0">文本输入</input> <input name="show_type" type="radio"
+													value="1">多选一</input> <input name="show_type" type="radio"
+													value="2">复选</input>
+											</div>
+										</div>
+										<div class="form-group">
+											<label
+												class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1  required">显示顺序</label>
+											<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+												<input class="form-control" id="show_order"
+													name="show_order" type="text" size="10" value="" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label
+												class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">备注</label>
+											<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+												<textarea class="form-control" id="remark" type="text"
+													name="remark" cols="50" rows="2" maxlength="200"></textarea>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<div
+									class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+									<button type="button" id="save_btn1"
+										class="btn btn-primary btn-md">确&nbsp;定</button>
+									<button type="button" class="btn btn-primary btn-md"
+										data-dismiss="modal">取&nbsp;消</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<!-- 矩阵题目选择项定义 -->
+				<div class="tab-pane" id="tab2">
+					<form class="form-horizontal" role="form" method="post"
+						id="searchForm2" name="searchForm2">
+						<input name="sort" type="hidden" value="tuid" preserve="true" /> <input
+							name="order" type="hidden" value="desc" preserve="true" /> <input
+							name="pageNo" type="hidden" value="" preserve="true" /> <input
+							name="totalPages" type="hidden" value="" preserve="true" /> <input
+							name="item_id1" type="hidden" value="${fld:item_id}"
+							preserve="true" />
+						<div class="form-group">
+							<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+								<input name="list_name" type="text" size="35" value=""
+									placeholder="请输入选择项名称" class="form-control" />
+							</div>
+							<div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+								<button class="btn btn-primary btn-md" type="button"
+									id="search_btn2">查询</button>
+								<button class="btn btn-primary btn-md" type="button"
+									id="search_reset_btn2">清空</button>
+								<button class="btn btn-primary btn-md " type="button"
+									id="addnew_btn2">新增</button>
+							</div>
+						</div>
+					</form>
+					<table class="table table-condensed">
+						<thead>
+							<tr>
+								<th>操作</th>
+								<th class="sortable" code="item_name">题目名称</th>
+								<th class="sortable" code="list_name">选择项名称</th>
+								<th class="sortable" code="list_code">选择项代码</th>
+								<th class="sortable" code="list_score">选项分值</th>
+								<th class="sortable" code="show_type">显示类型</th>
+								<th class="sortable" code="is_unspeak">是否读出</th>
+								<th class="sortable" code="show_order">显示顺序</th>
+							</tr>
+						</thead>
+						<tbody id="datagrid2Template" style="display: none">
+							<tr>
+								<td align="center">
+									<button class="btn btn-primary btn-md edit_btn2" type="button"
+										code="#tuid#">修改</button>
+									<button class="btn btn-primary btn-md delete_btn2"
+										type="button" code="#tuid#">删除</button>
+								</td>
+								<td align="center">#item_name#</td>
+								<td align="center">#list_name#</td>
+								<td align="center">#list_code#</td>
+								<td align="center">#list_score#</td>
+								<td align="center">#show_type#</td>
+								<td align="center">#is_unspeak#</td>
+								<td align="center">#show_order#</td>
+							</tr>
+						</tbody>
+						<tbody id="datagrid2">
+						</tbody>
+					</table>
+					<div class="pageDiv">
+						<ul class="pagination" data-target="datagrid2">
+						</ul>
+					</div>
+				</div>
+
+				<!-- 矩阵题目定义 修改新增 -->
+				<div class="modal fade" id="modalAddnew2" tabindex="-1"
+					role="dialog">
+					<div class="modal-dialog ">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title" id="formTitle2">修改记录</h4>
+							</div>
+							<div class="modal-body">
+								<form id="formEditor2" name="formEditor2"
+									class="form-horizontal" role="form" method="post">
+									<input type="hidden" id="tuid" name="tuid" value="" /> <input
+										name="item_id" type="hidden" value="${fld:item_id}" preserve="true" />
+									<div class="row clearfix">
+										<div class="form-group">
+											<label
+												class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">选择项名称</label>
+											<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+												<input class="form-control" id="list_name" name="list_name"
+													type="text" size="35" value="" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label
+												class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">选择项代码</label>
+											<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+												<input class="form-control" id="list_code" name="list_code"
+													type="text" size="35" value="" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label
+												class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">选项分值</label>
+											<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+												<input class="form-control" id="list_score"
+													name="list_score" type="text" size="35" value="" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label
+												class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1  required">显示类型</label>
+											<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+												<input id="show_type" name="show_type" type="radio"
+													value="0">标签</input> <input name="show_type" type="radio"
+													value="1">文本</input> <input name="show_type" type="radio"
+													value="2">标签加文本</input>
+											</div>
+										</div>
+										<div class="form-group">
+											<label
+												class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">显示顺序</label>
+											<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+												<input class="form-control" id="show_order"
+													name="show_order" type="text" size="10" value="" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label
+												class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">是否读出</label>
+											<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+												<input id="is_unspeak" name="is_unspeak" type="radio"
+													value="1">是</input> <input name="is_unspeak" type="radio"
+													value="0">否</input>
+											</div>
+										</div>
+										<div class="form-group">
+											<label
+												class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">备注</label>
+											<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+												<textarea class="form-control" type="text" id="remark"
+													name="remark" cols="50" rows="2" maxlength="200"></textarea>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<div
+									class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+									<button type="button" id="save_btn2"
+										class="btn btn-primary btn-md">确&nbsp;定</button>
+									<button type="button" class="btn btn-primary btn-md"
+										data-dismiss="modal">取&nbsp;消</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}"/>
+
+<SCRIPT LANGUAGE="JavaScript">
+function ItemClass(){
+	this.obj=null;
+	this.search=null;
+	this.init=function(){
+		this.page1();
+		this.page2();
+	}
+	this.page1=function(){
+			var obthis= this;
+			obthis.obj = $Crud({
+				formId:"formEditor1",
+				button:"save_btn1",
+				actionroot:"/action/ccms/module/term/matrix/item",
+				modalId:"modalAddnew1",
+				insertBack:function(){
+					obthis.search.searchData();
+				},
+				updateBack:function(){
+					obthis.search.searchData();
+				},
+				deleteBack:function(){
+					obthis.search.searchData();
+				},
+				addNewBack:function(){
+					$("#formTitle1").html("新增信息");
+				}, 
+				editBack:function(){
+					$("#formTitle1").html("修改信息");
+				},
+				validate:function(){
+					var flag=$("#formEditor1").validate({
+						rules: {
+							item_name: {
+								required: true,
+								rangelength: [1,50]
+							},
+							item_code: {
+								required: true,
+								rangelength: [1,50]
+							},
+							show_type: {
+								required: true,
+								rangelength: [1,50]
+							},
+							show_order: {
+								required: true,
+								isNumber:true,
+								rangelength: [1,50]
+							}
+						},
+						messages: {
+							item_name: {
+								required: "值不能为空",
+								rangelength: "字符长度在1到50之间"
+							},
+							item_code: {
+								required: "值不能为空",
+								rangelength: "字符长度在1到50之间"
+							},
+							show_type: {
+								required: "值不能为空",
+								rangelength: "字符长度在1到50之间"
+							},
+							show_order: {
+								required: "值不能为空",
+								rangelength: "字符长度在1到50之间"
+							}
+						}
+					});
+					return flag;
+				}
+			}).init();	
+			obthis.search=$Search({datagrid:"datagrid1",formId:"searchForm1",button:"search_btn1",resetButton:"search_reset_btn1",actionroot:"/action/ccms/module/term/matrix/item",
+				success:function(){
+					$(".edit_btn1").unbind().on("click", function(){
+						if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+							obthis.obj.edit({id:$(this).attr("code")});
+						}
+					});
+					//删除按钮
+					$(".delete_btn1").unbind().on("click", function () {
+						var obth = $(this);
+						$Dialog().confirm("确定要删除吗？",function(){
+							if(obth.attr("code") != undefined && obth.attr("code") != ""){
+								var url = "/action/ccms/module/term/matrix/item/delete?id="+obth.attr("code");
+								ajaxCall(url,{
+									method: "post",
+									progress: true,
+									dataType: "script",
+									success: function() {
+										$Dialog().notice("删除成功！",1500,function(){
+											window.location.reload();
+										});
+									}
+								});
+							}
+						});
+					});
+					$("#addnew_btn1").unbind().on("click",function(){
+						document.formEditor1.tuid.value="";
+						clearForm("formEditor1");
+						$("#modalAddnew1").modal();
+						$("#formTitle1").html("新增信息");
+					});
+			}}).initSearchBtn().searchData(1);
+	};
+	this.page2=function(){
+		var obthis2= this;
+		obthis2.obj2 = $Crud({
+			formId:"formEditor2",
+			button:"save_btn2",
+			actionroot:"/action/ccms/module/term/matrix/list",
+			modalId:"modalAddnew2",
+			insertBack:function(){
+				obthis2.search.searchData();
+			},
+			updateBack:function(){
+				obthis2.search.searchData();
+			},
+			deleteBack:function(){
+				obthis2.search.searchData();
+			},
+			addNewBack:function(){
+				$("#formTitle2").html("新增信息");
+			}, 
+			editBack:function(){
+				$("#formTitle2").html("修改信息");
+			},
+			validate:function(){
+				var flag=$("#formEditor2").validate({
+					rules: {
+						list_name: {
+							required: true,
+							rangelength: [1,50]
+						},
+						list_code: {
+							required: true,
+							rangelength: [1,50]
+						},
+						show_type: {
+							required: true,
+							rangelength: [1,50]
+						},
+						is_unspeak: {
+							required: true
+						},
+						show_order: {
+							isNumber:true,
+							rangelength: [1,50]
+						}
+					},
+					messages: {
+						list_name: {
+							required: "值不能为空",
+							rangelength: "字符长度在1到50之间"
+						},
+						list_code: {
+							required: "值不能为空",
+							rangelength: "字符长度在1到50之间"
+						},
+						show_type: {
+							required: "值不能为空",
+							rangelength: "字符长度在1到50之间"
+						},
+						is_unspeak: {
+							required: "值不能为空"
+						}
+					}
+				});
+				return flag;
+			}
+		}).init();	
+		obthis2.search=$Search({datagrid:"datagrid2",formId:"searchForm2",button:"search_btn2",resetButton:"search_reset_btn2",actionroot:"/action/ccms/module/term/matrix/list",
+			success:function(){
+				$(".edit_btn2").unbind().on("click", function(){
+					if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+						obthis2.obj2.edit({id:$(this).attr("code")});
+					}
+				});
+				//删除按钮
+				$(".delete_btn2").unbind().on("click", function () {
+					var obth2 = $(this);
+					$Dialog().confirm("确定要删除吗？",function(){
+						if(obth2.attr("code") != undefined && obth2.attr("code") != ""){
+							var url = "/action/ccms/module/term/matrix/list/delete?id="+obth2.attr("code");
+							ajaxCall(url,{
+								method: "post",
+								progress: true,
+								dataType: "script",
+								success: function() {
+									$Dialog().notice("删除成功！",1500,function(){
+										window.location.reload();
+									});
+								}
+							});
+						}
+					});
+				});
+				$("#addnew_btn2").unbind().on("click",function(){
+					document.formEditor2.tuid.value="";
+					clearForm("formEditor2");
+					$("#modalAddnew2").modal();
+					$("#formTitle2").html("新增信息");
+				});
+		}}).initSearchBtn().searchData(1);
+	};
+}
+var itemClass=null;
+$(document).ready(function() {
+	itemClass=new ItemClass();
+	itemClass.init();
+});
+</SCRIPT>
+</body>
+</html>
+

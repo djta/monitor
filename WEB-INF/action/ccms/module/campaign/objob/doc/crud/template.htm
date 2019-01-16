@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html >
+<html >
+
+<head>
+
+<!--COMMON :include style and javascript code-->
+${inc:/action/ccms/pub}
+
+<title>文档配置</title>
+
+</head>
+
+<body >
+
+<!--addnew/edit form-->
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+  	  <div class="modal-dialog">
+   	    <div class="modal-content">
+   	      <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="formTitle">文档配置</h4>
+          </div>
+          <div class="modal-body">
+			<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+			  <input type="hidden" id="tuid" name="tuid" value="">
+			   <input name="job_id" type="hidden" value="${fld:job_id}" preserve="true">
+			   <div class="row clearfix">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						文档名称
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+				                 <div class="col-xs-8 col-sm-7 col-md-8 col-lg-8">
+									<input id="document_id" name="document_id" type="hidden" value="1">
+				                    <input type="text" id="document_name" name="document_name" size="30"  readonly  class="form-control"  value="测试">
+								</div>
+								<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+									<img src="${def:context}/images/search.gif" class="tool" id="pickproject" title="查询"/>
+									<img src="${def:context}/images/clear.gif" code="document" class="tool2" title="清除选择的内容" />
+								</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row clearfix">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						文档类型
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<select  id="form_type" name="form_type" class="form-control" >	
+									<option value="0">客户信息</option>							
+									<option value="1">快速新增</option>							
+									<option value="2">其他</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row clearfix">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">
+						显示顺序
+						</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<input type="text" id="show_order" class="form-control"  name="show_order" size="40" >
+						</div>
+					</div>
+				</div>
+			</form>
+		  </div>
+		  <div class="modal-footer">
+		    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+			  <button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+			  <!--<button type="button" id="reset_btn" class="btn btn-primary btn-md">重&nbsp;置</button>-->
+			  <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+			  <button type="button" id="btn-del" class="btn btn-primary btn-del" data-dismiss="modal">删&nbsp;除</button>
+		    </div>
+	      </div>
+	    </div>
+      </div>
+    </div>
+
+
+<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">文档配置</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm">
+						<input name="sort" type="hidden" value="model_id" preserve="true"/>
+						<input name="order" type="hidden" value="desc" preserve="true" /> 
+						<input name="pageNo" type="hidden" value="" preserve="true" /> 
+						<input name="totalPages" type="hidden" value="" preserve="true" />
+						<input name="job_id" type="hidden" value="${fld:job_id}" preserve="true">
+				<div class="form-group">
+                <div class="col-xs-8 col-sm-4 col-md-4 col-lg-4">
+                    <button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+                </div>
+            </div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>操作</th>
+						<th class="sortable" code="document_name">文档名称</th>
+						<th class="sortable" code="form_type">文档类型</th>
+						<th class="sortable" code="show_order">显示顺序</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td class="text-center">
+							<button class="btn btn-primary btn-md delete_btn" type="button" code="#tuid#">删除</button>
+						</td>
+						<td class="text-center">#document_name#</td>
+						<td class="text-center">#form_type#</td>
+						<td class="text-center">#show_order#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}">
+
+<script language="javascript">
+$(document).ready(function() {
+	var search=null;
+    var obj = $Crud({
+        formId:"formEditor",
+        button:"save_btn",
+        insertBack:function(){
+            search.searchData(1);
+        },
+        updateBack:function(){
+            search.searchData(1);
+        },
+        deleteBack:function(){
+            search.searchData(1);
+        },
+        addNewBack:function(){
+            $("#formTitle").html("文档配置");
+            $("#btn-del").hide();
+        },
+        editBack:function(){
+            $("#formTitle").html("修改文档配置");
+            $("#btn-del").show();
+        },
+        validate:function(){
+            var flag=$("#formEditor").validate({
+                rules: {
+                },
+                messages: {
+                }
+            });
+            return flag;
+        },
+        check:function(){
+            return true;
+        }
+    }).init();
+    search=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+        $(".delete_btn").unbind().on("click",function(){
+            var obthis = $(this);
+            $Dialog().confirm("确定要删除吗？",function(){
+            	 if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+                	obj.del({id : obthis.attr("code")});
+                }
+            });
+        });
+        $("#pickproject").unbind().on("click",function(){
+			var url ='${def:context}/action/ccms/pub/pick/document/crud?id=document_id&name=document_name&pickId=formEditor';
+			ccms.dialog.open({url:url,id:"dialogPic",width:600,height:500});
+		});
+        
+        $(".tool2").unbind().on("click",function(){
+        	var code = $(this).attr("code");
+        	if( undefined != code && "" != code ){
+        		$("#" + code + "_id").val("");
+        		$("#" + code + "_name").val("");
+        	}
+        });
+    }}).initSearchBtn().searchData(1);
+});
+</script>
+
+</body>
+
+</html>

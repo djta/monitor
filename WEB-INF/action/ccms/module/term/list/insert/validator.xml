@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	
+	<parameter id="item_id" type="integer" required="true" label="item_id" />
+    <parameter id="list_name" type="varchar" required="true" label="list_name" maxlen="128"/>
+    <parameter id="list_code" type="varchar" required="true" label="list_code" maxlen="12"/>
+	<parameter id="list_score" type="varchar" required="true" label="list_score" />
+	<parameter id="show_type" type="varchar" required="true" label="show_type" />
+	<parameter id="is_unspeak" type="varchar" required="true" label="is_unspeak" />
+	<parameter id="list_score_code" type="varchar" required="false" label="list_score_code" maxlen="64"/>
+	<parameter id="namespace" type="varchar" required="false" label="namespace" maxlen="32"/>
+	<parameter id="show_order" type="integer" required="true" label="选项顺序" />
+	<parameter id="remark" type="varchar" required="false" label="remark" maxlen="256"/>
+	<parameter id="namespace_op" type="varchar" required="false" label="namespace_op" />
+
+	<!--parameter id="list_code" type="varchar" required="true" label="list_code" 
+    	maxlen="12" regexp="^[a-zA-Z]+$"
+		regexp-error-label="最输入少1位最多12位,首位为字母，由数字、字母组成 "/-->
+		
+	<custom-validator 	
+		classname="dinamica.validators.DuplicatedKeyValidator" 
+		on-error-label="选择项代码已存在"
+		id="list_code" sql="nodup.sql"/>
+</validator>

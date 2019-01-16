@@ -1,0 +1,115 @@
+body {
+  width: 320px;
+}
+.gg-publish-hd {
+  width: 100%;
+  height: 37.5px;
+  margin-bottom: 4.3px;
+  padding: 10.24px 12.8px;
+  box-sizing: border-box;
+  background: #fff;
+  text-align: center;
+}
+.gg-publish-hd .icon-back {
+  float: left;
+}
+.type {
+  padding: 1.7px 12px;
+  font-size: 12px;
+  color: #fff;
+  background-color: #7ED321;
+  border-radius: 1.4px;
+}
+.publish-btn {
+  float: right;
+  color: #419BF9;
+  font-size: 14.5px;
+}
+.article-title,
+.article-content {
+  width: 320px;
+  /* height: 37.5px; */
+  padding: 8.5px 12.8px;
+  background-color: #fff;
+  color: #B2B2B2;
+  font-size: 14.5px;
+  border: none;
+  border-bottom: 1px solid #E5E5E5;
+  box-sizing: border-box;
+  outline: 0;
+  -webkit-appearance: none;
+}
+.article-content {
+  height: 334px;
+  margin-bottom: -1.4px;
+}
+.article-content::-webkit-input-placeholder {
+  color: #B2B2B2;
+}
+.handle-panel {
+  position: relative;
+  width: 100%;
+  height: 37.5px;
+  padding: 9.49px 17.1px;
+  line-height: 37.5px;
+  background-color: #fff;
+  box-sizing: border-box;
+  clear: both;
+}
+.handle-panel > span {
+  float: right;
+}
+.handle-panel .icon-setting {
+  margin-left: 8.5px;
+}
+.handle-panel .dot {
+  display: inline-block;
+  vertical-align: middle;
+  width: 8.5px;
+  height: 8.5px;
+  margin-top: 4.3px;
+  margin-right: 6.83px;
+  border-radius: 100%;
+}
+.red {
+  background-color: #FF3D3D;
+}
+.yellow {
+  background-color: #F8E71C;
+}
+.green {
+  background-color: #7ED321;
+}
+.level-list,
+.setting-list {
+  display: none;
+  position: absolute;
+  right: 30px;
+  top: -77px !important;
+  width: 54.6px;
+  border-radius: 1.4px;
+  background: #F6F7FD;
+  box-shadow: 3px 3px 3px #888888;
+}
+.level-list li,
+.setting-list li {
+  width: 100%;
+  height: 24px;
+  line-height: 24px;
+  border-bottom: 1px solid #fff;
+  text-align: center;
+}
+.level-list .small-dot,
+.setting-list .small-dot {
+  display: inline-block;
+  vertical-align: middle;
+  width: 5.12px;
+  height: 5.12px;
+  margin-top: -5.12px;
+  margin-right: 6.83px;
+  border-radius: 100%;
+}
+.setting-list {
+  width: 136.53px;
+  right: 17.1px;
+}

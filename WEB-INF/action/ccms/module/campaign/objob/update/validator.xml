@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/error/validation/ajax">
+
+    <parameter id="tuid" type="varchar" required="true" label="TUID"/>
+    <parameter id="subject_id" type="integer" required="true" label="subject_id"/>
+    <parameter id="campaign_id" type="varchar" required="true" label="campaign_id"/>
+    <parameter id="model_id" type="integer" required="true" label="model_id"/>
+    <parameter id="job_name" type="varchar" required="true" label="job_name" />
+    <parameter id="job_quota" type="integer" required="true" label="job_quota" />
+    <parameter id="job_priority" type="integer" required="true" label="job_priority" />
+    <parameter id="from_date" type="date" required="false" label="from_date" />
+    <parameter id="to_date" type="date" required="false" label="to_date" />
+    <parameter id="reserve_accuracy" type="integer" required="true" label="reserve_accuracy"/>
+    <parameter id="remark" type="varchar" required="false" label="remark" />
+    <parameter id="campaign_type" type="varchar" required="true" label="campaign_type" />
+    <parameter id="data_push_flag" type="varchar" required="false" label="data_push_flag" />
+    <parameter id="data_switch_flag" type="varchar" required="false" label="data_switch_flag" />
+    <parameter id="round_type" type="varchar" required="false" label="round_type" />
+    <parameter id="template_name" type="varchar" required="false" label="template_name" />
+    <parameter id="template_id" type="integer" required="false" label="template_id" />
+    <parameter id="parent_id" type="integer" required="false" label="parent_id" />
+    <parameter id="result_type" type="varchar" required="false" label="result_type" />
+    <parameter id="call_type" type="varchar" required="false" label="call_type" />
+    <parameter id="quota_status" type="varchar" required="false" label="quota_status" />
+    <parameter id="reference_node_id" type="integer" required="false" label="reference_node_id" />
+	<parameter id="task_duplicate_scope" type="varchar" required="true" label="task_duplicate_scope" />
+	<parameter id="task_duplicate_flag" type="varchar" required="true" label="task_duplicate_flag" />
+	<parameter id="if_manual_push_flag" type="varchar" required="true" label="是否能够手工推送" />
+ <custom-validator 	
+	classname="dinamica.validators.DuplicatedKeyValidator" 
+	on-error-label="此名称已存在，请重新填写"
+	id="job_name" sql="nodup.sql"/>
+
+
+</validator>

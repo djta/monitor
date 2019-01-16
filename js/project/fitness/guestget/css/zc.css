@@ -1,0 +1,10 @@
+body{background-color: #F8F8F8;}
+.divform{margin-top: 15px;}
+.everyone{margin:10px auto;width:93%;height:44px;position: relative;}
+.inputtxt{display:block;width:100%;height:44px;border:1px #E7E8EB solid;font-size: 14px;color:#41434C;text-indent:0.5em;}
+.everyone .phone_button{display: block;position: absolute;top:6px;right:6px;width:100px;height: 32px;line-height: 32px;background-color: #F4F4F4;text-align: center;border:1px #E1E1E1 solid;color:#41434C;}
+#verifyImg{display: block;position: absolute;width:86px;height:32px; top:6px;right:6px;}
+.everytwo{margin:30px auto;width:55%;height:44px;position: relative;}
+#city_1{border:0px red solid;height:44px;}
+#city_1 .prov{border:1px #E7E8EB solid;width:120px;height:44px;font-size: 14px;border-radius: 0;background-color: #FFF;}
+#city_1 .city{border:1px #E7E8EB solid;width:120px;height:44px;font-size: 14px;border-radius: 0;background-color: #FFF;}

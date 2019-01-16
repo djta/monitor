@@ -1,0 +1,1 @@
+﻿ccms.dialog.alert("${req:dinamica.error.description@js}");

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<config>
+
+	<summary>
+		Show Database Schemas
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>com.ccms.jdbc.GetTables</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>page.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<expiration>1</expiration>
+		<print mode="table" recordset="tables" tag="rows" />
+		<print mode="form" recordset="_request" />
+	</output>
+
+</config>

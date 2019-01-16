@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>导入历史信息</title>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">导入历史信息</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post"
+				id="searchForm" name="searchForm">
+				<input name="sort" type="hidden" preserve="true" /> <input
+					name="order" type="hidden" value="desc" preserve="true" /> <input
+					name="pageNo" type="hidden" value="" preserve="true" /> <input
+					name="totalPages" type="hidden" value="" preserve="true" /> <input id="imp_id"
+					name="imp_id" value="" type="hidden" preserve="true" />
+				<div class="form-group">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input class="form-control" id="createdby" name="createdby" type="text" placeholder="创建人" maxlength="32" value="" />
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input class="form-control" id="import_batch" name="import_batch" type="text" placeholder="导入批次" maxlength="128" value="" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input type="text" class="form-control" id="start_time" name="start_time" placeholder="请选择起始日期" />
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<input type="text" class="form-control" id="end_time" name="end_time" placeholder="请选择结束日期" />
+					</div>
+				</div>
+				<div class="form-group" align="center">
+					<button type="button" id="search_data_btn" class="btn btn-primary btn-md">查询</button>
+					<button type="button" id="reset_btn" class="btn btn-primary btn-md">重置</button>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>序号</th>
+						<th class="sortable" code="imp_name">导入名称</th>
+						<th class="sortable" code="load_date">导入时间</th>
+						<th class="sortable" code="file_name">导入文件名</th>
+						<th class="sortable" code="total_record">导入记录总数</th>
+						<th class="sortable" code="insert_record">插入记录数</th>
+						<th class="sortable" code="update_record">更新记录数</th>
+						<th class="sortable" code="error_count">忽略记录数</th>
+						<th class="sortable" code="createdby">创建人</th>
+						<th class="sortable" code="remark">备注</th>
+						<th> 详细信息</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+
+						<td align="center">
+							#index#
+						</td>
+						<td align="center">
+							#imp_name#
+						</td>
+						<td align="center">#load_date#</td>
+						<td align="center">#file_name#</td>
+						<td align="center">#total_record#</td>
+						<td align="center">#insert_record#</td>
+						<td align="center">#update_record#</td>
+						<td align="center">#error_count#</td>
+						<td align="center">#createdby#</td>
+						<td align="center">#remark#</td>
+						<td align="center">
+							<button class="btn btn-primary btn-md jobIFrame_btn" type="button" code="#tuid#" title="导入详细信息">详细信息</button>
+						</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script language="javascript">
+var importLogClass = null;
+function ImportLogClass(){
+	var obthis = this;
+	
+	this.init = function(){
+		$("#imp_id").val("${fld:imp_id}");
+		$Dialog().date($('#start_time'));
+		$Dialog().date($('#end_time'));
+		
+		obthis.search();
+		
+		$("#reset_btn").unbind().on("click", function() {
+			$('#start_time').val("");
+			$('#end_time').val("");
+			$('#createdby').val("");
+			$("#import_batch").val("");
+		});
+		
+		$("#search_data_btn").unbind().on("click", function() {
+			$(".error").empty();
+			obthis.search();
+		});
+	};
+	
+	this.search = function(){
+		$Search({datagrid : "datagrid",formId : "searchForm",success : function() {
+			$("#datagrid").unbind().on("click", function(e){
+				var obj = $(e.target);
+				var code = obj.attr("code");
+				if(obj.hasClass("jobIFrame_btn")){
+					var url = "${def:context}/action/ccms/module/import/import/log/table/crud?history_id="+code;
+					ccms.dialog.open({
+						url: url,
+						height: 500,
+						width: 1000
+					});
+				}
+			});
+		}}).initSearchBtn().searchData(1);
+	}
+}
+$(document).ready(function(){
+	importLogClass = new ImportLogClass();
+	importLogClass.init();
+});
+</script>
+</body>
+</html>

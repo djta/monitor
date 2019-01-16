@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/error/validation/ajax">
+    <parameter id="usedcommon" type="varchar" required="true" maxlen="50" label="usedcommon"/>
+</validator>
+
+

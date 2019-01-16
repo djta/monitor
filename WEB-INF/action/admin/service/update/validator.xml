@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="tuid" type="integer" required="true" label="主键" />
+	<parameter id="group_id" type="integer" required="true" label="group_id" />
+	<parameter id="description_cn" type="varchar" required="true" label="中文描述" maxlen="150"/>
+	<parameter id="description_en" type="varchar" required="true" label="英文描述" maxlen="150"/>
+	<parameter id="description" type="varchar" required="true" label="备注" maxlen="150"/>
+	<parameter id="path" type="varchar" required="true" label="路径" maxlen="150"/>
+
+	<custom-validator 	
+	classname="dinamica.validators.DuplicatedKeyValidator" 
+	on-error-label="该服务地址已经存在，请换一个"
+	id="path" sql="nodup.sql" />
+	
+</validator>
+
+

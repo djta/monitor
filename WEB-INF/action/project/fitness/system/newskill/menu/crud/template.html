@@ -1,0 +1,74 @@
+	<div id="menusetting" class="ygrwmx">
+		<div class="ygrwmx-1">
+			<span>岗位权限设定</span>
+			<button type="button" class="save toSaveTable1" id="save_menu_btn" title="保存" style='width: 46px;'></button>
+		</div>
+		<form role="form" method="post" id="searchFormstaff" name="searchFormstaff">
+			<input type="hidden" id="skill_id" name="skill_id" value="${fld:skill_id}" />
+			<input type="hidden" id="single_menu_id" name="single_menu_id" value="" />
+			<nav class="navtitle">
+				<li>一级菜单</li>
+				<li>二级菜单</li>
+				<li>三级菜单</li>
+				<li>功能权限</li>
+			</nav>
+			<section class="main">
+				<nav class="left">
+					<g1-rows>
+					<li data-grade="1" code="${fld:tuid}">
+						<input type="checkbox" name="menu_id" data-pid="${fld:pid}" data-rootid="${fld:tuid}" data-grade="1" value="${fld:tuid}" />${fld:menu_name@js}
+					</li>
+					</g1-rows>
+				</nav>
+				
+				<div class="right">
+				</div>
+			</section>
+		</form>
+	</div>
+	<script language="JavaScript">
+		var ischange = false;
+		$(document).ready(function() {
+			// 渲染
+			ccms.util.renderCheckbox("menu_id");
+			$("#menusetting").find("li[data-grade=1]").unbind().on("click", function(){
+				var rootid = $(this).attr("code");
+				if( undefined != rootid && "" != rootid ){
+					if( ischange ){
+						ccms.dialog.confirm("请确认修改后的内容已保存，是否继续？", function(){
+							loadSubMenu(rootid);
+						});
+					}else{
+						loadSubMenu(rootid);
+					}
+				}
+			});
+			$("#menusetting").find("li[data-grade=1]:eq(0)").click();
+			
+			// 保存
+        	$("#save_menu_btn").unbind().on("click",function(){
+        		$("#single_menu_id").val($("#menusetting").find("li[data-grade=1].active").attr("code"));
+        		ajaxCall("${def:context}${def:actionroot}/insertsingle", {
+    				method : "post",
+    				form: "searchFormstaff",
+    				dataType : "script",
+    				progress : true,
+    				success : function() {
+    				}
+        		});
+        	});
+		});
+
+		function loadSubMenu(rootid){
+			$("#menusetting").find(".right").empty();
+			$("#menusetting").find("li[data-grade=1].active").removeClass("active");
+			$("#menusetting").find("li[data-grade=1][code="+rootid+"]").addClass("active");
+			ajaxCall("${def:context}${def:actionroot}/querysubmenu?skill_id=${fld:skill_id}&rootid="+rootid, {
+				method : "get",
+				dataType : "script",
+				progress : true,
+				success : function() {
+				}
+    		});
+		}
+	</script>

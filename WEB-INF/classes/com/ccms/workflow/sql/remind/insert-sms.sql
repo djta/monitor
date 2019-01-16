@@ -1,0 +1,44 @@
+INSERT INTO cc_sms
+(
+	tuid,
+	incident_code,
+	cust_code,
+	receiver,
+	content,
+	status,
+	created,
+	createdby,
+	account_id,
+	template_id,
+	campaign_id,
+	cs_task_id,
+	cs_job_id,
+	cs_node_id,
+	cs_bz_type,
+	cs_pk_value,
+	cs_bz_pk_value,
+	sms_count,
+	subject_id
+)
+VALUES
+(
+	${seq:nextval@seq_cc_sms},
+	null,
+	${p_pk_value},
+	'${receiver}',
+	'${body}',
+	'0',
+	{ts '${def:timestamp}'},
+	'workflow',
+	'${account_id}',
+	${template_id},
+	null,
+	null,
+	${wfm_id},
+	${action_id},
+	null,
+	'${pk_value}',
+	null,
+	1,
+	1001
+)

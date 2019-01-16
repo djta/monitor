@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<LINK REL="stylesheet" type="text/css" href="${def:context}/default.css" />
+</head>
+
+<body>
+
+<center>
+
+<h2>选择字段 (${fld:schema}.${fld:table})</h2>
+
+<table class="grid" width="50%">
+
+	<tr>
+		<th></th>
+		<th>名称</th>
+		<th>类型</th>
+	</tr>
+
+	<rows>
+	<tr>
+		<td width="10%" align="center">
+		<input onclick="javascript:selectValue('${fld:column_name}');" type="button" value="选择" class="btn_blue" >
+		</td>
+		<td align="center">${fld:column_name}</td>
+		<td align="center">${fld:type_name}</td>
+	</tr>
+	</rows>
+
+</table>
+
+</center>
+
+<script language="JavaScript" type="text/javascript">
+
+	function selectValue(item)
+	{
+		try
+		{
+		    	window.opener.document.formEditor.${fld:control}.value=item;
+		}
+		catch (error)
+		{
+		}
+		window.close();
+
+	}
+
+</script>
+
+</body>
+
+</html>

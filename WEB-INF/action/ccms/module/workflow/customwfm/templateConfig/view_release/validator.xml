@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="tuid" type="varchar" required="true" label="tuid" maxlen="10"/>
+</validator>

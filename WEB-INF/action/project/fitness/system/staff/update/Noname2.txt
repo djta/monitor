@@ -1,0 +1,5 @@
+alter table e_clubdef drop column c_idate;
+Alter table e_clubdef add column c_idate timestamp without time zone;
+
+alter table e_clubdef drop column c_setupdate;
+Alter table e_clubdef add column c_setupdate timestamp without time zone;

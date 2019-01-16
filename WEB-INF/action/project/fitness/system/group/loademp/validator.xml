@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="group_type" type="varchar" required="true" label="ID de Registro"/>
+	<parameter id="types" type="varchar" required="true" label="0修改查询  1添加查询"/>
+</validator>

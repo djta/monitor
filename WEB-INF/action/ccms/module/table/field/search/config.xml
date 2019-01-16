@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+	</summary>
+	
+	<log>false</log>
+
+	<!--configura el control de paginacion-->
+	<!-- <set-request-attribute id="paging.recordset" value="query_field.sql" />
+	<set-request-attribute id="paging.pagesize" value="50" /> -->
+
+	<colname>field_code,field_name_cn,field_type,subject_id,table_id</colname>
+	<operator></operator>
+	<sql-template>query-base.sql</sql-template>
+	<paging-recordset>query_field.sql</paging-recordset>
+	<total-recordset>query-count.sql</total-recordset>
+
+	<transaction>
+		<classname>com.ccms.SearchForJson</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+		<print mode="table" recordset="query_field.sql" tag="rows"/>
+		<print mode="form" recordset="query-count.sql"/>
+	</output>
+
+</config>

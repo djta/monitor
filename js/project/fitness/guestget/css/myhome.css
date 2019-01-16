@@ -1,0 +1,111 @@
+body {
+  width:320px;
+  padding-top:8.5px;
+}
+.gg-user-top {
+  position: relative;
+  width:320px;
+  height:75.1px;
+  margin-bottom:4.26666px;
+  padding: 10.24px 12.8px;
+  background-color: #fff;
+  box-sizing: border-box;
+  border-top: 1px solid #E5E5E5;
+  border-bottom: 1px solid #E5E5E5;
+}
+.avatar {
+  display: inline-block;
+  vertical-align: middle;
+  width: 54.7px;;
+  height: 54.7px;;
+  margin-right: 11px;
+  border-radius:4.26666px;
+  border: 1px solid #B4B4B4;
+  background-image: url(../../images/avatar.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.mid-info {
+  display: inline-block;
+  vertical-align: middle;
+}
+.nickname {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right:7.68px;
+  line-height:21.33333px;
+  font-size: 15.36px;
+  color: #000;
+}
+.contact {
+  margin-top:5.16px;
+  line-height:16.21333344px;
+  font-size:11.09px;
+  color: #9B9B9B;
+}
+.tel {
+  margin-right:13.65333344px;
+}
+.gg-user-mid {
+  width:320px;
+  height:93.86666px;
+  margin-bottom:4.26666px;
+  padding: 21.3333px 17px;
+  background-color: #fff;
+  font-size:11.94px;
+  color: #848999;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.gg-user-mid li {
+  position: relative;
+  width: 33.3%;
+  float: left;
+  text-align: center;
+}
+.sep {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  display: block;
+  width: 2px;
+  height:30.72px;
+  background: #F5F5F5;
+}
+.num-wrap {
+  margin-bottom:12.8px;
+}
+.num {
+  margin-right:4.26666px;
+  font-size: 17.06666px;
+  color: #419BF9;
+}
+.gg-user-bt {
+  width:320px;
+  background-color: #fff;
+  border-top: 1px solid #E5E5E5;
+  border-bottom: 1px solid #E5E5E5;
+}
+.gg-user-bt li {
+  position: relative;
+  width: 100%;
+  height: 37.54px;
+  line-height:37.54px;
+  padding: 0 12.8px;
+  color: #000;
+  font-size:14.54px;
+  border-bottom: 1px solid #E5E5E5;
+  box-sizing: border-box;
+}
+.gg-user-bt li:last-child {
+  border-bottom: none;
+}
+.icon-more {
+  position: absolute;
+  top: 50%;
+  right: 12.8px;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}

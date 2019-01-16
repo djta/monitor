@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/error/validation/ajax">
+
+    <parameter type="varchar" required="true"  id="name" label="类别名称" maxlen="128"/>
+
+</validator>
+
+

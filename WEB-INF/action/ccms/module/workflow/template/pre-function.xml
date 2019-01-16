@@ -1,0 +1,6 @@
+<pre-functions>
+	<function type="class">
+		<arg name="class.name">${class}</arg>
+		<arg name="next_step">${next_step}</arg>
+	</function>
+</pre-functions>

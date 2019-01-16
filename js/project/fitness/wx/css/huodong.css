@@ -1,0 +1,128 @@
+body{background-color: #F8F8F8;}
+.fl{float:left;}
+.fr{float:right;}
+.bannerimg{display: block;width: 100%;max-height:320px;}
+
+
+
+/*活动--健身大富豪首页*/
+.huodongdafuhaotop{width:100%;min-height:53px;background-color: #FFF;border-top: 1px #FFF solid;padding-bottom: 10px;}
+.huodongdafuhaotop p{margin:0;}
+.huodongdafuhaotop .title1{height:24px;line-height:24px;margin-top: 18px;color:#000;font-size: 17px;text-align: center;}
+.huodongdafuhaotop .title2{height:20px;line-height:20px;margin-top: 3px;color:#9B9B9B;font-size: 14px;text-align: center;}
+.huodongdafuhaotop .paiming{border:0px red solid;margin-top: 20px;}
+.huodongdafuhaotop .paiming .row .col-xs-4{position:relative;}
+.huodongdafuhaotop .paiming .row .col-xs-4 .huangguanimg{position:absolute;top:-12px;left:50%;margin-left: -18px;width:36px;}
+.huodongdafuhaotop .paiming .row .col-xs-4:nth-child(2) .huangguanimg{position:absolute;top:-16px;left:50%;margin-left: -22px;width:44px;}
+.huodongdafuhaotop .paiming .row .img{display: block;width: 60px;height:60px;border-radius: 50%;margin: 5px auto;}
+.huodongdafuhaotop .paiming .row .col-xs-4:nth-child(2) .img{width: 80px;height:80px;}
+.huodongdafuhaotop .paiming .row .name{font-size: 16px;color: #B4B4B4;font-weight: 700;height:22px;line-height: 22px;margin-top: 10px;text-align: center;}
+.huodongdafuhaotop .paiming .row .col-xs-4:nth-child(2) .name{color: #FFD737;}
+.huodongdafuhaotop .paiming .row .col-xs-4:nth-child(3) .name{color: #ECA182;}
+.huodongdafuhaotop .paiming .row .jine{font-size: 12px;color: #B4B4B4;line-height: 16px;margin-top: 5px;text-align: center;}
+.huodongdafuhaotop .paiming .row .col-xs-4:nth-child(2) .jine{color: #FFD737;}
+.huodongdafuhaotop .paiming .row .col-xs-4:nth-child(3) .jine{color: #ECA182;}
+
+.huodongdafuhaobody{width: 100%;border-top: 0px #E5E5E5 solid;margin-top: 0px;background-color: #FFF;}
+.huodongdafuhaobody .row{height:50px;line-height:50px;color:#353535;font-size: 16px;position:relative;}
+.huodongdafuhaobody .row p{margin:0;height:50px;line-height:50px;text-align: left;color:#4A4A4A;}
+.huodongdafuhaobody .row:nth-child(2n+1){background-color: #FAFAFA;}
+.huodongdafuhaobody .row .number{font-size: 16px;font-weight: 700;text-align: right;}
+.huodongdafuhaobody .row .img{display: block;width: 40px;height:40px;border-radius: 50%;margin: 5px auto;}
+.huodongdafuhaobody .row .name{font-size: 16px;font-weight: 700;}
+.huodongdafuhaobody .row .jine{font-size: 14px;}
+.huodongdafuhaobody .row .jines{font-size: 14px;color:#FFBF49;}
+.huodongdafuhaobody .shuoming{margin:0;font-size: 11px;color: #9B9B9B;text-align: center;height:30px;line-height:30px;}
+.huodongdafuhaobody .row .upjiantou{position: absolute;width:12px;height:21px;top:14px;left:50%;}
+.huodongdafuhaobody .row .col-xs-1 ,.huodongdafuhaobody .row .col-xs-2,.huodongdafuhaobody .row .col-xs-3,.huodongdafuhaobody .row .col-xs-5,.huodongdafuhaobody .row .col-xs-6{padding-left:0;padding-right: 0; }
+
+
+
+/*活动 健身大富豪介绍*/
+.huodong_dfhjs_top{width:90%;margin:0 auto;}
+.huodong_dfhjs_top p{margin:0;}
+.huodong_dfhjs_top .title{font-size: 17px;color:#000;text-align: center;margin-top: 18px;height:24px;line-height: 24px;font-weight: 700;margin-bottom: 10px;}
+.huodong_dfhjs_top .p1{font-size: 14px;color:#4a4a4a;line-height: 25px;margin-top: 5px;}
+.huodong_dfhjs_top .p2{font-size: 17px;color:#000;line-height: 25px;text-align: center;margin-top: 15px;}
+
+.huodong_dfhjs_body{width: 100%;margin-top: 20px;}
+.huodong_dfhjs_body .row{height:150px;}
+.huodong_dfhjs_body .row .col-xs-6{height:150px; }
+.huodong_dfhjs_body .row .col-xs-6 .updiv{height:150px;width:150px;background-color: #F5F5F5;margin:0 auto; position: relative;}
+.huodong_dfhjs_body .row .col-xs-6 .updiv .jiaimg{height:44px;width:44px;position: absolute;top:53px;left:53px;}
+
+.huodong_dfhjs_btn{width: 100%;min-height:50px;}
+.huodong_dfhjs_btn .tijiao{display:block;width:320px;margin:0px auto;padding-top:20px;padding-bottom:20px;}
+
+
+
+/*活动 健身大富豪投票*/
+.huodong_dfhtoupiao_top{width:85%;height:25px;margin:10px auto;background-color: #F5F5F5;border-radius: 3px;}
+.huodong_dfhtoupiao_top .title{color: #4A4A4A;font-size: 14px;text-align: center;line-height: 25px;}
+
+.huodong_dfhtoupiao_list{width: 90%;height:60px;margin:10px auto;}
+.huodong_dfhtoupiao_list .touxiangpic{display:block;width: 60px;border-radius: 50%;margin-top: 0px;margin-left:0px;}
+.huodong_dfhtoupiao_list .content{width: 50%;height:60px;margin-top:0px;margin-left:15px;}
+.huodong_dfhtoupiao_list .content .number{margin:0;height:25px;line-height: 25px;margin-top:5px;font-size: 17px;color:#4A4A4A;}
+.huodong_dfhtoupiao_list .content .name{margin:0;height:25px;line-height: 25px;margin-top:5px;font-size: 16px;color:#4A4A4A;}
+.huodong_dfhtoupiao_list .piaoshu{width: 20%;height:60px;}
+.huodong_dfhtoupiao_list .piaoshu p{margin:0;height:60px;line-height: 60px;font-size: 16px;color:#FF566B;}
+
+.huodong_dfhtoupiao_shuoming{width:90%;margin:10px auto;}
+.huodong_dfhtoupiao_shuoming p{margin:0;font-size: 16px;color:#9B9B9B;}
+
+.huodong_dfhtoupiao_body{width:88%;margin:10px auto;margin-bottom: 60px;}
+.huodong_dfhtoupiao_body img{display:block; width:100%;margin:10px auto;}
+
+.huodong_dfhtoupiao_btn{width: 100%;min-height:55px;position: fixed;left:0;bottom: 0;background-color: #FFF;}
+.huodong_dfhtoupiao_btn .lapiao{width:58%;float: left;display: block;margin-left: 5%;margin-top: 5px;}
+.huodong_dfhtoupiao_btn .toupiao{width:29%;float: right;display: block;margin-right: 5%;margin-top:5px;}
+
+
+
+/*活动报名*/
+.baomingaddtop{width: 100%;border-bottom: 1px #E5E5E5 solid;margin-top: 10px;background-color: #FFF;}
+.baomingaddtop .listother{width: 100%;height:44px;border-top: 1px #E5E5E5 solid;background-color: #FFF;}
+.baomingaddtop .listother .p1{display: inline-block;margin:0;margin-left:15px;width:25%;font-size: 17px;color:#000;height:44px;line-height:44px;}
+.baomingaddtop .listother .p2{display: inline-block;margin:0;font-size: 17px;height:44px;line-height:44px;}
+.baomingaddtop .listother .p2 .textinput{display:block;width:90%;height:33px;margin-top:5px;background-color: #FFF;border:0;color:#9b9b9b;}
+.baomingaddtop .listother .p2 input::-webkit-input-placeholder{color:#9b9b9b;font-size: 14px;}
+.baomingaddtop .list{width: 100%;height:100px;border-top: 1px #E5E5E5 solid;background-color: #FFF;}
+.baomingaddtop .list .p1{display: block;margin:0;margin-left:15px;width:25%;font-size: 17px;color:#000;height:44px;line-height: 44px;}
+.baomingaddtop .list .p2{display: block;margin:0;font-size: 17px;width:80%;margin-left:15px;}
+.baomingaddtop .list .p2 .form-control{width:100%;height:80px;margin-top:10px;background-color: #FFF;border:0;color:#9b9b9b;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0);padding:0;resize:none;}
+.baomingaddtop .list .p2 textarea::-webkit-input-placeholder{color:#9b9b9b;font-size: 14px;}
+.baomingaddtop .listimg{width: 100%;min-height:88px;border-top: 1px #E5E5E5 solid;background-color: #FFF;}
+.baomingaddtop .listimg .kuang{width:58px;height:58px;border:0px #CCC solid;margin-top: 15px;margin-left: 15px;background: url('../image/add1.png') 0 0 no-repeat;background-size:100% 100%;position: relative;}
+.baomingaddtop .listimg .kuang .fileimg{width:58px;opacity: 0;position: absolute;height:58px;}
+
+.baomingaddbtn{width: 100%;height:50px;border-bottom: 0px #E5E5E5 solid;margin-top: 10px;background-color: ;position: relative;}
+.baomingaddbtn .quxiao{display:block;position: absolute;top:20px;right:22px;width:160px;}
+.baomingaddbtn .tijiao{display:block;position: absolute;top:20px;left:22px;width:160px;}
+
+
+
+
+/*活动实时排名*/
+.huodong_dfhpaiming{width:100%;height:100%;position: absolute;top:0;left:0;bottom: 0;right: 0;background:linear-gradient(to bottom, #404145, #66686C)}
+.huodong_dfhpaiming_top{width:100%;height:25px;margin-top: 10px;}
+.huodong_dfhpaiming_top .title{color: #FFF;font-size: 14px;text-align: center;line-height: 20px;}
+
+.huodong_dfhpaiming_body{width: 90%;height:88%; border-radius: 5px; margin-top: 0px;background-color: #FFF;overflow: auto;}
+.huodong_dfhpaiming_body .row{height:40px;line-height:40px;margin-bottom: 10px;}
+.huodong_dfhpaiming_body .row p{margin:0;font-size: 16px;color:#4A4A4A;}
+.huodong_dfhpaiming_body .row .col-xs-3{padding-left:0px;padding-right:10px;}
+.huodong_dfhpaiming_body .row .biaoti{color:#4A4A4A;text-align: center;}
+.huodong_dfhpaiming_body .row .number{color:#4A4A4A;text-align: center;}
+.huodong_dfhpaiming_body .row .number .huangguan{display: block;width: 28px;margin:9px auto;}
+.huodong_dfhpaiming_body .row .jine{color:#FF566B;text-align: right;}
+.huodong_dfhpaiming_body .row .img{display: block;width: 40px;height:40px;border-radius: 50%;margin:0 auto;}
+
+.huodong_dfhpaiming .banquan{width:100%;text-align: center;font-size: 11px;color: #C8C8C8;position: absolute;bottom: 0;}
+
+
+
+/*活动详情*/
+.huodongdfhxq{width:95%;min-height:50px;background-color: #FFF;border-radius: 5px;margin: 10px auto;padding-bottom: 5px;}
+.huodongdfhxq .title{width:95%;height:44px;line-height: 44px;margin:0;margin:0 auto;font-size:17px;color: #4A4A4A;border-bottom: 1px #F5F5F5 solid; }
+.huodongdfhxq .p1{width:92%;line-height: 24px;margin:0;margin:8px auto;font-size:14px;color: #4A4A4A;}

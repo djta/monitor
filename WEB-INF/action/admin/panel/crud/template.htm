@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>面板</title>
+</head>
+<body>
+
+<!--addnew/edit form-->
+<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+	 		 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	 		 	<h4 class="modal-title" id="formTitle">新增面板</h4>
+	 		 </div>
+	 		 <div class="modal-body">
+	 		 	<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+	 		 		<input type="hidden" id="tuid" name="tuid" value="" />
+					<input type="hidden" name="app_id" value="${fld:app_id}" preserve="true" />
+					
+					<div class="row clearfix">
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">服务</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<select name="service_id" id="service_id" class="form-control">
+									<rows>
+										<option value="${fld:service_id}">${fld:description}(${fld:path})</option>
+									</rows>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">图片</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input type="text" class="form-control" name="icon_path" id="icon_path" readonly />
+							</div>
+							<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+								<img src="${def:context}/images/search.gif" style="cursor: pointer;" class="openPicList" title="上传" />
+								<img src="${def:context}/images/preView.gif" style="cursor: pointer;" class="lookImg" title="预览" />
+								<img src="${def:context}/images/clear.gif" style="cursor: pointer;" onclick="document.formEditor.icon_path.value='';"
+									title="清除选定值" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">序号</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<input id="orden" class="form-control" name="orden" type="text" size="10" maxlength="10" />
+							</div>
+						</div>
+					</div>
+	 		 	</form>
+	 		 </div>
+	 		 <div class="modal-footer">
+			    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+				  <button type="button" id="save_btn" class="btn btn-primary btn-md">保&nbsp;存</button>
+				  <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+			    </div>
+		     </div>
+		</div>
+	</div>
+</div>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading text-center col_main_body_title">
+			<h2 class="panel-title">&nbsp;&nbsp;&nbsp;&nbsp;查询面板</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm">
+				<input name="sort" type="hidden" value="orden" preserve="true"/>
+				<input type="hidden" name="app_id" value="${fld:app_id}" preserve="true" />
+				<input name="order" type="hidden" value="desc" preserve="true" /> 
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+				<div class="form-group">
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<input name="title" class="form-control" type="text" size="35" value="" placeholder="请输入服务描述" />
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+						<button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+						<button class="btn btn-primary btn-md openPanel" type="button">打开面板</button>
+						<!-- <button class="btn btn-primary btn-md" type="button" onclick="goBackToApp()">返回</button> -->
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>操作</th>
+						<th class="sortable" code="orden">序号</th>
+						<th class="sortable" code="description">服务描述</th>
+						<th class="sortable" code="path">服务路径</th>
+						<th class="sortable" code="icon_path">图片</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td align="center">
+							<button class="btn btn-primary btn-md edit_btn" type="button" code="#panel_id#">修改</button>
+							<button class="btn btn-primary btn-md delete_btn" type="button" code="#panel_id#">删除</button>
+						</td>
+						<td align="center">#orden#</td>
+						<td align="center">#description#</td>
+						<td align="center">#path#</td>
+						<td align="center">#icon_path#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid"></tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+	
+	<script type="text/javascript">
+$(document).ready(function() {
+	var srarch=null;
+	var obj = $Crud({
+		formId:"formEditor",
+		button:"save_btn",
+		insertBack:function(){
+			srarch.searchData();
+		},
+		updateBack:function(){
+			srarch.searchData();
+		},
+		deleteBack:function(){
+			srarch.searchData();
+		},
+		addNewBack:function(){
+			$("#formTitle").html("新增面板");
+		},
+		editBack:function(){
+			$("#formTitle").html("修改面板");
+		},
+		validate:function(){
+			var flag=$("#formEditor").validate({
+				rules: {
+					service_id: {
+						required: true
+					},
+					icon_path: {
+						required: true
+					},
+					orden: {
+						required: true
+					}
+				},
+				messages: {
+					service_id:{
+						required: "请选择服务"
+					},
+					icon_path:{
+						required: "请选择图片"
+					},
+					orden: {
+						required: "请输入序号"
+					}
+				}
+			});
+			return flag;
+		},
+		check:function(){
+			return true;
+		}
+	}).init();
+	this.srarch=srarch
+	srarch=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		$(".edit_btn").unbind().on("click", function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				obj.edit({id:$(this).attr("code")});
+			}
+		});
+		$(".delete_btn").unbind().on("click", function(){
+			var obthis = $(this);
+			$Dialog().confirm("确定要删除吗?", function(){
+				if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+					obj.del({id:obthis.attr("code")});
+				}
+			});
+		});
+	}}).initSearchBtn().searchData(1);
+	
+	//打开面板
+	$(".openPanel").unbind().on("click",function(){
+		ccms.dialog.open({url:"${def:context}${def:actionroot}/getpanel/form?app_id=${fld:app_id}",id:"panel",width:800,height:500});
+	});
+	//打开图片选择框
+	$(".openPicList").unbind().on("click",function(){
+		var url = "${def:context}/action/ccms/attachment/crud?id=icon_path&pickId=dialogPic";
+		ccms.dialog.open({url:url,id:"dialogPic",width:800,height:500});
+	});
+	$(".lookImg").unbind().on("click",function(){
+		if($("#icon_path").val()==''){
+			$Dialog().notice("请选择图片",1200);
+			return;
+		}
+		var id="${def:context}/action/ccms/attachment/preView?id="+encodeURIComponent($("#icon_path").val());
+		ccms.dialog.open({url:id,id:"yulan",width:600,height:400});
+	});
+});
+
+</script>
+</body>
+</html>

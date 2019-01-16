@@ -1,0 +1,92 @@
+<!--addnew/edit form-->
+<form name="formEditor" onsubmit="return save()">
+
+<div class="tabs">
+    <ul>
+        <li onclick="changeLiStyle(this);" id="tabsl"><b></b>
+            <a  
+                onmouseover="javascript:window.status='';return true;" 
+                onmouseout="javascript:window.status='';return true;" 
+                href='#' 
+                onclick='JavaScript:return false;'>
+                <span id="formTitleEditor">文档配置</span>
+            </a><p></p>
+        </li>
+    </ul>
+    <div id='hline'></div>
+</div>
+
+<div id="tabmain">
+<FIELDSET><LEGEND>文档配置</LEGEND>
+<TABLE class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0>
+	
+		<!--column layout-->
+		<col width="30%">
+		<col width="70%">
+	
+		<!--form fields-->
+		<tr>
+			<td class="th20 required">
+				文档名称
+			</td>
+			<td class="td20left">
+				<input id="document_id" name="document_id" type="hidden">
+				<input type="text" id="document_name" name="document_name" size="30"  readonly  class="readonly"  >
+				<img src="${def:context}/images/search.gif" class="tool" 
+				onclick="pickOpenNotCenter('document_name','document_id','${def:context}/action/pub/pick/document/crud?subject_id=${def:subject}','400','350','formEditor')"
+				title="查询表单"></img>
+				<img src="${def:context}/images/clear.gif"
+				onclick="pickClear('formEditor','document_id','document_name');" class="tool2"
+				title="清除选择的内容"></img>
+			</td>
+		</tr>
+
+		<tr>
+			<td class="th20 required">
+				文档类型
+			</td>
+			<td class="td20left">
+			<select  id="form_type" name="form_type" >	
+									<option value="0">客户信息</option>							
+									<option value="1">快速新增</option>							
+									<option value="2">其他</option>
+							</select>
+					</td>
+		</tr>	
+		<tr>
+			<td class="th20 required">
+				显示顺序
+			</td>
+			<td class="td20left">
+				<input type="text" id="show_order"  name="show_order" size="40" >
+			</td>
+		</tr>
+
+</TABLE>
+</FIELDSET>
+
+<FIELDSET><LEGEND>操作信息</LEGEND>
+<TABLE class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <col width="80%">
+        <col width="20%">
+	
+		<!--buttons-->
+		<tr>
+			<td align="center" colspan="1">
+				<input id="submitBtn" type="submit" value="保存" class="btn_blue">
+                <input type="button" class="btn_gray" value="取消" onclick="_goBackFn()" >
+				<input id="deleteCommand" type="button" value="删除" class="btn_gray" onclick="deleteRecord(tuid.value)">
+			</td>
+            <td class="th20 required" >
+                特别标注<font color="red"><B>*</B></font>为必填信息.
+            </td>
+		</tr>		
+	
+</table>
+</FIELDSET>
+
+    <!--tuid是否为空,决定了form的保存方法为编辑保存,还是新增保存-->
+	<input type="hidden" id="tuid" name="tuid" value="">
+	<input name="template_id" type="hidden" value="" preserve="true">
+</div>
+</form>

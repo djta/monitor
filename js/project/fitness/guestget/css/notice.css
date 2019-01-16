@@ -1,0 +1,132 @@
+body {
+  width: 320px;
+}
+.top-nav {
+  width: 320px;
+  padding: 8.533px 13.6666px 10.24px;
+  overflow: hidden;
+  background-color: #fff;
+  text-align: center;
+  box-sizing: border-box;
+}
+.top-nav li {
+  float: left;
+  width: 50%;
+  height:23.8933312px;
+  line-height:22.2px;
+  font-size:12px;
+  color: #007AFF;
+  text-align: center;
+  box-sizing: border-box;
+  border: 1px solid #007AFF;
+}
+.top-nav li:first-child {
+  border-top-left-radius: 3.4px;
+  border-bottom-left-radius: 3.4px;
+}
+.top-nav li:last-child {
+  border-top-right-radius: 3.4px;
+  border-bottom-right-radius: 3.4px;
+}
+.top-nav .active {
+  color: #fff;
+  background-color: #007AFF;
+}
+.red-dot {
+  display: inline-block;
+  vertical-align: middle;
+  width:15.36px;
+  height:15.36px;
+  margin-left:7.68px;
+  margin-top: -3.4px;
+  line-height:15.36px;
+  border-radius: 100%;
+  color: #fff;
+  background-color: #F12C20;
+}
+.lists {
+  display: none;
+}
+.lists li {
+  position: relative;
+  width: 320px;
+  margin-top: 4px;
+  padding: 8.533px 17px 8.533px 29.86px;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+.lists h1 {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size:14.5px;
+  color: #000;
+}
+.lists .nfoot {
+  margin-top:10.24px;
+  color: #9B9B9B;
+  font-size:12px;
+  overflow: hidden;
+}
+.lists .n-name {
+  float: left;
+}
+.lists .n-date {
+  float: right;
+}
+.lists .tag {
+  position: absolute;
+  top: 0;
+  left:8.533px;
+}
+.lists.active {
+  display: block;
+}
+.gg-notice-dlg {
+  display: none;
+  position: absolute;
+  top:67.41px;
+  left: 50%;
+  z-index: 100;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  width:278.18px;
+  height:353.28px;
+  padding-top:104.1px;
+  padding-left:27.3px;
+  padding-right:27.3px;
+  background-image: url(../images/notice_bg.png);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+}
+.gg-notice-dlg h1 {
+  margin-bottom:17.07px;
+  font-size:14.5px;
+  color: #111;
+  text-align: center;
+}
+.gg-notice-dlg .notice-content {
+  height:159.6px;
+  color: #848999;
+  font-size:12px;
+  overflow: auto;
+}
+.gg-notice-dlg .sign-date {
+  position: absolute;
+  bottom:14.5px;
+  right:27.3px;
+  color: #848999;
+  font-size:12px;
+}
+.notice-dlg-close {
+  position: absolute;
+  top: -20.48px;
+  right:-11.09333344px;
+}
+.fixed-issue {
+  position: fixed;
+  bottom:128px;
+  right:12.8px;
+}

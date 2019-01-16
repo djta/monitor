@@ -1,0 +1,489 @@
+body {
+  width: 100%;
+  min-width:1230px;
+  min-height: 800px;
+  margin: 0;
+  padding: 0;
+  background: url(../image/login/bg.png);
+  background-size:100% 100%;
+}
+.inline-block {
+  display: inline-block;
+  vertical-align: middle;
+}
+.icon-brand {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  background: url(../image/login/brand.png) no-repeat center;
+  background-size: 100% auto;
+}
+.icon-cancel {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  background: url(../image/login/cancel.png) no-repeat center;
+  background-size: 100% auto;
+}
+.icon-location {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  background: url(../image/login/location.png) no-repeat center;
+  background-size: 100% auto;
+}
+.icon-user {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  background: url(../image/login/user.png) no-repeat center;
+  background-size: 100% auto;
+}
+.icon-pwd {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  background: url(../image/login/pwd.png) no-repeat center;
+  background-size: 100% auto;
+}
+.icon-look {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  background: url(../image/login/look.png) no-repeat center;
+  background-size: 100% auto;
+}
+.icon-unlook {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  background: url(../image/login/unlook.png) no-repeat center;
+  background-size: 100% auto;
+}
+.icon-phone {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  background: url(../image/login/phone.png) no-repeat center;
+  background-size: 100% auto;
+}
+.icon-verification {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  background: url(../image/login/verification.png) no-repeat center;
+  background-size: 100% auto;
+}
+.icon-browser {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  background: url(../image/login/browser.png) no-repeat center;
+  background-size: 100% auto;
+}
+.icon-friendly {
+  display: inline-block;
+  vertical-align: middle;
+  width: 18px;
+  height: 14px;
+  background: url(../image/login/friendly.png) no-repeat center;
+  background-size: 100% auto;
+}
+.icon-print {
+  display: inline-block;
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  background: url(../image/login/print.png) no-repeat center;
+  background-size: 100% auto;
+}
+.icon-lock {
+  display: inline-block;
+  vertical-align: middle;
+  width: 15px;
+  height: 20px;
+  background: url(../image/login/lock.png) no-repeat center;
+  background-size: 100% auto;
+}
+.icon-cm {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 19px;
+  background: url(../image/login/cm.png) no-repeat center;
+  background-size: 100% auto;
+}
+.icon-daodian {
+  display: inline-block;
+  vertical-align: middle;
+  width: 16px;
+  height: 16px;
+  background: url(../image/login/daodian.png) no-repeat center;
+  background-size: 100% auto;
+}
+.icon-gfp {
+  display: inline-block;
+  vertical-align: middle;
+  width: 19px;
+  height: 18px;
+  background: url(../image/login/gfp.png) no-repeat center;
+  background-size: 100% auto;
+}
+.icon-shoufei {
+  display: inline-block;
+  vertical-align: middle;
+  width: 11px;
+  height: 14px;
+  background: url(../image/login/shoufei.png) no-repeat center;
+  background-size: 100% auto;
+}
+.login-hd {
+  width: 768px;
+  padding-top: 200px;
+  float: left;
+  text-align: center;
+}
+.login-hd h1 {
+  width: 288px;
+  margin: auto;
+  font-size: 36px;
+  color: #9B9B9B;
+}
+.animate-box {
+  position: relative;
+}
+.wave {
+  display: inline-block;
+  vertical-align: middle;
+  width: 562px;
+  height: 135px;
+  margin: auto;
+  margin-top: 190px;
+  background: url(../image/login/wave.png) no-repeat center;
+  background-size: 100% auto;
+}
+.wave-pt {
+  position: absolute;
+}
+.wave-pt-1 {
+  top: 116px;
+  left: 112px;
+  -webkit-animation: down 1s ease infinite;
+          animation: down 1s ease infinite;
+  -webkit-animation-direction: alternate;
+          animation-direction: alternate;
+}
+.wave-pt-2 {
+  top: 158px;
+  left: 168px;
+  -webkit-animation: up 1s ease infinite;
+          animation: up 1s ease infinite;
+  -webkit-animation-direction: alternate;
+          animation-direction: alternate;
+}
+.wave-pt-3 {
+  top: 110px;
+  left: 258px;
+  -webkit-animation: down 1s ease infinite;
+          animation: down 1s ease infinite;
+  -webkit-animation-direction: alternate;
+          animation-direction: alternate;
+}
+.wave-pt-4 {
+  top: 124px;
+  left: 350px;
+  -webkit-animation: up 1s ease infinite;
+          animation: up 1s ease infinite;
+  -webkit-animation-direction: alternate;
+          animation-direction: alternate;
+}
+.wave-pt-5 {
+  top: 114px;
+  left: 476px;
+  -webkit-animation: down 1s ease infinite;
+          animation: down 1s ease infinite;
+  -webkit-animation-direction: alternate;
+          animation-direction: alternate;
+}
+.wave-pt-6 {
+  top: 138px;
+  left: 590px;
+  -webkit-animation: up 1s ease infinite;
+          animation: up 1s ease infinite;
+  -webkit-animation-direction: alternate;
+          animation-direction: alternate;
+}
+.wave-pt-7 {
+  top: 92px;
+  left: 640px;
+  -webkit-animation: down 1s ease infinite;
+          animation: down 1s ease infinite;
+  -webkit-animation-direction: alternate;
+          animation-direction: alternate;
+}
+.line {
+  position: absolute;
+  display: inline-block;
+  width: 1px;
+  background: #979797;
+}
+.line-1 {
+  top: 139px;
+  left: 243px;
+  height: 36px;
+  -webkit-animation: up 1s ease infinite;
+          animation: up 1s ease infinite;
+  -webkit-animation-direction: alternate;
+          animation-direction: alternate;
+  opacity: 0.3;
+}
+.line-2 {
+  top: 61px;
+  left: 341px;
+  height: 60px;
+  -webkit-animation: down 1s 0.5s ease infinite;
+          animation: down 1s 0.5s ease infinite;
+  -webkit-animation-direction: alternate;
+          animation-direction: alternate;
+  opacity: 0.6;
+}
+.line-3 {
+  top: 101px;
+  left: 451px;
+  height: 60px;
+  -webkit-animation: up 1s 1s ease infinite;
+          animation: up 1s 1s ease infinite;
+  -webkit-animation-direction: alternate;
+          animation-direction: alternate;
+}
+.line-4 {
+  top: 81px;
+  left: 151px;
+  height: 60px;
+  -webkit-animation: up 1s 1s ease infinite;
+          animation: up 1s 1s ease infinite;
+  -webkit-animation-direction: alternate;
+          animation-direction: alternate;
+}
+.line-5 {
+  top: 101px;
+  left: 612px;
+  height: 30px;
+  -webkit-animation: up 1s 1s ease infinite;
+          animation: up 1s 1s ease infinite;
+  -webkit-animation-direction: alternate;
+          animation-direction: alternate;
+  opacity: 0.3;
+}
+@-webkit-keyframes up {
+  0% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(-10px);
+            transform: translateY(-10px);
+  }
+}
+@keyframes up {
+  0% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(-10px);
+            transform: translateY(-10px);
+  }
+}
+@-webkit-keyframes down {
+  0% {
+    -webkit-transform: translateY(-10px);
+            transform: translateY(-10px);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+@keyframes down {
+  0% {
+    -webkit-transform: translateY(-10px);
+            transform: translateY(-10px);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+.login-box {
+  width: 350px;
+  margin-top: 98px;
+  margin-right: 112px;
+  border-radius: 6px;
+  background-color: #fff;
+  float: right;
+  box-sizing: border-box;
+}
+form {
+  font-size: 16px;
+  padding: 28px 40px;
+}
+.logo {
+  width: 179px;
+  margin: 14px auto;
+}
+h2 {
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.form-group {
+  position: relative;
+  width: 270px;
+  height: 46px;
+  line-height: 46px;
+  border-bottom: 2px solid #D7D7D7;
+  margin-bottom: 10px;
+}
+.form-group input {
+  display: inline-block;
+  vertical-align: middle;
+  width: 204px;
+  margin-left: 4px;
+  color: #000;
+  font-size: 16px;
+}
+.icon-cancel {
+  position: absolute;
+  top: 15px;
+  right: 0;
+}
+input:valid + .icon-cancel {
+  display: block;
+}
+.icon-look {
+  position: absolute;
+  right: 0;
+}
+.icon-unlook {
+  position: absolute;
+  top: 20px;
+  right: 0;
+}
+.form-select {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 58px;
+  font-size: 16px;
+  -webkit-appearance: none;
+  background-color: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.addr-label {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 30px;
+  font-size: 16px;
+  text-align: center;
+}
+.addr-label::before {
+  position: absolute;
+  top: 44%;
+  left: 15%;
+  content: '';
+  display: block;
+  border-top: 6px solid #D8D8D8;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 6px solid transparent;
+}
+.msgcode-group {
+  position: relative;
+  width: 170px;
+}
+.msgcode-group input {
+  width: 140px;
+}
+.shape-code,
+.msg-code {
+  position: absolute;
+  bottom: 0;
+  right: -100px;
+  display: inline-block;
+  vertical-align: middle;
+  width: 86px;
+  height: 32px;
+  line-height: 32px;
+  color: #41434C;
+  font-size: 14px;
+  text-align: center;
+  background-color: #F4F4F4;
+  border: 1px solid #E1E1E1;
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+.shape-code {
+  background-color: #fff;
+}
+.submit-btn {
+  width: 266px;
+  height: 48px;
+  margin-top: 54px;
+  margin-bottom: 34px;
+  line-height: 48px;
+  background-image: linear-gradient(to right, #3857AC 0%, #0193BF 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1, startColorstr=#3857AC, endColorstr=#0193BF);
+  color: #fff;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 4px;
+  -moz-border-radius: 4px; /* Firefox */
+  -moz-box-shadow: 0 2px 8px 0 rgba(1, 147, 191, 0.7); /* Firefox */
+  box-shadow: 0 2px 8px 0 rgba(1, 147, 191, 0.7);
+  cursor: pointer;
+}
+.tips {
+  color: #848999;
+  font-size: 16px;
+  text-align: right;
+}
+.tips a {
+  color: #4A90E2;
+}
+.tips .apply-btn {
+  float: left;
+  color: inherit;
+  margin-bottom: 21px;
+}
+.tips .forgot-btn {
+  float: right;
+  color: inherit;
+  margin-bottom: 21px;
+}
+.download-browser {
+  position: absolute;
+  left: 50%;
+  bottom: 44px;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  color: #C8C8C8;
+  font-size: 16px;
+  text-align: center;
+}
+.download-browser span {
+  display: inline-block;
+  vertical-align: middle;
+}

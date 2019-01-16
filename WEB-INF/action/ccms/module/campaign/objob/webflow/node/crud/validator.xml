@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="subject_id" type="integer" required="true" label="subject_id" />
+	<parameter id="job_id" type="integer" required="true" label="job_id" />
+	<parameter id="id" type="varchar" required="true" label="id" />
+
+</validator>
+

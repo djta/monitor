@@ -1,0 +1,315 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>节点信息</title>
+<script type="text/javascript" src="${def:context}/js/gooflow/GooFlowUtil.js"></script>
+<link rel="stylesheet" href="${def:context}/js/kindeditor/themes/default/default.css" />
+<script src="${def:context}/js/kindeditor/kindeditor-min.js"></script>
+<script src="${def:context}/js/kindeditor/lang/zh_CN.js"></script>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+			<div class="tabs" style="display:none;">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#nodeInfoDiv" data-toggle="tab">节点信息</a></li>
+					<li><a href="#nodeHelpDiv" data-toggle="tab">节点帮助</a></li>
+				</ul>
+			</div>
+			<div class="tab-content" style="padding-top:10px;">
+				<div id="nodeInfoDiv"  class="tab-pane active">
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">节点编号:</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<input type="text" id="node_id" name="node_id" value="" size="30" readonly  class="form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">节点名称:</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<input type="text" id="node_name" name="node_name" value="" size="30"   class="form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">文档名称:</label>
+						<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">	
+							<input id="table_id1" name="document_id" type="hidden" value="" />
+							<input type="text" id="table_alias1" name="document_name" size="30"  readonly  class="form-control"  value="" />
+						</div>
+						<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">	
+							<img src="${def:context}/images/search.gif" class="tool" id="pickBusiDocument" title="查询文档" />
+							<img src="${def:context}/images/clear.gif" code1="document_id" code2="document_name" class="tool2 pickClear" title="清除选择的内容" />	
+						</div>
+					</div>
+					<div class="form-group" id="childWfmTr" style="display:none">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">选择子流程:</label>
+						<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">	
+							<input id="child_wfm_id" name="child_wfm_id" type="hidden" value="" />
+							<input type="text" id="child_wfm_name" name="child_wfm_name" size="30"  readonly  class="form-control"  value="" />
+						</div>
+						<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">	
+							<img src="${def:context}/images/search.gif" class="tool" id="pickWfm" code1="child_wfm_id" code2="child_wfm_name" title="查询子流程" />
+							<img src="${def:context}/images/clear.gif"  code1="child_wfm_id" code2="child_wfm_name" class="tool2 pickClear" title="清除选择的内容" />	
+						</div>
+					</div>
+					<div class="form-group" id="countersignTypeTr" style="display:none">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">会签类型:</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">	
+							<input name="countersign_type"  class="form-control" type="radio" value="0" checked />意见收集
+							<input name="countersign_type" type="radio" value="1"  class="form-control" />一票否决
+							<input name="countersign_type" type="radio" value="2"  class="form-control" />一票通过
+							<input name="countersign_type" type="radio" value="3"  class="form-control" />按比例通过
+						</div>
+					</div>
+					<div class="form-group" id="countersignPostTr" style="display:none"  title="会签选择部门后数据会自动到该岗位类型的岗位头上">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">会签岗位类型:</label>
+						<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">	
+							<input id="countersign_post" name="countersign_post" type="hidden" value="" />
+							<input type="text" id="countersign_post_name" name="countersign_post_name" size="30"  readonly  class="form-control"  value="" />
+						</div>
+						<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">	
+							<img src="${def:context}/images/search.gif" class="tool" id="pickPost" title="查询" />
+							<img src="${def:context}/images/clear.gif" code1="countersign_post" code2="countersign_post_name" class="tool2 pickClear" title="清除选择的内容" />	
+						</div>
+					</div>
+					<div class="form-group" id="countersignPerTr" style="display:none">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">会签比例:</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<input type="text" id="countersign_per" name="countersign_per" value="" size="30"   class="form-control"  maxlength="6"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">完成后状态:</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<input type="text" id="old_status" name="old_status" value="已完成" size="30"   class="form-control"  maxlength="120" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">执行中状态:</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<input type="text" id="status" name="status" value="处理中" size="30" class="form-control"  maxlength="120" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">节点描述:</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">						
+							<textarea  id="remark" name="remark"   class="form-control"  size="30" maxlength="200" ></textarea>
+						</div>
+					</div>
+					<input type="hidden" name="node_type" id="node_type" value="${fld:node_type}" />
+					<input type="hidden" name="step_type" id="step_type" value="${fld:step_type}" />
+				</div>
+				<div id="nodeHelpDiv" class="tab-pane">
+					<div class="form-group">
+						<textarea id="node_help" name="node_help" style="width:520px;height:260px;visibility:hidden;"></textarea>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="plan-footer navbar-fixed-bottom text-center">
+		<button type="button" id="save_btn" class="btn btn-primary btn-md" >确&nbsp;定</button>
+		<button type="button" class="btn btn-primary btn-md" id="cancel_btn">取&nbsp;消</button>
+	</div>
+</div>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" /> 
+</body>
+
+<script type="text/javascript">
+function NodeClass(){
+	this.id= "${fld:id}";
+	this.jsondata = parent.webflowClass.getFlowConfig();
+	this.nodedata = parent.webflowClass.getNodeConfig(this.id);
+	this.init=function(){
+		var obthis=this;
+		obthis.initData();
+		obthis.initEditor();
+		$("#pickBusiDocument").unbind("click");
+		$("#pickBusiDocument").unbind().on("click",function(){
+			var table_id = obthis.jsondata.table_id;
+			var url = "${def:context}/action/ccms/pub/pick/document/crud?pickId=pickOpen&id=table_id1&name=table_alias1";
+			if("${fld:step_type}" != "3" && "${fld:step_type}" != "4"){//如果是子流程或者会签则可以选择其他业务的文档
+				url += "&table_id="+table_id;
+			}
+			ccms.dialog.open({url:url,id:"pickOpen",width:500,height:400});
+		});
+		$("#pickWfm").unbind();
+		$("#pickWfm").unbind().on("click",function(){
+			var id=$(this).attr("code1");
+			var name=$(this).attr("code2");
+			var url="${def:context}/action/ccms/pub/pick/workflow/crud?id="+id+"&name="+name+"&pickId=wfmForm";
+			ccms.dialog.open({url:url,id:"wfmForm",width:500,height:400});
+		
+		});
+		$("#pickPost").unbind();
+		$("#pickPost").unbind().on("click",function(){
+			ccms.dialog.open({url:"${def:context}/action/ccms/pub/pick/post_type/crud?id=countersign_post&name=countersign_post_name&pickId=postForm",id:"postForm",width:500,height:400});
+		});
+		$("input[type='radio'][name='countersign_type']").unbind();
+		$("input[type='radio'][name='countersign_type']").unbind().on("click",function(){
+			var val=$(this).val();
+			if(val == "3"){
+				$("#countersignPerTr").show();
+			}else{
+				$("#countersignPerTr").hide();
+				document.formEditor.countersign_per.value = "";
+			}
+		});
+
+		$("#save_btn").unbind("click");
+		$("#save_btn").unbind().on("click",function(){
+			obthis.saveData();
+		});
+		$("#cancel_btn").unbind("click");
+		$("#cancel_btn").unbind().on("click",function(){
+			$("#_dlgnodeForm",window.parent.document).find(".dialog-close").click();//关闭此弹出窗口-新增
+		});
+	};
+	this.initEditor=function(){
+		var obthis=this;
+		KindEditor.ready(function(K) {
+			obthis.editor = K.create('textarea[name="node_help"]', {
+				resizeType : 1,
+				allowPreviewEmoticons : false,
+				allowImageUpload : false,
+				items : [
+					'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+					'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+					'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+			});
+		});
+	};
+	this.initData=function(){
+		if(typeof(this.jsondata) == "undefined"){
+			$Dialog().alert("请先配置流程信息！",function(){
+				$("#_dlgnodeForm",window.parent.document).find(".dialog-close").click();//关闭此弹出窗口-新增
+			});
+		}else{
+			if(this.nodedata){
+				var node_id = this.nodedata.node_id;
+				if(typeof(node_id) != "undefined" && node_id != null && node_id != ""){//修改
+					document.formEditor.node_id.value=this.nodedata.node_id;
+					document.formEditor.node_name.value=this.nodedata.node_name;
+					document.formEditor.document_id.value=this.nodedata.document_id;
+					document.formEditor.document_name.value=this.nodedata.document_name;
+					document.formEditor.old_status.value=this.nodedata.old_status;
+					document.formEditor.status.value=this.nodedata.status;
+					document.formEditor.remark.value=this.nodedata.remark;
+					document.formEditor.node_help.value=this.nodedata.node_help;
+					//会签类型
+					if("${fld:step_type}" == "3"){
+						document.formEditor.child_wfm_id.value=this.nodedata.child_wfm_id;
+						document.formEditor.child_wfm_name.value=this.nodedata.child_wfm_name;
+						setCheckboxValue("countersign_type",this.nodedata.countersign_type,"formEditor");
+						document.formEditor.countersign_per.value=this.nodedata.countersign_per;
+
+						if(this.nodedata.countersign_post){
+							document.formEditor.countersign_post.value=this.nodedata.countersign_post;
+						}
+						if(this.nodedata.countersign_post_name){
+							document.formEditor.countersign_post_name.value=this.nodedata.countersign_post_name;
+						}
+					}else if("${fld:step_type}" == "4"){//子流程节点
+						document.formEditor.child_wfm_id.value=this.nodedata.child_wfm_id;
+						document.formEditor.child_wfm_name.value=this.nodedata.child_wfm_name;
+					}
+				}else{//新增
+					//获取主键序列号
+					getSequence("node_id",null);
+				}
+				//会签类型
+				if("${fld:step_type}" == "3"){
+					document.getElementById("countersignTypeTr").style.display = "";
+					document.getElementById("childWfmTr").style.display = "";
+					document.getElementById("countersignPostTr").style.display = "";
+				}else if("${fld:step_type}" == "4"){//子流程节点
+					document.getElementById("childWfmTr").style.display = "";
+				}
+			}else{
+				$Dialog().alert("未获取到节点信息，请检查配置情况！");
+				$("#_dlgnodeForm",window.parent.document).find(".dialog-close").click();//关闭此弹出窗口-新增
+			}
+		}
+	};
+	this.pickClear=function(name,id){
+		$("#"+id).val("");
+		$("#"+name).val("");
+	};
+
+	this.saveData=function(){
+		if(document.formEditor.node_name.value == ""){
+			$Dialog().alert("节点名称不能为空！");
+			return false;
+		}
+		if(document.formEditor.document_id.value == ""){
+			$Dialog().alert("文档名称不能为空！");
+			return false;
+		}
+
+		var child_wfm_id = document.formEditor.child_wfm_id.value;
+		var child_wfm_name = document.formEditor.child_wfm_name.value;
+		var countersign_type = GetRadioValue("countersign_type","formEditor");
+		var countersign_per = document.formEditor.countersign_per.value;
+		//会签类型
+		if("${fld:step_type}" == "3"){
+			if(child_wfm_id == ""){
+				$Dialog().alert("请选择子流程！");
+				return false;
+			}
+			if(countersign_type == "3" && countersign_per == ""){
+				$Dialog().alert("请输入会签比例！");
+				return false;
+			}
+		}else if("${fld:step_type}" == "4"){//子流程节点
+			if(child_wfm_id == ""){
+				$Dialog().alert("请选择子流程！");
+				return false;
+			}
+		}
+
+		//更新Gooflow中配置信息
+		this.nodedata.node_id = document.formEditor.node_id.value;
+		this.nodedata.node_name = document.formEditor.node_name.value;
+		this.nodedata.document_id = document.formEditor.document_id.value;
+		this.nodedata.document_name = document.formEditor.document_name.value;
+		this.nodedata.old_status = document.formEditor.old_status.value;
+		this.nodedata.status = document.formEditor.status.value;
+		this.nodedata.remark = document.formEditor.remark.value;
+		this.nodedata.node_type = document.formEditor.node_type.value;
+		this.nodedata.step_type = document.formEditor.step_type.value;
+		
+		this.editor.sync();
+		var val=document.formEditor.node_help.value;
+		if(val==''){
+			this.nodedata.node_help ="" ;
+		}else{
+			this.nodedata.node_help = val;
+		}
+		//会签类型
+		if("${fld:step_type}" == "3"){
+			this.nodedata.child_wfm_id = child_wfm_id;
+			this.nodedata.child_wfm_name = child_wfm_name;
+			this.nodedata.countersign_type = countersign_type;
+			this.nodedata.countersign_per = countersign_per;
+			this.nodedata.countersign_post = document.formEditor.countersign_post.value;
+			this.nodedata.countersign_post_name = document.formEditor.countersign_post_name.value;
+		}else if("${fld:step_type}" == "4"){//子流程节点
+			this.nodedata.child_wfm_id = child_wfm_id;
+			this.nodedata.child_wfm_name = child_wfm_name;
+		}
+		parent.webflowClass.updateNodeConfig(this.id,this.nodedata);
+		$("#_dlgnodeForm",window.parent.document).find(".dialog-close").click();//关闭此弹出窗口-新增
+	};	
+}
+
+var nodeClass=null;
+$(document).ready(function(){
+	nodeClass=new NodeClass();
+	nodeClass.init();
+});
+	//changeRequiredStyle();
+</script>
+
+</html>

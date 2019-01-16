@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+${inc:/action/pub/easyui}
+<title>重置密码</title>
+</head>
+
+<body class="easyui-layout">
+<div id="tabmain"  region="center" style="height: 50px;">
+	<form name="formEditor">
+		<input type="hidden" id="tuid" name="tuid" value="${fld:user_id}"/>
+		<input type="hidden" id="user_id" name="user_id" value="${fld:user_id}"/>
+		<input type="hidden" id="userlogin" name="userlogin" value="${fld:userlogin}"/>
+		<table class="formgrid" width="100%">
+			<tr>
+				<td class="formlabel">用户名: </td>
+				<td>${fld:name}</td>
+			</tr>	
+
+			<tr>
+				<td class="formlabel">Email: </td>
+				<td>${fld:email}</td>
+			</tr>	
+	
+			<tr>
+				<td class="formlabel required">${lbl:s_fld_newpassword} </td>
+				<td><input id="passwd" name="passwd" type="password" size="20" maxlength="15" ></td>
+			</tr>
+
+			<tr>
+				<td class="formlabel required">${lbl:s_fld_confirm} </td>
+				<td><input id="confirm" name="confirm" type="password" size="20" maxlength="15" ></td>
+			</tr>
+		</table>
+	</form>
+	<div id="edit-buttons" style="padding-left:30%;">
+		<a class="easyui-linkbutton" iconCls="icon-ok" id="submitBtn" onclick="javascript:return save()">保存</a>
+		<a class="easyui-linkbutton" iconCls="icon-cancel" onclick="parent.$('#dialogDiv').dialog('close');">取消</a>
+	</div>
+</div>
+
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}"/>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/ccms/pub}
+<title>导入配置成功</title>
+	
+</head>
+
+<body>
+<script language="javascript">
+	$Dialog().notice("配置导入成功",1500,function(){
+		$("#_dlgwinsOpen",window.parent.document).find(".dialog-close").click();//关闭此弹出窗口
+	});
+</script>
+</body>
+
+</html>

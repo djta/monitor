@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<!--COMMON :include style and javascript code-->
+${inc:/action/pub/common}
+
+<title>FAQ导读信息</title>
+
+</head>
+
+<body onmouseup="hidInputValidatorTip(3);">
+
+<!--COMMON HEADER-->
+${inc:/action/pub/header}
+<SCRIPT LANGUAGE="JavaScript">
+
+	
+
+//-->
+</SCRIPT>
+
+<form name="formEditor">
+
+<FIELDSET><LEGEND>FAQ导读信息设置</LEGEND>
+<TABLE class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0>
+
+    <input name="faq_id" type="hidden" value="${fld:faq_id}">
+
+
+		<tr>
+		        <td  class=th20>
+		        <span class="required">
+		        标题
+		        </span>
+		        </td>
+		        <td  class=td20left>
+		                ${fld:show_name}
+		        </td>
+		</tr>
+
+		<tr>
+			<td  class=th20>
+			<span class="optional">
+			开始日期
+			</span>
+			</td>
+
+			<td  class=td20left>
+
+				<input id="from_date" name="from_date" type="text" size="10" value="" maxlength="10">
+				<img class="tool2" src="${def:context}/images/calendar.gif" 
+					title="打开日历.."
+					onclick="calendarOpen('from_date')"> YYYY-MM-DD
+			</td>
+		</tr>
+		
+		<tr>
+			<td  class=th20>
+			<span class="optional">
+			结束日期
+			</span>
+			</td>
+
+			<td  class=td20left>
+
+				<input id="t_date" name="t_date" type="text" size="10" value="" maxlength="10">
+				<img class="tool2" src="${def:context}/images/calendar.gif" 
+					title="打开日历.."
+					onclick="calendarOpen('t_date','from_date')"> YYYY-MM-DD
+			</td>
+		</tr>
+</TABLE>
+
+
+
+</FIELDSET>
+
+<FIELDSET><LEGEND>操作信息</LEGEND>
+<TABLE class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <col width="80%">
+        <col width="20%">
+        <!--buttons-->
+        <tr>
+            <td align="center" nowrap>
+                <input type="button" class="btn_blue" value="保存" onclick="return checkFields()" id="submitBtn">
+                <input id="deleteCommand" type="button" class="btn_gray" value="取消导读"  onclick="deleteFunc(tuid.value)">
+            </td>
+            <td class="th20 required" colspan=3>
+                特别标注为必填信息.
+            </td>
+        </tr>
+    
+</table>
+</FIELDSET>
+
+    <!--tuid是否为空,决定了form的保存方法为编辑保存,还是新增保存-->
+    <input type="hidden" id="tuid" name="tuid" default="0" value="${fld:tuid}">
+
+</form>
+
+</center>
+
+</body>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+//保存
+function checkFields(){
+	if(document.formEditor.tuid.value != ""){
+		document.formEditor.action = "${def:context}${def:actionroot}/update";
+	}else{
+		document.formEditor.action = "${def:context}${def:actionroot}/insert";
+	}
+	document.formEditor.method = "POST";
+	document.formEditor.submit();
+
+    return true;
+}
+//删除
+function deleteFunc(){
+  if (window.confirm("确认要取消导读吗?")==false)
+  {
+      return false;
+  }
+	
+	document.formEditor.action = "${def:context}${def:actionroot}/delete";
+	document.formEditor.method = "POST";
+	document.formEditor.submit();
+
+    return true;
+}
+//-->
+</SCRIPT>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+function initData(){
+    document.formEditor.from_date.value = "${fld:from_date@yyyy-MM-dd}";
+    document.formEditor.t_date.value = "${fld:t_date@yyyy-MM-dd}";
+	if("${fld:flag}" == "1"){
+		document.getElementById("submitBtn").style.display = "";
+		document.getElementById("deleteCommand").style.display = "none";
+	}else{
+		document.getElementById("submitBtn").style.display = "";
+		document.getElementById("deleteCommand").style.display = "";
+	}
+}
+initData();
+</SCRIPT>
+</html>

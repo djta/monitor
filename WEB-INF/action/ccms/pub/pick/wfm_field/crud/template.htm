@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>选取数据</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">选取字段</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post" id="searchForm" name="searchForm">
+			<input name="sort" type="hidden" value="description" preserve="true"/>
+			<input name="order" type="hidden" value="desc" preserve="true" /> 
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+			<div class="form-group">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+					<input id="name" class="form-control" placeholder="请输入名称" name="name" type="text" size="30" value="" maxlength="35" />
+					<input id="wfm_id" name="wfm_id" type="hidden" value="${fld:wfm_id}" />
+				</div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+					<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+					<button class="btn btn-primary btn-md" type="button" id="btn_reset">清空</button>
+				</div>
+			</div>
+		</form>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th class="sortable" code="description">字段名称</th>
+					<th class="sortable" code="name">字段代码</th>
+				</tr>
+			</thead>
+			<tbody id="datagridTemplate" style="display: none">
+				<tr onclick="selectItem('#id#','#description#')" style="cursor:pointer;" title="选择">
+					<td align="center">#description#</td>
+					<td align="center">#name#</td>
+				</tr>
+			</tbody>
+			<tbody id="datagrid"></tbody>
+		</table>
+		<div class="pageDiv">
+			<ul class="pagination"></ul>
+		</div>
+	</div>
+</div>
+
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		$("#btn_reset").unbind().on("click",function(){
+			document.searchForm.name.value='';
+		});
+	}}).initSearchBtn().searchData(1);
+});
+function selectItem(id,name) {
+	//界面配置中查询条件用到
+	parent.$("#${fld:id}").val(id);
+	parent.$("#${fld:name}").val(name);
+	//parent.$("#_dlg${fld:pickId}").modal("hide");//关闭此弹出窗口
+	ccms.dialog.close();
+}
+</script>
+</body>
+</html>

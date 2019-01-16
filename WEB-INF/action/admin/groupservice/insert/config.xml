@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		添加服务
+	</summary>
+	
+	<log>false</log>
+	
+	<audit>
+		<recordset>query.sql</recordset>
+		<cols>
+			<colname>app_id</colname>	
+			<colname>group_name</colname>		
+		</cols>
+		<table>s_service_group</table>
+		<oper>增加</oper>
+		<area>系统组服务</area>
+		<pkey>group_id</pkey>
+	</audit>
+
+	<transaction>
+		<classname>com.ccms.dinamica.domain.admin.AfterTransaction</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<query>insert.sql</query>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

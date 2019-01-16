@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="fdate3" type="date" required="false" label="开始日期" />
+	<parameter id="tdate3" type="date" required="false" label="结束日期" />
+	<parameter id="wfm_name3" type="varchar" required="false" label="工作流" />
+	<parameter id="entry_id3" type="integer" required="false" label="工单号" />
+
+
+	<custom-validator
+		classname="dinamica.validators.SQLPatternTransformer"
+		parameter="wfm_name3"
+		rule="contains" />
+</validator>

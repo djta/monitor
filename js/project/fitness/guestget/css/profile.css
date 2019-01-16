@@ -1,0 +1,68 @@
+body {
+  width: 10rem;
+  padding-top: 0.26666667rem;
+}
+.gg-profile-top {
+  position: relative;
+  width: 10rem;
+  height: 2.34666667rem;
+  line-height: 2.34666667rem;
+  margin-bottom: 0.13333333rem;
+  padding: 0 0.4rem;
+  background-color: #fff;
+  box-sizing: border-box;
+  border-top: 1px solid #E5E5E5;
+  border-bottom: 1px solid #E5E5E5;
+  font-size: 0.48rem;
+  color: #000;
+}
+.avatar {
+  position: absolute;
+  top: 50%;
+  right: 0.61333333rem;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  width: 1.70666667rem;
+  height: 1.70666667rem;
+  margin-right: 0.34666667rem;
+  border-radius: 0.13333333rem;
+  border: 1px solid #B4B4B4;
+  background-image: url(../../images/avatar.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.gg-profile-bt {
+  width: 10rem;
+  border-top: 1px solid #E5E5E5;
+}
+.gg-profile-bt li {
+  position: relative;
+  width: 100%;
+  height: 1.17333333rem;
+  line-height: 1.17333333rem;
+  padding: 0 0.4rem;
+  background-color: #fff;
+  color: #000;
+  font-size: 0.45333333rem;
+  border-bottom: 1px solid #E5E5E5;
+  box-sizing: border-box;
+}
+.gg-profile-bt li:last-child {
+  margin-top: 0.26666667rem;
+  border-top: 1px solid #E5E5E5;
+  border-bottom: 1px solid #E5E5E5;
+}
+.gg-profile-bt .value {
+  position: absolute;
+  right: 1.01333333rem;
+  color: #888888;
+  display: inline-block;
+  vertical-align: middle;
+}
+.icon-more {
+  position: absolute;
+  top: 50%;
+  right: 0.4rem;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}

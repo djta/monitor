@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		Producto - Insertar registro
+	</summary>
+	
+	<log>false</log>
+
+<colname>form_field,form_is_mandatory,form_is_readonly,form_is_attachment,form_item_id,form_show_order,form_show_type,form_width,form_colspan,form_rowspan,form_is_cascade_combo,form_show_color;filter_field,filter_is_mandatory,filter_item_id,filter_show_order,filter_show_type,filter_width,filter_colspan,filter_rowspan,filter_filter_type;grid_field,grid_show_order,grid_show_flag,grid_format,grid_sort_order,grid_print_html,grid_compute_total,grid_show_align;pdf_field,pdf_show_order,pdf_format,pdf_show_type,pdf_width;excel_field,excel_show_order,excel_show_type,excel_width</colname>
+	<sql-template>insert-shows.sql;insert-filters.sql;insert-grids.sql;insert-pdfs.sql;insert-excels.sql</sql-template>
+
+	<transaction>
+		<classname>com.ccms.InsertMaster</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<query>delete-shows.sql</query>
+	<query>delete-filters.sql</query>
+	<query>delete-grids.sql</query>
+	<query>delete-pdfs.sql</query>
+	<query>delete-excels.sql</query>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

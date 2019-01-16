@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>选择业务</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">选取业务</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post" id="searchForm" name="searchForm">
+			<input name="sort" type="hidden" value="" preserve="true"/>
+			<input name="order" type="hidden" value="desc" preserve="true" /> 
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+			<div class="form-group">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+					<input  class="form-control" id="field_code" name="field_code" type="text" value="" maxlength="35" size="10" placeholder="请输入字段代码"  /> 
+					<input type="hidden" name="tab_id" id="tab_id" value="${fld:tab_id}" preserve="true"/>
+				</div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+					<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+					<button class="btn btn-primary btn-md" type="button" id="btn_reset">清空</button>
+				</div>
+			</div>
+		</form>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>字段名称</th>
+					<th>字段代码</th>
+					<th>命名空间</th>
+					<th>字段顺序</th>
+					
+				</tr>
+			</thead>
+			<tbody id="datagridTemplate" style="display: none">
+				<tr onclick="selectItem('#id#','#field_code#','#field_length#','#default_value#','#domain_namespace#','#field_type#','#field_name#','#fk_schema#','#fk_tab#','#fk_fld_code#','#is_mandatory#')" title="选择" style="cursor:pointer;">
+					<td align="center">#field_name_cn#</td>
+					<td align="center">#field_code#</td>
+					<td align="center">#domain_namespace#</td>
+					<td align="center">#show_order#</td>
+
+				</tr>
+			</tbody>
+			<tbody id="datagrid"></tbody>
+		</table>
+		<div class="pageDiv">
+			<ul class="pagination"></ul>
+		</div>
+	</div>
+</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		$("#btn_reset").unbind().on("click",function(){
+			clearForm('searchForm');
+		});
+	}}).initSearchBtn().searchData(1);
+});
+function selectItem(id,code,field_length,default_value,domain_namespace,field_type,field_name,fk_schema,fk_tab,fk_fld_code,is_mandatory){
+	//业务表信息调用
+	$("#field_id",window.parent.document).val(id);
+	$("#field_code",window.parent.document).val(code);
+	$("#field_length",window.parent.document).val(field_length);
+	$("#default_value",window.parent.document).val(default_value);
+	$("#domain_namespace",window.parent.document).val(domain_namespace);
+	$("#field_name",window.parent.document).val(field_name);
+	/*$("#field_type",window.parent.document).val(field_type);
+	$("#fk_schema",window.parent.document).val(fk_schema);
+	$("#fk_tab",window.parent.document).val(fk_tab);
+	$("#fk_fld_code",window.parent.document).val(fk_fld_code);
+	$("#is_mandatory",window.parent.document).val(is_mandatory); */
+
+	$("#_dlgpickOpen",window.parent.document).find(".dialog-close").click();//关闭此弹出窗口-新增
+}	
+</script>
+</body>
+</html>

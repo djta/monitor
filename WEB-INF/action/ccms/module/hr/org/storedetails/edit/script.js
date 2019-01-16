@@ -1,0 +1,12 @@
+﻿$("#address").val('${fld:address}');
+$("#contacts").val('${fld:contacts}');
+$("#contact_phone").val('${fld:contact_phone}');
+$("#province").val('${fld:province}');
+$("#city").val('${fld:city}');
+$("#category_label").val('${fld:category_label}');
+$("#featured_products").val('${fld:featured_products}');
+$("#atmosphere").val('${fld:atmosphere}');
+$("#features").val('${fld:features}');
+$("#business_hours").val('${fld:business_hours}');
+$("#tuid_m").val('${fld:tuid}');
+$("#company").val('${fld:company}');

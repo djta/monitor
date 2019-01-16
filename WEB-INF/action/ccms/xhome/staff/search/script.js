@@ -1,0 +1,17 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{		
+		"show_order":"${fld:_rowNumber}",
+		"radiolink":"${fld:radiolink@js}",
+		"user_id":"${fld:user_id}",
+		"userlogin":"${fld:userlogin}",
+		"name":"${fld:name@js}",
+		"mobile":"${fld:mobile}",
+		"vc_contact":"${fld:vc_contact@js}",
+		"skill_name":"${fld:skill_name@js}",
+		"sex":"${fld:sex}",
+		"state":"${fld:state@js}"
+	},
+	</rows>
+	{}
+]}

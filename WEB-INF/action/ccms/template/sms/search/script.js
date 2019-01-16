@@ -1,0 +1,10 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{ 
+		"tuid":"${fld:tuid}"
+		,"template_name":"${fld:template_name@js}" 
+		,"template_content":"${fld:template_content@js}"
+	},
+	</rows>
+	{}
+]}

@@ -1,0 +1,11 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"service_id":"${fld:service_id}"
+		,"description_cn":"${fld:description_cn@js}"
+		,"description_en":"${fld:description_en@js}"
+		,"path":"${fld:path@js}"
+	},
+	</rows>
+	{}
+]}

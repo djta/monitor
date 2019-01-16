@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>业务操作历史信息</title>
+<script src="${def:context}/js/highcharts/js/highcharts.js"></script>
+<script src="${def:context}/js/highcharts/js/highcharts-3d.js"></script>
+<script type="text/javascript" src="${def:context}/js/highcharts/js/modules/exporting.js"></script>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">业务操作历史信息</h2>
+		</div>
+		<div class="panel-body col_main_body" style="overflow-x: hidden">
+			<form id="formFilter" name="formFilter" class="form-horizontal"
+				role="form" method="post">
+				<div class="form-group">
+					<div class="col-sm-4 clearright clearleft">
+						<label class="col-sm-4 clearright text-right">应用系统</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+							<select name="contexto" style="width: 150px" class="form-control" id="yingyongxitong">
+								<rows3>
+								<option value="${fld:app_alias}" >${fld:description}</option>
+								</rows3>
+							</select>
+						</div>
+					</div>
+
+					<div class="col-sm-4 clearright clearleft">
+						<label class="col-sm-4 clearright text-right">起始日期</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+							<input type="text" class="form-control" id="fdesde" name="fdesde"
+								size="20" maxlength="10" placeholder="请选择登录日期">
+						</div>
+					</div>
+
+					<div class="col-sm-4 clearright clearleft">
+						<label class="col-sm-4 clearright text-right">结束日期</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+							<input id="fhasta" name="fhasta" class="form-control" type="text"
+								size="20" value="" maxlength="10" placeholder="请选择结束日期">
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-4 clearright clearleft">
+						<label class="col-sm-4 clearright text-right">区域</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+							<select name="area" style="width: 150px" class="form-control">
+								<option value=""></option>
+								<rows>
+								<option value="${fld:area}">${fld:area}</option>
+								</rows>
+							</select>
+						</div>
+					</div>
+
+					<div class="col-sm-4 clearright clearleft">
+						<label class="col-sm-4 clearright text-right">业务操作</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+							<select name="operation" style="width: 150px"
+								class="form-control">
+								<option value=""></option>
+								<rows2>
+								<option value="${fld:oper}">${fld:oper}</option>
+								</rows2>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-4 clearright clearleft">
+						<div class="col-sm-12 clearright clearleft">
+							<button type="button" id="search_btn"
+								class="btn btn-primary btn-md">查询</button>
+							<button type="button" id="reset_btn"
+								class="btn btn-primary btn-md">重置</button>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div id="chartcontainer"></div>
+		</div>
+	</div>
+
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+</body>
+
+</html>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		$Dialog().date($('#fdesde'));
+		$Dialog().date($('#fhasta'));
+
+		$("#search_btn").click(function() {
+			var url = $("#actionroot").val() + "/search";
+			ajaxCall(url, {
+				method : "post",
+				progress : true,
+				form : "formFilter",
+				dataType : "json",
+				success : function(data) {
+					makeData(data);
+
+					//showChart();
+				}
+			});
+		});
+		$("#reset_btn").unbind().on("click", function() {
+			$('#fdesde').val("");
+		});
+		$("#reset_btn").unbind().on("click", function() {
+			$('#fhasta').val("");
+		});
+	});
+
+	
+	function maptoArray(map){
+		var array=new Array();
+		for(var key in map){ 
+			array.push(key);
+		}
+		return array;
+	}
+	
+	function makeData(data) {
+		data.pop();
+		var map={};
+		var xMap={};
+		for(var key in data){ 
+			var obj=data[key];
+			xMap[obj.operation]=obj.operation;
+			map[obj.usuario]=obj.usuario;
+		}
+		var renArray=maptoArray(map);
+		var operArray=maptoArray(xMap);
+		
+		var dataArray=[];
+		for(var key in operArray){
+			var type=operArray[key];
+			var tdarray=new Array();
+			for(var key1 in data){ 
+				var obj=data[key1];
+				var operation=obj.operation;
+				if(type==operation){
+					//dataMap.data.push([obj.usuario,obj.total]);
+					tdarray.push([obj.usuario+'',parseInt(obj.total)]);
+				}
+			}
+			var dataMap={
+		            name: type,
+		            data: tdarray
+		        };
+			dataArray.push(dataMap);
+		}
+		//alert(renArray+":"+dataArray);
+		showChart(renArray,dataArray);
+	}
+	
+	
+	function  getArray(data){
+		var array=[];
+		for(var key in data){ 
+			var obj=data[key];
+			array.push([obj.usuario,obj.total]);
+		}
+		return array;
+	}
+
+	function showChart(xArray,dataarray) {
+		/* dataarray=[];
+		dataarray.push({
+            name: '增加',
+            data: [['admin admin',19]]
+        });
+		alert(dataarray); */
+		 $('#chartcontainer').highcharts({
+		        chart: {
+		            type: 'column',
+		            margin: 75,
+		            options3d: {
+		                enabled: true,
+		                alpha: 10,
+		                beta: 25,
+		                depth: 70
+		            }
+		        },
+		        title: {
+		            text: '业务操作历史信息'
+		        },
+		        subtitle: {
+		            text: ' '
+		        },
+		        credits:{//右下角的文本  
+		     			 enabled: false  
+		        },
+		        plotOptions: {
+		            column: {
+		                depth: 25
+		            }
+		        },
+		        exporting:{ 
+                     enabled:false //用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示 
+                },
+		        xAxis: {
+		            categories: xArray
+		        },
+		        yAxis: {
+		             title: {
+		                 text: '数目'
+		             },
+		             min:0, // 定义最小值  
+		             plotLines: [{
+		                 value: 0,
+		                 width: 1,
+		                 color: '#808080'
+		             }]
+		         },
+		        series:dataarray
+		    });
+	}
+</script>

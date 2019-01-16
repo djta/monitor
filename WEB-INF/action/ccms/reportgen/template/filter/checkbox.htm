@@ -1,0 +1,10 @@
+<div class="col-xs-${fld:colspan} col-sm-${fld:colspan} col-md-${fld:colspan} col-lg-${fld:colspan}">
+	<label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label ${fld:is_required_alias}" for="${fld:field_code_alias}_filter">${fld:field_name}</label>
+	<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">						
+		<input type="hidden" name="${fld:field_code_alias}_operator" value="${fld:filter_type}" preserve="true">
+		<rows>
+		<input class="form-control" name="${fld:field_code_alias}_filter" type="checkbox" value="${fld:domain_value}" ${fld:plugin_code}>${fld:domain_text}</br>
+		</rows>
+		${fld:plugin_control}
+	</div>
+</div>

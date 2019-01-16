@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+    <parameter id="group_name" type="varchar" required="true" label="名称" maxlen="128"/>
+    <parameter id="remark" type="varchar" required="true" label="备注" maxlen="256"/>
+    
+	<custom-validator 	
+		classname="dinamica.validators.DuplicatedKeyValidator" 
+		on-error-label="该名称已经存在，请换一个"
+		id="group_name" sql="dupkey.sql" />
+</validator>
+

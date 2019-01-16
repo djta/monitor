@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>字段信息</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">字段信息</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm" name="searchForm">
+				<input name="order" type="hidden" value="desc" preserve="true" /> 
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+				<div class="form-group">
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+					<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+						字段类型
+					</div>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+						<input name="table_id" id="table_id"  type="hidden" value="" preserve="true"/>
+						<input id="field_type" name="field_type" type="hidden" value=""/>
+						<input type="text" id="type_alias1" class="form-control" name="type_alias1" size="30"  readonly  class="readonly" />
+					</div>
+					<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+									<img src="${def:context}/images/search.gif" class="tool"
+										id="pickOpenNotCenter"
+										title="查询字段类型"/>
+									<img src="${def:context}/images/clear.gif"
+										id="pickClear" class="tool2"
+										title="清除选择的内容" />
+					</div>
+					<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+						字段名称
+					</div>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+						<input name="field_name_cn" id="fdesde" class="form-control" type="text" size="30" value="" />
+					</div>
+				</div>
+				<div class="form-group">
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+					<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+						字段代码
+					</div>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+						<input name="field_code" id="fdesde1" class="form-control" type="text" size="30" value="" />
+							<!--最多显示记录个数-->
+							<input name="limitedcount"  value="1000" type="hidden" />
+					</div>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<input type="submit" class="btn btn-primary btn-md" value="查询" id="search_btn"/>
+			            <input type="button" class="btn btn-primary btn-md reset_btn" value="重置" />
+			            <input type="button" class="btn btn-primary btn-md" value="新增字段" id="addnew_btn"/>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>
+						    操作
+						</th>
+						<th>
+						    复制 
+						</th>
+						<th>
+							字段名称(中文)
+						</th>
+						<th>
+							字段名称(英文)
+						</th>
+						<th>
+							业务名称
+						</th>
+						<th>
+							字段代码
+						</th>
+						<th>
+							字段类型
+						</th>
+						<th>
+							长度
+						</th>
+						<th>
+							NameSpace
+						</th>
+						<th>
+							外键表
+						</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display:none ">
+					<tr>
+						<td align="center">
+							<button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">修改</button>
+							<button class="btn btn-primary btn-md delete_btn" type="button" code="#tuid#">删除</button>
+						</td>
+						<td align="center">
+							<button class="btn btn-primary btn-md CopyField" type="button" title="复制字段" code="#tuid#">复制</button>
+						</td>
+						<td align="center">
+							#field_name_cn#
+						</td>
+						<td align="center">
+							#field_name_en#
+						</td>
+						<td align="center">
+							#table_alias#
+						</td>
+						<td align="center">
+							#field_code#
+						</td>
+						<td align="center">
+							#type_alias#
+						</td>
+						<td align="center">
+							#field_length#
+						</td>
+						<td align="center">
+							#domain_namespace#
+						</td>
+						<td align="center">
+							#fk_tab#
+						</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+		<br>
+		<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+</div>
+</body>
+
+</html>
+
+<script language="javascript">
+$(document).ready(function() {
+	//重置
+	$(".reset_btn").unbind().on("click", function() {
+		$('#fdesde').val("");
+		$('#fdesde1').val("");
+	});
+	document.searchForm.table_id.value = "${fld:table_id}";
+	$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		$(".edit_btn").unbind().on("click",function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				var url = "/action/ccms/module/table/field/edit?id="+$(this).attr("code");
+				gotoPage(url);
+			}
+		});
+		$("#addnew_btn").unbind().on("click",function(){
+			var table_id =  document.searchForm.table_id.value;
+			var url = "/action/ccms/module/table/field/insertForm?table_id="+table_id;
+			gotoPage(url);
+		});
+		//复制字段
+		 $(".CopyField").unbind().on("click", function(){
+				var obthis = $(this);
+				if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+					//var url="${def:actionroot}/copy/form?field_id="+obthis.attr("code");
+					var url="${def:context}/action/ccms/module/table/field/copy/form?field_id="+obthis.attr("code");
+					ccms.dialog.open({url:url,id:"copysSubject",width:600,height:350});
+					//gotoPage(url);
+				}
+			});
+		//删除
+		 $(".delete_btn").unbind().on("click",function(){
+				var obthis = $(this);
+				$Dialog().confirm("确定要删除吗？",function(){
+					if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+						var url = "/action/ccms/module/table/field/delete?id="+obthis.attr("code");
+						ajaxCall(url,{
+								method: "post",
+								progress: true,
+								dataType: "script",
+								success: function() {
+									
+								}
+						});
+					}
+				});
+			});
+		//查询条件清空图标字段类型
+			$("#pickClear").unbind().on("click",function(){
+				document.searchForm.type_alias1.value='';
+				document.searchForm.field_type.value='';
+			});
+			//查询条件搜索图标字段类型
+			$("#pickOpenNotCenter").unbind().on("click",function(){
+				var url = "${def:context}/action/ccms/pub/pick/fieldtype?pickId=pickOpen&id=field_type&name=type_alias1";
+				ccms.dialog.open({url:url,id:"pickOpen",width:500,height:300});
+			});
+	}}).initSearchBtn().searchData(1);
+});
+</script>

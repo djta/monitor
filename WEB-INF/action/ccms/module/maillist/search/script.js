@@ -1,0 +1,11 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"col1":"${fld:col1@js}"
+		,"col2":"${fld:col2}"
+		,"col3":"${fld:col3}"
+		,"col4":"${fld:col4}"
+	},
+	</rows>
+	{}
+],"pid":${fld:pid}}

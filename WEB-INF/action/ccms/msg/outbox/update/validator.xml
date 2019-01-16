@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="tuid" type="varchar" required="true" label="TUID" maxlen="10"/>
+	<parameter id="msg_title" type="varchar" required="true" label="标题" maxlen="100"/>
+	<parameter id="msg_content" type="varchar" required="true" label="内容" maxlen="4000"/>
+	<parameter id="remark" type="varchar" required="false" label="备注" maxlen="500"/>
+	<parameter id="limit_date" type="date" required="false" label="限制时间"/>
+	<parameter id="flag" type="varchar" required="true" label="发送标志" maxlen="2"/>
+	<parameter id="send_flag" type="varchar" required="false" label="发送标志" maxlen="2"/>
+	<parameter id="topic_name" type="varchar" required="false" label="广播名称"/>
+	<parameter id="send_type" type="varchar" required="true" label="发送类型"/>
+
+</validator>
+
+

@@ -1,0 +1,1850 @@
+<script type="text/javascript">
+/*修正IE中的getElementById BUG*/
+if (/msie/i.test (navigator.userAgent)){ //根据userAgent确定用户使用IE浏览器
+    document.nativeGetElementById = document.getElementById;  
+    document.getElementById = function(id) {
+    	if(id==null || id==""){
+    		return null;
+    	}
+        var elem = document.nativeGetElementById(id);  
+        if(elem){  
+            //修改后的确认能得到id属性方法  
+            if(elem.attributes['id'].value == id){  
+                return elem;  
+            }else{  
+                //如果没有ID相同的,那么就遍历所有元素的集合找到id相同的元素  
+                for(var i=1;i<document.all[id].length;i++){  
+                    if(document.all[id][i].attributes['id'].value == id){  
+                        return document.all[id][i];  
+                    }  
+                }  
+            }  
+        }  
+        return null;  
+    };  
+}  
+function getHttpObject(){
+	var obj = null;
+	if (window.XMLHttpRequest) {
+		obj = new XMLHttpRequest();
+	} else if (window.ActiveXObject) {
+		obj = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	return obj;
+}
+function ajaxCall_report(httpMethod, uri, divResponse, formName, afterResponseFn, onErrorFn, ignoreShowDivStatus){
+		//显示等待图标
+		ccms.util.loadClass.showLoad();
+		
+		var server = "${def:httpserver}";
+		
+		var url = server + "${def:context}" + uri;
+		if (url.indexOf("?")>0){
+			url = url + "&random=" + Math.random();
+		}else{
+			url = url + "?random=" + Math.random();
+		}
+		
+		var data = null;
+		if (formName!=null){
+			data = getFormValues(formName);
+		}else if(httpMethod.toLowerCase()=="post"){	/*如果POST方法没指定form,则重构url及data数据*/
+			data = url.substring(url.indexOf("?")+1,url.length);
+			url = url.substring(0,url.indexOf("?"));
+		}
+		//创建一个请求
+		var http = getHttpObject();
+		//AJAX响应处理
+    	http.open(httpMethod, url, true);
+    	http.setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
+    	/* if (data!=null){
+			http.setRequestHeader("Content-length", data.length);
+		} */
+		console.info(server,url,data);
+		http.send(data);
+		
+		http.onreadystatechange = function (){
+			if (http.readyState == 4){
+				var contentType = http.getResponseHeader("Content-type");
+				var text = http.responseText;
+				//验证是否登录
+				if (text.indexOf("_ajax_VE8374yz_")>0){
+						window.location="${def:context}";
+				}else{
+					//隐藏等待图标
+					ccms.util.loadClass.hideLoad();
+					
+					//错误检查
+					if (http.status == 500 || http.status == 400){
+						ccms.dialog.alert("系统错误." + http.status);
+					}else if (http.status == 403){
+						ccms.dialog.alert("拒绝访问.");
+					}else if (http.status == 404){
+						ccms.dialog.alert("要访问的服务不存在.");
+					}else if (http.status == 401){
+						ccms.dialog.alert("要访问的服务需要 SSL.");
+					}else{   
+						if (contentType==null || (http.status !=200 && http.status!=400)) {
+							ccms.dialog.alert("服务没有响应.");
+							if (onErrorFn!=null){
+								onErrorFn();
+							}
+							return false;
+						}
+						if( contentType.indexOf("text/javascript")>=0){
+						    if(text!=null){
+						    	eval(text);
+						    }
+						}else{
+							if(divResponse!=null){
+								var div = document.getElementById(divResponse);
+   	   							div.innerHTML = text;
+       							if(ignoreShowDivStatus==undefined){
+       								div.style.display='';
+       							}
+           					}
+						}
+						
+						if (http.status == 200 && afterResponseFn!=null){
+                            afterResponseFn();
+                            //加载非空红心、全角校验函数
+                            if (typeof(changeRequiredStyle)!="undefined"){
+                                changeRequiredStyle();
+                            }
+                        }
+					}
+					
+					if (http.status != 200) {
+						if (onErrorFn!=null){
+							onErrorFn();
+						}
+					}
+					
+				}
+		   	}
+		}
+    	
+		return false;
+}
+
+function clearForm_report(formName){
+	var f = document.forms[formName];
+	for (i=0;i<f.elements.length;i++){
+		var e = f.elements[i];
+		if (e.type=="text" || e.type=="hidden" || e.tagName=="TEXTAREA" || e.type=="password"){
+		    if(e.getAttribute("preserve")!="true"){
+		    	e.value = "";
+		    }
+		    if(e.getAttribute("default")!=null){
+    			e.value = e.getAttribute("default");
+    		}
+		}
+
+		if (e.tagName=="SELECT"){
+			if(e.getAttribute("default")!=null && e.getAttribute("default")!="${fld:domain_value}"){
+			   var combo = document.forms[formName].elements[e.name];
+			   var cantidad = combo.length;
+			   for (j = 0; j < cantidad; j++) {
+			      if (combo[j].value == e.getAttribute("default")) {
+			         combo[j].selected = true;
+			      }
+			    }
+			}else{
+				e.options.selectedIndex = 0;
+			}
+		}
+
+		if (e.type=="checkbox"){
+		    if(e.getAttribute("default")=="checked" || e.getAttribute("default")=="1"){
+		    	e.checked = true;
+		    }else{
+		    	e.checked = false;
+		    }	
+    	}
+
+		if (e.type=="radio"){
+		    if(e.getAttribute("default")=="checked" || e.getAttribute("default")=="1"){
+		    	e.checked = true;
+		    }else{
+		    	e.checked = false;
+		    }
+    	}
+	}
+	clearErrorMessages_report();
+}
+
+function clearErrorMessages_report() {
+	var divs = getElementsByClass("errormsg");
+	for (var i=0;i<divs.length;i++) {
+		divs[i].style.display="none";
+		divs[i].innerHTML = "";
+	}
+}
+
+function setFocusOnForm_report(formName){
+	var f = document.forms[formName];
+	var n = f.elements.length;
+	for (i=0;i<n;i++) {
+		var e = f.elements[i];
+		if (e.readOnly == false && e.type!="hidden"){
+			return;
+		}
+	}
+}
+
+function moveBox_report(element, box){
+	var offset = 3;
+	if (isIE_report()){
+		offset = -13;
+	}
+	var cleft = 0;
+	var ctop = 0;
+	var obj = element;
+	while (obj.offsetParent) {
+		cleft += obj.offsetLeft;
+		ctop += obj.offsetTop;
+		obj = obj.offsetParent;
+	}
+	box.style.left = cleft + 'px';
+	ctop += element.offsetHeight + offset;
+	if (document.body.currentStyle && document.body.currentStyle['marginTop']) {
+	    ctop += parseInt(document.body.currentStyle['marginTop'])
+	}
+	box.style.top = ctop + 'px';
+}
+
+function showBox_report(objID, width, height, url, centerPage){
+	var overlay = document.getElementById('_overlay');
+	if(overlay==null){
+		overlay = document.createElement("div");
+		overlay.className = "overlay";
+		if(document.body.scrollHeight < 900){
+			overlay.style.height = '100%';
+		}else{
+			overlay.style.height = document.body.scrollHeight + 'px';
+		}
+	  	overlay.setAttribute("id", "_overlay");
+		document.body.appendChild(overlay);
+	}else{
+		if(document.body.scrollHeight < 900){
+			overlay.style.height = '100%';
+		}else{
+			overlay.style.height = document.body.scrollHeight + 'px';	
+		}	
+	}
+
+	var obj = document.getElementById(objID);
+	var newID = objID + "_popup";
+	var borderStyle = "#9d9d9d 1px solid";
+	var boxdiv = document.getElementById(newID);
+	
+	if (boxdiv != null) {
+		overlay.style.display='block';
+		boxdiv.style.zIndex = 1002;
+		if (boxdiv.style.display=='none') {
+			if (url!=null){
+				var f = window.frames[objID + "_iframe"];
+				f.document.open();
+    			f.document.write("<center>");
+    			f.document.write("<br><br>");
+    			f.document.write("<img src='${def:context}/images/progress.gif'>");
+	    		f.document.write("<span style='padding-left:10px;font-family:Arial;font-size:9pt;font-weight:normal'>Loading...</span>");
+    			f.document.write("</center>");
+	    		f.document.close();
+	      		f.location = url;
+			}
+	    	
+	    	if (centerPage==null){
+	    		moveBox_report(obj, boxdiv);
+	    	}	
+	    	boxdiv.style.display='block';
+	    } else{
+	    	boxdiv.style.display='none';
+	    	return false;
+	    }
+	}
+	
+	boxdiv = document.createElement('div');
+	boxdiv.setAttribute('id', newID);
+	boxdiv.style.display = 'none';
+	boxdiv.style.position = 'absolute';
+	boxdiv.style.width = width + 'px';
+	boxdiv.style.height = height + 'px';
+	boxdiv.style.border = borderStyle;
+	boxdiv.style.backgroundColor = '#F7F7F7';
+	boxdiv.style.padding = "0px";
+	if (centerPage!=null && centerPage=="true") {
+		boxdiv.style.top = (pageHeight() - height) / 2 + 'px';
+		boxdiv.style.left = (pageWidth() - width) / 2 + 'px';
+	}
+	contents = document.createElement('iframe');
+	if (centerPage!=null && centerPage=="true"){
+		//暂时改为 no 适应报表
+		contents.scrolling = 'no';
+	}else{
+		contents.scrolling = 'no';
+	}
+	contents.frameBorder = '0';
+	contents.style.width = width + 'px';
+	contents.style.height = height + 'px';
+	contents.marginHeight = 0;
+	contents.marginWidth = 0;
+	contents.setAttribute('id', objID + "_iframe");
+	contents.setAttribute('name', objID + "_iframe");
+	boxdiv.appendChild(contents);
+	document.body.appendChild(boxdiv);
+	if (url!=null) {
+		var f = window.frames[objID + "_iframe"];
+		f.document.open();
+		f.document.write("<center>");
+		f.document.write("<br><br>");
+		f.document.write("<img src='${def:context}/images/progress.gif'>");
+		f.document.write("<span style='padding-left:10px;font-family:Arial;font-size:9pt;font-weight:bold'>Loading...</span>");
+		f.document.write("</center>");
+		f.document.close();
+		f.location = url;
+	}
+	
+	overlay.style.display='block';
+	boxdiv.style.zIndex = 1002;
+	  
+	if (centerPage==null){
+		moveBox_report(obj, boxdiv);
+	}
+	boxdiv.style.display = 'block';
+	return false;
+}
+
+function closeBox_report(objID){
+	var obj = document.getElementById(objID);
+	if (!obj.readonly){
+		try{
+			obj.focus();
+		}catch(e){
+			
+		}
+	}
+	document.getElementById(objID + "_popup").style.display = "none";
+	var overlay = document.getElementById('_overlay')
+	if (overlay!=null){
+		overlay.style.display='none';
+	}
+}
+
+function isIE_report(){
+	if (navigator.appName.indexOf("Explorer")>0){
+		return true;
+	}else{
+		return false;
+	}	
+}
+
+function isValidDate_report(value){
+	var d = convertDate_report(value)
+	if (d==null){
+		return false;
+	}else{
+		return true;
+	}
+}
+
+/*
+* Retorna un objeto DATE si el valor representa una fecha
+* de lo contrario retorna NULL. Si el a駉 viene con 2 d韌itos
+* y es menor que 30, se asume el 20XX, de lo contrario 19XX.
+* value: String que representa una fecha con formato dd-mm-yyyy o dd/mm/yyyy
+*/
+function convertDate_report(value){
+	value = value.replace(new RegExp("/", "g") ,"-");
+	var values = value.split("-");
+	
+	if (values.length!=3){
+		return null;
+	}
+	
+	var day = values[0];
+	var month = values[1];
+	var year = values[2];
+
+	if (year.length!=2 && year.length!=4){
+		return null;
+	}
+
+	if (year.length==2 && parseInt(year)<30){
+		year = "20" + year;
+	}else if (year.length==2 && parseInt(year)>=30){
+		year = "19" + year;
+	}
+	month = month-1;
+	var dteDate = new Date(year,month,day);
+	var r = ((day==dteDate.getDate()) && (month==dteDate.getMonth()) && (year==dteDate.getFullYear()));
+	if (r){
+		return dteDate;
+	}else{
+		return null;
+	}
+}
+
+
+/*
+* Mostrar un Calendario debajo y alineado
+* a la izquierda del elemento designado
+* por el parametro objID. El elemento debe
+* ser un textbox.
+* objID: ID del elemento en donde sera colocada la fecha seleccionada
+* lboundID: ID del elemento que contiene una fecha menor que sera usada para
+* no permitir seleccionar fechas menores en el calendario a la fecha en el elemento objID,
+* permite nulos cuando no se requiere.
+* uboundID: ID del elemento que contiene una fecha mayor que sera usada para
+* no permitir seleccionar fechas mayores en el calendario a la fecha en el elemento objID,
+* permite nulos cuando no se requiere.
+*/
+function calendarOpen(objID, lboundID, uboundID){
+	var d = document.getElementById(objID).value;
+	var url = "${def:context}/action/calendar?id=" + objID + "&date=" + d;
+	if (lboundID != null){
+		url = url + "&date.lbound=" + document.getElementById(lboundID).value;
+	}
+		
+	if (uboundID != null){
+		url = url + "&date.ubound=" + document.getElementById(uboundID).value;
+	}
+	showBox_report(objID, 240,184, url);
+}
+
+/* --------------------------日期选择器方法---------------------------------- */
+/**
+ * Bootstrap样式的日期弹框方法
+ * 格式：yyyy-MM-dd
+ */
+function bootstrap_date(objID){
+	ccms.dialog.date($("#"+objID));
+	$("#"+objID).focus();
+}
+/**
+ * Bootstrap样式的日期弹框方法
+ * 格式：HH:mm
+ */
+function bootstrap_time(objID){
+	ccms.dialog.time($("#"+objID));
+	$("#"+objID).focus();
+}
+/**
+ * Bootstrap样式的日期弹框方法
+ * 格式：yyyy-MM-dd HH:mm:ss
+ */
+function bootstrap_datetime(objID){
+	ccms.dialog.datetime($("#"+objID));
+	$("#"+objID).focus();
+}
+/**
+ * Bootstrap样式的日期弹框方法
+ * 格式：日期环围
+ */
+function bootstrap_daterangepicker(objID){
+	ccms.dialog.daterangepicker($("#"+objID));
+	$("#"+objID).focus();
+}
+/* --------------------------日期选择器方法---------------------------------- */
+
+
+/**
+* Retorna valor seleccionado en el calendario
+* poniendolo dentro del textbox asociado y 
+* cierra el calendario
+* objID: ID del textbox asociado al calendario
+* sdate: String que representa una fecha en formato dd-mm-yyyy
+*/
+function calendarReturnValue(objID, sdate){
+	document.getElementById(objID + "_popup").style.display = "none";
+	document.getElementById(objID).value = sdate;
+	
+	var overlay = document.getElementById('_overlay')
+	if (overlay!=null){
+		overlay.style.display='none';
+	}
+	return false;
+}
+
+
+/**
+* Filtrar caracteres no permitidos en campos fecha, se usa
+* de esta manera: document.forms1.text1.onkeypress = keypressDate
+* en el evento onload del body.
+*/
+function keypressDate(e){
+	var mask = "0123456789-";
+	var keyCode = e ? e.which : window.event.keyCode;
+	var key = String.fromCharCode(keyCode);
+	if (mask.indexOf(key)==-1 && keyCode != 8 && keyCode!=0 && keyCode!=13){
+	    KeyPressValidatorTip("请输入日期!(0123456789-)");
+		return false;
+	}
+}
+
+/**
+* Filtrar caracteres no permitidos en campos fecha, se usa
+* de esta manera: document.forms1.text1.onkeypress = keypressDate
+* en el evento onload del body.
+*/
+function keypressDateTime(e){
+	var mask = "0123456789-:";
+	var keyCode = e ? e.which : window.event.keyCode;
+	var key = String.fromCharCode(keyCode);
+	if (mask.indexOf(key)==-1 && keyCode != 8 && keyCode!=0 && keyCode!=13){
+	    KeyPressValidatorTip("请输入日期时间!(0123456789-:)");
+		return false;
+	}
+}
+
+/**
+* Filtrar caracteres no permitidos en campos enteros, se usa
+* de esta manera: document.forms1.text1.onkeypress = keypressInteger
+* en el evento onload del body.
+*/
+function keypressMoney(e){
+	var mask = "0123456789.-";
+	var keyCode = e ? e.which : window.event.keyCode;
+	var key = String.fromCharCode(keyCode);
+	if (mask.indexOf(key)==-1 && keyCode != 8 && keyCode!=0 && keyCode!=13){
+	    KeyPressValidatorTip("请输入金额!(0123456789.-)");
+		return false;
+	}
+    return KeyPressValidatorLen();
+} 
+
+/**
+* Filtrar caracteres no permitidos en campos enteros, se usa
+* de esta manera: document.forms1.text1.onkeypress = keypressInteger
+* en el evento onload del body.
+*/
+function keypressInteger(e){
+	var mask = "0123456789";
+	var keyCode = e ? e.which : window.event.keyCode;
+	var key = String.fromCharCode(keyCode);
+	if (mask.indexOf(key)==-1 && keyCode != 8 && keyCode!=0 && keyCode!=13){
+	    KeyPressValidatorTip("请输入整数!(0123456789)");
+		return false;
+	}
+    return KeyPressValidatorLen();
+} 
+
+/**
+* Filtrar caracteres no permitidos en campos con decimales, se usa
+* de esta manera: document.forms1.text1.onkeypress = keypressDouble
+* en el evento onload del body. Solo acepta el punto "." como separador
+* de decimales.
+*/
+function keypressDouble(e){ 
+	var mask = "0123456789.";
+	var keyCode = e ? e.which : window.event.keyCode;
+	var elem = e ? e.target : window.event.srcElement;
+	var key = String.fromCharCode(keyCode);
+	if (mask.indexOf(key)==-1 && keyCode != 8 && keyCode!=0 && keyCode!=13){
+	    KeyPressValidatorTip("请输入整数及小数!(0123456789.)");
+		return false;
+	}
+		
+	if (key=="." && elem.value.indexOf(".") > -1){
+		return false;
+	}
+    return KeyPressValidatorLen();
+} 
+
+/**
+* Filtrar caracteres no permitidos en campos con decimales, se usa
+* de esta manera: document.forms1.text1.onkeypress = keypressDouble
+* en el evento onload del body. Solo acepta el punto "." como separador
+* de decimales.
+*/
+function keypressCharacter(e){
+	var mask = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.";
+	var keyCode = e ? e.which : window.event.keyCode;
+	var elem = e ? e.target : window.event.srcElement;
+	var key = String.fromCharCode(keyCode);
+	if (mask.indexOf(key)==-1 && keyCode != 8 && keyCode!=0 && keyCode!=13){
+	    KeyPressValidatorTip("请输入字母及数字!(abcd1234...)");
+		return false;
+	}
+		
+	if (key=="." && elem.value.indexOf(".") > -1){
+		return false;
+	}
+    return KeyPressValidatorLen();
+} 
+
+/**
+* Filtrar caracteres no permitidos en campos con decimales, se usa
+* de esta manera: document.forms1.text1.onkeypress = keypressDouble
+* en el evento onload del body. Solo acepta el punto "." como separador
+* de decimales.
+*/
+function keypressPhoneNumber(e){ 
+	var mask = "1234567890.()-";
+	var keyCode = e ? e.which : window.event.keyCode;
+	var elem = e ? e.target : window.event.srcElement;
+	var key = String.fromCharCode(keyCode);
+	if (mask.indexOf(key)==-1 && keyCode != 8 && keyCode!=0 && keyCode!=13){
+	    KeyPressValidatorTip("请输入电话号码!(1234567890.()-)");
+		return false;
+	}
+		
+	if (key=="." && elem.value.indexOf(".") > -1){
+		return false;
+	}
+    return KeyPressValidatorLen();
+} 
+
+/**
+* Filtrar caracteres no permitidos en campos con decimales, se usa
+* de esta manera: document.forms1.text1.onkeypress = keypressDouble
+* en el evento onload del body. Solo acepta el punto "." como separador
+* de decimales.
+*/
+function keypressNomalKeyCharacter(e){
+	var mask = "'\\\/\"\"";
+	var keyCode = e ? e.which : window.event.keyCode;
+	var elem = e ? e.target : window.event.srcElement;
+	var key = String.fromCharCode(keyCode);
+
+	if (mask.indexOf(key)!=-1 && keyCode != 8 && keyCode!=0 && keyCode!=13){
+	    KeyPressValidatorTip("不能输入特列字符!('\\\/\"\")");
+		return false;
+	}
+		
+	if (key=="." && elem.value.indexOf(".") > -1){
+		return false;
+	}
+    return KeyPressValidatorLen();
+} 
+
+
+/**
+* Retorna la trama requerida para hacer un POST del
+* formulario indicado usando Ajax
+* formName: Nombre del formulario 
+*/
+function getFormValues(formName){
+ 	returnString ="";
+ 	if( formName == "" ){
+ 		return returnString;
+ 	}
+ 	formElements=document.forms[formName].elements;
+ 	for ( var i=formElements.length-1; i>=0; --i ) {
+ 		if (formElements[i].getAttribute("name") != null && formElements[i].getAttribute("name") != "" && formElements[i].getAttribute("type") != "button" && formElements[i].getAttribute("type") != "submit" && formElements[i].getAttribute("type") != "reset"){  /*add radio box elements analysis.*/
+ 		    if ((formElements[i].type != "radio" && formElements[i].type != "checkbox" && formElements[i].getAttribute("dependent") == null)){ //不是多选或单选,并且无前置关联.
+ 			    var isDependent = false;
+     			for ( var j=formElements.length-1; j>=0; --j ){ /*检查哪些控件与本控件前置关联*/
+     			    if(formElements[j].getAttribute("dependent") == formElements[i].id  && formElements[j].name != null && formElements[j].name != ""){
+     			        isDependent = true; /*本控件被引用*/
+             			if(formElements[i].value!=""){
+             				returnString = returnString + formElements[j].name + "=" + encodeURIComponent(formElements[j].value) + "&";
+             			}
+     			    }
+     			}
+     			if(!isDependent){
+     				returnString = returnString + formElements[i].name + "=" + encodeURIComponent(formElements[i].value) + "&";
+     			}else if(formElements[i].value!=""){/*被引用,并且值不为空*/
+     				returnString = returnString + formElements[i].name + "=" + encodeURIComponent(formElements[i].value) + "&";
+     			}
+ 		    }else if(formElements[i].getAttribute("dependent") != null){/*存在前置关联*/
+                continue;
+            }else if(formElements[i].checked){/*单选或多选,并选中*/
+                /*选把自己传上*/
+     			returnString = returnString + formElements[i].name + "=" + encodeURIComponent(formElements[i].value) + "&";
+     			for ( var j=formElements.length-1; j>=0; --j ){ /*检查哪些控件与本控件前置关联*/
+     			    if(formElements[j].getAttribute("dependent") == formElements[i].id && formElements[j].name != null && formElements[j].name != ""){
+             			returnString = returnString + formElements[j].name + "=" + encodeURIComponent(formElements[j].value) + "&";
+     			    }
+     			}
+ 		    }
+ 		}
+ 	}
+	
+	if(returnString != ""){
+		returnString = returnString.substring(0, returnString.length - 1);
+	}
+ 	return returnString;
+}
+
+/**
+* Retorna checkboxes o radiobutton con la propiedad
+* checked = true
+* radioName: Nombre del checkbox o radiobutton
+* radioValue: Valor del checkbox o radiobutton
+* formName: Nombre del formulario 
+*/
+
+function setCheckboxValue(radioName,radioValue,formName){
+	if( formName == "") { 
+		return;
+	}
+	
+	var	formElements=document.forms[formName].elements;
+	for ( var i=formElements.length-1; i>=0; --i ) {
+		if (formElements[i].name == radioName && (formElements[i].type=="radio" || formElements[i].type=="checkbox") ){ 
+			if (formElements[i].value==radioValue){
+	    		formElements[i].checked = true;
+                if(typeof(formElements[i].onchange)=="function"){
+                	formElements[i].onchange();
+                }
+		    	return;
+			}
+		}
+	}
+}
+
+/**
+* Retorna combos con la propiedad
+* select = true
+* comboName: Nombre del combo
+* comboValue: Valor del combo
+* formName: Nombre del formulario 
+*/
+
+function setComboValue(comboName,comboValue,formName,triger_onchange){	   
+	if( formName == "") { 
+		return;
+	}
+
+	var combo = document.forms[formName].elements[comboName];
+	var cantidad = combo.length;
+	for (i = 0; i < cantidad; i++) {
+		if (combo[i].value == comboValue) {
+			combo[i].selected = true;
+			if(triger_onchange != undefined && triger_onchange=="true"){
+				if(typeof(combo.onchange)=="function"){
+					combo.onchange();
+				}
+			}
+		}
+	}   
+}
+
+/**
+ * Remplazar el valor "," por "." en un elemento que contiene
+ * un valor de tipo decimal. 
+ * elem: Elemento que contiene el valor a ser remplazado
+ */
+function replaceDecimal(elem){
+	var value = elem.value;
+	elem.value = value.replace(new RegExp(",", "g") ,".");
+}
+
+
+/**
+* Funciones de soporte para los grid
+* contiene funciones para la vista pagina, 
+* panel de control, regresar a la pagina indicada,
+* y ordenamiento por columnas.
+*/
+
+/*
+* soporte para la vista paginada y el panel de control
+*/
+	
+//variables de control
+var lastPage=0;
+var currentPage=0;
+var recordsFound=0;
+
+function pageFirst(){
+	currentPage = 1;
+	viewPage();
+}
+
+function pageLast(){
+	currentPage = lastPage;
+	viewPage();
+}
+
+function pagePrev(){
+	if (currentPage>1) {
+		currentPage=currentPage - 1;
+		viewPage();
+	} 
+}
+
+function pageNext(){
+	if (currentPage<lastPage) {
+		currentPage=currentPage + 1;
+		viewPage();
+	} 
+}
+
+function gotoPage(url){    
+	ajaxCall_report(
+		httpMethod="GET", 
+		uri= url + "?pagenumber=" + currentPage, 
+		divResponse="response", 
+		formName=null, 
+		afterResponseFn=showCurrentPage, 
+		onErrorFn=null
+	);    	
+}
+	
+//mostrar en la pagina de navegacion la pagina actual		
+function showCurrentPage(){
+	document.getElementById('currpage').innerHTML=currentPage;	
+	document.getElementById('pagecount').innerHTML=lastPage;
+	document.getElementById('recordcount').innerHTML=recordsFound;
+
+	//查询后返回结果界面执行自定义函数
+	if(typeof(afterSearchBackSetting) == "function"){
+		afterSearchBackSetting();
+	}
+}
+	
+//ordenar el grid por la columna indicada
+function sortBy(colName, recordsetId){
+	if (recordsetId == null){
+		recordsetId = "query.sql"
+	}
+	ajaxCall_report(
+		httpMethod="GET", 
+		uri="/action/sort?rs=" + recordsetId + "&colname=" + colName, 
+		divResponse="response", 
+		formName=null, 
+		afterResponseFn=showCurrentPage, 
+		onErrorFn=null
+	);    	
+}		
+
+/* funciones de soporte para picklist */
+
+//variables de control
+var pickForm = null;
+var pickControl = null;
+var idControl = null;
+var pickOtherControl = new Array();
+
+/**
+ * Abre un picklist DIV + IFRAME
+ * id: ID del elemento donde sera posicionado el picklist, y sera llenado 
+ * el valor de tipo PK (comunmente) seleccionado en el picklist  
+ * idCtl: ID del elemento en donde sera llenado el texto seleccionado en el picklist
+ * url: URL en donde se encuentra el action que sera mostrado como picklist 
+ * ancho: Ancho del picklist 
+ * altura: Altura del piklist
+ */
+function pickOpen(id, idCtl, url, ancho, altura, form){	
+	if (pickControl!=null){
+		pickClose();
+	}
+	//verifica si existe el textbox
+	var obj = document.getElementById(id);
+	if (obj==null) {
+		ccms.dialog.alert("ERROR (pickOpen): no existe un elemento con ID: " + id);
+		return;			
+	}
+			
+	pickControl = id;
+	idControl = idCtl;
+
+	pickForm = form;
+
+	for(var i=6;i<pickOpen.arguments.length;i++){ /*可以多带控件参数,以便于在选择窗口中同时取值,并传回来*/
+	    pickOtherControl[i-6] = pickOpen.arguments[i];
+	}
+	
+	showBox_report(pickControl, ancho, altura, url, "true");
+}	
+/**
+ * div not center
+ */
+function pickOpenNotCenter(id, idCtl, url, ancho, altura, form){
+	if (pickControl!=null){
+		pickClose();
+	}
+	//verifica si existe el textbox
+	var obj = document.getElementById(id);
+	if (obj==null) {
+		ccms.dialog.alert("ERROR (pickOpen): no existe un elemento con ID: " + id);
+		return;			
+	}
+			
+	pickControl = id;
+	idControl = idCtl;
+
+	pickForm = form;
+
+	for(var i=6;i<pickOpenNotCenter.arguments.length;i++){ /*可以多带控件参数,以便于在选择窗口中同时取值,并传回来*/
+	    pickOtherControl[i-6] = pickOpenNotCenter.arguments[i];
+	}
+	
+	showBox_report(pickControl, ancho, altura, url);
+}
+
+/**
+ * Rellena los elementos de la vista HTML padre con
+ * los valores seleccionados en el picklist 
+ * @param id Valor comunmente de tipo PK seleccionado en el picklist
+ * @param description Valor comunmente de tipo texto seleccionado en el picklist
+ * @return
+ */
+function pickSelect(id, description){
+	if(pickForm != null && pickForm != undefined ) {
+    	for(var i=2;i<pickSelect.arguments.length;i++){
+    		if(document.forms[pickForm].elements[pickOtherControl[i-2]] !=null && document.forms[pickForm].elements[pickOtherControl[i-2]]!= undefined){
+    			document.forms[pickForm].elements[pickOtherControl[i-2]].value = pickSelect.arguments[i];
+    		}
+    	}
+    	document.forms[pickForm].elements[idControl].value = id;
+    	document.forms[pickForm].elements[pickControl].value = description;
+    }else{
+    	for(var i=2;i<pickSelect.arguments.length;i++){
+        	document.getElementById(pickOtherControl[i-2]).value = pickSelect.arguments[i];
+    	}
+	    document.getElementById(idControl).value = id;
+	    document.getElementById(pickControl).value = description;
+    }
+}
+
+function pickClose(){
+	closeBox_report(pickControl);
+	idControl = null;
+	pickControl = null;
+}	
+
+//清除指定form下的若干个无素值
+function pickClear(form){
+	if(form==undefined){
+		return;
+	}
+	for(var i=1;i<pickClear.arguments.length;i++){
+	    var obj = document.forms[form].elements[pickClear.arguments[i]];
+	    if (obj != undefined){
+	    	obj.value = "";
+	    }
+	}
+}	
+
+//obtener el nodo a partir de el nombre del control 
+function getNodeByName(node, name){
+	for (i=0;i<node.childNodes.length;i++) {
+		if (node.childNodes[i].name==name){
+			return node.childNodes[i];
+		}
+	}
+}	
+
+/* soporte para listboxes */
+
+/*
+	A馻dir un item a un listbox
+	elementId: ID del control que representa al ListBox
+	itemId: ID del item
+	itemTitle: Texto del item
+	Notas: no permite a馻dir items con ID duplicado
+*/ 
+function listboxAddItem(elementId, itemId, itemTitle) {
+	//obtener el control listbox
+	var lbox = document.getElementById(elementId);
+	if (lbox==null) {
+		ccms.dialog.alert("ERROR (listboxAddItem): no existe un elemento con ID: " + elementId);
+		return;
+	}
+		
+	//crear el item
+	var option = document.createElement('option');
+	option.value = itemId;
+	option.text = itemTitle;
+	
+	//este item ya esta en el listbox?
+	for (var i = 0; i < lbox.length; i++) {
+      if (lbox[i].value == itemId) {
+    	  ccms.dialog.alert("该项已经存在！");
+         return;
+      }
+    } 	
+	
+	//a馻dir item
+	if (isIE_report()){
+		lbox.add(option);
+	}else{
+		lbox.add(option, null);
+	}
+}
+
+/*
+	Remover un item a un listbox
+	elementId: ID del control que representa al ListBox
+	Nota: solo removera el item si esta seleccionado
+*/ 
+function listboxRemoveItem(elementId) {
+	var lbox = document.getElementById(elementId);
+	if (lbox==null) {
+		ccms.dialog.alert("ERROR (listboxRemoveItem): no existe un elemento con ID: " + elementId);
+		return;
+	}	
+	if (lbox.selectedIndex>=0){
+		lbox.remove(lbox.selectedIndex);
+	}
+}
+
+/*
+	Eliminar todos los items de un listbox
+	elementId: ID del control que representa al ListBox
+*/
+function listboxClear(elementId) {
+	var lbox = document.getElementById(elementId);
+	if (lbox==null) {
+		ccms.dialog.alert("ERROR (listboxClear): no existe un elemento con ID: " + elementId);
+		return;
+	}
+	
+	while (lbox.length>0) {
+		lbox.remove(0);
+	}
+	
+}
+
+/*
+	Obtener los IDs de los items de un listbox concatenados como un String
+	y separados por un caracter, por defecto es ";" si no se especifica
+	elementId: ID del control que representa al ListBox
+	separator: caracter a utilizar para separar los items
+	Nota: si el control esta vacio retorna un string vacio
+*/ 
+function listboxGetItemValues(elementId, separator) {
+	if (separator==null){
+		separator=";";
+	}
+	var lbox = document.getElementById(elementId);
+	if (lbox==null) {
+		ccms.dialog.alert("ERROR (listboxGetItemValues): no existe un elemento con ID: " + elementId);
+		return;
+	}	
+	var ids = "";
+	for (var i=0;i<lbox.length;i++) {
+		var item = lbox.options[i];
+		ids = ids + item.value + separator;
+	}
+	//quitar el ultimo ;
+	if(ids!=""){
+		ids = ids.substr(0, ids.length-1);
+	}
+	return ids;
+}
+
+/**
+ * Obtener el texto de los items de un listbox 
+ * elementId: ID del control que representa al ListBox
+ * separator: caracter a utilizar para separar los items
+ * Nota: si el control esta vacio retorna un string vacio
+*/ 
+function listboxGetTextValues(elementId, separator) {
+	if (separator==null){
+		separator=";";
+	}
+	var lbox = document.getElementById(elementId);
+	if (lbox==null) {
+		ccms.dialog.alert("ERROR (listboxGetTextValues): no existe un elemento con ID: " + elementId);
+		return;
+	}	
+	var ids = "";
+	for (var i=0;i<lbox.length;i++) {
+		var item = lbox.options[i];
+		ids = ids + item.text + separator;
+	}
+	//quitar el ultimo ;
+	if(ids!=""){
+		ids = ids.substr(0, ids.length-1);
+	}
+	return ids;
+	
+}
+
+/*
+	Llenar el contenido de un objeto, como un DIV por ejemplo.
+	Forma parte del soporte para la validacion de formularios
+	posteados via Ajax, es utilizada 
+*/
+function setInnerHtml(elementId, text) {
+	var obj = document.getElementById(elementId);
+	if (obj==null) {
+		return;
+	}	
+	obj.innerHTML = text;
+	obj.style.display = "";
+}
+
+/*
+	Verifica si existe el DIV que corresponde a un control
+	de un formulario para mostrar un mensaje de error, si no existe
+	lo crea y luego muestra el mensaje usando setInnerHtml.
+	Es utilizada por el servicio generico de validacion Ajax:
+	/action/error/validation/ajax
+*/
+function setFormErrorMsg(formElementId,text) {
+	var id = formElementId + "_error";
+	var obj = document.getElementById(id);
+	if (obj==null) {
+		var elem = document.getElementById(formElementId);
+		if(elem==null){
+			ccms.dialog.alert(formElementId);
+		}
+		var div = document.createElement( "div" );
+		div.id = id;
+		div.className = "errormsg";
+		elem.parentNode.appendChild(div);
+	}	
+	setInnerHtml(id, text);	
+}
+
+/*
+By Dustin Diaz - http://www.dustindiaz.com/top-ten-javascript/
+Retorna un array de elementos que tengan una clase dada,
+los parametros node y tag pueden ser null
+*/
+function getElementsByClass(searchClass,node,tag) {
+	var classElements = new Array();
+	if ( node == null ){
+		node = document;
+	}
+	if ( tag == null ){
+		tag = '*';
+	}
+	var els = node.getElementsByTagName(tag);
+	var elsLen = els.length;
+	var pattern = new RegExp('(^|\\\\s)'+searchClass+'(\\\\s|$)');
+	for (i = 0, j = 0; i < elsLen; i++) {
+		if ( pattern.test(els[i].className) ) {
+			classElements[j] = els[i];
+			j++;
+		}
+	}
+	return classElements;
+}
+
+/*
+ * C骴igo tomado de:
+ * http://www.codingforums.com/showthread.php?p=178077#post178077
+ * Permite dar formato a un decimal y mostrar un cierto numero de decimales
+ * n: Numero de decimales a mostrar
+ */
+Number.prototype.toDecimals=function(n){
+    n=(isNaN(n))?2:n;
+    var nT=Math.pow(10,n);
+    function pad(s){
+		s=s||'.';
+		return (s.length>n)?s:pad(s+'0');
+    }
+    return (isNaN(this))?this:(new String(Math.round(this*nT)/nT)).replace(/(\.\d*)?$/,pad);
+}
+
+/** 
+ * C骴igo tomado de:
+ * http://www.webdeveloper.com/forum/showthread.php?t=68675
+ * Permite obtener tanto el alto como ancho de la pagina HTML que se esta usando
+ */
+function pageWidth() {return window.innerWidth != null? window.innerWidth: document.body != null? document.body.clientWidth:null;}
+function pageHeight() {return window.innerHeight != null? window.innerHeight: document.body != null? document.body.clientHeight:null;}
+
+/**
+ * Soporte para DialogBox centrado en una pagina HTML
+ */
+
+//variable de control
+var dialogID = null;
+
+/**
+* Muestra un DIV + IFRAME en el centro de una pagina
+* dialogID: ID del dialog que sera centrado
+* url: URL del action que contiene la informacion que sera impresa dentro del DIV + IFRAME
+* ancho: Ancho del DIV + IFRAME
+* altura: Altura del DIV + IFRAME
+*/
+function openDialog(dialogID, url, ancho, altura){
+	this.dialogID = dialogID;
+	//mostrar popup dhtml
+	showBox_report(dialogID, ancho, altura, url, "true");
+}	
+
+/**
+* Oculta un DIV + IFRAME que se encuentra en el centro
+* de una pagina 
+*/
+function closeDialog(){
+	document.getElementById(dialogID + "_popup").style.display = "none";
+
+	/* soporte para lightbox */
+	var overlay = document.getElementById('_overlay');
+	if (overlay!=null){
+		overlay.style.display='none';
+	}
+}
+
+/* ----------------------------------------------------------------分界线-------------------------------------------------------------------------- */
+
+/*将Dinamica新的ajax front contrl代码移至此处*/
+var _goBackFn = null; //pointer to goBack() function
+//load filter form
+function formLoaded(tag,attr){ /*判断DIV是否已经加载进来*/
+	var div = $("#"+tag);
+	if (div == null){/*需要加载的层不存在*/
+		return;
+	}                    
+    if(div.attr(attr)){
+    	/*如果已经检测到界面被加载,则退出*/
+    	return true;
+    }
+	div.attr(attr,true); /*设置加载标识,并返回本DIV未加载过标识(false)*/
+	return false;
+}
+
+//load filter form
+function loadFilter(afterResponseFn){
+	if(formLoaded("divFilter","loaded")){
+	    if(afterResponseFn!=undefined && afterResponseFn!=null){
+	    	afterResponseFn();
+	    }
+	    return;
+	}
+	_goBackFn = showGrid;
+	
+	console.info("33行loadFilter:url="+$("#actionroot").val()+"/filter");
+	return ajaxCall_report(
+			httpMethod="GET", 
+			uri=$("#actionroot").val()+"/filter", 
+			divResponse="divFilter", 
+			formName=null, 
+			afterResponseFn=(afterResponseFn==undefined?null:afterResponseFn), 
+			onErrorFn=showGrid,
+			ignoreShowDivStatus="true"
+	);
+}
+
+//load crud form
+function loadEditor(afterResponseFn){
+	if(formLoaded("divEditor","loaded")){
+		return;
+	}
+	_goBackFn = showGrid;
+
+	console.info("54行loadEditor:url="+$("#actionroot").val()+"/form");
+	return ajaxCall_report(
+			httpMethod="GET", 
+			uri=$("#actionroot").val()+"/form", 
+			divResponse="divEditor", 
+			formName=null, 
+			afterResponseFn=(afterResponseFn==undefined?changeRequiredStyle:afterResponseFn), 
+			onErrorFn=showGrid,
+			ignoreShowDivStatus="true"
+	);
+}
+
+//必填项目加红色星号
+function changeRequiredStyle() { 
+	var cell=document.getElementsByTagName('td'); 
+	for(c=0;c<cell.length;c++) { 
+		var redstar = '<font color="#FF0000">(*)</font></strong>';
+		if (cell[c].className =="th20 required"){
+			if (cell[c].innerHTML.indexOf("*")<0){
+				cell[c].innerHTML = cell[c].innerHTML + redstar;
+			}
+		}
+	} 
+	
+	if(typeof(setKeyPress)=="function"){
+		setKeyPress();
+	}
+	//页面所有text控件全角校验 2011-8-31
+	if(typeof(allElementsCheckDBC)=="function"){allElementsCheckDBC();}
+} 
+
+//call search action
+function search(afterResponseFn){
+	_goBackFn = showFilter;
+	//hideDiv("divFilter");
+
+	console.info("98行search:url="+$("#actionroot").val()+"/search");
+	return ajaxCall_report(
+		httpMethod="POST", 
+		uri=$("#actionroot").val()+"/search", 
+		divResponse="response", 
+		formName="formFilter", 
+		afterResponseFn=(afterResponseFn==undefined?null:afterResponseFn), 
+		onErrorFn=showFilter
+	);
+}
+
+//define la url en donde se mostrara el resultado de consulta
+function viewPage(){
+	console.info("112行viewPage:url="+$("#actionroot").val()+"/view");
+	var url = $("#actionroot").val()+"/view";
+    
+	//llama a la funcion para ir a la pagina indicada 
+	gotoPage(url);
+}	
+
+//retorna al estado previo que corresponde
+//al estado actual de la pagina, cada llamada Ajax
+//se encarga de definir cual es la funcion de goBack() que aplica
+function goBack(){
+	_goBackFn();			
+}
+
+function save(){
+	_goBackFn = showGrid;   //新增记录界面中,取消按钮指向查询结果界面
+	//提交之前数据校验，在crud/template.htm中定义“checkFields()”函数，如果不需要校验，则不需要定义该函数
+	//boolean isSubmit = true; //是否执行提交
+	
+	if(typeof(checkFields)=="function"){
+		if (!checkFields()) {
+			return false;
+		}
+	}
+
+	//校验成功执行提交操作(新增或者更新)
+	var tuid = document.forms["formEditor"].elements["tuid"].value;
+	var newFlag = (tuid==""?true:(tuid=="0"?true:false));   /*界面中须要有tuid标识主键,为空是新增记录*/
+	if (newFlag){
+		return insert();
+	}else{
+		return update();
+	}
+}
+
+//restaurar el formulario en caso de error
+function retryAddnewOrEdit() {
+	setFocusOnForm_report("formEditor");		
+}
+
+
+function hideEditor() {
+	hideDiv("divEditor"); /*保存之后是否隐藏新增的界面*/
+}
+
+//mostrar el detalle de un registro
+function insert(){
+	//definir funcion goBack()
+	_goBackFn = addNewBack;			
+	//hideDiv("divEditor");       
+	clearErrorMessages_report();
+
+	//llamada Ajax...
+	console.info("168行insert:url="+$("#actionroot").val()+"/insert");
+	return ajaxCall_report(
+			httpMethod="POST", 
+			uri=$("#actionroot").val()+"/insert", 
+			divResponse="divEditorResponse", 
+			formName="formEditor", 
+			afterResponseFn=null, 
+			onErrorFn=retryAddnewOrEdit
+	);
+}
+
+//mostrar el detalle de un registro
+function update(){
+	//definir funcion goBack()
+	//_goBackFn = addEdit(); 
+	_goBackFn = showGrid;   //新增记录界面中,取消按钮指向查询结果界面
+
+	//hideDiv("divEditor");       
+	hideDiv("response");       
+	clearErrorMessages_report();
+	//llamada Ajax...
+	console.info("190行update:url="+$("#actionroot").val()+"/update");
+	return ajaxCall_report(
+			httpMethod="POST", 
+			uri=$("#actionroot").val()+"/update", 
+			divResponse="divEditorResponse", 
+			formName="formEditor", 
+			afterResponseFn=null, 
+			onErrorFn=retryAddnewOrEdit
+		);
+}
+
+//eliminar un registro
+function deleteRecord(id,msg){
+	if (window.confirm(msg==undefined?"确认删除吗?":msg)==false){
+		return false;
+	}
+
+	//definir funcion goBack()
+	_goBackFn = addEdit;			
+	hideDiv("divEditor");       
+	hideDiv("response");       
+	console.info("215行deleteRecord:url="+$("#actionroot").val()+"/delete" + "?id=" + id);
+	return ajaxCall_report(
+			httpMethod="GET", 
+			uri=$("#actionroot").val()+"/delete" + "?id=" + id, 
+			divResponse="divEditorResponse", 
+			formName=null, 
+			afterResponseFn=null, 
+			onErrorFn=showGrid
+	);		
+}
+
+//display addnew/edit form
+function addNew(){
+	_goBackFn = showGrid;   //新增记录界面中,取消按钮指向查询结果界面
+	closeAllDiv();
+	document.getElementById("divEditor").style.display='';
+	document.forms["formEditor"].elements["submitBtn"].style.display='inline';
+
+	if(formLoaded("divEditor" ,"loaded")){   /*0-为新增界面标识.*/
+		showDiv("divEditor");       /*如果新增界面已经加载,则显示出来*/
+		addNewBack();
+		return;
+	}
+
+	//llamada Ajax...
+	console.info("245行addNew:url="+$("#actionroot").val()+"/form");
+	return ajaxCall_report(
+			httpMethod="GET", 
+			uri=$("#actionroot").val()+"/form", 
+			divResponse="divEditor", 
+			formName=null, 
+			afterResponseFn=addNewBack, 
+			onErrorFn=showGrid
+		);
+}
+
+//mostrar el detalle de un registro
+function edit(id){
+	//definir funcion goBack()
+	_goBackFn = showGrid;			
+	//hideDiv("response");       //不隐藏数据列表界面
+	closeAllDiv();
+
+	//在CRUD加载过程中,已经将form加载完成
+	//loadEditor();       //检查加载界面是否为当前目录指向
+	//anthony add 2009-12-21 必填项目加红色星号
+	changeRequiredStyle();
+
+	document.forms["formEditor"].elements["submitBtn"].style.display='inline';
+	document.forms["formEditor"].elements["deleteCommand"].style.display='inline';
+
+	console.info("274行edit:url="+$("#actionroot").val()+"/edit" + "?id=" + id);
+	return ajaxCall_report(
+			httpMethod="GET", 
+			uri=$("#actionroot").val()+"/edit" + "?id=" + id, 
+			divResponse="divEditor", 
+			formName=null, 
+			afterResponseFn=typeof(editBackSetting)=="function"?editBackSetting:null, 
+			onErrorFn=showGrid
+		);
+}
+
+//mostrar el detalle de un registro
+function showDetail(id){
+	//definir funcion goBack()
+	_goBackFn = showGrid;			
+	//hideDiv("response");       //不隐藏数据列表界面
+	closeAllDiv();
+
+	//在CRUD加载过程中,已经将form加载完成
+	//loadEditor();       //检查加载界面是否为当前目录指向
+	//anthony add 2009-12-21 必填项目加红色星号
+	changeRequiredStyle();
+	document.forms["formEditor"].elements["submitBtn"].style.display='none';
+	document.forms["formEditor"].elements["deleteCommand"].style.display='none';
+
+	console.info("303行showDetail:url="+$("#actionroot").val()+"/edit" + "?id=" + id);
+	return ajaxCall_report(
+			httpMethod="GET", 
+			uri=$("#actionroot").val()+"/edit" + "?id=" + id, 
+			divResponse="divEditor", 
+			formName=null, 
+			afterResponseFn=null, 
+			onErrorFn=showGrid
+		);
+}
+
+//muestra el formulario addnew
+function addNewBack(){ /*架载新增界面完成后,设置新增界面的内容信息*/
+	//restaura el goBack que corresponde a este estado
+	_goBackFn = showGrid;
+	//closeAllDiv();
+
+	document.forms["formEditor"].elements["deleteCommand"].style.display='none';
+	document.forms["formEditor"].getElementsByTagName("span")[0].innerHTML = "${req:formTitleAddNew}"; /*找formTitleEditor*/
+	document.getElementById("divEditor").style.display='';
+	clearForm_report("formEditor");
+
+	if(typeof(addNewBackSetting)=="function"){
+		addNewBackSetting();
+	}
+
+	//zhangchuan update 由于在IE中会报错（控件不可见）
+	//setFocusOnForm_report("formEditor");
+}
+
+//muestra el formulario edit
+function addEdit(){
+	closeAllDiv();
+
+	document.getElementById("divEditor").style.display='';
+	document.forms["formEditor"].getElementsByTagName("span")[0].innerHTML = "${req:formTitleEdit}";   /*找formTitleEditor*/
+	document.forms["formEditor"].elements["deleteCommand"].style.display='';
+
+	setFocusOnForm_report("formEditor");
+
+	//restaura el goBack que corresponde a este estado
+	_goBackFn = showGrid;
+}
+
+//display filter form
+function showFilter(){
+	closeAllDiv();        /*显示查询界面时,是否关闭其它界面*/
+
+	_goBackFn = showGrid;
+
+	//document.forms["formFilter"].getElementsByTagName("span")[0].innerHTML = "${req:formTitleFilter}";   /*找formTitleEditor*/
+	document.getElementById("divFilter").style.display='';
+	//setFocusOnForm_report("formFilter");
+}
+
+//display filter form
+function showGrid(){
+	closeAllDiv();
+	document.getElementById("response").style.display='';
+
+	if(typeof(searchBack) == "function"){
+		searchBack();
+	}
+	
+	//restaura el goBack que corresponde a este estado
+	//_goBackFn = showFilter;
+}
+
+//display filter form
+function hiddenGrid(){
+	closeAllDiv();
+	document.getElementById("response").style.display='node';
+}
+
+/**
+* Close All Div elements
+* 将预置的几个层全部关闭
+*/
+function closeAllDiv(){
+    var div = null;
+    //检索条件层
+    div = document.getElementById("divFilter");
+    if(div != null){
+    	div.style.display='none';
+    }
+    //编辑层
+    div = document.getElementById("divEditor");
+    if(div != null){
+    	div.style.display='none';
+    }
+    //更新提示层
+    div = document.getElementById("divEditorResponse");
+    if(div != null){
+    	div.style.display='none';
+    }
+    //数据列表层
+    div = document.getElementById("response");
+    if(div != null){
+    	div.style.display='none';
+    }
+}
+
+/**
+* Switch Div name
+* 
+*/
+function switchDivStatus(divName){
+    if(divName == ""){
+    	return;
+    }
+    if(document.getElementById(divName).style.display==''){
+    	document.getElementById(divName).style.display='none';
+    }else{
+    	document.getElementById(divName).style.display='';
+    } 
+}
+
+/**
+* Show Div element
+* 
+*/
+function showDiv(divID){
+    if (divID!=null){
+    	document.getElementById(divID).style.display='';
+    }
+}
+
+/**
+* Show Div element
+* 
+*/
+function hideDiv(divID){
+    if (divID!=null){
+    	document.getElementById(divID).style.display='none';
+    }
+}
+
+
+function Toggle(){
+    // Try to get the FCKeditor instance, if available.
+    var oEditor ;
+    if ( typeof( FCKeditorAPI ) != 'undefined' ){
+    	oEditor = FCKeditorAPI.GetInstance( '_DataFCKeditor' ) ;
+    }
+
+    // Get the _Textarea and _FCKeditor DIVs.
+    var eTextareaDiv = document.getElementById('_Textarea');
+    var eFCKeditorDiv = document.getElementById('_FCKeditor');
+
+    // If the _Textarea DIV is visible, switch to FCKeditor.
+    if ( eTextareaDiv.style.display != 'none' ){
+        // If it is the first time, create the editor.
+        if ( !oEditor ){
+            CreateEditor() ;
+        }else{
+            // Set the current text in the textarea to the editor.
+            oEditor.SetHTML(document.getElementById('_DataTextarea').value);
+        }
+
+        // Switch the DIVs display.
+        eTextareaDiv.style.display = 'none' ;
+        eFCKeditorDiv.style.display = '' ;
+
+        // This is a hack for Gecko 1.0.x ... it stops editing when the editor is hidden.
+        if ( oEditor && !document.all ){
+            if ( oEditor.EditMode == FCK_EDITMODE_WYSIWYG ){
+            	oEditor.MakeEditable() ;
+            }
+        }
+    }else{
+        // Set the textarea value to the editor value.
+        document.getElementById('_DataTextarea').value = oEditor.GetXHTML(true) ;
+
+        // Switch the DIVs display.
+        eTextareaDiv.style.display = '' ;
+        eFCKeditorDiv.style.display = 'none' ;
+    }
+}
+
+function CreateEditor(){
+    // Copy the value of the current textarea, to the textarea that will be used by the editor.
+	document.getElementById('_DataFCKeditor').value = document.getElementById('_DataTextarea').value ;
+
+    // Automatically calculates the editor base path based on the _samples directory.
+    // This is usefull only for these samples. A real application should use something like this:
+    // oFCKeditor.BasePath = '/fckeditor/' ;	// '/fckeditor/' is the default value.
+    var sBasePath = "${def:context}/js/fckeditor/2.63/" ;
+
+    // Create an instance of FCKeditor (using the target textarea as the name).
+    var oFCKeditor = new FCKeditor( '_DataFCKeditor' ) ;
+    oFCKeditor.BasePath = sBasePath ;
+    oFCKeditor.Config['ToolbarStartExpanded'] = false ;
+    oFCKeditor.Width = '100%' ;
+    oFCKeditor.Height = '350' ;
+    oFCKeditor.Config['CustomConfigurationsPath'] = sBasePath + 'my.config.js' ;
+    oFCKeditor.ReplaceTextarea() ;
+}
+
+// The FCKeditor_OnComplete function is a special function called everytime an
+// editor instance is completely loaded and available for API interactions.
+function FCKeditor_OnComplete(editorInstance){
+    // Enable the switch button. It is disabled at startup, waiting the editor to be loaded.
+    //anthony delete 2010-09-04 begin
+    //$('_BtnSwitchTextarea').disabled = false ;
+    //anthony delete 2010-09-04 end
+}
+
+function PrepareSave(){
+    // If the textarea isn't visible update the content from the editor.
+    if (document.getElementById('_Textarea').style.display == 'none'){
+        var oEditor = FCKeditorAPI.GetInstance( '_DataFCKeditor' ) ;
+        document.getElementById('_DataTextarea').value = oEditor.GetXHTML(true) ;
+    }
+}
+
+/*******************************************************/
+/*全部选择      2008-12-4    by Oasahi                 */
+/*被关联checkbox控件增加checkedwith属性,指向主关联控件 */
+/*设置状态,与提交无关                                   */
+/*******************************************************/
+function checkedWith(me){
+    var formElements=document.getElementsByTagName("*");
+ 	for ( var i=formElements.length-1; i>=0; --i ) {
+        if(formElements[i].getAttribute("checkedwith") == null){
+            continue;
+        } else {
+            if(formElements[i].getAttribute("checkedwith") == me.getAttribute("id")){
+                if(formElements[i].type=="checkbox"){
+                    formElements[i].checked =  me.checked;
+                }
+
+                if(formElements[i].type=="text"||formElements[i].type=="password"||formElements[i].type=="hidden"){       /*设置只读属性*/
+                    if(formElements[i].getAttribute("dependent") != null){
+                        if(document.getElementById(formElements[i].getAttribute("dependent"))==null) {
+                        	ccms.dialog.alert("关联验证元素:"+formElements[i].getAttribute("dependent")+"不存在");
+                        	return;
+                        }
+                        var depwith = document.getElementById(formElements[i].getAttribute("dependent"));
+                        if(depwith.type=="checkbox" && depwith.checked && me.checked){
+                            setReadWrite(formElements[i]);
+                        }else{   /*依存控件为其它类型*/
+                            if(depwith.value!="" && depwith.type!="checkbox" && me.checked){
+                            	setReadWrite(formElements[i]);
+                            }else{
+                            	setReadOnly(formElements[i]);
+                            }
+                        }
+                     }else{
+                        if(me.checked){
+                        	setReadWrite(formElements[i]);
+                        }else{
+                        	setReadOnly(formElements[i]);
+                        }
+                     }
+                }
+
+                if(typeof(formElements[i].onchange)=="function"){
+                	formElements[i].onchange();
+                }
+            }
+        }
+ 	}
+    return true;
+}
+
+function reverseWith(me){
+    var formElements=document.getElementsByTagName("*");
+
+ 	for ( var i=formElements.length-1; i>=0; --i ) {
+        if(formElements[i].getAttribute("checkedwith") == null){
+            continue;
+        } else {
+            if(formElements[i].getAttribute("checkedwith") == me.getAttribute("id")){
+                if(formElements[i].type=="checkbox"){
+                    formElements[i].checked =  !formElements[i].checked;
+                }
+
+                if(formElements[i].type=="text"||formElements[i].type=="password"){       /*设置只读属性*/
+                    if(formElements[i].getAttribute("dependent") != null){
+                        if(document.getElementById(formElements[i].getAttribute("dependent"))==null) {
+                        	ccms.dialog.alert("关联验证元素:"+formElements[i].getAttribute("dependent")+"不存在");
+                        	return;
+                        }
+                        var depwith = document.getElementById(formElements[i].getAttribute("dependent"));
+                        if(depwith.type=="checkbox" && depwith.checked){
+                            setReadWrite(formElements[i]);
+                        }else{
+                        	setReadOnly(formElements[i]);
+                        }
+                     }else{
+                        if(me.checked){
+                        	setReadWrite(formElements[i]);
+                        }else{
+                        	setReadOnly(formElements[i]);
+                        }
+                     }
+                }
+
+                if(typeof(formElements[i].onchange)=="function"){
+                	formElements[i].onchange();
+                }
+            }
+        }
+ 	}
+    return true;
+}
+
+
+/*************************************************************/
+/*前置关联状态  2008-12-4    by Oasahi                       */
+/*设置被关联控件状态,如果主控件没有选中或空值,则关联控件禁用 */
+/*设置关联状态,同时与提交次序相关联                          */
+/*************************************************************/
+function dependentWith(me){
+    var formElements=document.getElementsByTagName("*");
+
+ 	for ( var i=formElements.length-1; i>=0; --i ) {
+        if(formElements[i].getAttribute("dependent") == me.getAttribute("id")){
+            if(me.type=="checkbox"){
+                if(me.checked){
+                    if(formElements[i].getAttribute("checkedwith") != null){
+                        var chkwith = $(formElements[i].getAttribute("checkedwith"));
+                        if(chkwith.type=="checkbox" && chkwith.checked){
+                            setReadWrite(formElements[i]);
+                        }
+                     }else{
+                    	 setReadWrite(formElements[i]); 
+                     }
+                }else{
+                	setReadOnly(formElements[i]);
+                }
+            }
+            if(me.type=="text"||me.type=="select"||me.type=="radio"||me.type=="hidden"){
+                if(me.value != ''){
+                    if(formElements[i].getAttribute("checkedwith") != null){
+                        if(document.getElementById(formElements[i].getAttribute("checkedwith"))==null) {
+                        	ccms.dialog.alert("关联验证元素:"+formElements[i].getAttribute("checkedwith")+"不存在");
+                        	return;
+                        }
+                        var chkwith = document.getElementById(formElements[i].getAttribute("checkedwith"));
+                        if(chkwith.type=="checkbox" && chkwith.checked){
+                            setReadWrite(formElements[i]);
+                        }
+                     }else{
+                    	 setReadWrite(formElements[i]);
+                     }
+                }else{
+                    setReadOnly(formElements[i]);
+                }
+            }
+
+            if(typeof(formElements[i].onchange)=="function"){
+            	formElements[i].onchange();
+            }
+        }
+ 	}
+    return true;
+}
+
+/*************************************************************/
+/*设置控件只读状态                                           */
+/*************************************************************/
+function setReadOnly(objName,formName){
+    document.forms[formName].elements[objName].setAttribute("readOnly","readonly");
+    document.forms[formName].elements[objName].setAttribute("class","readonly");
+    return true;
+}
+
+function setReadOnly(me){
+    me.setAttribute("readOnly","true");
+    me.setAttribute("class","readonly");        /*FF*/
+    me.setAttribute("className","readonly");    /*IE*/
+    return true;
+}
+
+function setReadWrite(me){
+    me.removeAttribute("readOnly");
+    me.setAttribute("class","");
+    me.setAttribute("className","");
+    return true;
+}
+
+function selectAll(id,formName){
+	var obj = document.forms[formName].elements;
+	for (var i=0;i<obj.length;i++){
+		if (obj[i].name == id){
+			obj[i].checked = true;
+		}
+	}
+}
+
+function unselectAll(id,formName){
+	var obj = document.forms[formName].elements;
+	for (var i=0;i<obj.length;i++){
+		if (obj[i].name == id){
+			if (obj[i].checked==true){
+				obj[i].checked = false;
+			}else{
+				obj[i].checked = true;
+			}
+		}
+	}
+}
+</script>
+
+<div id="InputValidatorTipDiv" style="position:absolute;visibility:hidden;height:30px;background-color:seashell;z-index:3"></div>

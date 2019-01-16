@@ -1,0 +1,18 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"tuid":"${fld:tuid}"
+		,"table_code":"${fld:table_code@js}"
+			,"table_alias":"${fld:table_alias@js}"
+		,"schema_name":"${fld:schema_name@js}"
+		,"table_name":"${fld:table_name@js}"
+		,"created":"${fld:created}"
+		,"remark":"${fld:remark@js}"
+		,"subject_id":"${fld:subject_id}"
+		,"created_flag":"${fld:created_flag@js}"
+		,"import_flag":"${fld:import_flag@js}"
+		,"migrate_flag":"${fld:migrate_flag@js}"
+	},
+	</rows>
+	{}
+]}

@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		服务 - 更新记录
+	</summary>
+	
+	<log>false</log>
+	
+	<audit>
+		<recordset></recordset>
+		<cols>
+			<colname>description_cn</colname>	
+			<colname>description_en</colname>
+			<colname>path</colname>		
+		</cols>
+		<table>s_service</table>
+		<oper>更新</oper>
+		<area>系统服务</area>
+		<pkey>tuid</pkey>
+	</audit>
+	
+    <request-encoding>UTF-8</request-encoding>
+	<transaction>
+		<classname>dinamica.audit.AuditableTransaction</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<query>update.sql</query>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

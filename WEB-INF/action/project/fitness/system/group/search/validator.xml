@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+		<parameter id="s_name" type="varchar" required="false" label="s_name" />
+		<parameter id="s_category" type="varchar" required="false" label="s_category" />
+		<parameter id="s_status" type="integer" required="false" label="s_status" />
+</validator>

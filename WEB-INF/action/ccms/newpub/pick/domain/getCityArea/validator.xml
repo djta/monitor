@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="province" type="varchar" required="false" label="province" maxlen="32"/>
+	<parameter id="city_old" type="varchar" required="false" label="city_old" maxlen="32"/>
+</validator>

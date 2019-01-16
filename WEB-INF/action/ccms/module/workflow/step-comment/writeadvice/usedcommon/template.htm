@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/formgen/pub/common}
+<title>编辑常用意见</title>
+<script type="text/javascript">
+function editercommon(){
+var common_id=document.getElementById("common_id").value;
+
+	if(common_id=="0"||common_id==""){
+		 return ajaxCall( httpMethod="POST",
+				 uri=$("#actionroot").val()+"/usedcommon/insert",
+				 divResponse=null,
+				 divProgress=null,
+				 formName="formEditor",
+				 afterResponseFn=null,
+				 onErrorFn=null); 
+		}else{
+			 return ajaxCall( httpMethod="POST",
+					 uri=$("#actionroot").val()+"/usedcommon/update",
+					 divResponse=null,
+					 divProgress=null,
+					 formName="formEditor",
+					 afterResponseFn=null,
+					 onErrorFn=null); 
+			}
+}
+
+function deleteusedcommon(id){
+	if(window.confirm("确认要删除该条记录？")){
+		return ajaxCall( httpMethod="POST",
+			 uri=$("#actionroot").val()+"/usedcommon/delete?tuid="+id,
+			 divResponse=null,
+			 divProgress=null,
+			 formName=null,
+			 afterResponseFn=null,
+			 onErrorFn=null); 
+	}
+}
+function editer(id,common){
+    document.getElementById("usedcommon").value=common;
+    document.getElementById("common_id").value=id;
+	
+}
+</script>
+</head>
+<body>
+<div class="pop_title">
+<h2>编辑常用意见<span class="close"><a href="#"><img src="${def:context}/images/ccms/close.jpg" onclick="parent.pickClose()" title="关闭"/></a></span></h2>
+</div>
+<!--COMMON HEADER-->
+${inc:/action/pub/header}
+<center>
+<form name="formEditor" onsubmit="return editercommon()">
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}"/>
+<table style="width: 98%" >
+ <tr>
+	<td  align="left">
+		<textarea  name="usedcommon" id="usedcommon" rows="5" cols="50" value=""></textarea>
+	</td>
+	<td align="center">
+	<input type="hidden" name="common_id" id="common_id"  value="" default="0"/>
+	<input type="submit" name="submit" id="submit" value="保存" class="btn_blue" ></input>
+	</td>
+	</tr>
+</table>
+	
+	<table style="width: 98%" class="grid">
+	<tr>
+	<th align="center" >操作</th><th align="center">常用意见</th>
+	</tr>
+	<rows>
+	<tr>
+	<td align="center" >
+	<a href="javascript:void(0);" onclick="deleteusedcommon(${fld:tuid})">删除</a>
+	<a href="javascript:void(0);" onclick="editer('${fld:tuid}','${fld:comments@js}')">修改</a>
+	</td>
+	<td align="center"><span >${fld:comments@js}</span></td>
+	</tr>
+	</rows>
+	
+</table>
+</form>
+</center>
+</body>
+
+
+
+</html>

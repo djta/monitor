@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>菜单管理</title>
+${inc:/action/ccms/newpub}
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">查询菜单</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm" name="searchForm">
+				<input name="sort" type="hidden" value="t.show_order" preserve="true" />
+				<input name="order" type="hidden" value="asc" preserve="true" />
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+				<input id="_pid" name="_pid" type="hidden" value="" preserve="true" />
+
+				<div class="form-group">
+					<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+						<input type="text" id="_name" placeholder="请输入菜单名称" class="form-control" name="_name" value="" size="20" />
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+						<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+						<button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th nowrap>操作</th>
+						<th class="sortable" code="menu_name" nowrap>菜单名称</th>
+						<th class="sortable" code="menu_type" nowrap>类型</th>
+						<th class="sortable" code="icon_path" nowrap>菜单logo图标地址</th>
+						<th class="sortable" code="uri" nowrap>访问路径</th>
+						<th class="sortable" code="show_order" nowrap>显示顺序</th>
+						<th class="sortable" code="createdby" nowrap>创建人</th>
+						<th class="sortable" code="created" nowrap>创建时间</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td align="center" nowrap>
+							<button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">编辑</button>
+							<button class="btn btn-primary btn-md list_btn" type="button" style="#isshowbtn#" code="#tuid#">界面按钮</button>
+							<button class="btn btn-primary btn-md sub_btn" type="button" code="#tuid#">下级菜单</button>
+						</td>
+						<td align="center">#menu_name#</td>
+						<td align="center">#menu_type#</td>
+						<td align="center">#icon_path#</td>
+						<td align="center">#uri#</td>
+						<td align="center">#show_order#</td>
+						<td align="center">#createdby#</td>
+						<td align="center">#created#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="formTitle">新增菜单</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+						<input type="hidden" id="tuid" name="tuid" value="" />
+						<input id="pid" name="pid" type="hidden" value="" preserve="true" />
+						<div class="row clearfix">
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">菜单名称</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<input type="text" class="form-control" id="menu_name" name="menu_name" maxlength="64" value="" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">类型</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<select class="form-control" id="menu_type" name="menu_type">
+										<option value="0">普通菜单</option>
+										<option value="1">首页图表</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">菜单logo图标地址</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<input type="text" class="form-control" id="icon_path" name="icon_path" maxlength="128" value="" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">访问路径</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<input type="text" class="form-control" id="uri" name="uri" maxlength="256" value="" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">显示顺序</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<input type="text" class="form-control" id="show_order" name="show_order" maxlength="10" value="" />
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div
+						class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+						<button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+						<button type="button" id="delete_btn" class="btn btn-primary btn-md">删除</button>
+						<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--用于传递当前目录到header模版中-->
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+	<script language="javascript">
+    $(document).ready(function () {
+    	var pid = ( "undefined" == "${fld:pid}" || "" == "${fld:pid}" ? "0" : "${fld:pid}" );
+    	$("#_pid").val( pid );
+    	$("#pid").val( pid );
+    	var search1=null;
+        var obj = $Crud({
+            formId: "formEditor",
+            button: "save_btn",
+            insertBack: function () {
+            	$(".error").empty();
+            	search1.searchData();
+            },
+            updateBack: function () {
+            	search1.searchData();
+            },
+            deleteBack: function () {
+            	search1.searchData();
+            },
+            addNewBack: function () {
+            	$("#delete_btn").hide();
+                $("#formTitle").html("新增菜单信息");
+            },
+            editBack: function () {
+            	$("#delete_btn").show();
+                $("#formTitle").html("修改菜单信息");
+            },
+            validate: function () {
+                var flag = $("#formEditor").validate({
+                    rules: {
+                        name: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        name: {
+                            required: "请输入菜单名称"
+                        }
+                    }
+                });
+                return flag;
+            }
+        }).init();
+
+        search1=$Search({datagrid: "datagrid", formId: "searchForm", success: function () {
+        	$("table").css("table-layout","auto");
+        	$(".edit_btn").unbind().on("click", function () {
+                if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+                    obj.edit({id: $(this).attr("code")});
+                }
+            });
+            $("#delete_btn").unbind().on("click", function () {
+                $Dialog().confirm("确定要删除吗?", function () {
+                    if ($("#tuid").val() != undefined && $("#tuid").val() != "") {
+                        obj.del({id: $("#tuid").val()});
+                    }
+                });
+            });
+            $(".list_btn").unbind().on("click",function(){
+            	var id = $(this).attr("code");
+            	id = (id != undefined && id != "undefined" ? id : "" );
+            	ccms.dialog.open({url : "${def:context}${def:actionroot}/btn/crud?menu_id=" + id});
+            });
+            $(".sub_btn").unbind().on("click",function(){
+            	var id = $(this).attr("code");
+            	id = (id != undefined && id != "undefined" ? id : "" );
+            	ccms.dialog.open({url : "${def:context}${def:actionroot}/crud?pid=" + id});
+            });
+        }}).initSearchBtn().searchData(1);
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body > 
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">办理中<span id="typeTitleSpan"></span></h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post" id="searchForm2" name="searchForm2">
+					<input name="sort" type="hidden" value="created" preserve="true"/> 
+					<input name="order" type="hidden" value="desc" preserve="true"/> 
+					<input name="pageNo" type="hidden" value="" preserve="true"/>
+					<input name="totalPages" type="hidden" value="" preserve="true"/>
+					<div class="form-group">
+						<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+						<input id="fdate2" name="fdate2" type="text" class="form-control" placeholder="请输入日期"/>
+						</div>
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 hidden-xs">
+							<input id="entry_id2" name="entry_id2" type="text" class="form-control" size="30" value="" placeholder="请输入工单号"/>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+							<button class="btn btn-primary btn-md" type="button" id="search_btn2">查询</button>
+							<button class="btn btn-primary btn-md" type="button" id="search_reset_btn2">清空</button>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 hidden-xs">
+							<input id="wfm_name2" name="wfm_name2" type="text" class="form-control" size="30" value="" placeholder="请输入工作流"/>
+						</div>
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 hidden-xs">
+							<input id="tdate2" name="tdate2" type="text" class="form-control" placeholder="请输入结束日期"/>
+						</div>
+					</div>
+				</form>
+				<table class="table table-condensed">
+				<thead>
+					<tr>
+					 	<th class="hidden-xs">
+								序号
+						</th>
+						<th>
+								标题
+						</th>
+						<th class="hidden-xs">
+								拟稿人
+						</th>
+						<th>
+								拟稿时间
+						</th>
+						<th class="hidden-xs">
+								当前状态
+						</th>
+						<th>
+								流程名称
+						</th>
+					  
+					 </tr>
+				</thead>
+				<tbody id="datagrid2Template" style="display:none">
+					<tr>
+						<td  align="center" class="hidden-xs">
+							<a href="javascript:void(0);" onclick="javascript:myClass.showWfmStatus('#entry_id#')" title="查看流程图">#rowNumber#</a>
+						</td>
+						
+						<td  align="center">
+							#step_name#
+						</td>
+						<td  align="center" class="hidden-xs">
+							#createdby#
+						</td>
+						<td  align="center">
+							#created#
+						</td>
+						<td  align="center" class="hidden-xs">
+							#status#
+						</td>
+						<td  align="center">
+							#wfm_name#
+						</td>	
+						 
+					</tr>
+				</tbody>	
+				<tbody id="datagrid2">
+				</tbody>
+				</table>
+				<div class="pageDiv" >
+					<ul class="pagination" data-target="datagrid2">
+					</ul>
+				</div>
+		</div>
+			<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+		</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script language="javascript">
+var myClass=new myClass();
+
+function myClass(){
+	this.obj2=null;
+
+	this.page2=function(){
+		var obth=this;
+		$Search({datagrid:"datagrid2",formId:"searchForm2",button:"search_btn2",resetButton:"search_reset_btn2",actionroot:"/action/ccms/wfmgen/processingPhone",
+			success:function(){
+		}}).initSearchBtn().searchData(1);
+	};
+	this.showWfmStatus=function(entry_id){
+		var url = "${def:context}/action/ccms/wfmgen/show_status?entry_id="+entry_id;
+		ccms.dialog.open({url:url,id:"workflow"});
+	};
+	this.checkoutBill=function(document_id,p_pk_value,pk_value,entry_id,step_id,step_type,wfm_id,current_id,parent_entry_id,parent_node_id){
+		if(document_id !=""){
+		    var form_action = 5;
+			var url = "${def:context}/action/ccms/wfmgen/checkout?current_id="+current_id+"&document_id="+document_id;
+			if(step_type == "3" || step_type == "4"){//会签节点和子流程
+				form_action = 3;
+				url +=  '&__parent_wfentry_id__=' + entry_id + '&__parent_node_id__='+step_id + '&__p_pk_value__=' + p_pk_value;
+				if(step_type == "4"){
+					url += "&__wfm_id__="+wfm_id;
+				}
+			}else{
+				url += "&__wfm_id__="+wfm_id+'&__pk_value__=' + pk_value + '&__parent_wfentry_id__=' + parent_entry_id + '&__parent_node_id__='+parent_node_id;
+			}
+			url += '&__form_action__='+form_action+'&__search_action__=0';
+			gotoPage(url);
+		}
+	};
+	this.dealWfm = function(entry_id, current_id){
+		var url = "/action/ccms/module/workflow/dealwfm?__wfentry_id__="+entry_id+"&__current_step_id__="+current_id;
+		gotoPage(url);
+	};
+}
+$(document).ready(function() {
+	$Dialog().date($('#fdate1'));
+	$Dialog().date($('#tdate1'));
+	$Dialog().date($('#fdate2'));
+	$Dialog().date($('#tdate2'));
+	$Dialog().date($('#fdate3'));
+	$Dialog().date($('#tdate3'));
+	$Dialog().date($('#fdate4'));
+	$Dialog().date($('#tdate4'));
+	myClass.page2();
+});
+</script>
+</body>
+</html>

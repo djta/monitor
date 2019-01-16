@@ -1,0 +1,36 @@
+insert into cc_ptlog 
+(
+	code,
+    ptrestcode,
+	customercode,
+	cardcode,
+	ptlevelcode,
+	leftcount,
+	ptid,
+	ptfee,
+	scale,
+	status,
+	preparecode,
+	starttime,
+	endtime,
+	created,
+	createdby,
+	org_id
+) values(
+	${seq:nextval@seq_cc_ptlog},
+	${fld:ptrestcode},
+	${fld:customercode},
+	NULL,
+	${fld:ptlevelcode},
+	${fld:ptleftcount}-1,
+	${fld:ptid},
+	${fld:ptfee},
+	${fld:scale},
+	1,
+	${fld:preparecode},
+	({ts '${def:timestamp}'})::time,
+	({ts '${def:timestamp}'} + concat(${fld:times}, ' min')::interval)::time,
+	{ts '${def:timestamp}'},
+	'sys',
+	${fld:org_id}
+)

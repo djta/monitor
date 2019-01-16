@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="__pk_value__" type="varchar" required="true" label="__pk_value__"/>
+	<parameter id="form_id" type="integer" required="true" label="form_id"/>
+</validator>

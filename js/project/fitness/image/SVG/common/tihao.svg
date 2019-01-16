@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="20px" viewBox="0 0 18 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>tihao</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0.00150627615 0.0195121951 17.9951046 0.0195121951 17.9951046 19.9999756 0.00150627615 19.9999756"></polygon>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#035985" offset="0%"></stop>
+            <stop stop-color="#0AA8F7" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="问卷" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-305.000000, -119.000000)">
+        <g id="tihao" transform="translate(305.000000, 119.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Clip-2"></g>
+            <polygon id="Fill-1" fill="url(#linearGradient-3)" mask="url(#mask-2)" points="17.9951046 0.0195121951 17.9951046 19.9999756 8.99753975 16.8780244 0 19.9770244 0 0.0195121951"></polygon>
+        </g>
+    </g>
+</svg>

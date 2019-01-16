@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		导入数据
+	</summary>
+	
+	<log>false</log>
+
+	<on-error>${def:actionroot}/error</on-error>
+
+	<transaction>
+        <classname>com.ccms.imp.ImportExcel</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-import.sql" source="sql" scope="transaction" />
+		<recordset id="query-table.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+		<print mode="form" recordset="_request" />
+	</output>
+
+</config>

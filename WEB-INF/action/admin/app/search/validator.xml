@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="app_alias" type="varchar" required="false" label="名称" />
+	<parameter id="description" type="varchar" required="false" label="描述" /> 
+	
+	<custom-validator 
+		classname="dinamica.validators.SQLPatternTransformer" 
+		parameter="app_alias" 
+		rule="contains" 
+		ifnull="%" />
+		
+	<custom-validator 
+		classname="dinamica.validators.SQLPatternTransformer" 
+		parameter="description" 
+		rule="contains" 
+		ifnull="%" />
+</validator>

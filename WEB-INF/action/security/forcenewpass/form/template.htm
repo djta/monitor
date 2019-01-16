@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+*{ padding: 0; margin: 0; }
+body{ background: #fff; font-family: '微软雅黑'; color: #333; font-size: 16px; }
+.system-message{ padding:0 0 40px;margin:60px auto;width:600px;border:1px solid #ccc}
+.system-message h1{margin-top:0px;height:55px;background:#0d85d9;line-height:55px;color:white; text-align:center; letter-spacing:8px; font-size:24px; font-weight:normal; font-family:"微软雅黑";}
+</style>
+${inc:/action/ccms/pub}
+</head>
+<body>
+<div class="system-message">
+	<h1>系统提醒</h1>
+	<div>
+		亲爱的 先生/女士:<br></br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			基于 <span style="color:red"><b>安全原因</b></span> 您必须更改您的密码,
+			这是由系统的安全策略所要求的,以利于保护您的信息安全.
+			如果您有任何疑问,请咨询系统管理人员.
+			<br></br>
+	</div>
+	<div>
+		<form name="formEditor" class="form-horizontal" role="form" method="post" id="formEditor">
+			<input type="hidden" name="userlogin" id="userlogin" value="${ses:dinamica.userlogin}" ></input>
+			<div class="form-group">
+				<div class="col-sm-12 clearright clearleft">
+					<label class="col-sm-4 clearright text-right">登录名:</label>
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						${ses:dinamica.userlogin}
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-12 clearright clearleft">
+					<label class="col-sm-4 clearright text-right required">新密码:</label>
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<input id="passwd" class="form-control" name="passwd" type="password" size="20" maxlength="15" />
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-12 clearright clearleft">
+					<label class="col-sm-4 clearright text-right required">确认密码:</label>
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<input id="confirm" class="form-control" name="confirm" type="password" size="20" maxlength="15" />
+					</div>
+				</div>
+			</div>
+
+		</form>
+		<div style="padding-left:30%;">
+			<button type="button" id="save_btn" class="btn btn-primary btn-md">保存/Save</button>
+			<button type="button" class="btn btn-primary btn-md" onclick="window.location.href='${def:context}/'">返回/Back</button>
+		</div>
+	</div>
+</div>
+
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+
+<script language="javascript"> 
+	$(document).ready(function() {
+		$("#save_btn").unbind().on("click",function(){
+			if(document.formEditor.passwd.value == "" || document.formEditor.confirm.value == ""){
+				$Dialog().alert("密码和确认密码不能为空");
+				return false;
+			}else if(document.formEditor.passwd.value != document.formEditor.confirm.value){
+				$Dialog().alert("两次输入的密码不一致");
+				return false;
+			}else{
+				var url = "/action/security/forcenewpass/update";
+				ajaxCall(url,{
+			        method: "post",
+			        progress: true,
+			        form: "formEditor",
+			        dataType: "script",
+			        success: function(data) {
+			        	
+			        }
+			    });
+			}
+			
+		});
+	});
+</script>
+</body>
+</html>
+

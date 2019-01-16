@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		upload
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+        <classname>com.ccms.core.engine.ImportFormConfig</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+	</output>
+	
+	<!-- update_mode 0:判断存在就更新，不存在就原值新增 1:每次都删除后新增 -->
+	<import-campaigns>
+		<table name="cs_campaign" pk="tuid" update_mode="0"/>
+		
+		<table name="cs_job" pk="tuid" ppk="campaign_id" ppk_type="varchar" update_mode="0"/>
+		<table name="cs_campaign_vehicle" pk="tuid" ppk="campaign_id" ppk_type="varchar" update_mode="0"/>
+		<table name="cs_campaign_dealer" pk="tuid" ppk="campaign_id" ppk_type="varchar" update_mode="0"/>
+		<table name="cs_campaign_changci" pk="tuid" ppk="campaign_id" ppk_type="varchar" update_mode="0"/>
+
+		<table name="cs_job_skill" pk="tuid" ppk="campaign_id" ppk_type="varchar" update_mode="1" delete="delete from cs_job_skill where job_id in (select tuid from cs_job where campaign_id = ${ppk})"/>
+		<table name="cs_job_filter" pk="tuid" ppk="campaign_id" ppk_type="varchar" update_mode="1" delete="delete from cs_job_filter where job_id in (select tuid from cs_job where campaign_id = ${ppk})"/>
+		<table name="cs_job_form" pk="tuid" ppk="campaign_id" ppk_type="varchar" update_mode="1" delete="delete from cs_job_form where job_id in (select tuid from cs_job where campaign_id = ${ppk})"/>
+		<table name="cs_job_node" pk="tuid" ppk="campaign_id" ppk_type="varchar" update_mode="1" delete="delete from cs_job_node where job_id in (select tuid from cs_job where campaign_id = ${ppk})"/>
+
+		<table name="cs_job_node_to" pk="tuid" ppk="campaign_id" ppk_type="varchar" update_mode="1" delete="delete from cs_job_node_to where node_id in (select tuid from cs_job_node where job_id in (select tuid from cs_job where campaign_id = ${ppk}))"/>
+		
+		<table name="cs_job_node_rule" pk="tuid" ppk="campaign_id" ppk_type="varchar" update_mode="1" delete="delete from cs_job_node_rule where node_to_id in (select tuid from cs_job_node_to where node_id in (select tuid from cs_job_node where job_id in (select tuid from cs_job where campaign_id = ${ppk})))"/>
+	</import-campaigns>
+
+	<import-forms>
+		<table name="t_table" pk="tuid" update_mode="0"/>
+		<table name="t_field" pk="tuid" update_mode="0"/>
+		<table name="t_form" pk="tuid" update_mode="0"/>
+		<table name="t_form_item" pk="tuid" update_mode="0"/>
+		<table name="t_form_show_field" pk="tuid" ppk="form_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}"/>
+		<table name="t_form_pdf_field" pk="tuid" ppk="form_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}"/>
+		<table name="t_form_filter_field" pk="tuid" ppk="form_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}"/>
+		<table name="t_form_excel_field" pk="tuid" ppk="form_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}"/>
+		<table name="t_form_grid_field" pk="tuid" ppk="form_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}"/>
+	</import-forms>
+
+	<import-documents>
+		<table name="t_table" pk="tuid" update_mode="0"/>
+		<table name="t_field" pk="tuid" update_mode="0"/>
+		<table name="t_form" pk="tuid" update_mode="0"/>
+		<table name="t_document" pk="tuid" update_mode="0"/>
+		<table name="t_form_item" pk="tuid" update_mode="0"/>
+		<table name="t_form_show_field" pk="tuid" ppk="document_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}" delete="delete from t_form_show_field where form_id in (select form_id from t_document where tuid = ${ppk})"/>
+		<table name="t_form_pdf_field" pk="tuid" ppk="document_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}" delete="delete from t_form_pdf_field where form_id in (select form_id from t_document where tuid = ${ppk})"/>
+		<table name="t_form_filter_field" pk="tuid" ppk="document_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}" delete="delete from t_form_filter_field where form_id in (select form_id from t_document where tuid = ${ppk})"/>
+		<table name="t_form_excel_field" pk="tuid" ppk="document_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}" delete="delete from t_form_excel_field where form_id in (select form_id from t_document where tuid = ${ppk})"/>
+		<table name="t_form_grid_field" pk="tuid" ppk="document_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}" delete="delete from t_form_grid_field where form_id in (select form_id from t_document where tuid = ${ppk})"/>
+
+		<table name="t_report" pk="tuid" update_mode="0"/>
+		<table name="t_report_show_field" pk="tuid" ppk="document_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}" delete="delete from t_report_show_field where report_id in (select report_id from t_document where tuid = ${ppk})"/>
+		<table name="t_report_filter_field" pk="tuid" ppk="document_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}" delete="delete from t_report_filter_field where report_id in (select report_id from t_document where tuid = ${ppk})"/>
+		<table name="t_report_chart" pk="tuid" ppk="document_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}" delete="delete from t_report_chart where report_id in (select report_id from t_document where tuid = ${ppk})"/>
+
+		<table name="t_document_params" pk="tuid" ppk="document_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}"/>
+	</import-documents>
+
+	<import-imports>
+		<table name="t_table" pk="tuid" update_mode="0"/>
+		<table name="t_field" pk="tuid" update_mode="0"/>
+		<table name="t_import" pk="tuid" update_mode="0"/>
+		<table name="t_import_skill" pk="tuid" ppk="imp_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}"/>
+		<table name="t_import_table" pk="tuid" ppk="imp_id" update_mode="1"/>
+		<table name="t_import_field" pk="tuid" ppk="imp_id" update_mode="1" delete="delete from t_import_field where tab_id in (select tuid from t_import_table where imp_id = ${ppk})"/>
+		<table name="t_import_rule" pk="tuid" ppk="imp_id" update_mode="1" delete="delete from t_import_rule where tab_id in (select tuid from t_import_table where imp_id = ${ppk})"/>
+		<table name="t_import_rule_filter" pk="tuid" ppk="imp_id" update_mode="1" delete="delete from t_import_rule_filter where rule_id in (select tuid from t_import_rule where tab_id in (select tuid from t_import_table where imp_id = ${ppk}))"/>
+	</import-imports>
+	
+	<import-reports>
+		<table name="t_table" pk="tuid" update_mode="0"/>
+		<table name="t_field" pk="tuid" update_mode="0"/>
+		<table name="t_report" pk="tuid" update_mode="0"/>
+		<table name="t_report_show_field" pk="tuid" ppk="report_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}"/>
+		<table name="t_report_filter_field" pk="tuid" ppk="report_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}"/>
+		<table name="t_report_chart" pk="tuid" ppk="report_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}"/>
+	</import-reports>
+
+	<import-terms>
+		<table name="t_term" pk="tuid" update_mode="0"/>
+		<table name="t_term_skill" pk="tuid" ppk="term_id" update_mode="1"/>
+		<table name="t_term_type" pk="tuid" ppk="term_id" update_mode="1"/>
+		<table name="t_term_item" pk="tuid" ppk="term_id" update_mode="1" delete="delete from t_term_item where type_id in(select tuid from t_term_type where term_id = ${ppk})"/>
+		<table name="t_term_list" pk="tuid" ppk="term_id" update_mode="1" delete="delete from t_term_list where item_id in(select tuid from t_term_item where type_id in(select tuid from t_term_type where term_id = ${ppk}))"/>
+		<table name="t_term_item_matrix" pk="tuid" ppk="term_id" update_mode="1" delete="delete from t_term_item_matrix where item_id in(select tuid from t_term_item where type_id in(select tuid from t_term_type where term_id = ${ppk}))"/>
+		<table name="t_term_outlet_rule" pk="tuid" ppk="term_id" update_mode="1" delete="delete from t_term_outlet_rule where item_id in(select tuid from t_term_item where type_id in(select tuid from t_term_type where term_id = ${ppk}))"/>
+		<table name="t_term_skip_rule" pk="tuid" ppk="term_id" update_mode="1" delete="delete from t_term_skip_rule where item_id in(select tuid from t_term_item where type_id in(select tuid from t_term_type where term_id = ${ppk}))"/>
+	</import-terms>
+
+	<import-workflows>
+		<table name="os_wfm" pk="tuid" update_mode="0"/>
+		<table name="os_wfm_node" pk="tuid" ppk="wfm_id" update_mode="1"/>
+		<table name="os_wfm_node_to" pk="tuid" ppk="wfm_id" update_mode="1" delete="delete from os_wfm_node_to where node_id in (select tuid from os_wfm_node where wfm_id = ${ppk})"/>
+		<table name="os_wfm_node_rule" pk="tuid" ppk="wfm_id" update_mode="1" delete="delete from os_wfm_node_rule where node_to_id in (select tuid from os_wfm_node_to where node_id in (select tuid from os_wfm_node where wfm_id = ${ppk}))"/>
+	</import-workflows>
+
+	<import-ibjobs>
+		<table name="t_table" pk="tuid" update_mode="0"/>
+		<table name="t_field" pk="tuid" update_mode="0"/>
+		<table name="cc_ib_job" pk="tuid" update_mode="0"/>
+		<table name="cc_ib_doc" pk="tuid" ppk="job_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}"/>
+		<table name="cc_ib_inject_field" pk="tuid" ppk="job_id" update_mode="1" seq="${seq:nextval@${schema}seq_default}"/>
+	</import-ibjobs>
+</config>

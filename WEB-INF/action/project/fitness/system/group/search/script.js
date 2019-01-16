@@ -1,0 +1,17 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{		
+			"checkboxlist":"${fld:checkboxlist@js}",
+		    "team_id":"${fld:team_id}",
+		    "team_name":"${fld:team_name}",
+		    "counttuid":"${fld:counttuid}",
+		    "remark":"${fld:remark}",
+		    "leader_name":"${fld:leader_name}",
+		    "num":"${fld:num}",
+		    "type":"${fld:type}",
+		    "status":"${fld:status}",
+		    "member":"${fld:member}"
+	},
+	</rows>
+	{}
+]}

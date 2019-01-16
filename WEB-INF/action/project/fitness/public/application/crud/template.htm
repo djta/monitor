@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="JaneCC" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <title>芯复健身房管理系统 简单智能 免费试用</title>
+	<link rel="shortcut icon" href="${def:context}/js/project/fitness/image/favicon.ico" type="image/x-icon" />
+    <link href="${def:context}/js/project/fitness/public/css/style.css?334" rel="stylesheet">
+</head>
+
+<body class="page_application">
+    <!-- <div id="wx_pic" style="margin:0 auto;display:none"> <img src="http://www.fitpass.cn/a0fd281548c2102a8554191ff6e6c00e.jpg"> </div> -->
+    <div class="floor container-fluid navbar-fixed-top"></div>
+    <div class="navbar navbar-default navbar-fixed-top self__nav_fixed" id="selfNav">
+        <div class="container">
+            <a class="navbar-brand logo" href=""></a>
+            <ul class="nav navbar-nav navbar-right">
+                <li role="presentation">
+                    <a href="${def:context}/">首页</a>
+                </li>
+                <li role="presentation">
+                    <a href="">产品介绍</a>
+                </li>
+                <li role="presentation" class="active">
+                    <a href="#">免费试用</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" class="self__btn_link">
+                        <button type="button" class="btn btn-default navbar-btn">登录</button>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="header">
+        <div class="container self__nav_bar">
+            <a class="navbar-brand logo" href=""></a>
+            <ul class="nav navbar-nav navbar-right">
+                <li role="presentation">
+                    <a href="${def:context}/action/project/fitness/public/index/crud">首页</a>
+                </li>
+                <li role="presentation">
+                    <a href="#">产品介绍</a>
+                </li>
+                <li role="presentation" class="active">
+                    <a href="#">免费试用</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" class="self__btn_link">
+                        <button type="button" class="btn btn-default navbar-btn">登录</button>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="container-fluid">
+            <h2 class="text-center">免费试用</h2>
+            <h3 class="text-center">Free trial</h3>
+        </div>
+    </div>
+    <main class="main">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="text-center">免费申请试用</h4>
+                </div>
+            </div>
+            <div class="row">
+			<form id="regForm" name="regForm" method="post">
+                <div class="text-center col-md-4 col-md-offset-4">
+                    <div class="text-center self__input_group" id="selfInputGroup">
+                        <div class="name slef__input_box">
+                            <input type="text" name="company_name" id="company_name" class="form-control self__input" placeholder="请输入品牌">
+                            <i id="company_nameerror"></i>
+                        </div>
+						<div class="everyone slef__input_box">
+							<div id="city_1">
+								<select class="prov" id="province" name="province">
+									<option value="">请选择</option>
+								</select>&nbsp;&nbsp;&nbsp;省&nbsp;&nbsp;
+								<select class="city" id="city" name="city">
+									<option value="">请选择</option>
+								</select>&nbsp;&nbsp;&nbsp;市(区)&nbsp;
+							</div><i id="cityerror"></i>
+						</div>
+                        <div class="user slef__input_box">
+                            <input type="text" name="name" id="name" class="form-control self__input" placeholder="请输入姓名">
+                            <i id="nameerror"></i>
+                        </div>
+                        <div class="phone slef__input_box">
+                            <input type="text" name="mobile" id="mobile" class="form-control self__input" placeholder="请输入手机号">
+                            <i id="mobileerror"></i>
+                        </div>
+                        <div class="self__verificat_code code slef__input_box">
+                            <input type="text" class="form-control self__input" name="imgcode" id="imgcode" placeholder="请输图形验证码">
+                            <img src="" alt="" class="imgCode" onClick="getVerifyImg()" id="verifyImg">
+                            <i id="imgcodeerror"></i>
+                        </div>
+                        <div class="self__verificat_code code slef__input_box">
+                            <input type="text" name="captcha_code" id="captcha_code"  class="form-control self__input" placeholder="请输短信验证码">
+                            <span id="divCode" onclick="Getcode()">获取验证码</span>
+                            <i id="captcha_codeerror"></i>
+                        </div>
+                        <!-- <div class="email slef__input_box">
+                            <input type="text" class="form-control self__input" placeholder="请输入联系邮箱">
+                            <i></i>
+                        </div> -->
+                    </div>
+                    <div class="text-center self__submit_btn">
+                        <button type="button" class="btn btn-default" id="submitbtn">提交申请</button>
+                    </div>
+                    <p class="text-center">*提交申请后，我们将提供给您免费试用账户</p>
+                </div>
+    		</form>
+            </div>
+        </div>
+    </main>
+    <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+        <div class="modal-dialog self__modal" role="document">
+            <div class="modal-content self__modal_content">
+                <h4 class="self__success_title">提交成功</h4>
+                <p>提交审核后，我们会尽快联系您，请稍等！</p>
+                <div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    // $("#myModal").modal()
+    </script>
+    <div class="modal" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel">
+        <div class="modal-dialog self__modal" role="document">
+            <div class="modal-content self__modal_content">
+                <h4 class="self__error_title">提交失败</h4>
+                <p></p>
+                <div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // $("#errorModal").modal()
+    </script>
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 text-center self__footer_title">
+                    <a href="${def:context}/action/project/fitness/public/index/crud">首页</a> 丨
+                    <a href="javascript:;">产品介绍</a> 丨
+                    <a href="javascript:void(0);" class="self__btn_link">登录</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="self__footer_weiChat"></div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- 电话：400-009-3669 邮箱：sklm-club@vip.126.com 地址：北京市昌平区镇珠江壹仟栋299号 -->
+                <div class="col-md-12">
+                    <ul class="list-unstyled self__footer_info">
+                        <!-- <li>
+                            <span class="work_time">工作时间：24小时</span>
+                        </li> -->
+                        <li>
+                            <span class="">电话:400-009-3669</span>
+                        </li>
+                        <li>
+                            <span class="">邮箱:sklm-club@vip.126.com</span>
+                        </li>
+                        <li>
+                            <span class="">地址:北京市昌平区镇珠江壹仟栋299号</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <p class="text-center self__company">备案号：冀ICP备18004316号-1 </p>
+            </div>
+        </div>
+    </footer>
+    <div class="self__susp_box">
+        <ul class="list-unstyled">
+            <li class="weichat">
+                <div class="weichat_code"></div>
+            </li>
+            <li class="phone">
+                <div class="phone_number">400-009-3669</div>
+            </li>
+            <li class="to_top" id="toTop"></li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="${def:context}/js/project/fitness/public/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${def:context}/js/project/fitness/public/js/ixu.js"></script>
+<script type="text/javascript" src="${def:context}/js/project/fitness/js/ccms.js"></script>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script language="JavaScript">
+var console = window.console || { log: function() {} };
+var contextPath = "${def:context}";
+var errimg = 0;
+$(document).ready(function() {
+	/** 加载省市 */
+	getSelectDomain("province", "Province", "", "");
+	$("#province").unbind().on("change",function(){
+		getSelectDomain("city", "City", "Province", $(this).val());
+	});
+	/** 加载图形验证码 */
+	getVerifyImg();
+    $(".self__btn_link").click(function(){
+        location.href="https://demo.gymjam.cn/";
+    })
+    /** 提交 */
+	$('#submitbtn').click(function(){
+		var company_name = $('#company_name').val();
+		if( company_name == "" || company_name == "单位名称" ){
+			$("#company_nameerror").html("不能为空");
+			$("#company_nameerror").addClass("error");
+			return false;
+		}
+		var province = $('#province').val();
+		if( province == "" ){
+			$("#cityerror").html("请选择省");
+			$("#cityerror").addClass("error");
+			return false;
+		}
+		var city = $('#city').val();
+		if( city == "" ){
+			$("#cityerror").html("请选择市(区)");
+			$("#cityerror").addClass("error");
+			return false;
+		}
+		var name = $('#name').val();
+		if( name == "" || name == "姓名" ){
+			$("#nameerror").html("不能为空");
+			$("#nameerror").addClass("error");
+			return false;
+		}
+		/** 图形验证码输错超过5次，自动刷新验证码 */
+		if( errimg > 5 ){
+			getVerifyImg();
+			errimg = 0;
+			$('#img_code').val("");
+		}
+		if( !checkMobile() ){
+			return false;
+		}
+		/** 验证图形验证码 */
+		validateVerifycode(function(){
+			/** 验证短信验证码 */
+			validateCaptchacode(function(){
+				var url = "/action/project/fitness/public/application/insert";
+				ajaxCall(url,{
+					method: "post",
+					form: "regForm",
+					button: "submitbtn",
+					progress: true,
+					dataType: "script",
+					success: function(data) {
+					    $("#regForm input").val("");
+					    $("#regForm select").val("");
+						/** 加载图形验证码 */
+						getVerifyImg();
+					    $("#myModal").modal();
+					},
+		   			error: function(){
+					    $("#errorModal").modal();
+		   			}
+				});
+			});
+		});
+	});
+    //品牌验证非空
+    $("#company_name").blur(function(){
+		var company_name = $(this).val();
+		if( company_name == "" || company_name == "单位名称" ){
+			$("#company_nameerror").html("不能为空");
+			$("#company_nameerror").addClass("error");
+			return false;
+		}else{
+			$("#company_nameerror").html("");
+			$("#company_nameerror").removeClass("error");
+		}
+    });
+    //姓名验证非空
+    $("#name").blur(function(){
+		var name = $(this).val();
+		if( name == "" || name == "姓名" ){
+			$("#nameerror").html("不能为空");
+			$("#nameerror").addClass("error");
+			return false;
+		}else{
+			$("#nameerror").html("");
+			$("#nameerror").removeClass("error");
+		}
+    });
+    //手机验证非空
+    $("#mobile").blur(function(){
+		var mobile = $(this).val();
+		if( mobile == ""){
+			$("#mobileerror").html("请输入手机号");
+			$("#mobileerror").addClass("error");
+			return false;
+		}else{
+			$("#mobileerror").html("");
+			$("#mobileerror").removeClass("error");
+		}
+    });
+    //图形验证非空
+    $("#imgcode").blur(function(){
+		var imgcode = $(this).val();
+		if( imgcode == ""){
+			$("#imgcodeerror").html("请输入图形验证码");
+			$("#imgcodeerror").addClass("error");
+			return false;
+		}else{
+			$("#imgcodeerror").html("");
+			$("#imgcodeerror").removeClass("error");
+		}
+    });
+    //图形验证非空
+    $("#captcha_code").blur(function(){
+		var captcha_code = $(this).val();
+		if( captcha_code == ""){
+			$("#captcha_codeerror").html("请输入短信验证码");
+			$("#captcha_codeerror").addClass("error");
+			return false;
+		}else{
+			$("#captcha_codeerror").html("");
+			$("#captcha_codeerror").removeClass("error");
+		}
+    });
+    $("#province").change(function(){
+    	var province = $(this).val();
+		if( province == ""){
+			$("#cityerror").html("请选择省")
+			$("#cityerror").addClass("error");
+			return false;
+		}else{
+			$("#cityerror").html("");
+			$("#cityerror").removeClass("error");
+		}
+    })
+    $("#city").change(function(){
+    	var city = $(this).val();
+		if( city == ""){
+			$("#cityerror").html("请选择市(区)")
+			$("#cityerror").addClass("error");
+			return false;
+		}else{
+			$("#cityerror").html("");
+			$("#cityerror").removeClass("error");
+		}
+    })
+
+});
+
+
+
+
+//获取手机验证码
+function Getcode(){
+	if( !checkMobile() ){
+		return false;
+	}
+	/** 验证图形验证码 */
+	validateVerifycode(function(){
+		RemainTime();
+		// 表单提交
+		var url = "${def:context}/service/captcha/get?mobile="+$("#mobile").val();
+		ajaxCall(url,{
+			method: "get",
+			progress: true,
+			dataType: "script",
+			success: function(data) {
+			}
+		});
+	});
+}
+
+/** 验证手机号码 */
+function checkMobile(){
+	var mobile = $('#mobile').val();
+	if( mobile == "" || mobile == "手机" ){
+		$("#mobileerror").html("请输入手机号");
+		$("#mobileerror").addClass("error");
+		$('.divform').css({'margin-top':'40px'});
+		setTimeout(function(){$('.divform').css({'margin-top':'15px'});},2000);
+		return false;
+	}else if( !IsMibile(mobile) ){
+		$("#mobileerror").html("请输入正确的手机号");
+		$("#mobileerror").addClass("error");
+		return false;
+	}
+	return true;
+}
+
+var iTime = 59;
+function RemainTime(){
+	var iSecond,sSecond="",sTime="";
+	if (iTime >= 0){
+		iSecond = parseInt(iTime%60);
+		if (iSecond >= 0){
+			sSecond = iSecond + "秒";
+		}
+		sTime="<span style='color:#41434C'>" + sSecond + "</font>";
+		if(iTime==0){
+			clearTimeout(Account);
+			sTime='获取验证码';
+			document.getElementById('divCode').innerHTML= sTime;
+			$('#divCode').attr({'onClick':'Getcode()'});
+			iTime = 59;
+		}else{
+			Account = setTimeout("RemainTime()",1000);
+			iTime=iTime-1;
+			document.getElementById('divCode').innerHTML= "请等待"+sTime;
+			$('#divCode').attr({'onClick':'false'});
+		}
+	}else{
+		sTime='<font size="1">没有倒计时</font>';
+	}
+}
+
+//手机号码匹配
+function IsMibile(s){
+	var flg=false;
+	var field13=/^13\d{9}$/g;
+	var field15=/^15\d{9}$/g;
+	var field17=/^17\d{9}$/g;
+	var field18=/^18\d{9}$/g;
+	if((field13.exec(s))||(field15.exec(s))||(field17.exec(s))||(field18.exec(s))) {
+		flg=true;
+	} else {
+		flg=false;
+	}
+	return flg;
+}
+
+/** 验证图形验证码 */
+var isverify = false;
+function validateVerifycode(callback){
+	isverify = false;
+	var verifycode = $("#imgcode").val();
+	if( undefined == verifycode || "" == verifycode ){
+		$("#imgcodeerror").html("请输入图形验证码");
+		$("#imgcodeerror").addClass("error");
+		return false;
+	}
+		var url = "/action/project/fitness/guestget/util/validateverifycode?verify_code=" + verifycode;
+		ajaxCall(url,{
+			method: "get",
+			progress: true,
+			async: false,
+			dataType: "script",
+			success: function(data) {
+			}
+		});
+		if( false == isverify ){
+			$("#imgcodeerror").html("图形验证码不正确");
+			$("#imgcodeerror").addClass("error");
+		}
+		if( isverify && undefined != callback ){
+			callback(isverify);	
+		}
+}
+
+/** 获取图形验证码*/
+function getVerifyImg(){
+	$("#verifyImg").attr("src", "${def:context}/service/captcha/image?code=" + Math.random());
+}
+
+/** 验证短验证码 */
+function validateCaptchacode(callback){
+	isverify = false;
+	var captcha_code = $("#captcha_code").val();
+	if( undefined == captcha_code || "" == captcha_code ){
+		$("#captcha_codeerror").html("请输入短信验证码");
+		$("#captcha_codeerror").addClass("error");
+		return false;
+	}
+		var url = "/action/project/fitness/guestget/util/validatecaptchacode?mobile="+$("#mobile").val()+"&captcha_code=" + captcha_code;
+		ajaxCall(url,{
+			method: "get",
+			progress: true,
+			async: false,
+			dataType: "script",
+			success: function(data) {
+			}
+		});
+		if( false == isverify ){
+			$("#captcha_codeerror").html("短信验证码不正确");
+			$("#captcha_codeerror").addClass("error");
+		}
+		if( isverify && undefined != callback ){
+			callback(isverify);	
+		}
+}
+/** 获取域值 */
+function getSelectDomain(objid, namespace, parent_namespace, parent_domain_value, callback){
+	if( undefined == objid || "" == objid ){
+		ccms.dialog.notice("Parameter id can not be null.");
+		return false;
+	}else if( undefined == namespace || "" == namespace ){
+		ccms.dialog.notice("Parameter namespace can not be null.");
+		return false;
+	}
+	parent_namespace = (undefined != parent_namespace ? parent_namespace : "");
+	parent_domain_value = (undefined != parent_domain_value ? parent_domain_value : "");
+	var uri = "/action/project/fitness/guestget/util/getdomain";
+	uri += "?id=" + objid + "&namespace=" + namespace + "&parent_namespace=" + parent_namespace + "&parent_domain_value=" + parent_domain_value;
+	return ajaxCall(uri,{
+		method: "get",
+		progress: true,
+		dataType: "script",
+		success: function() {
+			if( undefined != callback ){
+				callback();
+			}
+		}
+	});
+}
+</script>
+</body>
+</html>
+
+
+

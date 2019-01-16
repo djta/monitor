@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+    <parameter id="tenantry_name" type="varchar" required="true" label="商户名称" maxlen="64"/>
+    <parameter id="description" type="varchar" required="false" label="描述" maxlen="128"/>
+    <parameter id="enabled" type="varchar" required="false" label="是否启用" maxlen="2"/>
+    <parameter id="app_id" type="integer" required="true" label="应用系统"/>
+	<parameter id="is_default" type="integer" required="true" label="是否默认"/>
+
+</validator>

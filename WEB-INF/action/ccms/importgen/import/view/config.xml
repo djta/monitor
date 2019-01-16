@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<config>
+
+	<summary>
+		Ver resultado de consulta paginado
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>false</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query_import.sql" source="session" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<expiration>0</expiration>
+		<print mode="table" recordset="query_import.sql" tag="rows" alternate-colors="true" />
+	</output>
+	
+	<group-master sql="delete.sql" id="id" child="group-excel,group-filter,group-grid,group-item,group-pdf,group-show">
+		<group-excel table="t_form_excel_field" key="tuid" pkey="form_id">
+		</group-excel>
+		<group-filter table="t_form_filter_field" key="tuid" pkey="form_id">
+		</group-filter>
+		<group-grid table="t_form_grid_field" key="tuid" pkey="form_id">
+		</group-grid>
+		<group-item table="t_form_item" key="tuid" pkey="form_id">
+		</group-item>
+		<group-pdf table="t_form_pdf_field" key="tuid" pkey="form_id">
+		</group-pdf>
+		<group-show table="t_form_show_field" key="tuid" pkey="form_id">
+		</group-show>
+    </group-master>
+
+</config>

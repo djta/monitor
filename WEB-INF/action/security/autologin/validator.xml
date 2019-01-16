@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="userlogin" type="varchar" required="true" label="userlogin" />
+	<parameter id="passwd" type="varchar" required="false" label="passwd" />
+	<parameter id="uri" type="varchar" required="true" label="uri" />
+
+</validator>

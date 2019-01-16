@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/newpub}
+<title>岗位权限管理</title>
+<script src="${def:context}/js/project/itilnew/js/ztree/ztree/jquery.ztree.all-3.5.js"></script>
+<link rel="stylesheet" href="${def:context}/js/project/itilnew/js/ztree/ztree/zTreeStyle/zTreeStyle.css" />
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">岗位权限管理</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm" name="searchForm">
+				<input name="sort" type="hidden" value="skill_id" preserve="true" />
+				<input name="order" type="hidden" value="desc" preserve="true" />
+				<input name="pageNo" type="hidden" value="" preserve="true" />
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+
+				<div class="form-group">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+						<input type="text" id="skill_name" name="skill_name" placeholder="请输入岗位名称" class="form-control" value="" size="20" />
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+						<button class="btn btn-primary" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary" type="button" id="search_reset_btn">清空</button>
+						<button class="btn btn-primary" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th width="200px" nowrap>操作</th>
+						<th class="sortable" code="skill_name" nowrap>岗位名称</th>
+						<th nowrap>职责描述</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td align="center">
+							<button class="btn btn-primary editbtn" type="button" code="#skill_id#">查看</button>
+							<button class="btn btn-primary menub_btn" type="button" code="#skill_id#">授权管理</button>
+						</td>
+						<td align="center">#skill_name#</td>
+						<td align="center">#remark#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="formTitle">新增岗位</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+						<input type="hidden" id="tuid" name="tuid" default="0" value="" />
+						<div class="row clearfix">
+							<div class="form-group">
+								<label class="col-xs-2 col--3 col-sm-3 col-lg-3 control-label col-xs-offset-1 col--offset-1 col-sm-offset-1 col-lg-offset-1 required">岗位名称</label>
+								<div class="col-xs-8 col--7 col-sm-7 col-lg-7">
+									<input type="text" class="form-control" id="skill_name2" name="skill_name" maxlength="64" value="" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 col--3 col-sm-3 col-lg-3 control-label col-xs-offset-1 col--offset-1 col-sm-offset-1 col-lg-offset-1 ">职责描述</label>
+								<div class="col-xs-8 col--7 col-sm-7 col-lg-7">
+									<textarea name="remark" class="form-control" id="remark" cols="30" rows="2" maxlength="256"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+	                            <label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 ">系统角色</label>
+	                            <div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+	                                <role-list>
+	                                    <input name="role_id"   id="role_id" type="checkbox" value="${fld:role_id}"/>
+	                                    ${fld:rolename}
+	                                </role-list>
+	                            </div>
+                        	</div>
+							
+							<div class="form-group text-center">
+								<label class="col-xs-2 col--3 col-sm-3 col-lg-3 control-label col-xs-offset-1 col--offset-1 col-sm-offset-1 col-lg-offset-1 ">岗位权限</label>
+								<div class="col-xs-8 col--7 col-sm-7 col-lg-7">
+									<ul id="ztree" class="ztree"></ul>
+								</div>
+							</div>
+						</div>
+						<div id="checkedNodesDiv" style="display:none;"></div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="col-xs-12 col--8 col-sm-6 col-lg-8 col-xs-offset-1 col--offset-2 col-sm-offset-3 col-lg-offset-2">
+						<button type="button" id="save_btn" class="btn btn-info btn-sm">确&nbsp;定</button>
+						<button type="button" id="delete_btn" class="btn btn-info btn-sm">删除</button>
+						<button type="button" class="btn btn-info btn-sm" data-dismiss="modal">取&nbsp;消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--用于传递当前目录到header模版中-->
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+	<script language="javascript">
+	var treeObj;
+    $(document).ready(function () {
+    	var search1=null;
+        var obj = $Crud({
+            formId: "formEditor",
+            button: "save_btn",
+            insertBack: function () {
+            	$(".error").empty();
+            	search1.searchData();
+            },
+            updateBack: function () {
+            	search1.searchData();
+            },
+            deleteBack: function () {
+            	search1.searchData();
+            },
+            addNewBack: function () {
+            	$("#delete_btn").hide();
+                $("#formTitle").html("新增岗位信息");
+                treeObj.checkAllNodes(false);
+            },
+            editBack: function () {
+            	$("#delete_btn").show();
+                $("#formTitle").html("修改岗位信息");
+            },
+            validate: function () {
+                var flag = $("#formEditor").validate({
+                    rules: {
+                        skill_name: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        skill_name: {
+                            required: "请输入岗位名称"
+                        }
+                    }
+                });
+                return flag;
+            },
+            check: function(){
+            	getCheckedMenu();
+            	return true;
+            }
+        }).init();
+
+        search1=$Search({datagrid: "datagrid", formId: "searchForm", success: function () {
+        	$("table").css("table-layout","auto");
+            $(".editbtn").unbind().on("click", function () {
+                if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+                    obj.edit({id: $(this).attr("code")});
+                }
+            });
+            $("#delete_btn").unbind().on("click", function () {
+                $Dialog().confirm("确定要删除吗?", function () {
+                    if ($("#tuid").val() != undefined && $("#tuid").val() != "") {
+                        obj.del({id: $("#tuid").val()});
+                    }
+                });
+            });
+            $(".menub_btn").unbind().on("click",function(){
+                if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+                	ccms.dialog.open({url : "${def:context}${def:actionroot}/menubtn/form?skill_id=" + $(this).attr("code")});
+                }
+            });
+        }}).initSearchBtn().searchData(1);
+
+        // 加载菜单树
+		var setting = createTreeSetting();
+		var nodes = createTreeNodes();
+   		$(function(){
+   			$.fn.zTree.init($("#ztree"), setting, nodes);
+   			treeObj = $.fn.zTree.getZTreeObj("ztree");
+   		});
+    });
+    function createTreeSetting(){
+    	var setting = {
+    		check: {
+    			enable: true,
+    			chkboxType: { "Y": "ps", "N": "ps" }
+    		},
+    		data: {	// 必须使用data
+    			simpleData: {
+    				enable: true,
+   					/**editNameSelectAll:true,*/
+    				idKey: "id", // id编号命名 默认
+    				pIdKey: "pId", // 父id编号命名 默认
+    				rootPId: 0 // 用于修正根节点父节点数据，即 pIdKey 指定的属性值
+    			}
+   			}
+   		};
+   		return setting;
+    }
+    function createTreeNodes(){
+    	var nodes = [];
+    	var i = 0;
+    	<menu-rows>
+    		nodes[i] = { id:"${fld:tuid}", pId:"${fld:pid}", name:"${fld:menu_name}", open:true, nocheck:false };
+    		i++;
+    	</menu-rows>
+    	return nodes;
+    }
+    function getCheckedMenu(){
+    	var nodes = treeObj.getCheckedNodes(true);
+    	var len = (undefined != nodes ? nodes.length : 0);
+    	var divobj = $("#checkedNodesDiv");
+    	divobj.empty();
+    	for(var i = 0; i < len; i++){
+    		var obj = nodes[i];
+    		if( undefined == obj.id || !isNumber(obj.id) ){
+    			continue;
+    		}
+        	divobj.append('<input type="hidden" name="menu_id" value="' + obj.id + '" />');
+    	}
+    }
+</script>
+</body>
+</html>

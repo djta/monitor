@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="item_id" type="integer" required="true" label="item_id" />
+	<parameter id="list_show_type" type="varchar" required="true" label="list_show_type" />
+</validator>

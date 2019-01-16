@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator >
+
+	<parameter id="subject_id" type="integer" required="false" label="subject_id" />
+	<parameter id="campaign_name" type="varchar" required="false" label="campaign_name" />
+	<parameter id="campaign_type" type="varchar" required="false" label="campaign_type" />
+
+	<custom-validator
+		classname="dinamica.validators.SQLPatternTransformer"
+		parameter="campaign_name"
+		rule="contains" />
+
+</validator>
+

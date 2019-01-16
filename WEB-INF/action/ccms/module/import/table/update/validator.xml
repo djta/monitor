@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+    <parameter id="tuid" type="integer" required="true" label="导入id"/>
+    <parameter id="imp_id" type="integer" required="true" label="导入业务ID"/>
+    <parameter id="table_id" type="integer" required="true" label="业务表"/>
+    <parameter id="bpk_field_alias" type="varchar" required="true" label="主键别名"/>
+    <parameter id="parent_id" type="integer" required="false" label="上级表"/>
+    <parameter id="if_new_flag" type="varchar" required="false" label="新增标识"/>
+    <parameter id="remark" type="varchar" required="false" label="备注"/>
+    <parameter id="tab_name" type="varchar" required="true" label="导入表名称"/>
+	<parameter id="data_operator_type" type="varchar" required="false" label="数据导入类型"/>
+
+	<custom-validator 	
+		classname="dinamica.validators.DuplicatedKeyValidator" 
+		on-error-label="该导入主键别名已经存在，请重新输入"
+		sql="nodup_bpk_field_alias.sql" id="bpk_field_alias"/>
+</validator>

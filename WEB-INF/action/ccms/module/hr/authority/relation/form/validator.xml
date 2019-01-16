@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="group_id" type="integer" required="true" label="group_id"/>
+	<parameter id="status" type="varchar" required="true" label="status"/>
+	<parameter id="check_status" type="varchar" required="true" label="check_status"/>
+</validator>

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+    <parameter id="tuid" type="integer" required="true" label="tuid" />
+    <parameter id="wfm_status" type="varchar" required="true" label="wfm_status" />
+	<parameter id="remark" type="varchar" required="false" label="remark" />
+	<parameter id="logo_path" type="varchar" required="true" label="logo_path" />
+ 
+</validator>
+
+

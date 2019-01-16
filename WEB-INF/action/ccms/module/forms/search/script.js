@@ -1,0 +1,14 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+		"tuid":"${fld:tuid}"
+		,"subject_id":"${fld:subject_id}"
+		,"table_id":"${fld:table_id}"
+		,"form_name":"${fld:form_name@js}"
+		,"remark":"${fld:remark@js}"
+		,"table_alias":"${fld:table_alias@js}"
+		,"table_id1":"${fld:table_id1}"
+	},
+	</rows>
+	{}
+]}

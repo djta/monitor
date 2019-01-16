@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>我的访问历史</title>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">我的访问历史</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post"
+				id="searchForm" name="searchForm">
+				<input name="sort" type="hidden" value="login_date" preserve="true" />
+				<input name="order" type="hidden" value="desc" preserve="true" /> <input
+					name="pageNo" type="hidden" value="" preserve="true" /> <input
+					name="totalPages" type="hidden" value="" preserve="true" />
+				<div class="form-group">
+					<div class="col-sm-4 clearright clearleft">
+						<label class="col-sm-4 clearright text-right">起始日期</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+							<input type="text" class="form-control" id="fdesde" name="fdesde"
+								placeholder="请选择起始日期" />
+						</div>
+					</div>
+					<div class="col-sm-4 clearright clearleft">
+						<label class="col-sm-4 clearright text-right">结束日期</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+							<input type="text" class="form-control" id="fhasta" name="fhasta"
+								placeholder="请选择结束日期" />
+						</div>
+					</div>
+
+					<div class="col-sm-3 clearright clearleft">
+						<div class="col-sm-12 clearright clearleft">
+							<button type="button" id="search_btn"
+								class="btn btn-primary btn-md">查询</button>
+							<button type="button" id="reset_btn"
+								class="btn btn-primary btn-md">重置</button>
+						</div>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th></th>
+						<th class="sortable" code="login_date">登录日期</th>
+						<th>登录时间</th>
+						<th>登出时间</th>
+						<th>远端IP地址</th>
+						<th>应用</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td align="center">#index#</td>
+						<td align="center">#login_date#</td>
+						<td align="center">#login_time#</td>
+						<td align="center">#exit_date#</td>
+						<td align="center">#remote_addr#</td>
+						<td align="center">#context#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<input type="hidden" name="actionroot" id="actionroot"
+		value="${def:actionroot}" />
+
+	<script language="javascript">
+		$(document).ready(function() {
+			var search = $Search({
+				datagrid : "datagrid",
+				formId : "searchForm",
+				success : function() {
+				}
+			}).initSearchBtn().searchData(1);
+			$Dialog().date($('#fdesde'));
+			$Dialog().date($('#fhasta'));
+			$("#search_btn").unbind().on("click", function() {
+				$(".error").empty();
+				search.searchData(1);
+			});
+			$("#reset_btn").unbind().on("click", function() {
+				$('#fdesde').val("");
+				$('#fhasta').val("");
+			});
+
+		});
+	</script>
+</body>
+
+</html>

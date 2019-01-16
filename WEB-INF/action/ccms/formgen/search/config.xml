@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		Search Reocrd
+	</summary>
+	
+	<log>false</log>
+	<on-error>/action/error/alert</on-error>
+
+	<clase-template>clause-field.sql</clase-template>
+	<paging-recordset>query_formgen</paging-recordset>
+	<total-recordset>query_total</total-recordset>
+	<form-id>form_id</form-id>
+	<print-tag>rows</print-tag>
+
+	<transaction>
+		<classname>com.ccms.core.formengine.FormSearchEngine</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<output>
+		<classname>com.ccms.core.formengine.FormSearchOutputEngine</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

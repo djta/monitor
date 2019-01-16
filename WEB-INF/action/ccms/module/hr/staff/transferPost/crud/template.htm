@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>转岗</title>
+${inc:/action/ccms/pub}
+</head>
+<body>
+	
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">岗位信息</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm">
+				<input type="hidden" id="user_id" name="user_id" value="${fld:tuid}" preserve="true" /> 
+				<input name="sort" type="hidden" value="org_name" preserve="true" />
+				<input name="order" type="hidden" value="desc" preserve="true" /> 
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+				
+				<div class="form-group">
+					<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+						<input name="org_name" type="text" class="form-control" size="20" value="" placeholder="请输入岗位名称" />
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th class="sortable" code="org_name">岗位名称</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr onclick="transferOrg('#org_id#');" style="cursor: pointer;" title="选择">
+						<td align="center">#org_name#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid"></tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<!--用于传递当前目录到header模版中-->
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script type="text/javascript">
+$(document).ready(function() {
+	$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		
+	}}).initSearchBtn().searchData(1);
+});
+function transferOrg(org_id){
+	var user_id = $("#user_id").val();
+	var url = "/action/ccms/module/hr/staff/transferPost/update?user_id="+user_id+"&org_id="+org_id;
+	ajaxCall(url,{
+		method: "post",
+		progress: true,
+		dataType: "script",
+		success: function() {
+			$Dialog().notice("转岗成功！",1200,function(){
+				//parent.$("#_dlgtransferPost").modal("hide");//关闭此弹出窗口
+				ccms.dialog.close();
+				parent.staffClass.init();
+			});
+		}
+	});
+}
+</script>
+</body>
+</html>

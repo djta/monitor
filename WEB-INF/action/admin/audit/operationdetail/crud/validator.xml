@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="table_code" type="varchar" required="false" label="表代码" />
+	<parameter id="pk_value" type="varchar" required="false" label="业务主键" />
+	<parameter id="op_date" type="varchar" required="false" label="创建时间" />
+	<parameter id="op_time" type="varchar" required="false" label="创建时间" />
+	
+</validator>
+

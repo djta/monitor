@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="userlogin" type="varchar" required="false" label="Login del usuario" />
+	<parameter id="user_alias" type="varchar" required="false" label="Usuarios" />
+	<parameter id="fdesde" type="date" required="false" label="Fecha desde" />
+	<parameter id="fhasta" type="date" required="false" label="Fecha hasta" />
+	<parameter id="operation" type="varchar" required="false" label="Operaci髇"/>
+	<parameter id="area" type="varchar" required="false" label="Area" />
+	<parameter id="contexto" type="varchar" required="false" label="Aplicaci髇 Web" />
+	
+	<custom-validator
+		classname="dinamica.validators.DateRangeValidator"
+		on-error-label="[起始日期] 不能晚于 [结束日期]."
+		date1="fdesde" date2="fhasta" />
+
+</validator>
+

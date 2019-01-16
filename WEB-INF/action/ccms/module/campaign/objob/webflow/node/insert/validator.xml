@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/error/validation/ajax">
+
+    <parameter id="job_id" type="integer" required="true" label="job_id"/>
+    <parameter id="node_name" type="varchar" required="true" label="node_name"/>
+    <parameter id="node_type" type="varchar" required="true" label="node_type" />
+    <parameter id="paper_id" type="integer" required="false" label="paper_id"/>
+    <parameter id="wait_time" type="integer" required="false" label="wait_time" />
+    <parameter id="ob_type" type="varchar" required="true" label="ob_type" />
+    <parameter id="remark" type="varchar" required="false" label="remark" />
+    <parameter id="success_quota" type="integer" required="true" label="success_quota"/>
+
+    <parameter id="grab_flag" type="varchar" required="true" label="grab_flag" />
+    <parameter id="grab_skip_flag" type="varchar" required="true" label="grab_skip_flag" />
+    <parameter id="grab_flag_scope" type="varchar" required="true" label="grab_flag_scope" />
+
+    <parameter id="sms_template_id" type="integer" required="false" label="sms_template_id" />
+	<parameter id="mms_template_id" type="integer" required="false" label="mms_template_id" />
+    <parameter id="email_template_id" type="integer" required="false" label="email_template_id" />
+    <parameter id="email_subject" type="varchar" required="false" label="email_subject" />
+    <parameter id="email_send_type" type="varchar" required="true" label="email_send_type" />
+    <parameter id="dm_job_id" type="integer" required="false" label="dm_job_id" />
+
+    <parameter id="remind_template_id" type="integer" required="false" label="remind_template_id" />
+    <parameter id="remind_subject" type="varchar" required="false" label="remind_subject" />
+
+    <parameter id="is_auto_assign" type="varchar" required="false" label="is_auto_assign" />
+	<parameter id="limit_dial_count" type="integer" required="false" label="限制拨打次数"/>
+
+		<parameter id="node_width" type="varchar" required="true" label="node_width" />
+		<parameter id="node_height" type="varchar" required="true" label="node_height" />
+		<parameter id="node_x" type="varchar" required="true" label="node_x" />
+		<parameter id="node_y" type="varchar" required="true" label="node_y" />
+		
+		<custom-validator 	
+		classname="dinamica.validators.DuplicatedKeyValidator" 
+		on-error-label="已经存在开始节点,不能新建开始节点." id="node_type"
+		sql="nodup.sql" />
+		
+		<custom-validator
+		 classname='dinamica.validators.NoRecordsFound'
+		 on-error-label="任务下没有开始节点,请首先新建开始节点." id="node_type"
+		 sql='find-type.sql'/>
+
+</validator>
+ 

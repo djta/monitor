@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-term.sql" source="sql" scope="transaction" />
+		<recordset id="query-term_skill.sql" source="sql" scope="transaction" />
+		<recordset id="query-term_type.sql" source="sql" scope="transaction" />
+		<recordset id="query-term_item.sql" source="sql" scope="transaction" />
+		<recordset id="query-term_list.sql" source="sql" scope="transaction" />
+		<recordset id="query-term_item_matrix.sql" source="sql" scope="transaction" />
+		<recordset id="query-term_outlet_rule.sql" source="sql" scope="transaction" />
+		<recordset id="query-term_skip_rule.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>com.ccms.core.engine.ExportFormConfig</classname>
+	</output>
+	
+	<request-ppk>term_id</request-ppk>
+	<xml-category>terms</xml-category>
+	<sequences>seq_term</sequences>
+
+	<export-tables>
+		<table name="t_term" recordset="query-term.sql"/>
+		<table name="t_term_skill" recordset="query-term_skill.sql"/>
+		<table name="t_term_type" recordset="query-term_type.sql"/>
+		<table name="t_term_item" recordset="query-term_item.sql"/>
+		<table name="t_term_list" recordset="query-term_list.sql"/>
+		<table name="t_term_item_matrix" recordset="query-term_item_matrix.sql"/>
+		<table name="t_term_outlet_rule" recordset="query-term_outlet_rule.sql"/>
+		<table name="t_term_skip_rule" recordset="query-term_skip_rule.sql"/>
+	</export-tables>
+
+</config>

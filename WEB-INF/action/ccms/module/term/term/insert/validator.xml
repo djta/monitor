@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+    <parameter id="term_name" type="varchar" required="true" label="term_name" maxlen="128"/>
+    <parameter id="term_type" type="varchar" required="true" label="term_type" maxlen="2"/>
+	<parameter id="pre_class" type="varchar" required="false" label="pre_class" maxlen="256"/>
+	<parameter id="post_class" type="varchar" required="false" label="post_class" maxlen="256"/>
+	<parameter id="remark" type="varchar" required="false" label="remark" maxlen="512"/>
+	<parameter id="status" type="varchar" required="true" label="status" maxlen="2"/>
+	<parameter id="logo_path" type="varchar" required="true" label="logo_path" maxlen="256"/>
+	<parameter id="introduction" type="varchar" required="false" label="introduction" maxlen="4000"/>
+	<parameter id="ending" type="varchar" required="false" label="ending" maxlen="4000"/>
+   <parameter id="question_bank_id" type="integer" required="false" label="question_bank_id" maxlen="256"/>
+</validator>

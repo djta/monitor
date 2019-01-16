@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config nodb="true">
+
+	<summary>
+		我的访问历史
+	</summary>
+
+	<log>false</log>
+
+	<set-request-attribute id="header.title" value="我的访问历史" />
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

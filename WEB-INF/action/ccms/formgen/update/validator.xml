@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="form_id" type="integer" required="true" label="form_id"/>
+	<parameter id="__p_pk_value__" type="varchar" required="false" label="__p_pk_value__"/>
+    <parameter id="__pk_value__" type="varchar" required="true" label="__pk_value__"/>
+    <parameter id="__wfm_id__" type="integer" required="false" label="__wfm_id__"/>
+	<parameter id="__wfentry_id__" type="integer" required="false" label="__wfentry_id__"/>
+	<parameter id="__current_step_id__" type="integer" required="false" label="__current_step_id__"/>
+	<parameter id="__dowfm__" type="integer" required="false" label="__dowfm__"/>
+</validator>

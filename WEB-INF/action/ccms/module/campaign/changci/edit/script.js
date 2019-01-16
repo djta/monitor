@@ -1,0 +1,13 @@
+document.formEditor.tuid.value = "${fld:tuid}";
+document.formEditor.changci_name.value = "${fld:changci_name@js}";
+document.formEditor.changci_time.value = "${fld:changci_time}";
+document.formEditor.regist_from_time.value = "${fld:regist_from_time@yyyy-MM-dd hh:mm:ss}";
+document.formEditor.regist_to_time.value = "${fld:regist_to_time@yyyy-MM-dd hh:mm:ss}";
+//getChildDomainByChild("Province","province","City","event_city","${fld:event_city}");
+var init_event_city = "${fld:event_city}";
+document.formEditor.province.value = "${fld:province}";
+$("#province").change();
+document.formEditor.car_series.value = "${fld:car_series}";
+document.formEditor.remark.value = "${fld:remark@js}";
+document.formEditor.show_order.value = "${fld:show_order}";
+document.formEditor.changci_quota.value = "${fld:changci_quota}";

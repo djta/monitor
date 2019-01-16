@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+    <parameter id="table_id" type="varchar" required="true" label="表ID" maxlen="10"/>
+	<custom-validator 	
+		classname="dinamica.validators.DuplicatedKeyValidator" 
+		on-error-label="字段已经生成过了,请手工调整."
+		sql="dupkey.sql" />
+
+</validator>

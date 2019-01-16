@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<parameter id="org_id" type="integer" required="true" label="org_idinsert" />
+	<parameter id="post_id" type="integer" required="false"
+		label="post_id" />
+	<parameter id="org_post_name" type="varchar" required="true"
+		label="org_post_name" maxlen="128" />
+	<parameter id="show_order" type="integer" required="false"
+		label="show_order" />
+	<parameter id="pid" type="integer" required="false" label="pid" />
+	<parameter id="pid" type="integer" required="false" label="pid" />
+	<parameter id="org_post_path" type="varchar" required="false"
+		label="org_post_path" maxlen="512" />
+</validator>

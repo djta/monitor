@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<validator>
+	<parameter id="action_id" type="integer" required="true" label="action_id" maxlen="10" />
+	<parameter id="step_type" type="integer" required="true" label="step_type" maxlen="10" />
+	<parameter id="next_node" type="integer" required="true" label="next_node" maxlen="10" />
+	<parameter id="entry_id" type="integer" required="true" label="entry_id" maxlen="10" />
+	<parameter id="current_step_id" type="integer" required="true" label="current_step_id" maxlen="10" />
+	
+</validator>

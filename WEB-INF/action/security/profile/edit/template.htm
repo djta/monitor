@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>我的基本信息</title>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">我的基本信息</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form name="formEditor" class="form-horizontal" role="form" method="post" id="formEditor">
+				<input type="hidden" id="tuid" name="tuid" value="${def:user}" />
+				<div class="form-group">
+					<div class="col-sm-12 clearright clearleft">
+						<label class="col-sm-4 clearright text-right">姓氏</label>
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+							<input type="text" id="lname" class="form-control" name="lname"
+								value="${fld:lname}" size="25" maxlength="25" />
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12 clearright clearleft">
+						<label class="col-sm-4 clearright text-right required">名称</label>
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+							<input type="text" id="fname" class="form-control" name="fname"
+								value="${fld:fname}" size="25" maxlength="25" />
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12 clearright clearleft">
+						<label class="col-sm-4 clearright text-right">${lbl:s_profile_email}</label>
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+							<input type="text" id="email" class="form-control" name="email"
+								value="${fld:email}" size="30" maxlength="80" />
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12 clearright clearleft">
+						<label class="col-sm-4 clearright text-right">手机号码</label>
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+							<input type="text" id="mobile" class="form-control" name="mobile"
+								value="${fld:mobile}" size="30" maxlength="80" />
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12 clearright clearleft">
+						<label class="col-sm-4 clearright text-right">${lbl:s_profile_lang}</label>
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+							<select name="locale" class="form-control">
+								<option value="cn">中文</option>
+								<option value="en">English</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div style="padding-left: 500px;">
+				<button type="button" id="save_btn" class="btn btn-primary btn-md ">保存</button>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="actionroot" id="actionroot"
+		value="${def:actionroot}" />
+
+	<script language="javascript">
+		$(document).ready(function() {
+
+			var obj = $Crud({
+				formId : "formEditor",
+				button : "save_btn",
+				updateBack : function() {
+					$Dialog().notice("保存成功", 2000);
+				},
+				validate : function() {
+					var flag = $("#formEditor").validate({
+						rules : {
+							fname : {
+								required : true
+							},
+							mobile : {
+								isMobile : true
+							}
+						},
+						messages : {
+							fname : {
+								required : "请输入名称"
+							}
+						}
+					});
+					return flag;
+				}
+			}).init();
+		});
+	</script>
+</body>
+</html>
+

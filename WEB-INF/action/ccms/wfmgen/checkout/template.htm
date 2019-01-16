@@ -1,0 +1,28 @@
+<script language="javascript">
+	var check_url = "";
+	if("${fld:is_success}" == "1"){
+		check_url = "/action/ccms/doc?document_id=${fld:document_id}&__p_pk_value__=${fld:__p_pk_value__}&__pk_value__=${fld:__pk_value__}&__wfm_id__=${fld:__wfm_id__}&__wfentry_id__=${fld:entry_id}&__current_step_id__=${fld:step_id}&__parent_wfentry_id__=${fld:__parent_wfentry_id__}&__parent_node_id__=${fld:__parent_node_id__}&__form_action__=${fld:__form_action__}&__search_action__=${fld:__search_action__}";
+	}else{
+		if("${fld:checkout_user}" == ""){
+			$Dialog().alert("该任务可能已经被其他人处理，请刷新任务列表后重试！", function(){
+				gotoBack();
+			});
+		}else{
+			if("${fld:checkout_user}" == "${def:user}" || "${fld:checkout_alias}" == "${def:user}"){
+				check_url = "/action/ccms/doc?document_id=${fld:document_id}&__p_pk_value__=${fld:__p_pk_value__}&__pk_value__=${fld:__pk_value__}&__wfm_id__=${fld:__wfm_id__}&__wfentry_id__=${fld:entry_id}&__current_step_id__=${fld:step_id}&__parent_wfentry_id__=${fld:__parent_wfentry_id__}&__parent_node_id__=${fld:__parent_node_id__}&__form_action__=${fld:__form_action__}&__search_action__=${fld:__search_action__}";
+			}else{
+				$Dialog().alert("该任务已经被(${fld:checkout_name})处理，请知晓！", function(){
+					gotoBack();
+				});
+			}
+		}
+	}
+	if(check_url != ""){
+		if(typeof(loadDivPage) == "function"){
+			loadDivPage("body_content",check_url);
+		}else{
+			gotoPage(check_url);
+		}
+	}
+
+</script>

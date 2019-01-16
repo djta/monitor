@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator  onerror="/action/ccms/validate">
+
+    <parameter id="table_id" type="integer" required="true" label="table_id"/>
+    <parameter id="field_code" type="varchar" required="true" label="field_code"/>
+    <parameter id="field_code_alias" type="varchar" required="true" label="field_code_alias"/>
+    <parameter id="field_name_cn" type="varchar" required="true" label="field_name_cn" />
+    <parameter id="field_name_en" type="varchar" required="true" label="field_name_en" />
+    <parameter id="field_type" type="varchar" required="true" label="field_type"/>
+    <parameter id="field_length" type="varchar" required="false" label="field_length"/>
+    <parameter id="decimal_length" type="varchar" required="false" label="decimal_length"/>
+    <parameter id="format_mark" type="varchar" required="false" label="format_mark"/>
+    <parameter id="is_mandatory" type="varchar" required="false" label="is_mandatory" />
+    <parameter id="default_value" type="varchar" required="false" label="default_value" />
+    <parameter id="fk_schema" type="varchar" required="false" label="fk_schema" />
+    <parameter id="fk_tab" type="varchar" required="false" label="fk_tab" />
+    <parameter id="fk_fld_id" type="varchar" required="false" label="fk_fld_id" />
+    <parameter id="fk_fld_alias" type="varchar" required="false" label="fk_fld_alias" />
+    <parameter id="fk_fld_anchor" type="varchar" required="false" label="fk_fld_anchor" />
+    <parameter id="fk_references" type="varchar" required="false" label="fk_references" />
+	<parameter id="fk_fld_deleted" type="varchar" required="false" label="fk_fld_deleted" />
+    <parameter id="fk_sql" type="varchar" required="false" label="fk_sql" maxlen="4000" />
+    
+    <parameter id="plugin_code" type="varchar" required="false" label="plugin_code" />
+    <parameter id="plugin_control" type="varchar" required="false" label="plugin_control" />
+    <parameter id="show_type" type="varchar" required="true" label="show_type" />
+    <parameter id="insert_phrase" type="varchar" required="false" label="insert_phrase" />
+    <parameter id="update_phrase" type="varchar" required="false" label="update_phrase" />
+    <parameter id="is_virtual_type" type="varchar" required="true" label="is_virtual_type" />
+
+    <parameter id="remark" type="varchar" required="false" label="remark" />
+    <parameter id="domain_namespace" type="varchar" required="false" label="domain_namespace" maxlen="32"/>
+	<parameter id="show_order" type="integer" required="false" label="show_order" maxlen="10"/>
+	
+	<parameter id="is_formula" type="integer" required="false" label="is_formula" maxlen="10"/>
+
+</validator>

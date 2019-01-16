@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="userlogin" type="varchar" required="true" label="Login" maxlen="25" regexp="\w{3,}?" regexp-error-label="登录帐号格式不正确，至少3位" />
+	<parameter id="email" type="varchar" required="true" label="Email" maxlen="80" regexp="^([\w-]+\.)*?[\w-]+@[\w-]+\.([\w-]+\.)*?[\w]+$" regexp-error-label="电子邮箱格式不正确" />
+	<parameter id="captcha" type="varchar" required="true" label="验证码"/>
+	<parameter id="passwd" type="varchar" required="false" label="Password" maxlen="15" />
+	<parameter id="passwd_clear" type="varchar" required="false" label="Password" />
+
+	<custom-validator
+ classname='dinamica.validators.NoRecordsFound'
+ on-error-label='登录帐号不存在'
+ sql='find-user.sql' id="userlogin"/>
+
+	<custom-validator classname='dinamica.validators.NoRecordsFound' on-error-label='登录帐号和电子邮箱不匹配' sql='find.sql' id="email"/>
+	
+
+	<custom-validator
+		classname="dinamica.validators.CaptchaValidator"
+		on-error-label="验证码输入不正确"
+		param="captcha" ignoreCase="true" id="captcha"/>
+		
+</validator>
+

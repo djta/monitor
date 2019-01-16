@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		问卷预览
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+        <classname>dinamica.GenericTransaction</classname>
+        <validator>true</validator>
+        <transaction>false</transaction>
+        <jdbc-log>false</jdbc-log>
+        <recordset id="query-term.sql" source="sql" scope="transaction" />
+		<recordset id="query-type.sql" source="sql" scope="transaction" />
+    </transaction>
+
+    <output>
+        <classname>com.ccms.term.PrintTermView</classname>
+        <template>template.htm</template>
+        <set-http-headers>true</set-http-headers>
+        <content-type>text/html</content-type>
+        <expiration>0</expiration>
+		<print mode="form" recordset="query-term.sql" />
+		<print mode="form" recordset="_request" />
+    </output>
+    
+</config>

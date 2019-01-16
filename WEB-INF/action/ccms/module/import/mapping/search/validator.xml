@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="namespace" type="varchar" required="false" label="namespace" />
+	<parameter id="domain_text" type="varchar" required="false" label="domain_text" />
+
+	<custom-validator
+		classname="dinamica.validators.SQLPatternTransformer"
+		parameter="domain_text"
+		rule="contains" />
+
+</validator>
+

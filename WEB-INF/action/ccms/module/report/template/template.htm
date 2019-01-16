@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/ccms/pub}
+<title>Report</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">Report</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+			<form class="form-horizontal" role="form" method="post" id="searchForm" name="searchForm">
+				<div class="form-group">
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<input id="from_date" class="form-control" name="from_date" type="text" value="" placeholder="请选择开始日期" size="30" />
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<input id="to_date" class="form-control" name="to_date" type="text" value="" placeholder="请选择结束日期" size="30" />
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- 文档输出div（id值固定） -->
+<div id="document_content" class="panel panel-default col_mainInner" style="overflow-x:hidden; display:none;"></div>
+
+<input type="hidden" name="actionroot" id="actionroot"	value="${def:actionroot}"/> 
+<script type="text/javascript">
+$(document).ready(function() {
+	$Dialog().date($("#from_date"));
+	$Dialog().date($("#to_date"));
+	$("#from_date").val("2017-04-01");
+	$("#to_date").val("2017-05-15");
+	$("#search_btn").unbind().on("click",function(){
+		if( reportSearch && typeof(reportSearch) == "function" ){ 
+			reportSearch({ "id" : "document_content", "from_date" : $("#from_date").val(), "to_date" : $("#to_date").val() });
+		}
+	});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+<head>
+${inc:/action/project/fitness/home/pub}
+<title>岗位任务设定</title>
+</head>
+<style>
+.delete {
+    cursor: pointer;
+    width: 15px;
+    
+    height: 32px;
+    background: url(${def:context}/js/project/fitness/image/SVG/nav/shanchu.svg) center left no-repeat;
+}
+</style>
+<body>
+	<!--addnew/edit form-->
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog" style="display: none;">
+		<div class="modal-dialog basic-information dialogbg" style="width: 900px;">
+			<header class="header-default">
+				<span id="formTitle">新增</span> 
+				<span class="header-close" onclick="$('.close').click()"></span>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style='display: none;'>&times;</button>
+			</header>
+			<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+				<input type="hidden" id="tuid" name="tuid" value="" />
+				<div class="modal-body b-i-main">
+					<nav>
+						<li>
+							<label style="width: 150px;">岗位名称：</label> 
+							<input type="text" id="skill_name" name="skill_name" class="input-default" value="" placeholder="请输入岗位名称" />
+						</li>
+
+						<li class="to100w" style="margin-left: 6%">
+							<label>职责描述：</label> 
+							<textarea rows="2" class="my-textarea" cols="50" id="remark" name="remark" placeholder="请输入职责描述"></textarea>
+						</li>
+					</nav>
+				</div>
+				<footer class="footer-default">
+					<button type="button" id="save_btn">确&nbsp;定</button>
+				</footer>
+			</form>
+		</div>
+	</div>
+
+	<div class="leftstaff">
+		<form role="form" method="post" id="searchForm" name="searchForm">
+			<input name="sort" type="hidden" value="skill_id" preserve="true" />
+			<input name="order" type="hidden" value="desc" preserve="true" />
+			<input name="pageNo" type="hidden" value="" preserve="true" />
+			<input name="pageSize" type="hidden" value="10000" preserve="true" />
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+			<div class="am-tabs-bd r-tab-cont">
+				<div class="r-tab-cout-1 am-tab-panel am-in am-active am-fade three-none" id="rw-tab1">
+					<article class="r-tab-cout-1-l">
+						<nav class="r-tab-cout-1-l-t">
+							<li style="width:145px;">
+								<input type="text" name="skill_name" class="input-default" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;岗位名称" />
+							</li>
+							<li class="search">
+								<button type="button" id="search_btn" title="查询"></button>
+							</li>
+							<li class="w-35">
+								<i class="am-icon-plus" id="addnew_btn" title="新增"></i>
+							</li>
+						</nav>
+						<div class="r-tab-cout-3-b mt-0">
+							<div class="to-change-background h-43"></div>
+							<table class="">
+								<thead>
+									<tr>
+										<th>岗位名称</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="datagridTemplate" style="display: none">
+									<tr>
+										<td class="menulink menucolor" data-code="#skill_id#">#skill_name#</td>
+										<td class="menucolor">
+											<button class="write edit_btn" code="#skill_id#" type="button" title="修改"></button>
+											<button class="delete delete_btn" code="#skill_id#" type="button" title="删除"></button>
+										</td>
+									</tr>
+								</tbody>
+								<tbody id="datagrid">
+								</tbody>
+							</table>
+							<div class="pageDiv">
+								<ul class="pagination">
+								</ul>
+							</div>
+						</div>
+					</article>
+					
+					<section class="r-tab-cout-1-r">
+						<article class="r-tab-cout-1-r-t yg-rwsd">
+							<div class="yg-rwsd" style="width:100%;" id="menuinfo"></div>
+						</article>
+					</section>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+	<script language="JavaScript">
+var search = "";
+$(document).ready(function() {
+	ccms.util.renderRadio("data_limit");
+	selectInit($("#skill_scope"));
+	var obj = $Crud({
+		formId:"formEditor",
+		button:"save_btn",
+		bpkField:"tuid",
+		insertBack:function(){
+			search.searchData();
+		},
+		updateBack:function(){
+			search.searchData();
+		},
+		deleteBack:function(){
+			search.searchData();
+		},
+		addNewBack:function(){
+			setCheckboxRadioValue("data_limit", "0");
+			$("#formTitle").html("新增岗位信息");	
+		},
+		editBack:function(){
+			$("#formTitle").html("修改岗位信息");
+		},
+		validate:function(){
+		   var flag=$("#formEditor").validate({
+			   	rules : {
+				},
+				messages: {
+				}
+			});
+			return flag; 
+		},
+		check:function(){
+			return true;			
+		}
+	}).init();
+	this.search = search;
+	search = $Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		$(".edit_btn").unbind().on("click", function () {
+			if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+				obj.edit({id: $(this).attr("code")});
+			}
+		});
+		$(".delete_btn").unbind().on("click", function () {
+			var code = $(this).attr("code");
+			if (code != undefined && code != "") {
+				$Dialog().confirm("确定要删除该岗位吗?", function () {
+					obj.del({id: code});
+				});
+			}
+		});
+		// 加载菜单权限
+		$(".menulink").unbind().on("click", function () {
+			var code = $(this).data("code");
+			$(".menucolor").css("background", "");
+			$(this).css("background", "rgba(240, 238, 238, 0.2)");
+			$(this).next().css("background", "rgba(240, 238, 238, 0.2)");
+			$("#menuinfo").load("${def:context}${def:actionroot}/menu/crud?skill_id="+code);
+		});
+		//查询后加载第一个菜单权限
+        if($('#datagrid tr:eq(0) td:eq(0)').html()==undefined){
+        	$("#menuinfo").html("");
+        }else{
+            $('#datagrid tr:eq(0) td:eq(0)').click()
+        }
+	}}).initSearchBtn().searchData(1);
+});
+</script>
+</body>
+</html>

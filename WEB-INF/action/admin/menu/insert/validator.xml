@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="app_id" type="integer" required="true" label="app_id" maxlen="10" />
+	<parameter id="title_cn" type="varchar" required="true" label="Title Of Menu(Chinese)" maxlen="60" />
+	<parameter id="title_en" type="varchar" required="true" label="Title Of Menu(English)" maxlen="60" />
+	<parameter id="position" type="integer" required="true" label="Orden" maxlen="10" />
+	<parameter id="service_id" type="integer" required="false" label="Service" maxlen="10" />
+	<parameter id="parentmenu_id" type="integer" required="false" label="Id del men?padre" maxlen="10" />
+	<parameter id="logo_path" type="varchar" required="false" label="logo_path" maxlen="256" />
+<!--  
+	<custom-validator 	
+	classname="dinamica.validators.DuplicatedKeyValidator" 
+	on-error-label="此菜单项名称已存在，请重新填写"
+	id="title_cn" sql="query.sql"/>
+-->	
+	<custom-validator 	
+	classname="dinamica.validators.DuplicatedKeyValidator" 
+	on-error-label="此序号已存在，请重新填写"
+	id="position" sql="nodup.sql"/>
+	
+</validator>
+

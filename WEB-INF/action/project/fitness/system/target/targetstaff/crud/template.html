@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+<head>
+<style>
+</style>
+<title>员工任务明细</title>
+</head>
+<body>
+	<div class="panel-default col_mainInner">
+	<div class="ygrwmx">
+		<div class="ygrwmx-1">
+			<span>员工任务明细</span> 
+			<button type="button" class="save toSaveTable1" id="addtargerstaff" title="保存"></button>
+			<button type="button" class="write toChangeTable1" id="updatestaff" title="修改"></button>
+		</div>
+		<div id="targetinfo" style="color: white;"></div>
+		<form role="form" method="post" id="searchFormstaff" name="searchFormstaff">
+			<input type="hidden" id="tuid" name="tuid" value="${fld:tuid}"/>
+			<input type="hidden" id="skill_id" name="skill_id" value="${fld:skill_id}"/>
+			<input type="hidden" id="yearmonth" name="yearmonth" value="${fld:yearmonth}"/>
+			<input type="hidden" id="skill_scope" name="skill_scope" value="${fld:skill_scope}"/>
+			<article class="r-tab-cout-3-b">
+				<div class="to-change-background"></div>
+				<table class="">
+					<thead>
+						<tr>
+							<th code="name">组员</th>
+							<th id="thguest_target" code="guest_target" nowrap>资源获取量</th>
+							<th id="thfollow_target" code="follow_target" nowrap>跟进量</th>
+							<th id="thprepare_target" code="prepare_target" nowrap>预约量</th>
+							<th id="thvisit_target" code="visit_target" nowrap>实际到访量</th>
+							<th id="thordernum_target" code="ordernum_target" nowrap>成单量</th>
+							<th id="thorderfee_target" code="orderfee_target" nowrap>成单额</th>
+							<th id="thcall_target" code="call_target" nowrap>回访量</th>
+							<th id="thcall_mc_target" code="call_mc_target" nowrap>回访预约会籍量</th>
+							<th id="thcall_pt_target" code="call_pt_target" nowrap>回访预约私教量</th>
+							<th id="thtest_target" code="test_target" nowrap>体测量</th>
+							<th id="thunpayclass_target" code="unpayclass_target" nowrap>体验课上课量</th>
+							<th id="thallclass_target" code="allclass_target" nowrap>总上课量</th>
+							<th id="thsite_target" code="site_target" nowrap>场开量</th>
+						</tr>
+					</thead>
+					<tbody id="datagridstaffTemplate">
+						
+					</tbody>
+					<tbody id="datagridstaff">
+					</tbody>
+				</table>
+			</article>
+		</form>
+		<div class="pageDiv" style="float: center;" target="staff">
+			<ul class="pagination">
+			</ul>
+		</div>
+	</div>
+	</div>
+<script language="JavaScript">
+var searchstaff = null;
+$(document).ready(function() {
+	//隐藏保存按钮
+	$("#addtargerstaff").hide();
+	$("#updatestaff").unbind().click(function(){
+		//点击修改显示保存按钮隐藏修改按钮
+		$(this).hide();
+		$("#addtargerstaff,.inputtext").show();
+		$(".spantext").hide();
+	});
+	searchtargetstaff("${fld:skill_id}","${fld:tuid}");
+	//保存
+	$("#addtargerstaff").click(function(){
+		var url="${def:context}${def:actionroot}/insert";
+	   	ajaxCall(url,{
+		   	method: "post",
+	   		progress: true,
+		   	form: "searchFormstaff",
+	   		dataType: "script",
+		   	success: function() {
+				$("#addtargerstaff,.inputtext").hide();
+				$("#updatestaff").show();
+				searchtargetstaff("${fld:skill_id}","${fld:tuid}");
+	   		}
+	   	});
+	});
+	var skill_scope = "${fld:skill_scope}"; 
+	//任务目标 按人(0) 按分组(1) 设置  
+	if("${fld:target_type}"=="0"){
+		url="${def:context}${def:actionroot}/queryskilltargetinfo?tuid="+$("#tuid").val()+"&skill_scope="+skill_scope;
+		ajaxCall(url,{
+		   	method: "get",
+	   		progress: true,
+	   		dataType: "script",
+		   	success: function() {
+		   	}
+		});
+	}else if("${fld:target_type}"=="1"){
+		url="${def:context}${def:actionroot}/queryteamtargetinfo?tuid="+$("#tuid").val()+"&skill_scope="+skill_scope;
+		ajaxCall(url,{
+		   	method: "get",
+	   		progress: true,
+	   		dataType: "script",
+		   	success: function() {
+		   	}
+		});
+	}
+}); 
+
+//查询
+function searchtargetstaff(skill_id, tuid){
+	//判断目标类型：0岗位目标 1分组目标
+	var url= "";
+	if("${fld:target_type}"=="0"){
+		url="${def:context}${def:actionroot}/skillsearch?skill_id="+skill_id;
+	}else{
+		url="${def:context}${def:actionroot}/teamsearch?skill_id="+skill_id;
+	}
+   	ajaxCall(url,{
+	   	method: "get",
+   		progress: true,
+   		dataType: "script",
+	   	success: function() {
+	   		var targerstaffurl="${def:context}${def:actionroot}/querytargetstaff?targetgroupid="+tuid+"&skill_scope=${fld:skill_scope}";
+	   	   	ajaxCall(targerstaffurl,{
+	   		   	method: "get",
+	   	   		progress: true,
+	   	   		dataType: "script",
+	   		   	success: function() {
+		   		 	tdhide();
+		   		 	thhide();
+		   			var skill_scope = "${fld:skill_scope}"; 
+		   			//0客服 1私教 2会籍
+		   			if(skill_scope=="0"){
+		   				//客服
+		   				$("#tdcall_target,#tdcall_mc_target,#tdcall_pt_target").show();
+		   				$("#thcall_target,#thcall_mc_target,#thcall_pt_target").show();
+		   			}else if(skill_scope=="1"){
+		   				//私教
+		   				$("#tdfollow_target,#tdordernum_target,#tdorderfee_target,#tdtest_target,#tdunpayclass_target,#tdallclass_target,#tdsite_target").show();
+		   				$("#thfollow_target,#thordernum_target,#thorderfee_target,#thtest_target,#thunpayclass_target,#thallclass_target,#thsite_target").show();
+		   			}else if(skill_scope=="2"){
+		   				//会籍
+		   				$("#tdguest_target,#tdfollow_target,#tdprepare_target,#tdvisit_target,#tdordernum_target,#tdorderfee_target,#tdcall_target").show();
+		   				$("#thguest_target,#thfollow_target,#thprepare_target,#thvisit_target,#thordernum_target,#thorderfee_target,#thcall_target").show();
+		   			}
+					//跟进系统设置的状态判断input能不能填写	任务目标 按人(0) 按分组(1) 设置  
+		   			if("${fld:target_type}"!="${fld:param_value}"){
+	   					$("#datagridstaffTemplate").find("input").attr("disabled", "disabled");
+		   			}
+	   	   		}
+	   	   	});
+   		}
+   	});
+}
+
+//隐藏td标签
+function tdhide(){
+	$("#tdguest_target,#tdfollow_target,#tdcall_target,#tdordernum_target,#tdvisit_target,#tdprepare_target,#tdorderfee_target,#tdcall_target,#tdcall_mc_target,#tdcall_pt_target,#tdtest_target,#tdunpayclass_target,#tdallclass_target,#tdsite_target").hide()
+}
+//隐藏th标签
+function thhide(){
+	$("#thguest_target,#thfollow_target,#thcall_target,#thordernum_target,#thvisit_target,#thprepare_target,#thorderfee_target,#thcall_target,#thcall_mc_target,#thcall_pt_target,#thtest_target,#thunpayclass_target,#thallclass_target,#thsite_target").hide()
+}
+</script>
+</body>
+</html>

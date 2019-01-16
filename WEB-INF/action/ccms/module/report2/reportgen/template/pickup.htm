@@ -1,0 +1,22 @@
+<th class="th20${fld:is_required_alias}">
+	<label class="control-label">${fld:field_name}</label>
+</th>
+<td class="td20left">
+	<input type="hidden" name="${fld:field_code_alias}_operator" value="${fld:filter_type}" preserve="true" />
+	<input id="${fld:field_code_alias}_filter" name="${fld:field_code_alias}_filter" type="hidden" size="${fld:show_width}" readonly value="" />
+	<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+		<input type="text" class="form-control" id="${fld:field_code_alias}_alias_filter" name="${fld:field_code_alias}_alias_filter" size="20" readonly="readonly" value="" />
+	</div>
+	<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+		<img src="${def:context}/images/search.png" title="查询${fld:field_name}" class="tool" 
+			onclick="pickOpen('${fld:field_code_alias}_alias_filter',
+					'${fld:field_code_alias}_filter',
+					'${def:context}/action/pub/template/formgen/pick/form?display=display:none&pickup_field=${fld:pickup_field}',
+					'400','500','${fld:pickup_form}')" />
+	</div>
+	<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+		<img src="${def:context}/images/clear.gif" title="清除选择的内容"  class="tool" 
+			onclick="pickClear('${fld:pickup_form}','${fld:field_code_alias}_alias_filter','${fld:field_code_alias}_filter');" />
+	</div>
+	${fld:plugin_control}			
+</td>

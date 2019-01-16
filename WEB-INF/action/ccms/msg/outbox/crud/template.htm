@@ -1,0 +1,366 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/ccms/pub}
+<script src="${def:context}/js/kindeditor/kindeditor-min.js"></script>
+<script src="${def:context}/js/kindeditor/lang/zh_CN.js"></script>
+<link rel="stylesheet" href="${def:context}/js/kindeditor/themes/default/default.css" />
+<title>收件箱信息</title>
+<style type="text/css">
+.nav-tabs a{
+	color : #333;
+}
+</style>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">查询收件箱信息</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<ul id="menuTabList" class="nav nav-tabs">
+				<li><a href="javascript:void(0)" data-toggle="tab" code="9">收件箱</a></li>
+				<li><a href="javascript:void(0)" data-toggle="tab" code="0">草稿箱</a></li>
+				<li><a href="javascript:void(0)" data-toggle="tab" code="1">发件箱</a></li>
+			</ul>
+		
+			<form class="form-horizontal" role="form" method="post" id="searchForm" name="searchForm">
+				<input name="sort" type="hidden" value="" preserve="true" />
+				<input name="order" type="hidden" value="desc" preserve="true" /> 
+				<input name="pageNo" type="hidden" value="" preserve="true" /> 
+				<input name="totalPages" type="hidden" value="" preserve="true" />
+				<input name="send_flag"  value="" type="hidden" preserve="true">
+
+				<div class="form-group">
+					<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+						<input name="msg_title" placeholder="请输入标题" class="form-control" type="text" size="20" value="" />
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+						<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+						<button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>操作</th>
+						<th class="sortable" code="staff_name">发件人</th>
+						<th class="sortable" code="msg_title">标题</th>
+						<th class="sortable" code="send_date">发件日期</th>
+						<th class="sortable" code="limit_date">限制日期</th>
+						<th>备注</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td align="center">
+							<button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">编辑</button>
+						</td>
+						<td align="center">#staff_name#</td>
+						<td align="center">#msg_title#</td>
+						<td align="center">#send_date#</td>
+						<td align="center">#limit_date#</td>
+						<td align="center">#remark#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="formTitle">收件箱信息</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+						<input type="hidden" id="tuid" name="tuid" value="" />
+						<input type="hidden" id="flag" name="flag" value="" />
+						<input type="hidden" name="send_flag" value="" preserve="true" />
+						<div class="row clearfix">
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">标题:</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<input type="text" class="form-control" id="msg_title" name="msg_title" size="30"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">发送方式:</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<input name="send_type" type="radio" value="0" class="form-control"/>点对点（不保存记录）
+									<input name="send_type" type="radio" value="1" class="form-control"/>广播（所有人）
+								</div>
+							</div>
+							<div class="form-group" id="topicDiv" style="display:none">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">选择广播:</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<drows>
+									<input name="topic_name" type="radio" value="${fld:topic_name}" class="form-control"/>${fld:topic_name}
+									</drows>
+								</div>
+							</div>
+							<div class="form-group" id="skillDiv" style="display:none">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">选择技能:</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<span><a href="javascript:void(0);" onclick="selectAll('skill','formEditor');">全选</a>-<a href="javascript:void(0);" onclick="unselectAll('skill','formEditor');">反选</a></span><br>
+									<srows>
+										<input name="skill" type="checkbox" value="${fld:skill_id}" class="form-control"/>${fld:skill_name}&nbsp;
+									</srows>
+									<br/><input type="button" value="选择人员" onclick="selectStaff()" class="btn btn-primary btn-sm">
+								</div>
+							</div>
+							<div class="form-group" id="staffDiv" style="display:none">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">选择人员:</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7" id="staffTd">
+									<span><a href="javascript:void(0);"  onclick="selectAll('staff_id','formEditor');">全选</a>-<a href="javascript:void(0);" onclick="unselectAll('staff_id','formEditor');">反选</a></span><br>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 required">内容:</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<textarea class="form-control" id="msg_content" name="msg_content" cols="30" rows="2"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">限制读取日期:</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<input id="limit_date" name="limit_date" type="text" class="form-control" value="" readonly class="readonly" >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">备注:</label>
+								<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+									<textarea class="form-control" id="remark" name="remark" cols="30" rows="2"></textarea>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+						<button type="button" id="submitBtn" class="btn btn-primary btn-md" onclick="return beforeSumbitForm('0')">保存</button>
+                		<button type="button" class="btn btn-primary btn-md" onclick="return beforeSumbitForm('1')">发送</button>
+                		
+						<button type="button" id="save_btn" class="btn btn-primary btn-md" style="display:none;">确&nbsp;定</button>
+						<button type="button" id="delete_btn" class="btn btn-primary btn-md">删除</button>
+						<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+	<script type="text/javascript">
+	function CheckRadio(val,msg1,msg2,formObj)
+	{
+	    //表单对象，如果为null，默认为“formEditor”
+	    var formTarget=(formObj==null || formObj=="" || typeof(formObj)=="undefined")? "formEditor":formObj;
+
+	    var is_radio=document.forms[formTarget].elements[val];
+	    var s_msg1=(msg1==null || msg1=="")? "请选择 radio!":msg1;
+	    var s_msg2=(msg2==null || msg2=="")? "没有可选的 radio!":msg2;
+
+	    if(is_radio)
+	    {
+	         if (document.forms[formTarget].elements[val].value != null)
+	         {
+	            if (document.forms[formTarget].elements[val].checked)
+	            {
+	                return true;
+	            }
+	            else
+	            {
+	                alert(s_msg1);
+	                return false;
+	            }
+	         }
+	         else
+	         {
+	            var check_length = document.forms[formTarget].elements[val].length;
+	            var i_count=0
+	            for(var i=0;i<check_length;i++)
+	            {
+	                if (document.forms[formTarget].elements[val][i].checked)
+	                {
+	                    i_count=i_count+1;
+	                    return true;
+	                }
+	            }
+	            if(i_count==0)
+	            {
+	                alert(s_msg1);
+	                return false;
+	            }
+	         }
+	    }//
+	    else
+	    {
+	        alert(s_msg2);
+	        return false;
+	    }
+
+	}
+		$(document).ready(function() {
+			var search1 = null;
+			if("${fld:send_flag}" == "1"){
+				document.searchForm.send_flag.value = "1";
+				$("#menuTabList").find("li a[code=1]").parent().addClass("active");
+			}else{
+				document.searchForm.send_flag.value = "0";
+				$("#menuTabList").find("li a[code=0]").parent().addClass("active");
+			}
+			var obj = $Crud({
+				formId : "formEditor",
+				button : "save_btn",
+				insertBack : function() {
+					search1.searchData();
+				},
+				updateBack : function() {
+					search1.searchData();
+				},
+				deleteBack : function() {
+					search1.searchData();
+				},
+				addNewBack : function() {
+					document.formEditor.send_flag.value = document.searchForm.send_flag.value;
+	            	$("#delete_btn").hide();
+					$("#formTitle").html("新增收件箱信息");
+					$("#content").val("");
+					setEditorValue("");
+				},
+				editBack : function() {
+	            	$("#delete_btn").show();
+					$("#formTitle").html("修改收件箱信息");
+				},
+				validate : function() {
+					var flag = $("#formEditor").validate({
+						rules : {
+						},
+						messages : {
+						}
+					});
+					return flag;
+				},
+				check : function(){
+					editor.sync();
+					return true;
+				}
+			}).init();
+			search1 = $Search({datagrid : "datagrid", formId : "searchForm", success : function() {
+				$(".edit_btn").unbind().on("click", function() {
+					if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+						obj.edit({id : $(this).attr("code")});
+					}
+				});
+				$("#delete_btn").unbind().on("click", function() {
+					var tuid = $("#tuid").val();
+					$Dialog().confirm("确定要删除该条数据吗?", function() {
+						if (tuid != undefined && tuid != "") {
+							obj.del({id : tuid});
+						}
+					});
+				});
+			}}).initSearchBtn().searchData(1);
+
+			createEditor();
+			$("#menuTabList").find("li").unbind().on("click", function(){
+				var flag = $(this).find("a").attr("code");
+				if( undefined != flag && "" != flag ){
+					document.searchForm.send_flag.value = flag;
+					if( "0" == flag || "1" == flag ){
+						if( null != search1 && !$(this).hasClass("active") ){
+							$(this).siblings().removeClass("active");
+							$(this).addClass("active");
+							search1.searchData(1);
+						}
+					}else{
+						window.location.href = "../inbox/crud";
+					}
+				}
+			});
+			
+			$("input[name=send_type]").unbind().on("ifChecked", function(){
+				selectSendType($(this).val());
+			});
+			$Dialog().date($("#limit_date"));
+		});
+		
+		function createEditor(){
+			editor = KindEditor.create('textarea[name="msg_content"]', {
+				resizeType : 1,
+				allowPreviewEmoticons : false,
+				allowImageUpload : false,
+				minWidth:300,
+				items : [
+					'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+					'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+					'insertunorderedlist', '|', 'emoticons', 'link']
+			});
+			$("div.ke-container").css("width","100%");
+		}
+		function setEditorValue(data){
+			editor.sync();
+			editor.html(data);
+		}
+		function beforeSumbitForm(flag){
+			document.formEditor.flag.value = flag;
+			if(flag == "1"){//发送
+				if(document.formEditor.send_flag.value == "1"){
+					document.formEditor.tuid.value = "";
+				}else{
+					document.formEditor.send_flag.value = "1";
+				}
+			}
+			var send_type = ccms.util.getRadioValue("send_type","formEditor");
+			if("1" == send_type && !CheckRadio("topic_name","请选择广播","没有可选的广播","formEditor")){
+				return false;
+			}else{
+				$("#save_btn").click();
+			}
+		}
+		function selectStaff(){
+			var skillId = "";
+			var skills = document.getElementsByName("skill");
+			for(var i=0;i<skills.length;i++){
+				if(skills[i].checked == true){
+					skillId += skills[i].value + ",";
+				}
+			}
+			if(skillId == ""){
+				ccms.dialog.notice("请先选择技能！",2000);
+				return false;
+			}
+			skillId = "*/" + skillId.substring(0,skillId.length-1) + "/**";
+			ajaxCall("${def:actionroot}/select-staff" + "?id=" + skillId, {
+				method : "get",
+				progress : true,
+				dataType : "script",
+				success : function() {
+				}
+			});
+		}
+		function selectSendType(flag){
+			if(flag == '0'){//点对点
+				document.getElementById("topicDiv").style.display = "none";
+				document.getElementById("skillDiv").style.display = "";
+				document.getElementById("staffDiv").style.display = "";
+				document.getElementById("submitBtn").style.display = "none";
+			}else if(flag == '1'){//广播
+				document.getElementById("topicDiv").style.display = "";
+				document.getElementById("skillDiv").style.display = "none";
+				document.getElementById("staffDiv").style.display = "none";
+				document.getElementById("submitBtn").style.display = "";
+			}
+		}
+	</script>
+</body>
+</html>

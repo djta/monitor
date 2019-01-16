@@ -1,0 +1,251 @@
+@CHARSET "UTF-8";
+
+.body {
+	color: #222;
+	background: #3b4756 url(../img/bg.png) 0 0 repeat;
+	margin: 0;
+}
+.home_head {
+	overflow: hidden;
+	height: 70px;
+	padding: 20px 0;
+}
+h1.home_logo {
+	margin: 0;
+}
+.home_logo {
+	float: left;
+	position: absolute;
+	font-size: 100%;
+}
+.home_logo .home_avatar {
+	margin-left: 60px;
+	position: relative;
+	z-index: 10;
+	width: 70px;
+	height: 70px;
+	display: inline-block;
+}
+.home_logo .home_avatar img {
+	height: 70px;
+	width: 70px;
+	border-radius: 4px;
+}
+.home_logo .home_txt {
+	margin-left: 20px;
+	vertical-align: top;
+	font-size: 1.75em;
+	line-height: 28px;
+	font-weight: 400;
+	color: #fff;
+	text-decoration: none;
+}
+.home_mod-head__nav {
+	float: right;
+	padding: 5px 20px 0;
+	vertical-align: middle;
+}
+.home_mod-head__nav-item {
+	color: #929ca8;
+	vertical-align: middle;
+	height: 24px;
+	line-height: 24px;
+}
+.home_mod-head__nav-line {
+	margin: 0 15px;
+	border-left: 1px solid #303945;
+	border-right: 1px solid #4e5866;
+	vertical-align: middle;
+	height: 16px;
+	display: inline-block;
+}
+
+.home_main_body {
+	position: absolute;
+	width: 100%;
+	bottom: 30px;
+	top: 66px;
+}
+.home_mod-footer {
+	padding-top: 6px;
+	text-align: right;
+	color: #898F96;
+	position: absolute;
+	bottom: 5px;
+	width: 100%;
+}
+.home_main_body .home_container_box, body, html {
+	height: 100%;
+}
+.home_container_box {
+	padding-right: 20px;
+}
+.home_container_box:before {
+	content: "";
+	display: table;
+}
+.home_container_box:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+.home_col_side {
+	float: left;
+	padding-top: 85px;
+	width: 150px;
+	overflow-y:auto;
+	height:100%;
+}
+
+.home_col_side_any {
+	float: left;
+	padding-top: 10px;
+	overflow-y:auto;
+	height:100%;
+}
+.home_menu_box {
+	margin: 0;
+	padding: 0;
+	display: block;
+	list-style-type: disc;
+}
+.home_menu_box li {
+	list-style: none;
+	display: list-item;
+}
+.home_menu_box .menu {
+	border-bottom: 1px solid #2e3844;
+	border-top: 1px solid #4f5a68;
+	color: #929ca8;
+}
+.home_menu_box .menu_title {
+	display: block;
+	text-decoration: none;
+	font-size: 1.125em;
+	outline:none;
+     -moz-outline:none;
+	 cursor: pointer;
+	 margin-top: 4px;
+	 height: 30px;
+}
+
+.home_menu_box .menu_title_any {
+	display: block;
+	text-decoration: none;
+	font-size: 1.3em;
+	outline:none;
+     -moz-outline:none;
+	 cursor: pointer;
+	 margin-top: 4px;
+	 line-height: 1.9em;
+}
+.home_menu_box .menu_on{
+	color:#4a90e2;
+}
+.home_menu_box .icon_menu {
+	margin-top: 4px;
+	margin-right: 4px;
+	display: inline-block;
+	vertical-align: middle;
+	float: right;
+}
+.home_menu_box .cmenu_title {
+	display: block;
+	text-decoration: none;
+	font-size: 1em;
+	outline:none;
+     -moz-outline:none;
+	 margin-top: 3px;
+	 height: 28px;
+	 text-align:center;
+}
+
+.home_menu_box .cmenu_title_any {
+	display: block;
+	text-decoration: none;
+	font-size: 1.3em;
+	outline:none;
+     -moz-outline:none;
+	 margin-top: 3px;
+	 line-height: 1.8em;
+	 text-align:center;
+}
+.home_menu_box .logoimg{
+	width: 15px;
+	height: 15px;
+	margin-right: 4px;
+}
+.home_menu .child_menu{
+	padding-left: 0px;
+	text-align: left;
+}
+.home_menu_box .child_menu_any{
+	padding-left: 0px;
+	text-align: left;
+}
+.home_menu_box a{
+	color:#929ca8;
+}
+.home_menu_box a:hover{
+	color:#4a90e2;
+}
+.home_menu_box a:active{
+	color:#4a90e2;
+}
+
+.col_main {
+	height: 100%;
+	margin: 0 auto;
+	overflow: hidden;
+	background-color: #fff;
+	border-radius: 3px;
+}
+.col_main .col_mainInner {
+	position: relative;
+	height: 100%;
+}
+.col_main .col_mainInner .col_main_body_title {
+	position: relative;
+	height: 45px;
+	line-height: 44px;
+}
+.col_main .col_mainInner .col_main_body {
+	position: absolute;
+	top: 45px;
+	bottom: 0;
+	overflow: auto;
+	width: 100%;
+}
+
+.home_mod-footer__copyright-text {
+	border-left: 1px solid #515B68;
+	display: inline-block;
+	height: 12px;
+	line-height: 12px;
+	padding-left: 5px;
+	font-size: 0.875em;
+}
+
+a>span.home_menubtn{
+	font-size: 1.8em;
+    line-height: 1.6em;
+    position: relative;
+    right: 10px;
+    color:#000000;
+    margin-left:20px;
+}
+
+a>span.home_exitbtn{
+	color: rgb(66, 139, 202);
+    font-size: 1.5em;
+    position: relative;
+}
+#home_menu_title {
+	color:rgb(66, 139, 202);
+}
+#home_menu_title p{
+	font-size:1.3em;
+}
+#home_menu_title a{
+	font-size:1.2em;
+}

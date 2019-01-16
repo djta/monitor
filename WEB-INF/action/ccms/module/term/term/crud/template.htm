@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>问卷管理</title>
+${inc:/action/ccms/pub}
+<script type="text/javascript" charset="utf-8" src="${def:context}/js/kindeditor-4.1.10/kindeditor.js"></script>
+<script type="text/javascript" charset="utf-8" src="${def:context}/js/kindeditor-4.1.10/lang/zh_CN.js"></script>
+<script type="text/javascript" charset="utf-8" src="${def:context}/js/kindeditor-4.1.10/plugins/code/prettify.js"></script>
+</head>
+<body>
+<!-- 查询 -->
+<div class="panel panel-default col_mainInner">
+   	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">问卷管理</h2>
+    </div>
+    <div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post" id="searchForm">
+			<input name="sort" type="hidden" value="term_name" preserve="true"/> 
+			<input name="order" type="hidden" value="desc" preserve="true"/> 
+			<input name="pageNo" type="hidden" value="" preserve="true"/>
+			<input name="totalPages" type="hidden" value="" preserve="true"/>
+			<div class="form-group">
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+					<input type="text" class="form-control" name="term_name" placeholder="请输入问卷名称">
+				</div>
+			
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+					<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+					<button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+				</div>
+			</div>
+		</form>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>操作</th>
+					<th></th>
+					<th></th>
+					<th class="sortable" code="question_bank_name">题库</th>
+					<th class="sortable" code="term_name">问卷名称</th>
+					<th class="sortable" code="term_type">问卷类型</th>
+			  	 	<th class="sortable" code="status">状态</th>
+			  	 	<th class="sortable" code="remark">备注</th>
+				 </tr>
+			</thead>
+			<tbody id="datagridTemplate" style="display:none">
+				<tr>
+					<td align="center">
+						<button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">编辑</button>
+						<button class="btn btn-primary btn-md delete_btn" type="button" code="#tuid#">删除</button>
+						<button class="btn btn-primary btn-md export_btn" type="button" code="#tuid#">导出问卷配置</button>
+						#button#
+						<button class="btn btn-primary btn-md conclusion_btn" type="button" code="#tuid#">结论</button>
+					</td>
+					<td align="center">
+						<button class="btn btn-primary btn-md preViewTerm_btn" type="button" code="#tuid#">预览</button>
+					</td>
+					<td align="center">
+						<button class="btn btn-primary btn-md setTermType_btn" type="button" code="#tuid#">题目分类</button>
+					</td>
+					<td align="center">#question_bank_name#</td>
+					<td align="center">#term_name#</td>
+					<td align="center">#term_type#</td>
+					<td align="center">#status#</td>
+					<td align="center">#remark#</td>
+				</tr>
+			</tbody>	
+			<tbody id="datagrid"></tbody>
+		</table>
+		<div class="pageDiv">
+			<ul class="pagination">
+			</ul>
+		</div>
+	</div>
+</div>
+
+<!-- 编辑 -->
+<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content" style="width:130%;">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="formTitle">新增问卷</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor" style="margin-left:-12%;">
+					<input type="hidden" name="tuid" id="tuid" value="" />
+					<div class="row clearfix">
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">问卷名称</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">						
+								<input type="text" class="form-control" id="term_name" name="term_name" value="" maxlength="128"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">题库</label>
+							<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">						
+								<input type="hidden" id="question_bank_id" name="question_bank_id" value="">
+								<input type="text" class="form-control" id="question_bank_name" name="question_bank_name" readonly  value="" maxlength="128"/>
+							</div>
+							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+	 		 					<img src="${def:context}/images/search.gif" class="tool" id="openProListm"  style="cursor: pointer;" title="查询"/>
+								<img src="${def:context}/images/clear.gif" id="closeProListm" style="cursor: pointer;" onclick="document.formEditor.goods_name.value='';" title="清除选定值" />
+	 		 				</div>	
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">问卷类型</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">						
+								<input name="term_type" class="form-control" type="radio" value="0">评价
+								<input name="term_type" class="form-control"  type="radio" value="1">问卷
+								<input name="term_type" class="form-control"  type="radio" value="9">题库
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">状态</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">						
+								<input name="status" class="form-control" type="radio" value="0">禁用
+								<input name="status" class="form-control"  type="radio" value="1" checked>启用
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label required">Logo</label>
+							<div class="col-xs-5 col-sm-5 col-md-4 col-lg-4">
+								<input type="text" class="form-control"  name="logo_path" id="logo_path" readonly /> 
+							</div>
+							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+								<img src="${def:context}/images/search.gif" style="cursor: pointer;" id="openPicList" title="上传" />
+								<img src="${def:context}/images/preView.gif" style="cursor: pointer;" id="preViewImg" title="预览" /> 
+								<img src="${def:context}/images/clear.gif" style="cursor: pointer;" id="pickClear"
+									title="清除选定值" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">导读&nbsp;&nbsp;&nbsp;</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">					
+								<textarea type="text" class="form-control" id="introduction" name="introduction" value="" style="width: 100%"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">结尾语&nbsp;&nbsp;&nbsp;</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">					
+								<textarea type="text" class="form-control" id="ending" name="ending" value="" style="width: 100%" ></textarea>
+							</div>
+						</div>
+						<div class="form-group" style="display: none">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">前置类名称</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">					
+								<input type="text" class="form-control" id="pre_class" name="pre_class" value="" maxlength="256"/>
+							</div>
+						</div>
+						<div class="form-group"style="display: none">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">后置类名称</label>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<input type="text" class="form-control" id="post_class" name="post_class" value="" maxlength="256"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">备注&nbsp;&nbsp;&nbsp;</label>
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+								<textarea type="text" class="form-control" id="remark" name="remark" value="" maxlength="512" ></textarea>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+					<button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+					<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}">
+<script language="javascript">
+$(document).ready(function() {
+	var search=null;
+	var obj = $Crud({
+		formId:"formEditor",
+		button:"save_btn",
+		insertBack:function(){
+			search.searchData(1);
+		},
+		updateBack:function(){
+			search.searchData(1);
+		},
+		deleteBack:function(){
+			search.searchData(1);
+		},
+		addNewBack:function(){
+			$("#formTitle").html("新增问卷");
+			k("kindeditor");
+			$("#introduction").val("");
+		},
+		editBack:function(){
+			$("#formTitle").html("修改问卷");
+			k("kindeditor");
+		},
+		validate:function(){
+			var flag=$("#formEditor").validate({
+				rules: {
+					term_name: {
+						required: true,
+						rangelength: [1,128]
+					},
+					term_type: {
+						required: true
+					},
+					status:{
+						required: true
+					},
+					logo_path:{
+						required: true
+					}
+				},
+				messages: {
+					term_name:{
+						required: "请输入问卷名称",
+						rangelength: "问卷名称长度为128"
+					},
+					term_type:{
+						required: "请选择问卷类型" 
+					},
+					status:{
+						required: "请选择状态" 
+					},
+					logo_path:{
+						required: "请选择Logo" 
+					}
+				}
+			});
+			return flag;
+		},
+		check:function(){
+			return true;
+		}
+	}).init();
+	this.search=search;
+	search=$Search({datagrid:"datagrid",formId:"searchForm",rowpackage:function(obj){
+		if(obj.status=='启用'){
+			obj.button='<button type="button" class="btn btn-primary btn-md disable_btn" code='+obj.tuid+'>禁用</button>';
+		}else{
+			obj.button='<button type="button" class="btn btn-primary btn-md enable_btn"  code='+obj.tuid+'>启用</button>';
+		}
+	},success:function(){
+		$(".edit_btn").unbind().on("click", function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				obj.edit({tuid:$(this).attr("code")});
+			}
+		});
+		$(".delete_btn").unbind().on("click",function(){
+			var obthis = $(this);
+			$Dialog().confirm("确定要删除吗？",function(){
+				if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+					var url = "/action/ccms/module/term/term/delete?tuid="+obthis.attr("code");
+					ajaxCall(url,{
+						method: "post",
+						progress: true,
+						dataType: "script",
+						success: function() {
+							search.searchData(1);
+						}
+					});
+				}
+			});
+		});
+		$("#save_btn").unbind().on("click",function(){
+			editor_introduction.sync();
+			editor_ending.sync();
+			  if($("#tuid").val()=="" || $("#tuid").val()== undefined){
+				 ajaxCall("/action/ccms/module/term/term/insert",{
+						method: "post",
+						progress: true,
+						form:"formEditor",
+						dataType: "script",
+						success: function() {
+							$("#modalAddnew").modal("hide");
+							search.searchData(1);
+						}
+					});
+			 }else{
+				 ajaxCall("/action/ccms/module/term/term/update",{
+						method: "post",
+						progress: true,
+						form:"formEditor",
+						dataType: "script",
+						success: function() {
+							$("#modalAddnew").modal("hide");
+							search.searchData(1);
+						}
+					});
+			 } 
+		});
+				//导出问卷配置
+		$(".export_btn").unbind().on("click",function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				var url = "${def:context}/action/ccms/module/subject/config/export/term?term_id="+$(this).attr("code");
+				window.open(url);
+			}
+		});
+		//预览
+		$(".preViewTerm_btn").unbind().on("click",function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				var url = "/action/ccms/termgen?term_id="+$(this).attr("code");
+				gotoPage(url);
+			}
+		});
+		//问卷类型设置
+		$(".setTermType_btn").unbind().on("click",function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				var url = "/action/ccms/module/term/type/crud?term_id="+$(this).attr("code");
+				gotoPage(url);
+			}
+		});
+		//问卷结论设置
+		$(".conclusion_btn").unbind().on("click",function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				var url = "/action/ccms/module/term/conclusion/crud?term_id="+$(this).attr("code");
+				gotoPage(url);
+			}
+		});
+		//禁用
+		$(".disable_btn").unbind().on("click",function(){
+			var obthis = $(this);
+			$Dialog().confirm("确定要禁用吗？",function(){
+				if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+					var url = "/action/ccms/module/term/term/disable?id="+obthis.attr("code");
+					ajaxCall(url,{
+						method: "post",
+						progress: true,
+						dataType: "script",
+						success: function() {
+							$Dialog().notice("禁用成功！",1200,function(){
+								search.searchData(1);
+							});
+						}
+					});
+				}
+			});
+		});
+		//启用
+		$(".enable_btn").unbind().on("click",function(){
+			var obthis = $(this);
+			$Dialog().confirm("确定要启用吗？",function(){
+				if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+					var url = "/action/ccms/module/term/term/enable?id="+obthis.attr("code");
+					ajaxCall(url,{
+						method: "post",
+						progress: true,
+						dataType: "script",
+						success: function() {
+							$Dialog().notice("启用成功！",1200,function(){
+								search.searchData(1);
+							});
+						}
+					});
+				}
+			});
+		});
+		
+		$("#openPicList").unbind().on("click", function(){
+			var url = "${def:context}/action/ccms/attachment/crud?id=logo_path&pickId=dialogPic";
+			ccms.dialog.open({url:url,id:"dialogPic",width:800,height:500});
+		});
+		$("#preViewImg").unbind().on("click",function(){
+			if($("#logo_path").val()==''){
+				$Dialog().notice("请选择图片",1200);
+				return;
+			}
+			var id="${def:context}/action/ccms/attachment/preView?id="+encodeURIComponent($("#logo_path").val());
+			ccms.dialog.open({url:id,id:"yulan",width:600,height:400});
+		});
+		$("#pickClear").unbind().on("click",function(){
+			document.formEditor.logo_path.value='';
+		});
+		//选择题库ID
+		$("#openProListm").unbind().on("click",function(){
+			var url = contextPath+"/action/ccms/module/term/term/select_question/crud";
+			ccms.dialog.open({url:url,id:"dialogPic",width:600,height:500});
+		});
+	}}).initSearchBtn().searchData(1);
+});
+function k(k)
+{
+	    editor_introduction= KindEditor.create('textarea[name="introduction"]', {
+		pasteType : 2,
+		cssPath : '/js/kindeditor-4.1.10/plugins/code/prettify.css',
+		uploadJson : '/js/kindeditor-4.1.10/jsp/upload_json.jsp',
+		fileManagerJson : '/js/kindeditor-4.1.10/jsp/file_manager_json.jsp',
+		allowFileManager : true,
+		afterCreate : function() {
+			var self = this;
+			KindEditor.ctrl(document, 13, function() {
+				self.sync();
+				document.forms['example'].submit();
+			});
+			KindEditor.ctrl(self.edit.doc, 13, function() {
+				self.sync();
+				document.forms['example'].submit();
+			});
+		},
+    afterBlur: function () {  //同时设置这里   
+        this.sync();  
+    },  
+
+	});
+	prettyPrint();
+	
+	editor_ending = KindEditor.create('textarea[name="ending"]', {
+		pasteType : 2,
+		cssPath : '/js/kindeditor-4.1.10/plugins/code/prettify.css',
+		uploadJson : '/js/kindeditor-4.1.10/jsp/upload_json.jsp',
+		fileManagerJson : '/js/kindeditor-4.1.10/jsp/file_manager_json.jsp',
+		allowFileManager : true,
+		afterCreate : function() {
+			var self = this;
+			KindEditor.ctrl(document, 13, function() {
+				self.sync();
+				document.forms['example'].submit();
+			});
+			KindEditor.ctrl(self.edit.doc, 13, function() {
+				self.sync();
+				document.forms['example'].submit();
+			});
+		},
+    afterBlur: function () {  //同时设置这里   
+        this.sync();  
+    },  
+
+	});
+	prettyPrint();
+}
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+.select2-container{
+	margin-right:20px;
+}
+.select2-container .select2-choice {
+	display: block;
+	width: 260px;
+	height: 35px;
+	padding: 0 0 0 8px;
+	overflow: hidden;
+	position: relative;
+	white-space: nowrap;
+	line-height: 35px;
+	font-family: Microsoft yahei; font-size : 15px; color : #777;
+	text-decoration: none;
+	border-radius: 4px;
+	background-clip: padding-box;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: #fff;
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eee),
+		color-stop(0.5, #fff));
+	background-image: -webkit-linear-gradient(center bottom, #eee 0%, #fff 50%);
+	background-image: -moz-linear-gradient(center bottom, #eee 0%, #fff 50%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=   '#ffffff',
+		endColorstr=   '#eeeeee', GradientType=   0);
+	background-image: linear-gradient(top, #fff 0%, #eee 50%);
+	background: #fff url(../../../../images/qa/fdj.png) no-repeat 13px center!important;
+	font-size: 15px;
+	color: #777;
+	border:solid 1px #c5c5c5;
+
+}
+
+.select2-arrow {
+	display: none;
+	width: 18px;
+	height: 100%;
+	position: absolute;
+	right: 0;
+	top: 0;
+	border-left: 1px solid #aaa;
+	border-radius: 0 4px 4px 0;
+	background-clip: padding-box;
+	background: #ccc;
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #ccc),
+		color-stop(0.6, #eee));
+	background-image: -webkit-linear-gradient(center bottom, #ccc 0%, #eee 60%);
+	background-image: -moz-linear-gradient(center bottom, #ccc 0%, #eee 60%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=  '#eeeeee',
+		endColorstr=  '#cccccc', GradientType=  0);
+	background-image: linear-gradient(top, #ccc 0%, #eee 60%);
+}

@@ -1,0 +1,68 @@
+<form name="formFilter" onsubmit="return search()">
+
+
+<div class="tabs">
+    <ul>
+        <li onclick="changeLiStyle(this);" id="tabsl"><b></b>
+            <a  
+                onmouseover="javascript:window.status='';return true;" 
+                onmouseout="javascript:window.status='';return true;" 
+                href='#' 
+                onclick='JavaScript:return false;'>
+                <span id="formTitleFilter">查询</span>
+            </a><p></p>
+        </li>
+    </ul>
+    <div id='hline'></div>
+</div>
+
+<div id="tabmain">
+<FIELDSET><LEGEND>查询条件</LEGEND>
+<TABLE class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <!--column layout-->
+        <col width="40%">
+        <col width="60%">
+        <!--form title-->
+
+        <!--form fields-->
+		<tr>
+			<td class="th20">
+				命名空间
+			</td>
+			<td>
+				<input name="namespace" type="text" value="" size="35">
+			</td>
+		</tr>
+
+		<tr>
+			<td class="th20">
+				错误数据
+			</td>
+			<td>
+				<input name="domain_text" type="text" size="35" value="" >
+			</td>
+		</tr>
+       
+        <!--最多显示记录个数-->
+		<input name="limitedcount"  value="10000" type="hidden" >
+		
+        
+
+</TABLE>
+</FIELDSET>
+
+<FIELDSET><LEGEND>操作信息</LEGEND>
+<TABLE class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <tr>
+        <!--buttons-->
+        <td align="center" colspan="2">
+            <input type="submit" class="btn_blue" value="查询" >
+            <input type="button" class="btn_gray" value="重置"  onclick="clearForm('formFilter')">
+            <input type="button" class="btn_gray" value="取消"  onclick="_goBackFn()">
+            <input type="button" class="btn_gray" value="新增映射"  onclick="addNew()">
+        </td>
+        </tr>
+</TABLE>
+</FIELDSET>
+</div>
+</form>

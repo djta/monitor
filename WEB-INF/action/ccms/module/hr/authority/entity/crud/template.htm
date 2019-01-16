@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>权限实体信息</title>
+</head>
+<body>
+<!--addnew/edit form-->
+<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+	 		 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	 		 	<h4 class="modal-title" id="formTitle">新增权限实体</h4>
+	 		 </div>
+	 		 <div class="modal-body">
+	 		 	<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+	 		 		<input type="hidden" id="tuid" name="tuid" value="" />
+	 		 		<div class="row clearfix">
+	 		 			<div class="form-group">
+	 		 				<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">权限名称</label>
+	 		 				<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+	 		 					<input id="authority_id" name="authority_id" type="hidden" preserve="true" value="${fld:authority_id}" />
+								<span id="authority_name">${fld:authority_name}</span>
+	 		 				</div>
+	 		 			</div>
+	 		 			<div class="form-group">
+	 		 				<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">权限实体名称</label>
+	 		 				<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+	 		 					<input id="entity_name" name="entity_name" class="form-control" type="text" value=""/>
+	 		 				</div>
+	 		 			</div>
+	 		 			<div class="form-group">
+	 		 				<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">实体类型</label>
+	 		 				<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+		 		 				<select id="entity_type" name="entity_type" class="form-control">
+									<option value=""></option>
+									<option value="0">个人</option>
+									<option value="1">岗位</option>
+									<option value="2">岗位类型</option>
+									<option value="3">部门</option>
+									<option value="4">单位</option>
+									<option value="5">组织层级</option>
+									<option value="6">技能</option>
+									<option value="7">团组</option>
+									<option value="8">本人</option>
+									<option value="9">本岗位</option>
+									<option value="10">本部门</option>
+									<option value="11">下级部门</option>
+									<option value="12">上级部门</option>
+									<option value="13">本单位</option>
+									<option value="14">上级单位</option>
+								</select>
+							</div>
+	 		 			</div>
+	 		 			<div class="form-group">
+	 		 				<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">备注</label>
+	 		 				<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+	 		 					<textarea rows="4" cols="50" class="form-control" id="remark" name="remark" ></textarea>
+	 		 				</div>
+	 		 			</div>
+	 		 		</div>
+	 		 	</form>
+	 		 </div>
+	 		 <div class="modal-footer">
+				<div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+					<button type="button" id="save_btn" class="btn btn-primary btn-md">保&nbsp;存</button>
+					<button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--filter form-->
+<!--grid view response-->
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">查询权限实体信息</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post" id="searchForm">
+			<input name="sort" type="hidden" value="entity_name" preserve="true"/>
+			<input name="order" type="hidden" value="desc" preserve="true" /> 
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+			<div class="form-group">
+				<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+					<input id="authority_id_filter" class="form-control" name="authority_id_filter" type="hidden" preserve="true" value="${fld:authority_id}" />
+					<input name="entity_name" class="form-control" type="text" placeholder="请输入权限实体名称"  size="20" maxlength="25" value=""/>
+				</div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+					<button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+					<button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+					<button class="btn btn-primary btn-md" type="button" data-toggle="modal" id="addnew_btn">新增</button>
+				</div>
+			</div>
+		</form>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>操作</th>
+					<th>设置成员</th>
+					<th class="sortable" code="entity_name">权限实体名称</th>
+					<th>权限名称</th>
+					<th>权限实体类型</th>
+					<th>备注</th>
+					<th>创建人</th>
+					<th>创建时间</th>
+					<th>更新人</th>
+					<th>更新时间</th>
+				</tr>
+			</thead>
+			<tbody id="datagridTemplate" style="display: none">
+				<tr>
+					<td align="center">
+						<button class="btn btn-primary btn-md edit_btn" type="button" code="#tuid#">编辑</button>
+						<button class="btn btn-primary btn-md delete_btn" type="button" code="#tuid#">删除</button>
+					</td>
+					<td align="center">
+						#operator2#
+					</td>
+					<td align="center">
+						#entity_name#
+					</td>
+					<td align="center">
+						#authority_name#
+					</td>
+					<td align="center">
+						#entity_type_alias#
+					</td>
+					<td align="center">
+						#remark#
+					</td>
+					<td align="center">#createdby#</td>
+					<td align="center">#created#</td>
+					<td align="center">#updatedby#</td>
+					<td align="center">#updated#</td>
+				</tr>
+			</tbody>
+			<tbody id="datagrid"></tbody>
+		</table>
+		<div class="pageDiv">
+			<ul class="pagination">
+			</ul>
+		</div>
+	</div>
+	<!--用于传递当前目录到header模版中-->
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}"/>
+</div>
+
+<script language="javascript">
+$(document).ready(function() {
+	var search=null;
+	var obj = $Crud({
+		formId:"formEditor",
+		button:"save_btn",
+		insertBack:function(){
+			search.searchData();
+		},
+		updateBack:function(){
+			search.searchData();
+		},
+		deleteBack:function(){
+			search.searchData();
+		},
+		addNewBack:function(){
+			$("#formTitle").html("新增用户信息");
+		},
+		editBack:function(){
+			$("#formTitle").html("修改用户信息");
+		},
+		validate:function(){
+			var flag=$("#formEditor").validate({
+				rules: {
+					userlogin: {
+						required: true,
+						rangelength: [1,25]
+					}
+				},
+				messages: {
+					userlogin: {
+						required: "请输入登录代码",
+						rangelength: "登录代码长度为1到25位"
+					}
+				}
+			});
+			return flag;
+		},
+		check:function(){
+			return true;
+		}
+	}).init();
+	this.search=search;
+	search=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		$(".edit_btn").unbind().on("click", function(){
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				obj.edit({id:$(this).attr("code")});
+			}
+		});
+		$(".delete_btn").unbind().on("click", function(){
+			var obthis = $(this);
+			$Dialog().confirm("确定要删除吗?", function(){
+				if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+					obj.del({id:obthis.attr("code")});
+				}
+			});
+		});
+		$(".setMembers").unbind().on("click",function(){
+			var obthis = $(this);
+			if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+				var url = "";
+				if(obthis.attr("code1") == 0){
+					url = "${def:actionroot}/list/personal/crud?entity_id="+obthis.attr("code");
+				}else if(obthis.attr("code1") == 1){
+					url = "${def:actionroot}/list/post/crud?entity_id="+obthis.attr("code");
+				}else if(obthis.attr("code1") == 2){
+					url = "${def:actionroot}/list/posttype/crud?entity_id="+obthis.attr("code");
+				}else if(obthis.attr("code1") == 3){
+					url = "${def:actionroot}/list/deparment/crud?entity_id="+obthis.attr("code");
+				}else if(obthis.attr("code1") == 4){
+					url = "${def:actionroot}/list/unit/crud?entity_id="+obthis.attr("code");
+				}else if(obthis.attr("code1") == 5){
+					url = "${def:actionroot}/list/orggrade/crud?entity_id="+obthis.attr("code");
+				}else if(obthis.attr("code1") == 6){
+					url = "${def:actionroot}/list/skill/crud?entity_id="+obthis.attr("code");
+				}else if(obthis.attr("code1") == 7){
+					url = "${def:actionroot}/list/team/crud?entity_id="+obthis.attr("code");
+				}
+				gotoPage(url);
+			}
+		});
+	}}).initSearchBtn().searchData(1);
+});
+</script>
+</body>
+</html>

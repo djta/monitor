@@ -1,0 +1,1 @@
+﻿{"upload_id":"${fld:id}","filename":"${fld:name@js}","filetype":"${fld:filetype@js}"}

@@ -1,0 +1,477 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body > 
+<div id="body_content" code="root">
+<div class="panel panel-default col_mainInner">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#li_daiban" data-toggle="tab">待办件</a></li>
+			<li><a href="#li_banlizhong" data-toggle="tab">办理中</a></li>
+			<li><a href="#li_yiban" data-toggle="tab">已办件</a></li>
+			<li><a href="#li_yijie" data-toggle="tab">已结件</a></li>
+		</ul>
+	<div class="panel-body col_main_body">
+	    <div class="tab-content">
+			<div class="tab-pane active" id="li_daiban">
+				<form class="form-horizontal" role="form" method="post" id="searchForm1" name="searchForm1">
+					<input name="sort" type="hidden" value="created" preserve="true"/> 
+					<input name="order" type="hidden" value="desc" preserve="true"/> 
+					<input name="pageNo" type="hidden" value="" preserve="true"/>
+					<input name="totalPages" type="hidden" value="" preserve="true"/>
+					<div class="form-group">
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="fdate1" name="fdate1" type="text" class="form-control" placeholder="请输入开始日期"/>
+						</div>
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="tdate1" name="tdate1" type="text" class="form-control" placeholder="请输入结束日期"/>
+						</div>
+						<div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+							<button class="btn btn-primary btn-md" type="button" id="search_btn1">查询</button>
+							<button class="btn btn-primary btn-md" type="button" id="search_reset_btn1">清空</button>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="wfm_name1" name="wfm_name1" class="form-control" type="text" size="30" value="" placeholder="请输入工作流"/>
+						</div>
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="entry_id1" name="entry_id1" type="text" size="30" class="form-control" value="" placeholder="请输入工单号"/>
+						</div>
+					</div>
+				</form>
+				<table class="table table-condensed">
+				<thead>
+					<tr>
+					 	<th>
+								序号
+						</th>
+						<th>
+								标题
+						</th>
+						<th>
+								拟稿人
+						</th>
+						<th>
+								拟稿时间
+						</th>
+						<th>
+								当前状态
+						</th>
+						<th>
+								流程名称
+						</th>
+					 </tr>
+				</thead>
+				<tbody id="datagrid1Template" style="display:none">
+					<tr>
+						<td  align="center">
+							<a href="javascript:void(0);" onclick="javascript:myClass.showWfmStatus('#entry_id#')" title="查看流程图">#rowNumber#</a>
+						</td>
+						
+						<td  align="center">
+							<a href="javascript:void(0);" onclick="javascript:myClass.checkoutBill('#document_id#','#p_pk_value#','#pk_value#','#entry_id#','#step_id#','#step_type#','#wfm_id#','#current_id#','#parent_entry_id#','#parent_node_id#')" title="处理">#step_name#</a>
+						</td>
+						<td  align="center">
+							#createdby#
+						</td>
+						<td  align="center">
+							#created#
+						</td>
+						<td  align="center">
+							#status#
+						</td>
+						<td  align="center">
+							#wfm_name#
+						</td>	
+						 
+					</tr>
+				</tbody>	
+				<tbody id="datagrid1">
+				</tbody>
+				</table>
+				<div class="pageDiv" >
+					<ul class="pagination" data-target="datagrid1">
+					</ul>
+				</div>
+			</div>
+			
+			<div class="tab-pane" id="li_banlizhong">
+				<form class="form-horizontal" role="form" method="post" id="searchForm2" name="searchForm2">
+					<input name="sort" type="hidden" value="created" preserve="true"/> 
+					<input name="order" type="hidden" value="desc" preserve="true"/> 
+					<input name="pageNo" type="hidden" value="" preserve="true"/>
+					<input name="totalPages" type="hidden" value="" preserve="true"/>
+					<div class="form-group">
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="fdate2" name="fdate2" type="text" class="form-control" placeholder="请输入开始日期"/>
+						</div>
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="tdate2" name="tdate2" type="text" class="form-control" placeholder="请输入结束日期"/>
+						</div>
+						<div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+							<button class="btn btn-primary btn-md" type="button" id="search_btn2">查询</button>
+							<button class="btn btn-primary btn-md" type="button" id="search_reset_btn2">清空</button>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="wfm_name2" name="wfm_name2" type="text" class="form-control" size="30" value="" placeholder="请输入工作流"/>
+						</div>
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="entry_id2" name="entry_id2" type="text" class="form-control" size="30" value="" placeholder="请输入工单号"/>
+						</div>
+					</div>
+				</form>
+				<table class="table table-condensed">
+				<thead>
+					<tr>
+					 	<th>
+								序号
+						</th>
+						<th>
+								标题
+						</th>
+						<th>
+								拟稿人
+						</th>
+						<th>
+								拟稿时间
+						</th>
+						<th>
+								当前状态
+						</th>
+						<th>
+								流程名称
+						</th>
+					  
+					 </tr>
+				</thead>
+				<tbody id="datagrid2Template" style="display:none">
+					<tr>
+						<td  align="center">
+							<a href="javascript:void(0);" onclick="javascript:myClass.showWfmStatus('#entry_id#')" title="查看流程图">#rowNumber#</a>
+						</td>
+						
+						<td  align="center">
+							#step_name#
+						</td>
+						<td  align="center">
+							#createdby#
+						</td>
+						<td  align="center">
+							#created#
+						</td>
+						<td  align="center">
+							#status#
+						</td>
+						<td  align="center">
+							#wfm_name#
+						</td>	
+						 
+					</tr>
+				</tbody>	
+				<tbody id="datagrid2">
+				</tbody>
+				</table>
+				<div class="pageDiv" >
+					<ul class="pagination" data-target="datagrid2">
+					</ul>
+				</div>
+			</div>
+
+			<div class="tab-pane" id="li_yiban">
+				<form class="form-horizontal" role="form" method="post" id="searchForm3" name="searchForm3">
+					<input name="sort" type="hidden" value="created" preserve="true"/> 
+					<input name="order" type="hidden" value="desc" preserve="true"/> 
+					<input name="pageNo" type="hidden" value="" preserve="true"/>
+					<input name="totalPages" type="hidden" value="" preserve="true"/>
+					<div class="form-group">
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="fdate3" name="fdate3" type="text" class="form-control" placeholder="请输入开始日期"/>
+						</div>
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="tdate3" name="tdate3" type="text" class="form-control" placeholder="请输入结束日期"/>
+						</div>
+						<div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+							<button class="btn btn-primary btn-md" type="button" id="search_btn3">查询</button>
+							<button class="btn btn-primary btn-md" type="button" id="search_reset_btn3">清空</button>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="wfm_name3" name="wfm_name3" type="text" size="30" value="" class="form-control" placeholder="请输入工作流"/>
+						</div>
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="entry_id3" name="entry_id3" type="text" size="30" value="" class="form-control" placeholder="请输入工单号"/>
+						</div>
+					</div>
+				</form>
+				<table class="table table-condensed">
+				<thead>
+					<tr>
+					 	<th>
+							序号
+						</th>
+						<th>
+								流程名称
+						</th>
+						<th>
+								节点名称
+						</th>
+						<th>
+								操作名称
+						</th>
+						<th>
+								操作人
+						</th>
+						<th>
+								状态
+						</th>
+						<th>
+								完成时间
+						</th>
+						<th>
+								拟稿人
+						</th>
+						<th>
+								拟稿时间
+						</th>
+					  
+					 </tr>
+				</thead>
+				<tbody id="datagrid3Template" style="display:none">
+					<tr>
+						<td  align="center">
+							<a href="javascript:void(0);" onclick="javascript:myClass.showWfmStatus('#entry_id#')" title="查看流程图">#rowNumber#</a>
+						</td>
+				
+						<td  align="center">
+							#wfm_name#
+						</td>
+						<td  align="center">
+							#step_name#
+						</td>
+						<td  align="center">
+							<a href="javascript:void(0);" onclick="javascript:myClass.dealWfm('#entry_id#','#step_id#')" title="查看明细">#action_name#</a>
+						</td>
+						<td  align="center">
+							#caller#
+						</td>
+						<td  align="center">
+							#status#
+						</td>
+						<td  align="center">
+							#finish_date#
+						</td>
+						<td  align="center">
+							#createdby#
+						</td>
+						<td  align="center">
+							#created#
+						</td>
+						 
+					</tr>
+				</tbody>	
+				<tbody id="datagrid3">
+				</tbody>
+				</table>
+				<div class="pageDiv" >
+					<ul class="pagination" data-target="datagrid3">
+					</ul>
+				</div>
+			</div>
+			
+			<div class="tab-pane" id="li_yijie">
+				<form class="form-horizontal" role="form" method="post" id="searchForm4" name="searchForm4">
+					<input name="sort" type="hidden" value="created" preserve="true"/> 
+					<input name="order" type="hidden" value="desc" preserve="true"/> 
+					<input name="pageNo" type="hidden" value="" preserve="true"/>
+					<input name="totalPages" type="hidden" value="" preserve="true"/>
+					<div class="form-group">
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="fdate4" name="fdate4" type="text" class="form-control" placeholder="请输入开始日期"/>
+						</div>
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="tdate4" name="tdate4" type="text" class="form-control" placeholder="请输入结束日期"/>
+						</div>
+						<div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+							<button class="btn btn-primary btn-md" type="button" id="search_btn4">查询</button>
+							<button class="btn btn-primary btn-md" type="button" id="search_reset_btn4">清空</button>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="wfm_name4" name="wfm_name4" type="text" size="30" class="form-control" value="" placeholder="请输入工作流"/>
+						</div>
+						<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+							<input id="entry_id4" name="entry_id4" type="text" size="30" value="" class="form-control" placeholder="请输入工单号"/>
+						</div>
+					</div>
+				</form>
+				<table class="table table-condensed">
+				<thead>
+					<tr>
+					 	<th>
+							序号
+						</th>
+						<th>
+								流程名称
+						</th>
+						<th>
+								节点名称
+						</th>
+						<th>
+								操作名称
+						</th>
+						<th>
+								操作人
+						</th>
+						<th>
+								状态
+						</th>
+						<th>
+								完成时间
+						</th>
+						<th>
+								拟稿人
+						</th>
+						<th>
+								拟稿时间
+						</th>
+					  
+					 </tr>
+				</thead>
+				<tbody id="datagrid4Template" style="display:none">
+					<tr>
+						<td  align="center">
+							<a href="javascript:void(0);" onclick="javascript:myClass.showWfmStatus('#entry_id#')" title="查看流程图">#rowNumber#</a>
+						</td>
+				
+						<td  align="center">
+							#wfm_name#
+						</td>
+						<td  align="center">
+							#step_name#
+						</td>
+						<td  align="center">
+							<a href="javascript:void(0);" onclick="javascript:myClass.dealWfm('#entry_id#','#step_id#')" title="查看明细">#action_name#</a>
+						</td>
+						<td  align="center">
+							#caller#
+						</td>
+						<td  align="center">
+							#status#
+						</td>
+						<td  align="center">
+							#finish_date#
+						</td>
+						<td  align="center">
+							#createdby#
+						</td>
+						<td  align="center">
+							#created#
+						</td>
+						 
+					</tr>
+				</tbody>	
+				<tbody id="datagrid4">
+				</tbody>
+				</table>
+				<div class="pageDiv" >
+					<ul class="pagination" data-target="datagrid4">
+					</ul>
+				</div>
+			</div>
+		</div>  
+	</div> 
+</div>
+</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script language="javascript">
+var myClass=new myClass();
+
+function myClass(){
+	this.obj1=null;
+
+	this.page1=function(){
+		var obth=this;
+		$Search({datagrid:"datagrid1",formId:"searchForm1",button:"search_btn1",resetButton:"search_reset_btn1",actionroot:"/action/ccms/wfmgen/owner",
+			success:function(){
+				
+				
+		}}).initSearchBtn().searchData(1);
+	};
+
+	this.page2=function(){
+		var obth=this;
+		$Search({datagrid:"datagrid2",formId:"searchForm2",button:"search_btn2",resetButton:"search_reset_btn2",actionroot:"/action/ccms/wfmgen/processing",
+			success:function(){
+				
+		}}).initSearchBtn().searchData(1);
+	};
+	
+
+	this.page3=function(){
+		var obth=this;
+		$Search({datagrid:"datagrid3",formId:"searchForm3",button:"search_btn3",resetButton:"search_reset_btn3",actionroot:"/action/ccms/wfmgen/myhistory",
+			success:function(){
+			
+		}}).initSearchBtn().searchData(1);
+	};
+	
+
+	this.page4=function(){
+		var obth=this;
+		$Search({datagrid:"datagrid4",formId:"searchForm4",button:"search_btn4",resetButton:"search_reset_btn4",actionroot:"/action/ccms/wfmgen/historywfm",
+			success:function(){
+				
+		}}).initSearchBtn().searchData(1);
+	};
+	
+	this.showWfmStatus=function(entry_id){
+		var url = "${def:context}/action/ccms/wfmgen/show_status?entry_id="+entry_id;
+		ccms.dialog.open({url:url,id:"workflow"});
+	};
+	this.checkoutBill=function(document_id,p_pk_value,pk_value,entry_id,step_id,step_type,wfm_id,current_id,parent_entry_id,parent_node_id){
+		if(document_id !=""){
+		    var form_action = 5;
+			var url = "/action/ccms/wfmgen/checkout?current_id="+current_id+"&document_id="+document_id+ '&__p_pk_value__=' + p_pk_value;
+			if(step_type == "3" || step_type == "4"){//会签节点和子流程
+				form_action = 3;
+				url +=  '&__parent_wfentry_id__=' + entry_id + '&__parent_node_id__='+step_id ;
+				if(step_type == "4"){
+					url += "&__wfm_id__="+wfm_id;
+				}
+			}else{
+				url += "&__wfm_id__="+wfm_id+'&__pk_value__=' + pk_value + '&__parent_wfentry_id__=' + parent_entry_id + '&__parent_node_id__='+parent_node_id;
+			}
+			url += '&__form_action__='+form_action+'&__search_action__=0';
+			gotoPage(url);
+		}
+	};
+	this.dealWfm = function(entry_id, current_id){
+		var url = "/action/ccms/module/workflow/dealwfm?__wfentry_id__="+entry_id+"&__current_step_id__="+current_id;
+		gotoPage(url);
+	};
+}
+
+$(document).ready(function() {
+	$Dialog().date($('#fdate1'));
+	$Dialog().date($('#tdate1'));
+	$Dialog().date($('#fdate2'));
+	$Dialog().date($('#tdate2'));
+	$Dialog().date($('#fdate3'));
+	$Dialog().date($('#tdate3'));
+	$Dialog().date($('#fdate4'));
+	$Dialog().date($('#tdate4'));
+	myClass.page1();
+	myClass.page2();
+	myClass.page3();
+	myClass.page4();
+	
+});
+</script>
+</body>
+</html>

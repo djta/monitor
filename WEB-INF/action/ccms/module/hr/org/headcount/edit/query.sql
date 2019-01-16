@@ -1,0 +1,9 @@
+SELECT
+   	hc_name
+	,show_order
+	,hc_id
+	,org_post_id
+FROM
+	hr_headcount
+WHERE
+	hc_id=${fld:id}

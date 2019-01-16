@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="userlogin" type="varchar" required="true" label="${lbl:s_fld_login}" />
+	<parameter id="passwd" type="varchar" required="true" label="${lbl:s_fld_password}"  />
+	<parameter id="passwd_mw" type="varchar" required="false" label="${lbl:s_fld_password}"  />
+	<parameter id="uri" type="varchar" required="false" label="URL to redirect after login"/>
+	<parameter id="weixin_location" type="varchar" required="false" label="weixin_location"/>
+	<parameter id="weixin_id" type="varchar" required="false" label="weixin_id"/>
+	<parameter id="service_id" type="varchar" required="false" label="service_id"/>
+	<!--
+	<custom-validator
+		classname='dinamica.validators.DuplicatedKeyValidator'
+		on-error-label='Su direcci髇 IP actual no est?autorizada para que usted ingrese al sistema.'
+		sql='invalid-ip.sql' />
+	-->
+
+	<!--
+	<custom-validator
+		classname='dinamica.validators.DuplicatedKeyValidator'
+		on-error-label='相同的工号已经登录.'
+		sql='invalid-session.sql'/>
+	-->
+	<!--
+	<custom-validator
+		classname="com.ccms.dinamica.LowerCaseTransformer" parameter="userlogin" />
+	 -->
+
+</validator>
+

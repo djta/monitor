@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		Edit Record
+	</summary>
+	
+	<log>false</log>
+	<on-error>/action/error/alert</on-error>
+
+	<print-recordset>query.sql</print-recordset>
+	<cascade-tag>rows-cascade-edit</cascade-tag>
+
+	<transaction>
+		<classname>com.ccms.core.formengine.FormEditEngine</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<output>
+		<classname>com.ccms.core.formengine.FormEditOutputEngine</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+		<print mode="form" recordset="query_priviledge.sql" />
+		<print mode="form" recordset="query.sql" />
+		<print mode="form" recordset="_request" />
+	</output>
+
+</config>

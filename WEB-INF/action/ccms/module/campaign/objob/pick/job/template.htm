@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<link rel="stylesheet" type="text/css" href="${def:context}/default.css" />
+<title>Select Table</title>
+
+	<script language="javascript">
+	
+		var currStyle="";
+	
+		function rowOn(obj) {
+			currStyle = obj.className;
+			obj.className="hilite";
+		}
+		
+		function rowOff(obj) {
+			obj.className=currStyle
+		}
+		
+		function closePickList()
+		{
+			parent.pickClose();
+		}	
+		function selectItem(id)
+		{
+			var descripcion = document.getElementById(id);
+			parent.pickSelect(id, descripcion.innerHTML);
+			closePickList();
+		}	
+
+		/*
+		function addNew()
+		{
+			window.location='${def:context}${def:actionroot}/addnew';
+		}
+		*/
+	</script>
+
+</head>
+
+<body class="pickListBody">
+
+<div class="pop_title">
+<h2>选择任务<span class="close"><a href="#"><img src="${def:context}/images/ccms/close.jpg" onclick="parent.pickClose()" title="关闭"/></a></span></h2>
+</div>
+
+<div class="pop_content">
+
+	<div class="pickListBody" style="width: 100%; height: 170px; overflow: auto;">
+
+	<!--START GRID-->
+	<table class="grid" width="100%" cellspacing="1">
+		
+		<rows>
+		<tr ${fld:_rowStyle} onmouseover="rowOn(this)" onmouseout="rowOff(this)" onclick="selectItem('${fld:id}')" >
+			<td style="font-size:9pt">
+				<span id="${fld:id}">${fld:description}</span>
+			</td>					
+		</tr>
+		</rows>
+		
+	</table>
+	
+	</div>
+	
+</div>
+	
+</body>
+
+</html>

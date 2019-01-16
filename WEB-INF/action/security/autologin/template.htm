@@ -1,0 +1,39 @@
+﻿${inc:/action/ccms/pub}
+<body>
+	<div style="display: none;">
+		<form class="form-horizontal" name="formLogin" id="formLogin" method="post">
+			<input type="hidden" name="uri" id="uri" value="">
+			<input type="text" class="form-control login-field" value="${fld:userlogin}" id="userlogin" name="userlogin">
+			<input type="password" class="form-control login-field" value="" id="passwd" name="passwd">
+			<button type="button" class="btn btn-lg btn-block" id="submitbutton">登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+		</form>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+var contextPath = "";
+var passwd = "${fld:passwd}";
+var uri = "${fld:uri}";
+if(passwd != undefined && passwd != ""){
+	passwd = decodeURIComponent(passwd);
+}
+$("#passwd").val(passwd);
+if(uri != undefined && uri != ""){
+	uri = decodeURIComponent(uri);
+	var hash = $Base64.encode(uri);
+	//uri= "/action/project/rofine/shciq/index/crud#" + hash;
+	uri= "/action/project/rofine/shciq/index/crud#" + hash;
+}else{
+	//uri= "/action/project/pension/home";
+	uri= "/action/project/rofine/shciq/index/crud";
+}
+$("#uri").val(uri);
+var url = "/action/security/autologin/validate";
+ajaxCall(url, {
+	form : "formLogin",
+	dataType : "script",
+	button : "submitbutton",
+	method : "POST",
+	progress : true
+});
+</script>

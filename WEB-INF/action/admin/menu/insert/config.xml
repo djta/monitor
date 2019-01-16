@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<config>
+
+	<summary>
+		新增菜单
+	</summary>
+
+	<log>false</log>
+
+	<!--soporte de auditoria-->
+	<audit>
+		<!--de donde saca los datos, por defecto es "_request"-->
+		<recordset>query.sql</recordset>
+		<!--que campos extrae para el registro descriptivo-->
+		<cols>
+			<colname>app_id</colname>	
+			<colname>title</colname>	
+			<colname>position</colname>		
+		</cols>
+		<table>s_menu</table>
+		<oper>增加</oper>
+		<area>菜单</area>
+		<!--
+			query para obtener el ID generado o nombre de 
+			la columna que contiene el pkey, si es query, 
+			el alias del campo debe ser "id"
+		-->
+		<pkey>menu_id</pkey>
+	</audit>
+
+	<colname>role_id</colname>
+	<sql-template>insert-roles.sql</sql-template>
+
+	<transaction>
+		<classname>com.ccms.dinamica.domain.admin.InsertMaster</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<query>insert.sql</query>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+		<print mode="form" recordset="_request" />
+	</output>
+
+</config>

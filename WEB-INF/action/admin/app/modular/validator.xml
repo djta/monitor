@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="app_id" type="integer" required="true" label="Alias" />
+		
+</validator>

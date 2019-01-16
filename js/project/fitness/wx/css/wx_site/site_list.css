@@ -1,0 +1,66 @@
+body,
+html {
+    width: 100%;
+    padding-bottom: 1.1rem;
+}
+
+.list_cont {
+    width: 100%;
+    height: auto;
+    background: #fff;
+    padding-bottom: 0.3rem;
+}
+
+.list_cont li {
+    width: 100%;
+    height: 1.3rem;
+    padding-left: 0.27rem;
+    margin-top: 0.4rem;
+}
+
+.list_cont li div {
+    float: left;
+}
+
+.list_con_left {
+    width: 1.8rem;
+    height: 1.3rem;
+    border-radius: 0.08rem;
+}
+
+.list_con_left img {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.08rem;
+    background-position: center;
+}
+
+.list_con_right {
+    width: 5.27rem;
+    height: 1.3rem;
+    margin-left: 0.16rem;
+}
+
+.cont_rt_tit {
+    font-size: 0.28rem;
+    line-height: 0.7rem;
+    color: rgba(51, 51, 51, 1);
+}
+
+.list_con_right div {
+    width: 100%;
+    line-height: 0.3rem;
+    font-size: 0.24rem;
+    color: rgba(153, 153, 153, 1);
+}
+
+.list_con_right div img {
+    vertical-align: middle;
+    width: 0.2rem;
+    height: 0.2rem;
+}
+
+.list_con_right div span {
+    padding: 0.05rem;
+    vertical-align: middle;
+}

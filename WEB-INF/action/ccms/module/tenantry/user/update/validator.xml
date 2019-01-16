@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="user_id" type="integer" required="true" label="ID" />
+	<parameter id="name" type="varchar" required="true" label="Nombre" maxlen="32" />
+	<parameter id="email" type="varchar" required="false" label="E-mail" maxlen="256" />
+	<parameter id="mobile" type="varchar" required="false" label="mobile" maxlen="32" />
+	
+	<custom-validator 	
+	classname="dinamica.validators.ArrayNotEmptyValidator" 
+	on-error-label="没有添加用户角色，无法进行保存."
+	parameter-name="role_id" id="role_id" />
+	
+</validator>
+

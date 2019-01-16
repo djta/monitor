@@ -1,0 +1,38 @@
+<!--data grid-->
+<table class="grid" style="width: 95%;">
+	<col width="45%">
+	<col width="50%">
+	<!--toolbar-->
+	<tr>
+		<th colspan="2">
+			<span style="color: gray; float: left;"><!-- 选择信息 --></span> 
+			<!--panel de control de navegacion--> 
+			<span style="float: left;">${inc:/action/pagecontrols}</span> 
+			<!--indicador de progreso-->
+			<img id="grid-progress" style="float: right; display: none" src="${def:context}/images/progress.gif">
+		</th>
+	</tr>
+
+	<!--encabezados-->
+	<tr>
+		<th >
+			字段名称
+		</th>
+		<th >
+			字段代码
+		</th>
+	</tr>
+
+	<!--data-->
+	<rows>
+	<tr ${fld:_rowStyle} onmouseover="rowOn(this)" onmouseout="rowOff(this)" onclick="selectItem('${fld:id}')" >
+		<td>
+			<span id="${fld:id}">${fld:description}</span>
+		</td>	
+		<td>
+			${fld:field_code}
+		</td>	
+	</tr>
+	</rows>
+
+</table>

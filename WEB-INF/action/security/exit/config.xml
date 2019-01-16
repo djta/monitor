@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		Update record
+	</summary>
+	
+	<log>false</log>
+
+    <request-encoding>UTF-8</request-encoding>
+
+	<transaction>
+		<classname>com.ccms.dinamica.Exit</classname>
+		<validator>false</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<query>update-loginlog.sql</query>
+	<query>update-session.sql</query>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

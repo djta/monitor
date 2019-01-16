@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="skill_scope" type="varchar" required="true" label="skill_scope" />
+	<parameter id="num" type="varchar" required="true" label="num" />
+	<parameter id="id" type="varchar" required="true" label="id" />
+	<parameter id="type" type="varchar" required="true" label="type" />
+</validator>

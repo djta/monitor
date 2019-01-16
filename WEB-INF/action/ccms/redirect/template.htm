@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/ccms/pub}
+<title></title>
+</head>
+<body class="body">
+      <div id="body_content" style="height: 100%; overflow:auto;">	
+
+${inc:${fld:url}}
+<input type="hidden" id="home_actionroot" value="${def:actionroot}"/>
+<script type="text/javascript" src="${def:context}/js/ccms/redirect.js?random="+Math.random()></script>
+
+</body>
+</html>

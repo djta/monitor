@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<parameter id="id" type="integer" required="true" label="ID del producto" maxlen="10"/>
+	<custom-validator 	
+		classname="dinamica.validators.DuplicatedKeyValidator" 
+		on-error-label="请先删除下级数据."
+		sql="dupkey.sql" />
+</validator>

@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+    <parameter id="tuid" type="integer" required="true" label="导入id"/>
+    <parameter id="imp_name" type="varchar" required="true" label="导入名称"/>
+    <parameter id="before_class_name" type="varchar" required="false" label="前置扩展类名"/>
+    <parameter id="pre_class_name" type="varchar" required="false" label="单条记录前置类"/>
+    <parameter id="post_class_name" type="varchar" required="false" label="单条记录后置类"/>
+	<parameter id="validator_class_name" type="varchar" required="false" label="校验类名称"/>
+    <parameter id="title_line_num" type="integer" required="true" label="标题启始行"/>
+    <parameter id="is_previwe_flag" type="varchar" required="false" label="是否预览数据"/>
+	<parameter id="is_error_continue" type="varchar" required="false" label="验证不通过是否继续导入"/>
+    <parameter id="remark" type="varchar" required="false" label="备注"/>
+    <parameter id="after_sql" type="varchar" required="false" label="单条后处理SQL" maxsize="4000"/>
+    
+    	<custom-validator 	
+		classname="dinamica.validators.DuplicatedKeyValidator" 
+		on-error-label="该导入名称已经存在，请重新输入."
+		sql="nodup.sql" id="imp_name"/>
+</validator>

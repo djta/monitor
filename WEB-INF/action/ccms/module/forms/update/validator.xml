@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+    <parameter id="tuid" type="varchar" required="true" label="TUID"/>
+    <parameter id="subject_id" type="integer" required="true" label="专题"/>
+    <parameter id="table_id" type="integer" required="true" label="业务"/>
+	<parameter id="form_name_cn" type="varchar" required="true" label="表单中文名称" />
+	<parameter id="form_name_en" type="varchar" required="true" label="表单英文名称" />
+    <parameter id="form_type" type="varchar" required="true" label="表单类型" />
+    <parameter id="col_num_edit" type="integer" required="false" label="编辑界面列数"/>
+    <parameter id="col_num_filter" type="integer" required="false" label="查询界面列数"/>
+    <parameter id="keypress" type="varchar" required="false" label="按键约束代码"  maxlen="8000"/>
+    <parameter id="checkfield" type="varchar" required="false" label="字段检测代码" maxlen="8000"/>
+    <parameter id="form_js" type="varchar" required="false" label="JS代码" maxlen="8000"/>
+    <parameter id="addnew_js" type="varchar" required="false" label="新增界面JS代码" maxlen="8000"/>
+    <parameter id="insert_js" type="varchar" required="false" label="增加后JS代码" maxlen="1024"/>
+    <parameter id="update_js" type="varchar" required="false" label="更新后JS代码" maxlen="1024"/>
+    <parameter id="loadeditor_js" type="varchar" required="false" label="加载界面JS代码" maxlen="8000"/>
+    <parameter id="loadfilter_js" type="varchar" required="false" label="加载查询界面JS代码" maxlen="8000"/>
+    <parameter id="editback_js" type="varchar" required="false" label="加载编辑界面后JS代码" maxlen="8000"/>
+    <parameter id="search_sql" type="varchar" required="false" label="检索语句" maxlen="4000"/>
+    <parameter id="edit_sql" type="varchar" required="false" label="编辑语句" maxlen="4000"/>
+    <parameter id="remark" type="varchar" required="false" label="备注" maxlen="128"/>
+	<parameter id="insert_classname" type="varchar" required="false" label="新增后操作" />
+	<parameter id="update_classname" type="varchar" required="false" label="修改后操作" />
+	<parameter id="insert_classname1" type="varchar" required="false" label="新增后操作1" />
+	<parameter id="update_classname1" type="varchar" required="false" label="修改后操作1" />
+	<parameter id="delete_classname" type="varchar" required="false" label="删除后操作" />
+
+	<parameter id="insert_classname_validator" type="varchar" required="false" label="新增前校验" />
+	<parameter id="insert_classname_replace" type="varchar" required="false" label="新增替换操作" />
+	<parameter id="update_classname_validator" type="varchar" required="false" label="修改前校验" />
+	<parameter id="update_classname_replace" type="varchar" required="false" label="修改替换操作" />
+	<parameter id="delete_classname_validator" type="varchar" required="false" label="删除前校验" />
+	<parameter id="delete_classname_replace" type="varchar" required="false" label="删除替换操作" />
+
+	<parameter id="head_inc" type="varchar" required="false" label="head_inc" maxlen="1024"/>
+
+	<parameter id="owner_field" type="integer" required="false" label="数据所属人字段" maxlen="10"/>
+	<parameter id="access_type" type="varchar" required="false" label="数据访问类型" />
+    <parameter id="operation_type" type="varchar" required="false" label="数据操作类型" />
+    <parameter id="page_size" type="integer" required="false" label="每页显示行数"/>
+	<parameter id="form_action" type="varchar" required="false" label="form_action" maxlen="32"/>
+	<parameter id="search_action" type="varchar" required="false" label="search_action" maxlen="32"/>
+	<parameter id="search_success_js" type="varchar" required="false" label="search_success_js" maxlen="4000"/>
+
+</validator>

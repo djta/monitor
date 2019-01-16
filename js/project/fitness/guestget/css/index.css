@@ -1,0 +1,141 @@
+body {
+  width: 320px;
+}
+.gg-index-top {
+  width: 320px;
+  background-color: #fff;
+}
+.gg-index-top ul {
+  width: 100%;
+  height: 68.26666656px;
+  padding: 9.3px 0;
+  font-size: 12.8px;
+  color: #000;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.gg-index-top li {
+  position: relative;
+  float: left;
+  text-align: center;
+}
+.gg-index-top li:nth-child(1) {
+  width: 30%;
+}
+.gg-index-top li:nth-child(2) {
+  width: 36%;
+}
+.gg-index-top li:nth-child(3) {
+  width: 34%;
+}
+.sep {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  display: block;
+  width: 2px;
+  height: 30.72px;
+  background: #F5F5F5;
+}
+.num-wrap {
+  margin-top: 12.8px;
+  color: #848999;
+  font-size: 14px;
+}
+.num {
+  margin-right: 4.26666px;
+  font-size: 16px;
+  color: #419BF9;
+}
+.progress-wrap {
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+}
+.progress-label {
+  position: relative;
+  margin-bottom: 10.24px;
+  color: #848999;
+  font-size: 14px;
+}
+.progress-percent {
+  position: absolute;
+  right: 0;
+  color: #419BF9;
+}
+.progress-bar {
+  width: 290.13333344px;
+  height: 12.8px;
+  background-color: #F5F5F5;
+  border-radius: 1.70666656px;
+}
+.progress-bar-play {
+  display: inline-block;
+  width: 0%;
+  height: 12.8px;
+  background-color: #419BF9;
+  border-radius: 1.70666656px;
+}
+.gg-index-bt {
+  width: 320px;
+  margin-top: 4.26666px;
+}
+.gg-index-bt li {
+  width: 100%;
+  min-height: 51.2px;
+  padding: 0 12.8px;
+  line-height: 51.2px;
+  background-color: #fff;
+  box-sizing: border-box;
+  border: 1px solid #E5E5E5;
+}
+.gg-index-bt li > div {
+  display: inline-block;
+  vertical-align: middle;
+}
+.u-item-left {
+  line-height:48px;
+}
+.u-item-left .nickname {
+  display: inline-block;
+  vertical-align: middle;
+  max-width:89.6px;
+  margin-right: 16px;
+  font-size:14.5px;
+  color: #000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.u-item-left .age {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left:7.68px;
+  padding: 2.56px 5.97333344px;
+  color: #fff;
+  font-size: 9.3px;
+  background-color: #50E3C2;
+  border-radius: 3.41333344px;
+}
+.u-item-left .tel {
+  margin-top: 3.41333344px;
+  color: #888;
+  font-size: 0.34666667rem;
+}
+.u-item-right {
+  float: right;
+}
+.purpose {
+  display: inline-block;
+  vertical-align: middle;
+  width: 100.26px;
+  height: 16px;
+  margin-right:7.68px;
+  line-height: 16px;
+  color: #fff;
+  font-size: 15.6px;
+  border-radius: 3.41333344px;
+  text-align: center;
+}

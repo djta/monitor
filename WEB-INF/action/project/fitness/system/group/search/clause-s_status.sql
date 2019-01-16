@@ -1,0 +1,1 @@
+and t.status=${fld:s_status}

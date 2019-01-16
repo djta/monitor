@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+	<summary>
+		Insertar un registro
+	</summary>
+
+	<log>false</log>
+
+	<audit>
+		<recordset>query.sql</recordset>
+		<cols>	
+			<colname>app_alias</colname>		
+			<colname>description</colname>
+		</cols>
+		<table>s_application</table>
+		<oper>增加</oper>
+		<area>应用系统</area>
+		<pkey>app_id</pkey>
+	</audit>
+    <request-encoding>UTF-8</request-encoding>
+	<transaction>
+		<classname>com.ccms.dinamica.domain.admin.AfterTransaction</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+	<query>insert.sql</query>
+	<query>insert_role.sql</query>
+	<query>insert_menu.sql</query>
+	<query>insert_menu_role.sql</query>
+	<query>insert_group.sql</query>
+	<query>insert_service_1.sql</query>
+	<query>insert_service_4.sql</query>
+	<query>insert_menu_item_1.sql</query>
+	<query>insert_service_6.sql</query>
+	<query>insert_service_7.sql</query>
+	<query>insert_service_8.sql</query>
+	<query>insert_service_10.sql</query>
+	<query>insert_menu_item_2.sql</query>
+	<query>insert_service_11.sql</query>
+	<query>insert_service_12.sql</query>
+	<query>insert_menu_item_3.sql</query>
+	<query>insert_service_13.sql</query>
+	<query>insert_service_role.sql</query>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+</config>

@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="term_id" type="integer" required="true" label="term_id" />
+</validator>

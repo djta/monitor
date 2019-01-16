@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		Mensaje que aparece cuando no encuentra data
+	</summary>
+
+	<log>false</log>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>message.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/plain</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

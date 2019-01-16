@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>false</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="com.ccms.dinamica.domain.panel.ImageList" source="class" scope="request"/>
+	</transaction>
+
+	<on-exit return-code="0" forward-to="${def:actionroot}/view"/>
+	<on-exit return-code="1" forward-to="${def:actionroot}/notfound"/>
+
+</config>

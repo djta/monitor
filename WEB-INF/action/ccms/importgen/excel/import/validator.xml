@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+	<parameter id="imp_id" type="integer" required="true" label="imp_id" maxlen="10"/>
+	<parameter id="import_batch" type="varchar" required="false" label="导入批次" maxlen="128"/>
+	<parameter id="remark" type="varchar" required="false" label="备注" maxlen="256"/>
+	<parameter id="file_name" type="varchar" required="false" label="文件名称" maxlen="256"/>
+</validator>

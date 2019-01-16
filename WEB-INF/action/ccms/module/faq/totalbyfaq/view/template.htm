@@ -1,0 +1,41 @@
+﻿<center>
+<!--data grid-->
+<table class="grid" width="100%" cellspacing="1">
+
+	
+	<tr>
+		<th NOWRAP>
+			序号
+		</th>
+
+		<th NOWRAP>
+			<a href="javascript:onclick=sortBy('show_name','query-faq-total.sql')" >
+				FAQ标题
+			</a>
+		</th>
+
+		<th NOWRAP>
+			<a href="javascript:onclick=sortBy('total','query-faq-total.sql')" >
+				点击次数
+			</a>
+		</th>
+	</tr>
+	
+	<rows>
+	<tr ${fld:_rowStyle}>
+		<td  align="center">
+			${fld:_rowNumber}
+		</td>
+		
+		<td  align="center">
+			${fld:show_name}
+		</td>
+
+		<td  align="center">
+			${fld:total}
+		</td>
+	</tr>
+	</rows>
+</table>
+${inc:/action/pagecontrols?is_can_export=inline}
+</center>

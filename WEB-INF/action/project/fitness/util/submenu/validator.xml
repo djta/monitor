@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+    <parameter id="menuid" type="integer" required="false" label="menuid" maxlen="10" />
+</validator>
+

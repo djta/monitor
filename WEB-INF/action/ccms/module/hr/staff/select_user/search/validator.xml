@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="name" type="varchar" required="false" label="name" /> 	
+	<parameter id="shift_id" type="varchar" required="false" label="shift_id" /> 	
+	<custom-validator 
+		classname="dinamica.validators.SQLPatternTransformer" 
+		parameter="name" 
+		rule="contains" 
+		ifnull="%" />
+
+</validator>
+

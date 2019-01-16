@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+    <parameter id="subject_id" type="integer" required="true" label="专题名称"/>
+    <parameter id="table_alias" type="varchar" required="true" label="业务名" />
+    <parameter id="table_name" type="varchar" required="true" label="表名" />
+    <parameter id="table_type" type="varchar" required="true" label="业务类型" />
+    <parameter id="schema_name" type="varchar" required="true" label="Schema名称" />
+    <parameter id="table_code" type="varchar" required="true" label="表代码"/>
+    <parameter id="bpk_field" type="varchar" required="false" label="业务主键字段"/>
+    <parameter id="bpk_field_type" type="varchar" required="false" label="业务主键类型"/>
+    <parameter id="delete_field" type="varchar" required="false" label="删除标识字段"/>
+    <parameter id="bpk_field_prefix" type="varchar" required="false" label="主键生成前缀"/>
+    <parameter id="bpk_field_seq" type="varchar" required="false" label="主键生成序列"/>
+    <parameter id="remark" type="varchar" required="false" label="备注" />
+
+</validator>
+
+

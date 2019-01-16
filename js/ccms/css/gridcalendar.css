@@ -1,0 +1,150 @@
+.gridcalendar{
+	overflow-y: auto; 
+	overflow-x: hidden; 
+	width: 100%;
+}
+.gridcalendar TABLE{
+	width: 100%; 
+	height: 90%;
+}
+.gridcalendar TABLE.calendar{
+	background-color:#C5C5E3;
+}
+.gridcalendar TH.calendar{
+	FONT-WEIGHT: bold;
+	BORDER-RIGHT: #d7d7d7 1px solid;
+	BORDER-LEFT: #d7d7d7 1px solid;
+	WIDTH: 14.3%;
+	COLOR: #006600;
+	BORDER-TOP: #d7d7d7 1px solid;
+	BORDER-BOTTOM: #d7d7d7 1px solid;
+	HEIGHT: 20px;
+	BACKGROUND-COLOR: #f1f8f1;
+	TEXT-ALIGN: center;
+}
+.gridcalendar TH.calendar2{
+	FONT-WEIGHT: bold;
+	BORDER-LEFT: #d7d7d7 1px solid;
+	BORDER-RIGHT: #d7d7d7 1px solid;
+	WIDTH: 14.3%;
+	COLOR: #006600;
+	BORDER-TOP: #d7d7d7 1px solid;
+	BORDER-BOTTOM: #d7d7d7 1px solid;
+	HEIGHT: 20px;
+	BACKGROUND-COLOR: #f1f8f1;
+	TEXT-ALIGN: left;
+}
+.gridcalendar TD.calEmptyCell{
+	color:black;
+	background-color:white;
+	font-family: Arial;
+	font-size: 10pt;
+	VERTICAL-ALIGN: top;
+	BORDER-LEFT: #d7d7d7 1px solid;
+	BORDER-RIGHT: #d7d7d7 1px solid;
+	BORDER-BOTTOM: #d7d7d7 1px solid;
+	HEIGHT: 50px;
+}
+.gridcalendar TD.calCurDay{
+	color:blue;
+	font-weight:bold;
+	background-color:#CCFFFF;
+	font-family: Arial;
+	font-size: 10pt;
+	cursor:pointer;
+	VERTICAL-ALIGN: top;
+	BORDER-LEFT: #d7d7d7 1px solid;
+	BORDER-RIGHT: #d7d7d7 1px solid;
+	BORDER-BOTTOM: #d7d7d7 1px solid;
+	HEIGHT: 50px;
+}
+.gridcalendar TD.calProblemDay{
+	color:blue;
+	font-weight:bold;
+	background-color:#F0F70D;
+	font-family: Arial;
+	font-size: 10pt;
+	cursor:pointer;
+	VERTICAL-ALIGN: top;
+	BORDER-LEFT: #d7d7d7 1px solid;
+	BORDER-RIGHT: #d7d7d7 1px solid;
+	BORDER-BOTTOM: #d7d7d7 1px solid;
+	HEIGHT: 50px;
+}
+.gridcalendar TD.calFinishDay{
+	color:blue;
+	font-weight:bold;
+	background-color:#1CEA12;
+	font-family: Arial;
+	font-size: 10pt;
+	cursor:pointer;
+	VERTICAL-ALIGN: top;
+	BORDER-LEFT: #d7d7d7 1px solid;
+	BORDER-RIGHT: #d7d7d7 1px solid;
+	BORDER-BOTTOM: #d7d7d7 1px solid;
+	HEIGHT: 50px;
+}
+.gridcalendar TD.calDay{
+	color:black;
+	background-color:white;
+	font-family: Arial;
+	font-size: 10pt;
+	cursor:pointer;
+	VERTICAL-ALIGN: top;
+	BORDER-LEFT: #d7d7d7 1px solid;
+	BORDER-RIGHT: #d7d7d7 1px solid;
+	BORDER-BOTTOM: #d7d7d7 1px solid;
+	HEIGHT: 50px;
+}
+.gridcalendar TD.calDisabled{
+	color:red;
+	background-color:white;
+	font-family: Arial;
+	font-size: 10pt;
+	VERTICAL-ALIGN: top;
+	BORDER-RIGHT: #d7d7d7 1px solid;
+	BORDER-BOTTOM: #d7d7d7 1px solid;
+	HEIGHT: 50px;
+}
+.gridcalendar TD.calDay2{
+	background-color:#f1f1f1;
+	font-size: 10pt;
+	font-family: Arial;
+	font-weight:bold;
+	cursor: pointer;
+	VERTICAL-ALIGN: top;
+	BORDER-LEFT: #d7d7d7 1px solid;
+	BORDER-RIGHT: #d7d7d7 1px solid;
+	BORDER-BOTTOM: #d7d7d7 1px solid;
+	HEIGHT: 50px;
+}
+.gridcalendar .calendarHeader{
+	background-color:#E3E4FA;
+	color:black;
+	font-family: Arial;
+	font-size: 13pt;
+	padding:1px;
+}
+.gridcalendar .daytable {
+	COLOR: #006600; 
+	HEIGHT: 19px; 
+	BACKGROUND-COLOR: #f1f1f1;
+}
+.gridcalendar .daydiv {
+	BORDER-RIGHT: #d7d7d7 1px solid; 
+	WIDTH: 19px; 
+	COLOR: #006600; 
+	LINE-HEIGHT: 19px; 
+	BORDER-BOTTOM: #d7d7d7 1px solid; 
+	HEIGHT: 19px; 
+	BACKGROUND-COLOR: #f1f8f1; 
+	TEXT-ALIGN: left;
+}
+.gridcalendar .dayevent {
+	VERTICAL-ALIGN: top; 
+	HEIGHT: 80px;
+	TEXT-ALIGN: left;
+}
+.fleft {
+	FLOAT: left;
+}

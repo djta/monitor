@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+${inc:/action/ccms/pub}
+<title>PickList Image</title>
+</head>
+<body>
+<div class="pop_content" style="overflow-y:auto;height:500px;">
+
+<center>
+
+<!--indicador de progreso-->
+<div id="status" class="alert" style="display: none; color: gray; width: 60%; font-weight: normal; font-family: Arial; margin-top: 10px">
+	<img src="${def:context}/images/progress.gif" /> 请稍候...
+</div>
+
+<div id="response" style="display: none; width: 100%;">
+</div>
+</center>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	document.getElementById("response").style.display="block";
+	var url = "${def:actionroot}/search";
+	ajaxCall(url,{
+		method: "GET",
+		progress: true,
+		response: "response",
+		dataType: "html",
+		success: function() {
+			
+		}
+	});
+});
+function displayImage(imageID){
+	document.getElementById(imageID + "_wait").style.display='none';
+	document.getElementById(imageID).style.display='';
+}
+
+function selectItem(id) {
+	parent.selectPic(id);
+	//parent.$("#_dlgdialogPic").modal("hide");
+	ccms.dialog.close();
+}
+</script>
+</body>
+</html>

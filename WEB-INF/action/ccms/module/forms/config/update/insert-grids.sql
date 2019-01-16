@@ -1,0 +1,27 @@
+INSERT INTO
+	t_form_grid_field
+(
+	tuid
+	,form_id
+	,field_id
+	,show_order
+	,show_flag
+	,format
+	,sort_order
+	,print_html
+	,compute_total
+	,show_align
+)
+VALUES
+(
+	${seq:nextval@${schema}seq_default}
+	,${fld:form_id}
+	,${fld:grid_field}
+	,${fld:grid_show_order}
+	,${fld:grid_show_flag}
+	,${fld:grid_format}
+	,${fld:grid_sort_order}
+	,${fld:grid_print_html}
+	,${fld:grid_compute_total}
+	,${fld:grid_show_align}
+)

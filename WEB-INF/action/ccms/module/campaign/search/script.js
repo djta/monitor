@@ -1,0 +1,17 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{
+			"tuid":"${fld:tuid}",
+		    "subject_id":"${fld:subject_id}",
+		    "campaign_name":"${fld:campaign_name}",
+		    "campaign_name_en":"${fld:campaign_name_en}",
+		    "campaign_quota":"${fld:campaign_quota}",
+		    "campaign_code":"${fld:campaign_code}",
+		    "campaign_status":"${fld:campaign_status}",
+		    "campaign_type":"${fld:campaign_type}",
+		    "remark":"${fld:remark}",
+		    "url_status":"${fld:url_status@js}"
+	},
+	</rows>
+	{}
+]}

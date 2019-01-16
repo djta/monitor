@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-table.sql" source="sql" scope="transaction" />
+		<recordset id="query-fields.sql" source="sql" scope="transaction" />
+		<recordset id="query-import.sql" source="sql" scope="transaction" />
+		<recordset id="query-import_rule_filter.sql" source="sql" scope="transaction" />
+		<recordset id="query-import_rule.sql" source="sql" scope="transaction" />
+		<recordset id="query-import_field.sql" source="sql" scope="transaction" />
+		<recordset id="query-import_table.sql" source="sql" scope="transaction" />
+		<recordset id="query-import_skill.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>com.ccms.core.engine.ExportFormConfig</classname>
+	</output>
+	
+	<request-ppk>imp_id</request-ppk>
+	<xml-category>imports</xml-category>
+	<sequences>seq_table,seq_field,seq_import,seq_import_field,seq_import_table,seq_import_rule,seq_import_rule_filter</sequences>
+
+	<export-tables>
+		<table name="t_table" recordset="query-table.sql"/>
+		<table name="t_field" recordset="query-fields.sql"/>
+		<table name="t_import" recordset="query-import.sql"/>
+		<table name="t_import_rule_filter" recordset="query-import_rule_filter.sql"/>
+		<table name="t_import_rule" recordset="query-import_rule.sql"/>
+		<table name="t_import_field" recordset="query-import_field.sql"/>
+		<table name="t_import_table" recordset="query-import_table.sql"/>
+		<table name="t_import_skill" recordset="query-import_skill.sql"/>
+	</export-tables>
+
+</config>

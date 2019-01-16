@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+	</summary>
+	
+	<log>false</log>
+	
+	<colname>fdate3,tdate3,wfm_name3,entry_id3</colname>
+	<sql-template>query.sql</sql-template>
+	<paging-recordset>query.sql</paging-recordset>
+	<paging-pagesize>10</paging-pagesize>
+	<total-recordset>query-page.sql</total-recordset>
+	
+	<transaction>
+		<classname>com.ccms.SearchForJson</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+	
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+		<print mode="table" recordset="query.sql" tag="rows"/>
+		<print mode="form" recordset="query-page.sql"/>
+	</output>
+</config>

@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/error/validation/ajax">
+
+    <parameter id="tuid" type="varchar" required="true" label="TUID"/>
+    <parameter id="subject_id1" type="integer" required="true" label="subject_id1"/>
+    <parameter id="campaign_name" type="varchar" required="true" label="campaign_name" />
+    <parameter id="campaign_name_en" type="varchar" required="true" label="campaign_name_en" />
+    <parameter id="campaign_code" type="varchar" required="false" label="campaign_code" />
+    <parameter id="campaign_type1" type="varchar" required="true" label="campaign_type" />
+    <parameter id="campaign_quota" type="integer" required="true" label="campaign_quota" />
+    <parameter id="remark" type="varchar" required="false" label="remark" />
+    <parameter id="launch_year" type="varchar" required="false" label="launch_year" />
+    <parameter id="launch_city" type="varchar" required="false" label="launch_city" />
+    <parameter id="partners_name" type="varchar" required="false" label="partners_name" />
+    <parameter id="launch_platform" type="varchar" required="false" label="launch_platform" />
+    <parameter id="priority" type="integer" required="true" label="priority"/>
+    <parameter id="is_recommend" type="varchar" required="false" label="is_recommend"/>
+
+</validator>
+
+

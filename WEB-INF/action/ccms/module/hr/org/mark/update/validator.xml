@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="coordinate" type="varchar" required="true"
+		label="coordinate" />
+	<parameter id="org_id" type="integer" required="true" label="org_id" />
+</validator>

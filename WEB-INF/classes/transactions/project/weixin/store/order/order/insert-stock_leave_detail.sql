@@ -1,0 +1,30 @@
+insert into ws_leave_stock_detail
+(
+leave_stock_detail_id
+,leave_stock_id
+,goods_id
+,description
+,quantity
+,price
+,state
+,created
+,createdby
+,updated
+,updatedby
+,snapshot
+)
+values
+(
+${seq:nextval@seq_ws_leave_stock_detail}
+,${seq:currval@seq_ws_leave_stock}
+,${fld:goods_id}
+,''
+,${fld:goods_num}
+,${fld:price}
+,'1'
+,{ts '${def:timestamp}'}
+,'${def:user}'
+,null
+,null
+,0
+)

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator id="filter.params">
+
+	<parameter id="campaign_id" type="varchar" required="true" label="campaign_id" />
+
+</validator>
+

@@ -1,0 +1,76 @@
+﻿<form name="formFilter" onsubmit="return search()">
+
+<!--TABLE class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0>
+<tr>
+<td>
+<div class="tabs">
+    <ul>
+        <li onclick="changeLiStyle(this);" id="tabsl"><b></b>
+            <a  
+                onmouseover="javascript:window.status='';return true;" 
+                onmouseout="javascript:window.status='';return true;" 
+                href='#' 
+                onclick='JavaScript:return false;'>
+                <span id="formTitleFilter">查询</span>
+            </a><p></p>
+        </li>
+    </ul>
+    <div id='hline'></div>
+</div>
+</td>
+</tr>
+</table-->
+
+<FIELDSET><LEGEND>过滤条件</LEGEND>
+<TABLE class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <!--column layout-->
+        <col width="40%">
+        <col width="60%">
+        <!--form title-->
+
+        <!--form fields-->
+		<tr>
+			<td class="th20">
+				起始日期
+			</td>
+			<td>
+				<input id="fdate" name="fdate" type="text" size="15" value="" maxlength="10"  readonly  class="readonly" >
+				<img class="tool" src="${def:context}/images/calendar.gif" 
+					title="打开日历.."
+					onclick="calendarOpen('fdate')"> YYYY-MM-DD
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="th20">
+				结束日期
+			</td>
+			<td>
+				<input id="tdate" name="tdate" type="text" size="15" value="" maxlength="10"  readonly  class="readonly" >
+				<img class="tool2" src="${def:context}/images/calendar.gif" 
+					title="打开日历.."
+					onclick="calendarOpen('tdate', 'fdate')"> YYYY-MM-DD
+			</td>
+		</tr>
+		
+        <!--最多显示记录个数-->
+		<input name="limitedcount"  value="1000" type="hidden" >
+		
+        
+
+</TABLE>
+</FIELDSET>
+
+<FIELDSET><LEGEND>操作信息</LEGEND>
+<TABLE class="formgrid" cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <tr>
+        <!--buttons-->
+        <td align="center" colspan="2">
+            <input type="submit" class="btn_blue" value="查询" >
+            <input type="button" class="btn_gray" value="重置"  onclick="clearForm('formFilter')">
+        </td>
+        </tr>
+</TABLE>
+</FIELDSET>
+
+</form>

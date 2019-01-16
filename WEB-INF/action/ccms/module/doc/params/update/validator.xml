@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+    <parameter id="tuid" type="varchar" required="true" label="TUID"/>
+    <parameter id="document_id" type="integer" required="true" label="document_id"/>
+    <parameter id="params_code" type="varchar" required="true" label="params_code"/>
+    <parameter id="params_url" type="varchar" required="false" label="params_url"/>
+    <parameter id="params_value" type="varchar" required="false" label="param_svalue" />
+    <parameter id="remark" type="varchar" required="false" label="remark" />
+
+</validator>
+
+

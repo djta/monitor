@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="group_name" type="varchar" required="false" label="权限组合名称" />
+
+	<custom-validator
+		classname="dinamica.validators.SQLPatternTransformer"
+		parameter="group_name"
+		rule="contains"  
+		ifnull="%" />
+
+</validator>
+

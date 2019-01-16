@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		工单流
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-current_step.sql" source="sql" scope="transaction" />
+		<recordset id="query-history_step.sql" source="sql" scope="transaction" />
+		<recordset id="query.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>gooflow.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<print mode="table" recordset="query-current_step.sql" tag="rows" />
+		<print mode="table" recordset="query-history_step.sql" tag="hrows" />
+		<print mode="form" recordset="query.sql" />
+		<print mode="form" recordset="_request" />
+	</output>
+
+</config>

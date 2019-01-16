@@ -1,0 +1,15 @@
+﻿<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin: 10px 0;font-size: 24px;">
+	<button type="button" class="btn btn-primary btn-md" onclick="openExcel()">导出EXcel</button>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">${html}</div>
+
+<chart-rows>
+<br>
+<div id="chart${fld:chart_id}_wait" class="alert" style="color:gray;width:20%;font-weight:bold;font-family:Arial">
+	<img src="${def:context}/images/progress.gif"> ${lbl:report_creating_chart}
+</div>
+<!--chart-->
+<img id="chart${fld:chart_id}" style="display:none" border="0" onload="displayChart('chart${fld:chart_id}')" 
+	src="${def:context}${def:actionroot}/chart?chart_id=${fld:chart_id}&dummy=${def:time}" />
+</chart-rows>
+

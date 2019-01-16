@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+    <parameter id="tuid" type="integer" required="true" label="主键" maxlen="100"/>
+    <parameter id="subject_name" type="varchar" required="true" label="模式名称" maxlen="128"/>
+    <parameter id="remark" type="varchar" required="false" label="备注" maxlen="128"/>
+
+</validator>

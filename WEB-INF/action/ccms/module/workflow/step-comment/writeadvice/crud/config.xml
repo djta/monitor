@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		
+	</summary>
+	
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="query-entry_comment.sql" source="sql" scope="transaction" />	
+		<recordset id="query-entry_comment_userd.sql" source="sql" scope="transaction" />		
+		<recordset id="query-title.sql" source="sql" scope="transaction" />		
+		<recordset id="query-history.sql" source="sql" scope="transaction" />
+		<recordset id="query-attachment.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<print mode="table" recordset="query-entry_comment.sql" tag="rows2" />
+	    <print mode="form" recordset="query-title.sql" />
+		<print mode="table" recordset="query-entry_comment_userd.sql" tag="rows"/>
+		<print mode="table" recordset="query-history.sql" tag="rows1"/>
+		<print mode="table" recordset="query-attachment.sql" tag="rowsa"/>
+		<print mode="form" recordset="_request"/>
+	</output>
+
+</config>

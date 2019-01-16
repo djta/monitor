@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<validator>
+	<parameter id="schema" type="varchar" required="true" label="schema" maxlen="150" />
+	<parameter id="table" type="varchar" required="true" label="table" maxlen="150" />
+	<parameter id="id" type="varchar" required="true" label="ID" />
+	<parameter id="name" type="varchar" required="true" label="Name" />
+	<parameter id="pickId" type="varchar" required="true" label="pickId" />
+</validator>

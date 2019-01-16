@@ -1,0 +1,11 @@
+{"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
+	<rows>
+	{ 
+		"tuid":"${fld:tuid}"
+		,"team_name":"${fld:team_name@js}"
+		,"team_leader":"${fld:team_leader@js}" 
+		,"remark":"${fld:remark@js}" 
+	},
+	</rows>
+	{}
+]}

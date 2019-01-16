@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/project/fitness/home/pub}
+<title>菜单管理</title>
+</head>
+<body>
+	<form  role="form" method="post" id="searchForm">
+		<input name="sort" type="hidden" value="t.show_order" preserve="true" />
+		<input name="order" type="hidden" value="asc" preserve="true" />
+		<input name="pageNo" type="hidden" value="" preserve="true" /> 
+		<input name="totalPages" type="hidden" value="" preserve="true" />
+		<input id="_pid" name="_pid" type="hidden" value="" preserve="true" />
+		
+		<div class="r-tab-cont  " style="height: 900px">
+			<div class="c-n-nav-2 am-tab-panel am-in am-active am-fade three-none" >
+				<div class="r-tab-cout-3-t">
+					<div class="r-tab-cout-3-t-t">
+						<nav>
+							<li>
+								<input type="text" id="_name" placeholder="请输入菜单名称" name="_name" value="" class="input-default" size="20" />
+							  </li>
+									<button type="button" class="r-c-3-btn-1" id="search_btn" ></button>
+									<img src="${def:context}/js/project/fitness/image/SVG/nav/xinzengkecheng.svg" alt="" data-toggle="modal" id="addnew_btn">
+						</nav>
+						
+					</div>
+					<div class="r-tab-cout-3-t-b">
+						<nav class="r-c-3-t-b-l">
+						</nav>
+						<nav class="r-c-3-t-b-r">
+						</nav>
+					</div>
+				</div>				
+			</div>
+			<div class="r-tab-cout-3-b">
+				<div class="to-change-background"></div>
+					<table class="">
+						<thead>
+							<tr>
+								<th code="menu_name">菜单名称</th>
+								<th code="menu_type">类型</th>
+								<!-- <th code="icon_path">菜单logo地址</th> -->
+								<!-- <th code="icon_path2">菜单logo地址2</th> -->
+								<th code="uri">访问路径</th>
+								<th code="show_order">显示顺序</th>
+								<th code="createdby">创建人</th>
+								<th code="created">创建时间</th>
+								<th >操作</th>
+							</tr>
+						</thead>
+						<tbody id="datagridTemplate" style="display: none">
+							<tr>
+								<td>#menu_name#</td>
+								<td>#menu_type#</td>
+								<!-- <td>#icon_path#</td>
+								<td>#icon_path2#</td> -->
+								<td>#uri#</td>
+								<td>#show_order#</td>
+								<td>#createdby#</td>
+								<td>#created#</td>
+								<td style=>
+									<button class="edit_btn" type="button" code="#tuid#" style='margin-bottom:10px;'>编辑</button>
+<!-- 									<button class="list_btn" type="button"  style="#isshowbtn# margin-bottom:10px;" code="#tuid#" >界面按钮</button>
+ -->
+ 									<button class="list_btn" type="button"  style="display:none; margin-bottom:10px;" code="#tuid#" >界面按钮</button>
+								 	<button class="sub_btn" type="button" code="#tuid#" style='margin-bottom:10px;'>下级菜单</button>
+								</td>
+							</tr>
+						</tbody>
+						<tbody id="datagrid">
+						</tbody>
+					</table>
+				<div class="pageDiv">
+					<ul class="pagination">
+					</ul>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="modal fade" id="modalAddnew"  tabindex="-1" style="display:none;">
+		<div class="basic-information modal-dialog dialogbg">
+			<header class="header-default">
+			<span id="formTitle">新增</span>
+			<span class="header-close" onclick="$('.close').click()"></span> <!--关闭按钮无效，调用函数触发旧按钮点击事件-->
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style='display:none;'>&times;</button>
+			</header>
+			<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+				<input type="hidden" id="tuid" name="tuid" value="" />
+				<input id="pid" name="pid" type="hidden" value="" preserve="true" />
+          		<div class="modal-body b-i-main">
+					<nav>
+						<li>
+							<label for="">菜单名称</label>
+							<input type="text" id="menu_name" name="menu_name" maxlength="64" value="" placeholder="菜单名称" />
+						</li>
+						<li>
+							<label for="">类型</label>
+							<select id="menu_type" name="menu_type" class="normal-select">
+								<option value="0">普通菜单</option>
+								<option value="1">首页图表</option>
+							</select>
+						</li>
+						<li class="row100w">
+							<label for="">菜单logo图标地址</label>
+							<input type="text" id="icon_path" name="icon_path" class="" maxlength="128" value="" placeholder="菜单logo图标地址"/>
+						</li>
+						<li class="row100w">
+							<label for="">菜单logo图标地址2</label>
+							<input type="text" id="icon_path2" name="icon_path2" maxlength="128" value="" placeholder="菜单logo图标地址2"/>
+						</li>
+						<li class="row100w">
+							<label for="">访问路径</label>
+							<input type="text" id="uri" name="uri" maxlength="256" value="" placeholder="访问路径"/>
+						</li>
+						<li>
+							<label for="">显示顺序</label>
+							<input type="text" id="show_order" name="show_order" maxlength="10" value="" placeholder="显示顺序"/>
+						</li>
+					</nav>
+				</div>
+			</form>
+			<footer class="footer-default">
+				<button type="button" id="save_btn">确&nbsp;定</button>
+				<button type="button" id="delete_btn" style='margin-left:6px;'>删除</button>
+			</footer>
+		</div>
+	</div>
+	<!--用于传递当前目录到header模版中-->
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+	<script language="javascript">
+    $(document).ready(function () {
+    	searchSelectInit($("#menu_type"));
+    	var pid = ( "undefined" == "${fld:pid}" || "" == "${fld:pid}" ? "0" : "${fld:pid}" );
+    	$("#_pid").val( pid );
+    	$("#pid").val( pid );
+    	var search1=null;
+        var obj = $Crud({
+            formId: "formEditor",
+            button: "save_btn",
+            insertBack: function () {
+            	$(".error").empty();
+            	search1.searchData();
+            },
+            updateBack: function () {
+            	search1.searchData();
+            },
+            deleteBack: function () {
+            	search1.searchData();
+            },
+            addNewBack: function () {
+            	$("#delete_btn").hide();
+                $("#formTitle").html("新增菜单信息");
+            },
+            editBack: function () {
+            	$("#delete_btn").show();
+                $("#formTitle").html("修改菜单信息");
+            },
+            validate: function () {
+                var flag = $("#formEditor").validate({
+                    rules: {
+                        name: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        name: {
+                            required: "请输入菜单名称"
+                        }
+                    }
+                });
+                return flag;
+            }
+        }).init();
+
+        search1=$Search({datagrid: "datagrid", formId: "searchForm", success: function () {
+        	$("table").css("table-layout","auto");
+        	$(".edit_btn").unbind().on("click", function () {
+                if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
+                    obj.edit({id: $(this).attr("code")});
+                }
+            });
+            $("#delete_btn").unbind().on("click", function () {
+                $Dialog().confirm("确定要删除吗?", function () {
+                    if ($("#tuid").val() != undefined && $("#tuid").val() != "") {
+                        obj.del({id: $("#tuid").val()});
+                    }
+                });
+            });
+            $(".list_btn").unbind().on("click",function(){
+            	var id = $(this).attr("code");
+            	id = (id != undefined && id != "undefined" ? id : "" );
+            	ccms.dialog.open({url : "${def:context}${def:actionroot}/btn/crud?menu_id=" + id});
+            });
+            $(".sub_btn").unbind().on("click",function(){
+            	var id = $(this).attr("code");
+            	id = (id != undefined && id != "undefined" ? id : "" );
+            	ccms.dialog.open({url : "${def:context}${def:actionroot}/crud?pid=" + id});
+            });
+            
+           if("${fld:pid}"!=""){
+               parent.$('iframe').contents().find('.list_btn').show();
+               parent.$('iframe').contents().find('th:eq(6)').width(195);
+               parent.$('iframe').contents().find('div').first().addClass('dialogbg');
+               parent.$('iframe').contents().find('.header-default').show();
+               parent.$('iframe').contents().find('.r-tab-cout-3-t').removeClass('r-tab-cout-3-t');
+           }
+        }}).initSearchBtn().searchData(1);
+    });
+</script>
+</body>
+
+</html>

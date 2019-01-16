@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="__pk_value__" type="varchar" required="true" label="__pk_value__" />
+	<parameter id="__p_pk_value__" type="varchar" required="false" label="__p_pk_value__" />
+	<parameter id="form_id" type="integer" required="true" label="form_id"/>
+	<parameter id="snapshot" type="integer" required="false" label="snapshot"/>
+	<parameter id="is_show_detail" type="varchar" required="false" label="is_show_detail"/>
+</validator>

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="__wfm_id__" type="integer" required="true" label="流程编号"/>
+	<parameter id="__wfentry_id__" type="integer" required="true" label="流程实例"/>
+	<parameter id="__current_step_id__" type="integer" required="true" label="当前流程步骤"/>
+	<parameter id="__pk_value__" type="varchar" required="true" label="业务主键"/>
+	<parameter id="__action_id__" type="integer" required="true" label="执行动作"/>
+	<parameter id="__assign_user__" type="varchar" required="false" label="处理人"/>
+	<parameter id="_entry_comment_" type="varchar" required="false" label="意见"/>
+</validator>

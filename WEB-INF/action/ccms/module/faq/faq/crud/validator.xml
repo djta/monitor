@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+    <parameter id="show_name" type="varchar" required="false" label="查询条件" maxlen="120"/>
+</validator>

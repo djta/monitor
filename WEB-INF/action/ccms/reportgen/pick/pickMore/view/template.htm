@@ -1,0 +1,28 @@
+﻿<center>
+<!--data grid-->
+<table class="grid" width="100%" cellspacing="1">
+
+	<tr class="pageColor">
+		<th colspan="20">
+			<span style="float:left;margin-left:4px">
+				<!--panel de control de navegacion-->
+				${inc:/action/pagecontrols}
+			</span>
+			
+			<span id="grid-progress" style="float:right;margin-right:20px;display:none">
+				<img src="${def:context}/images/progress.gif">
+			</span>
+		</th>
+	</tr>
+
+	<rows>
+	<tr ${fld:_rowStyle} onmouseover="rowOn(this)" onmouseout="rowOff(this)" onclick="selectItems('${fld:description}','${fld:id}')" style="cursor: pointer;">
+		<td  align="left">
+			${fld:reference}${fld:description}
+		</td>	
+	</tr>
+	</rows>
+
+</table>
+
+</center>

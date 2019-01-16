@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Language" content="zh-CN" />
+${inc:/action/project/fitness/home/pub}
+<title>CCMS</title>
+</head>
+<body>
+	<nav id="submenuList" class="am-tabs-nav am-nav am-nav-tabs r-tab">
+	</nav>
+	<!--div id="subContent"></div-->
+	<iframe id="subContent" src="" width="100%" height="800px" frameborder="no" border="0" scrolling="yes"></iframe>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		var sumenuStr = "";
+		<menu-rows>
+			sumenuStr += '<li>';
+			sumenuStr += '<a class="three-none" href="javascript:void(0)" uri="${def:context}${fld:uri@js}">${fld:menu_name@js}</a>';
+			sumenuStr += '</li>';
+		</menu-rows>
+		document.getElementById("submenuList").innerHTML = sumenuStr;
+		$("#submenuList").find("li").unbind().on("click",function(){
+			$(this).siblings(".am-active").removeClass("am-active");
+			$(this).addClass("am-active");
+			var uri = $(this).find("a").attr("uri");
+			$("#subContent").empty();
+			/**if( uri.indexOf("?") < 0 ){
+				uri += "?ispubload=true";
+			}else{
+				uri += "&ispubload=true";
+			}
+			$("#subContent").load(uri);*/
+			$("#subContent").attr("src", uri);
+		});
+		/**$("#subContent").load(function(){
+			var mainheight = $(this).contents().find("body").height()+30;
+			$(this).height(mainheight);
+		});*/
+		$("#submenuList").find("li:eq(0)").click();
+	});
+	</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		新增
+	</summary>
+	
+	<log>false</log>
+	
+    <request-encoding>UTF-8</request-encoding>
+
+	<colname>guest_target,follow_target,prepare_target,visit_target,ordernum_target,orderfee_target
+	,call_target,call_mc_target,call_pt_target,test_target,unpayclass_target,allclass_target,site_target,user_id,userlogin</colname>
+	<sql-template>insert.sql</sql-template>
+	
+	<transaction>
+		<classname>com.ccms.InsertMaster</classname>
+		<validator>true</validator>
+		<transaction>true</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+	
+	<query>delete.sql</query>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>script.js</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/javascript</content-type>
+		<expiration>0</expiration>
+	</output>
+
+</config>

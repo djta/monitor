@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="form_id" type="integer" required="true" label="form_id"/>
+    <parameter id="__p_pk_value__" type="varchar" required="false" label="__p_pk_value__"/>
+    <parameter id="__wfm_id__" type="integer" required="false" label="__wfm_id__"/>
+	<parameter id="__parent_wfentry_id__" type="integer" required="false" label="__parent_wfentry_id__"/>
+	<parameter id="__parent_node_id__" type="integer" required="false" label="__parent_node_id__"/>
+	
+	<!-- 非界面值，作为 Recordset 字段 -->
+	<parameter id="bpk_field_value" type="varchar" required="false" label="bpk_field_value"/>
+	<parameter id="table_id" type="integer" required="false" label="table_id"/>
+	<parameter id="wfentry_id" type="integer" required="false" label="wfentry_id"/>
+	<parameter id="current_step_id" type="integer" required="false" label="current_step_id"/>
+</validator>

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		我的基本信息
+	</summary>
+
+	<log>false</log>
+	<request-encoding>UTF-8</request-encoding>
+	<transaction>
+		<classname>dinamica.security.GetProfile</classname>
+		<validator>false</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<expiration>0</expiration>
+		<print mode="combo" recordset="getrecord.sql" control="locale" />
+		<print mode="form" recordset="getrecord.sql" />
+	</output>
+
+</config>

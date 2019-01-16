@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<config>
+
+	<summary>
+		查询信息
+	</summary>
+	
+	<log>false</log>
+
+	<on-error>${def:actionroot}/error</on-error>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>false</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+		<recordset id="report.filter.params" source="session" scope="transaction" />
+		<recordset id="query_charts.sql" source="sql" scope="session"  params="report.filter.params"/>
+		<recordset id="query-report-result.sql" source="session" scope="transaction" />
+		<recordset id="query_rowhead_field.sql" source="sql" scope="session"  params="report.filter.params"/>
+		<recordset id="query_colhead_field.sql" source="sql" scope="session"  params="report.filter.params"/>
+		<recordset id="query_crossvalue_field.sql" source="sql" scope="session"  params="report.filter.params"/>
+		<recordset id="query_report.sql" source="sql" scope="session"  params="report.filter.params"/>
+		<recordset id="query_css.sql" source="sql" scope="transaction" />
+	</transaction>
+
+	<output>
+		<classname>com.ccms.report2.ReportOutput</classname>
+		<template>template.htm</template>
+		<set-http-headers>true</set-http-headers>
+		<content-type>text/html</content-type>
+		<expiration>0</expiration>
+		<print mode="table" recordset="query_charts.sql" tag="chart-rows"  />
+	</output>
+</config>

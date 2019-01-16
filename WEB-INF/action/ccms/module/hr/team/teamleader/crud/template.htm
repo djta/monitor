@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>查询成员列表</title>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">查询成员列表</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post"
+				id="searchForm" name="searchForm">
+				<input name="sort" type="hidden" value="name" preserve="true" /> <input
+					name="order" type="hidden" value="desc" preserve="true" /> <input
+					name="pageNo" type="hidden" value="" preserve="true" /> <input
+					name="totalPages" type="hidden" value="" preserve="true" />
+
+				<div class="form-group">
+					<div class="col-sm-4 clearright clearleft">
+						<label class="col-sm-4 clearright text-right">姓名</label>
+						<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7">
+							<input type="text" id="name" class="form-control" name="name"
+								value="" maxlength="20" />
+						</div>
+					</div>
+					<div class="col-sm-4 clearright clearleft">
+						<div
+							class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+							<button type="button" id="search_btn"
+								class="btn btn-primary btn-md" >查询</button>
+							<button type="button" id="reset_btn"
+								class="btn btn-primary btn-md">重置</button>
+						</div>
+					</div>
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th class="sortable" code="name">姓名</th>
+						<th>登录代码</th>
+						<th>所属部门</th>
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr class="check" data-id="#id#" data-name="#name#">
+						<td>#name#</td>
+						<td>#userlogin#</td>
+						<td>#org_name#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<input type="hidden" name="actionroot" id="actionroot"
+		value="${def:actionroot}" />
+
+	<script language="javascript">
+		$(document).ready(function() {
+			$Search({
+				datagrid : "datagrid",
+				formId : "searchForm",
+				success : function() {$(".check").unbind().on("click",function() {
+ 						parent.document.getElementById('leader_id').value = $(this).data("id");
+						parent.document.getElementById('leader_name').value = $(this).data("name");
+				$("#_dlgtestDialog",$(parent.document)).find(".dialog-close").click();
+				});
+				}
+				}).initSearchBtn().searchData(1);
+			
+			$("#search_btn").unbind().on("click", function() {
+				searchData();
+			});
+			$("#reset_btn").unbind().on("click", function() {
+				clearForm('searchForm');
+			});
+			});
+	</script>
+</body>
+</html>
+

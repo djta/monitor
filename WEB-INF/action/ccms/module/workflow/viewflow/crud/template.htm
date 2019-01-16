@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>发起流程</title>
+</head>
+<body>
+
+<!-- 查询 -->
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">发起流程</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		<form class="form-horizontal" role="form" method="post" id="searchForm">
+			<input name="sort" type="hidden" value="created" preserve="true"/>
+			<input name="order" type="hidden" value="desc" preserve="true" /> 
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+		</form>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div id="datagridTemplate" style="display:none">
+				<div class="col-sm-4 col-md-3 col-lg-2 col-xs-6">
+					<div class="text-center">
+						<img src="${def:context}#logo_path#" class="flow_btn" title="发起流程" code="#tuid#" code1="#document_id#" style="width:60%;border-radius:1em;cursor: pointer;"/><br>
+					</div>
+					<div class="text-center">
+						<b>#wfm_name#</b>
+					</div>
+				</div>
+			</div>
+			<div id="datagrid"></div>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+			$(".flow_btn").unbind();
+			$(".flow_btn").unbind().on("click",function(){
+				if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+					var code=$(this).attr("code");
+					var code1=$(this).attr("code1");
+					gotoPage("/action/ccms/doc?document_id="+code1+"&__wfm_id__="+code);
+				}
+			});
+		}}).initSearchBtn().searchData(1);
+});
+</script>
+</body>
+</html>

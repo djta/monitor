@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>FAQ 回收箱</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center" id="backButton">
+		<h2 class="panel-title">FAQ 回收箱</h2>
+	</div>
+	<div class="panel-body ">
+		<form class="form-horizontal" role="form"   method="post" id="searchForm" name="searchForm">
+			<input name="sort" type="hidden" value="tuid" preserve="true"/>
+			<input name="order" type="hidden" value="desc" preserve="true" /> 
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+		</form>
+		<form role="form" method="post" id="formEditor" name="formEditor">
+		<input type="hidden" id="tuid" name="tuid" />
+		<table class="table table-bordered">
+            <thead>
+            <tr>
+				<th>标题</th>
+				<th>标签</th>
+				<th>
+				<button class="btn btn-primary btn-md" type="button" id="removeAll">清空</button>
+				</th>
+				<th></th>
+			</tr>
+            </thead>
+            <tbody id="datagridTemplate" style="display:none">
+						<tr>
+							<td align="left" width="40%">#show_name#</td>
+							<td align="left" width="20%">#lable#</td>
+							<td align="left" width="40%">#superior#</td>
+							<td align="center" nowrap>
+								<button class="btn btn-primary btn-md delete_btn" type="button" code="#tuid#">移除</button>&nbsp;
+								<button class="btn btn-primary btn-md reduction_btn" type="button" code="#tuid#">恢复</button>
+							</td>
+						</tr>
+					</tbody>
+            <tbody id="datagrid">
+            </tbody>
+        </table>
+        </form>
+        <div class="pageDiv">
+            <ul class="pagination">
+            </ul>
+        </div>
+	</div>
+</div>
+
+<input type="hidden" name="actionroot" id="actionroot"	value="${def:actionroot}"/> 
+<div id="status" class="alert" style="text-align:left; display:none;color:gray;width:150px;font-weight:bold;font-family:Arial">
+	<img src="${def:context}/images/progress.gif"> 请稍候...
+</div>
+<!--template support code-->
+<script type="text/javascript">
+
+$(document).ready(function () {
+	if($Mobile.Android() || $Mobile.BlackBerry() || $Mobile.iOS()){
+		parent.document.getElementById("show1").style.display = 'none';
+		parent.document.getElementById("show2").style.display = '';
+		$("#show2").removeClass("col-xs-7 col-sm-7 col-md-7 col-lg-7 column");
+		$("#show2").addClass("col-xs-12 col-sm-12 col-md-12 col-lg-12 column");
+		
+		$("#backButton").append("<button class='btn btn-default pull-left btnCancel' style='margin-top: -15px;'><span class='glyphicon glyphicon-arrow-left'></span></button>");
+		$(".btnCancel").unbind().on("click",function(){
+			document.getElementById("show1").style.display = '';
+			document.getElementById("show2").style.display = 'none';
+			$("#show1").removeClass("col-xs-5 col-sm-5 col-md-5 col-lg-5 column");
+			$("#show1").addClass("col-xs-12 col-sm-12 col-md-12 col-lg-12 column");
+		});
+	}
+	
+	$("#removeAll").unbind().on("click",function(){
+		$Dialog().confirm("提示：\n清空后不可恢复，确认清空吗?",
+				function(){
+					ajaxCall("${def:actionroot}/removeall?action=removeAll",
+		        			{method:"get", 
+			    			dataType:"script",
+			    			success:function(){
+			    				faqObj.openRecycle();
+			    			}});
+		});
+	});
+    $Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		//删除
+    	$(".delete_btn").unbind().on("click", function () {
+			var obthis = $(this);
+			$Dialog().confirm("确定要删除吗？",function(){
+				if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+					var url = "${def:actionroot}/remove?action=remove&tuid="+obthis.attr("code");
+					ajaxCall(url,{
+						method: "get",
+						progress: true,
+						dataType: "script",
+						success: function() {
+							faqObj.openRecycle();	
+						}
+					});
+				}
+			});
+		});
+		//恢复
+		$(".reduction_btn").unbind().on("click",function(){
+			var obthis = $(this);
+			if(obthis.attr("code") != undefined && obthis.attr("code") != ""){
+				var url = "${def:actionroot}/reduction?action=reduction&tuid="+obthis.attr("code");
+				ajaxCall(url,{
+					method: "get",
+					progress: true,
+					dataType: "script",
+					success: function() {
+						faqObj.openRecycle();	
+					}
+				});
+			}
+		});
+	}}).initSearchBtn().searchData(1);
+});
+
+</script>
+
+ </body>
+ </html>

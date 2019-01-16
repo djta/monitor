@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="imp_id" type="varchar" required="true" label="imp_id"/>
+</validator>

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config nodb="true">
+
+	<summary>
+		Export PDF
+	</summary>
+
+	<log>false</log>
+
+	<transaction>
+		<classname>dinamica.GenericTransaction</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<output>
+		<classname>com.ccms.core.formengine.FormPDFOutputEngine</classname>
+	</output>
+
+	<pdf-table maxRecord="1000" width="60" spacingBefore="10">
+
+		<font name="STSong-Light" encoding="UniGB-UCS2-H" embedded="false" />
+		
+	</pdf-table>
+
+</config>

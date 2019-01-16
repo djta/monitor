@@ -1,0 +1,40 @@
+insert into ws_sale_order
+(
+sale_order_id
+,sale_order_date
+,user_code
+,state
+,created
+,createdby
+,updated
+,updatedby
+,snapshot
+,total_price
+/**,sale_order_code
+,product_id*/
+,org_id
+,order_date
+,order_time
+,trade_order_id
+,remark
+)
+values
+(
+${fld:sale_order_id}
+,{ts '${def:timestamp}'}
+,${fld:userlogin}
+,'10'
+,{ts '${def:timestamp}'}
+,'${def:user}'
+,null
+,null
+,0
+,${fld:total_price}
+/**,${fld:sale_order_code}
+,${fld:product_id}*/
+,${fld:org_id}
+,${fld:order_date}
+,${fld:order_time}
+,${fld:trade_order_id}
+,${fld:remark}
+)

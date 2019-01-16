@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>资料信息</title>
+</head>
+<body>
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">新增资料信息</h2>
+	</div>
+	<div class="panel-body" >
+		<form class="form-horizontal" role="form" method="post" id="formEditor" name="formEditor">
+			<input name="sort" type="hidden" value="description" preserve="true"/>
+			<input name="order" type="hidden" value="desc" preserve="true" /> 
+			<input name="pageNo" type="hidden" value="" preserve="true" /> 
+			<input name="totalPages" type="hidden" value="" preserve="true" />
+			<input type="hidden" name="superior_id" value="${fld:tuid}"/>
+			<input name="faq_code" type="hidden" size="19" value=""/>
+    		<input name="lable_code" type="hidden" size="19" value=""/>
+    		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	    		<div class="form-group">
+					<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label  required">标题</label>
+					<div class="col-xs-10 col-sm-9 col-md-9 col-lg-9">
+						 <input id="show_name" value="" class="form-control" name="show_name" type="text" size="52" maxlength="100"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label  ">标签</label>
+					<div class="col-xs-10 col-sm-9 col-md-9 col-lg-9">
+						  <input  class="form-control" name="lable" type="text" size="52" maxlength="128"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label  required">内容</label>
+					<div class="col-xs-10 col-sm-9 col-md-9 col-lg-9">
+						<textarea id="content" class="form-control" name="content" style="visibility:hidden;" ></textarea>
+						<input name="is_node" type="hidden" value="0"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label  ">对应技能</label>
+					<div class="col-xs-10 col-sm-9 col-md-9 col-lg-9">
+						<a href="javascript:void(0);" id="skill-all" onclick="selectAll('skill_id','formEditor')">全选</a>
+						-<a href="javascript:void(0);" id="skill-reverse" onclick="unselectAll('skill_id','formEditor')">反选</a><br/>
+							<check-skill>
+							  <input type="checkbox" id="skill_id" name="skill_id" value="${fld:skill_id}">${fld:skill_name}<br/>
+							</check-skill>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label ">起始日期</label>
+					<div class="col-xs-10 col-sm-9 col-md-9 col-lg-9">
+						<input readonly="readonly" type="text" class="form-control date" id="start_date" name="start_date"
+								placeholder="请选择起始日期" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label ">结束日期</label>
+					<div class="col-xs-10 col-sm-9 col-md-9 col-lg-9">
+						<input readonly="readonly" type="text" class="form-control date" id="end_date" name="end_date"
+								placeholder="请选择起始日期" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label ">是否公告通知</label>
+					<div class="col-xs-10 col-sm-9 col-md-9 col-lg-9">
+						<input type="checkbox" id="is_tip" name="is_tip" value="1">通知
+						<div id="topicDiv" style="display:none">
+							<drows>
+								<input name="topic_name" type="radio" value="${fld:topic_name}" checked>${fld:topic_name}
+							</drows>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label ">是否过期</label>
+					<div class="col-xs-10 col-sm-9 col-md-9 col-lg-9">
+						<input type="radio" id="is_expired" name="is_expired" value="0">未过期
+		           		<input type="radio" id="is_expired" name="is_expired" value="1">已经过期
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 col-sm-3 col-md-3 col-lg-3 control-label ">是否公告</label>
+					<div class="col-xs-10 col-sm-9 col-md-9 col-lg-9">
+						<input type="radio" id="is_bulletin" name="is_bulletin" value="0">不公告
+		            	<input type="radio" id="is_bulletin" name="is_bulletin" value="1">发布公告
+					</div>
+				</div>
+			</div>
+				
+		    <!--tuid是否为空,决定了form的保存方法为编辑保存,还是新增保存-->
+		    <input type="hidden" id="tuid" name="tuid" value=""/>
+		</form>
+		<div class="modal-footer">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<button type="button" id="save_btn" class="btn btn-primary btn-md">保&nbsp;存</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+//全选
+function selectAll (name, formName){
+	$("form[name="+formName+"] input[name="+name+"]").prop("checked", true)
+		.parent("*[class*=icheckbox_square]").addClass("checked");
+}
+//反选
+function unselectAll (name, formName){
+	$("form[name="+formName+"] input[name="+name+"]").each(function(){
+		if($(this).prop("checked")){
+			$(this).prop("checked", false)
+			.parent("*[class*=icheckbox_square]").removeClass("checked");
+		}else {
+			$(this).prop("checked", true)
+			.parent("*[class*=icheckbox_square]").addClass("checked");
+		}
+	});
+}
+</script>
+
+</body>
+</html>

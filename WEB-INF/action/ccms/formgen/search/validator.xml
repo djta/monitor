@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+	<parameter id="form_id" type="integer" required="true" label="form_id" maxlen="10"/>
+	<parameter id="__p_pk_value__" type="varchar" required="false" label="__p_pk_value__"/>
+	<parameter id="__page_size__" type="integer" required="false" label="__page_size__"/>
+	<parameter id="__search_type__" type="integer" required="true" label="__search_type__"/>
+</validator>

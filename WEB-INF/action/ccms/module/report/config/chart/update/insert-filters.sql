@@ -1,0 +1,23 @@
+INSERT INTO
+	t_report_filter_field
+(
+	tuid
+	,report_id
+	,field_id
+	,show_order
+	,show_type
+	,width
+	,filter_type
+	,is_mandatory
+)
+VALUES
+(
+	${seq:nextval@${schema}seq_default}
+	,${fld:report_id}
+	,${fld:filter_field}
+	,${fld:filter_show_order}
+	,${fld:filter_show_type}
+	,${fld:filter_width}
+	,${fld:filter_type}
+	,${fld:filter_is_mandatory}
+)

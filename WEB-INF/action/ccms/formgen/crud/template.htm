@@ -1,0 +1,494 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate" />
+<meta http-equiv="Expires" content="mon, 27 sep 2010 14:30:00 GMT" />
+<meta http-equiv="Pragma" content="no-cache" />
+${inc:/action/ccms/newpub}
+<script type="text/javascript" src="${def:context}/js/formgen/common.js"></script>
+${fld:head_inc}
+</head>
+
+<body>
+<div id="mainContainer_${fld:form_id}" style="height:100%">
+${controls_editor}
+
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">${fld:form_name_${def:locale}}</h2>
+	</div>
+	<div class="panel-body col_main_body">
+		${controls_filter}
+	</div>
+</div>
+
+<!--用于传递当前目录到header模版中-->
+<input type="hidden" id="actionroot_${fld:form_id}" value="${def:actionroot}">
+</div>
+<script>
+//自定义函数
+${fld:form_js}
+
+$(document).ready(function() {
+	var checkFormAction = function(val){
+		var formType = "${fld:__form_action__}";
+		if(formType == "0") return false;
+		return checkActionParameter(formType,val);
+	};
+
+	var checkSearchAction = function(val){
+		var searchType = "${fld:__search_action__}";
+		if(searchType == "0") return false;
+		return checkActionParameter(searchType,val);
+	};
+
+	var crudObj = null,searchObj = null;
+
+	if("${fld:__form_action__}" !=  "0"){		//加截编辑界面
+		crudObj = $Crud({
+			formId: "formEditor_${fld:form_id}",
+			modalId: "modalAddnew_${fld:form_id}",
+			button: "save_btn_${fld:form_id}",
+			addNewButton: "addnew_btn_${fld:form_id}",
+			bpkField: "__pk_value__",
+			actionroot: $("#actionroot_${fld:form_id}").val(),
+			isUseModal: "${fld:__search_action__}"=="0"?"false":"true",
+			insertBack:function(){
+				try{
+					$Dialog().notice("新增成功！",1500);
+					${fld:insert_js}
+					if("${fld:__search_action__}"!="0"){
+						
+						$("#modalAddnew_${fld:form_id}").modal("hide");
+					}
+					//如果是工单界面,则跳到修改界面
+					if($("#formEditor_${fld:form_id} input[name='__wfm_id__']").val()!="" && $("#formEditor_${fld:form_id} input[name='__wfentry_id__']").val() != ""){
+						top.dealWfmBackUrl = location.href;
+						gotoPage("/action/ccms/module/workflow/dealwfm?__wfentry_id__="+$("#formEditor_${fld:form_id} input[name='__wfentry_id__']").val()+"&__current_step_id__="+$("#formEditor_${fld:form_id} input[name='__current_step_id__']").val());
+					}
+					if(checkFormAction("8")){
+						searchObj.searchData(1);
+					}
+				}catch(e){
+					$Dialog().alert(e);
+				}
+			},
+			updateBack:function(){
+				try{
+					${fld:update_js}
+					if("${fld:__search_action__}"!="0"){
+						$("#modalAddnew_${fld:form_id}").modal("hide");
+					}
+					if($("#formEditor_${fld:form_id} input[name='__wfm_id__']").val()!="" && $("#formEditor_${fld:form_id} input[name='__dowfm__']").val() == "1" && $("#formEditor_${fld:form_id} input[name='__wfentry_id__']").val() != ""){//处理流程
+						$Dialog().notice("修改成功！",1500);
+						top.dealWfmBackUrl = location.href;
+						gotoPage("/action/ccms/module/workflow/dealwfm?__wfentry_id__="+$("#formEditor_${fld:form_id} input[name='__wfentry_id__']").val()+"&__current_step_id__="+$("#formEditor_${fld:form_id} input[name='__current_step_id__']").val());
+					}else{
+						$Dialog().notice("修改成功！",1500);
+					}
+					if(checkFormAction("16")){
+						searchObj.searchData(1);
+					}
+				}catch(e){
+					$Dialog().alert(e);
+				}
+			},
+			deleteBack:function(){
+				try{
+					if(checkFormAction("32")){
+						searchObj.searchData(1);
+					}
+				}catch(e){
+					$Dialog().alert(e);
+				}
+			},
+			addNewBack:function(){
+				try{
+					$("#formTitle_${fld:form_id}").html("新增");
+					if($("#formEditor_${fld:form_id} input[name='__wfm_id__']").val() != ""){
+						$("#save_btn_${fld:form_id}").hide();
+					}
+					$("#delete_btn_${fld:form_id}").hide();
+					$("#attachment_btn_${fld:form_id}").hide();
+					
+					/*字段挂附件按钮*/
+					$("#mainContainer_${fld:form_id} img[data-type='attachment-img']").each(function(){
+						$(this).hide();
+					});
+					/*仅显示内容清空*/
+					$("#formEditor_${fld:form_id} span").each(function(){
+						var id = $(this).attr("id");
+						if(id && id.endWith("_showonly")){
+							$(this).html("");
+						}
+					});
+					
+					//缓存有级联关系的下拉框的值
+					<rows-cascade-addnew>
+						var obj = document.formEditor_${fld:form_id}.${fld:field_code};
+						if(typeof(obj) != "undefined"){
+							obj.options.length = 0;
+							var children = crudObj.cascade["${fld:field_code}"];
+							for(var i=0;i<children.length;i++){
+								var a = children[i];
+								option = new Option(a[1],a[0]);
+								obj.options.add(option);
+							}
+						}
+					</rows-cascade-addnew>
+					
+					//读取传输参数,并对表单中,同名的字段进行赋值.即所传参数需要在查询条件中配置.
+					<rows-form>
+						if (typeof(document.formEditor_${fld:form_id}.${fld:field_code_alias}) != "undefined") {
+							switch ("${fld:show_type}")
+							{
+								case "0"://text
+									document.formEditor_${fld:form_id}.${fld:field_code_alias}.value = "${fld:field_value@js}";
+									break;
+								case "1"://combo
+									setComboValue("${fld:field_code_alias}","${fld:field_value@js}","formEditor_${fld:form_id}");
+									break;
+								case "3"://radio
+									setCheckboxValue("${fld:field_code_alias}","${fld:field_value@js}","formEditor_${fld:form_id}");
+									break;
+								case "4"://readonly
+									document.formEditor_${fld:form_id}.${fld:field_code_alias}.value = "${fld:field_value@js}";
+									break;
+								case "5"://date
+									document.formEditor_${fld:form_id}.${fld:field_code_alias}.value = "${fld:field_value@js}";
+									break;
+								case "6"://textarea
+									document.formEditor_${fld:form_id}.${fld:field_code_alias}.value = "${fld:field_value@js}";
+									break;
+								case "9"://hidden
+									document.formEditor_${fld:form_id}.${fld:field_code_alias}.value = "${fld:field_value@js}";
+									break;
+								default:
+									document.formEditor_${fld:form_id}.${fld:field_code_alias}.value = "${fld:field_value@js}";
+									if(typeof(document.formEditor_${fld:form_id}.${fld:field_code_alias}_alias) != "undefined"){
+										document.formEditor_${fld:form_id}.${fld:field_code_alias}_alias.value = "${fld:field_value@js}";
+									}
+									break;
+							}
+						}
+					</rows-form>
+
+					//重新渲染radio和checkbox
+					$("input[type=radio]").iCheck({
+						radioClass : 'iradio_square-blue',
+						increaseArea : '20%'
+					});
+					$("input[type=checkbox]").iCheck({
+						radioClass : 'icheckbox_square-blue',
+						increaseArea : '20%'
+					});
+					${fld:addnew_js}
+				}catch(e){
+					$Dialog().alert(e);
+				}
+			},
+			editBack:function(){
+				try{
+					$("#formTitle_${fld:form_id}").html("修改");
+					if($("#formEditor_${fld:form_id} input[name='__wfm_id__']").val() != ""){
+						$("#save_btn_${fld:form_id}").show();
+					}
+					if(checkFormAction("64")){
+						$("#save_btn_${fld:form_id}").hide();
+					}else{
+						$("#save_btn_${fld:form_id}").show();
+					}
+					$("#delete_btn_${fld:form_id}").show();
+					$("#attachment_btn_${fld:form_id}").show();
+					/*字段挂附件按钮*/
+					$("#mainContainer_${fld:form_id} img[data-type='attachment-img']").each(function(){
+						$(this).show();
+					});
+					
+					//重新渲染radio和checkbox
+					$("input[type=radio]").iCheck({
+						radioClass : 'iradio_square-blue',
+						increaseArea : '20%'
+					});
+					$("input[type=checkbox]").iCheck({
+						radioClass : 'icheckbox_square-blue',
+						increaseArea : '20%'
+					});
+					
+					${fld:editback_js}
+				}catch(e){
+					$Dialog().alert(e);
+				}
+			},
+			validate:function(){
+				var flag=$("#formEditor_${fld:form_id}").validate({
+					rules: {
+						
+					},
+					messages: {
+						
+					}
+				});
+				return flag;
+			},
+			check:function(){
+				${fld:checkfield}
+			    return true;
+			}
+			
+		}).init(function(){
+			try{
+				
+				${fld:keypress}
+			    
+				${fld:loadeditor_js}
+				
+			}catch(e){
+				$Dialog().alert(e);
+			}
+		});
+		try{
+			//缓存有级联关系的下拉框的值
+			crudObj.cascade = [];
+			<rows-cascade>
+				if(typeof(document.formEditor_${fld:form_id}.${fld:field_code}) != "undefined"){
+					var array = [];
+					var children = document.formEditor_${fld:form_id}.${fld:field_code}.options;
+					for(var i=0;i<children.length;i++){
+						var a = [];
+						a[0] = children[i].value;
+						a[1] = children[i].text;
+						array[i] = a;
+					}
+					crudObj.cascade["${fld:field_code}"] = array;
+				}
+			</rows-cascade>
+			
+			//判断加载表单之后执行什么操作
+			if(checkFormAction("2")){//加载后新增
+				$("#cancel_btn_${fld:form_id}").hide();
+				crudObj.addNew();
+			}else if(checkFormAction("4")||checkFormAction("64")){//加载后编辑
+				$("#cancel_btn_${fld:form_id}").hide();
+				if("${fld:__pk_value__}" != ""){
+					crudObj.edit({"__pk_value__":"${fld:__pk_value__}","form_id":"${fld:form_id}","__p_pk_value__":"${fld:__p_pk_value__}","snapshot":"${fld:snapshot}"});
+				}else{
+					$Dialog().alert("业务主键不能为空！");
+					return false;
+				}
+			}
+			
+			//判断当前为流程处理界面则将确定按钮改为暂存，显示提交按钮
+			if($("#formEditor_${fld:form_id} input[name='__wfm_id__']").val() != ""){
+				/* $("#save_btn_${fld:form_id}").text("继续跟进"); */
+				$("#save_btn_${fld:form_id}").text("保存");
+				$("#wfmCommand_${fld:form_id}").text("结束");
+				$("#formEditor_${fld:form_id} input[name='__dowfm__']").val("0");
+				$("#wfmCommand_${fld:form_id}").unbind().on("click",function(){
+					$("#formEditor_${fld:form_id} input[name='__dowfm__']").val("1");
+					if(crudObj.map["validate"] != null) {
+						if (!crudObj.map["validate"]()) {
+							return false;
+						}
+					}
+					$("#formEditor_${fld:form_id}").submit();
+				}).show();
+			}else{
+				$("#formEditor_${fld:form_id} input[name='__dowfm__']").val("0");
+				$("#wfmCommand_${fld:form_id}").hide();
+			}
+			
+			if("${fld:is_can_delete}" == "inline"){
+				$("#delete_btn_${fld:form_id}").unbind().on("click", function(){
+					var v = $("#formEditor_${fld:form_id} input[name='__pk_value__']").val();
+					if(v != ""){
+						$Dialog().confirm("确认删除该条数据?",function(){
+							crudObj.del({"__pk_value__":v,"form_id":"${fld:form_id}"});
+						});
+					}
+				});
+			}
+			
+			if("${fld:is_can_attachment}" == "inline"){
+				$("#attachment_btn_${fld:form_id}").unbind().on("click", function(){
+					var v = $("#formEditor_${fld:form_id} input[name='__pk_value__']").val();
+					if(v != ""){
+						crudObj.attachment({"pk_value":$(this).attr("code"),"table_code":$(this).attr("table_code")});
+					}
+				});
+			}
+		}catch(e){
+			$Dialog().alert(e);
+		}
+	}
+	
+	if("${fld:__search_action__}" !=  "0"){			//加截查询界面
+		searchObj = $Search({
+			datagrid: "datagrid_${fld:form_id}"
+			,formId: "formFilter_${fld:form_id}"
+			,button: "search_btn_${fld:form_id}"
+			,resetButton: "search_reset_btn_${fld:form_id}"
+			,actionroot: $("#actionroot_${fld:form_id}").val()
+			,success:function(){
+			try{
+				if("${fld:__form_action__}" !=  "0"){
+					if("${fld:is_can_show}"=="none"){
+						$("#searchResultTable_${fld:form_id} tr").each(function(){
+						   $("th:first",this).hide();
+						   $("td:first",this).hide();
+						});
+					}else{
+						$("#datagrid_${fld:form_id}").find(".edit_btn").unbind().on("click", function(){
+							if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+								//缓存有级联关系的下拉框的值
+								<rows-cascade-edit>
+									var obj = document.formEditor_${fld:form_id}.${fld:field_code};
+									if(typeof(obj) != "undefined"){
+										obj.options.length = 0;
+										var children = crudObj.cascade["${fld:field_code}"];
+										for(var i=0;i<children.length;i++){
+											var a = children[i];
+											option = new Option(a[1],a[0]);
+											obj.options.add(option);
+										}
+									}
+								</rows-cascade-edit>
+								
+								crudObj.edit({"__pk_value__":$(this).attr("code"),"form_id":"${fld:form_id}"});
+							}
+						});
+						
+						$("#datagrid_${fld:form_id}").find(".attachment_btn").unbind().on("click", function(){
+							if($(this).attr("code") != undefined && $(this).attr("code") != ""){
+								crudObj.attachment({"pk_value":$(this).attr("code"),"table_code":$(this).attr("table_code")});
+							}
+						});
+					}
+				}else{
+					$("#searchResultTable_${fld:form_id} tr").each(function(){
+					   $("th:first",this).hide();
+					   $("td:first",this).hide();
+					});
+				}
+				
+				$("#formFilter_${fld:form_id} button[name='excel_btn']").show();
+				$("#formFilter_${fld:form_id} button[name='pdf_btn']").show();
+
+				${fld:search_success_js}
+
+			}catch(e){
+				$Dialog().alert(e);
+			}
+		}}).initSearchBtn(function(){
+			try{
+				//如果进入crud界面还挂有其他参数，则在此处赋值
+				<rows-filter>
+					if (typeof(document.formFilter_${fld:form_id}.${fld:field_code_alias}_filter) != "undefined") {
+						switch ("${fld:show_type}")
+						{
+							case "0"://text
+								document.formFilter_${fld:form_id}.${fld:field_code_alias}_filter.value = "${fld:field_value@js}";
+								break;
+							case "1"://combo
+								setComboValue("${fld:field_code_alias}_filter","${fld:field_value@js}","formFilter_${fld:form_id}");
+								break;
+							case "3"://radio
+								setCheckboxValue("${fld:field_code_alias}_filter","${fld:field_value@js}","formFilter_${fld:form_id}");
+								break;
+							case "4"://readonly
+								document.formFilter_${fld:form_id}.${fld:field_code_alias}_filter.value = "${fld:field_value@js}";
+								break;
+							case "5"://date
+								document.formFilter_${fld:form_id}.${fld:field_code_alias}_filter.value = "${fld:field_value@js}";
+								break;
+							case "6"://textarea
+								document.formFilter_${fld:form_id}.${fld:field_code_alias}_filter.value = "${fld:field_value@js}";
+								break;
+							case "9"://hidden
+								document.formFilter_${fld:form_id}.${fld:field_code_alias}_filter.value = "${fld:field_value@js}";
+								break;
+							default:
+								document.formFilter_${fld:form_id}.${fld:field_code_alias}_filter.value = "${fld:field_value@js}";
+								if(typeof(document.formFilter_${fld:form_id}.${fld:field_code_alias}_alias_filter) != "undefined"){
+									document.formFilter_${fld:form_id}.${fld:field_code_alias}_alias_filter.value = "${fld:field_value@js}";
+								}
+								break;
+						}
+					}
+				</rows-filter>
+		
+				${fld:loadfilter_js}
+
+			    return true;
+			}catch(e){
+				$Dialog().alert(e);
+			}
+		});
+		
+		try{
+			if("${fld:__form_action__}" ==  "0"){
+				$("#addnew_btn_${fld:form_id}").hide();
+			}
+			
+			$("#formFilter_${fld:form_id} select[name='__page_size__']").unbind().on("change",function(){
+				searchObj.searchData(1);
+			});
+
+			$("#formFilter_${fld:form_id} button[name='excel_btn']").hide().on("click", function(e){
+				var recordcount = document.formFilter_${fld:form_id}.total.value;
+				var features = "height=0,width=0,status=no,toolbar=no,menubar=no,location=no,scrollbars=no,resizable=no";
+				var url = "${def:context}${def:actionroot}/excel?form_id=${fld:form_id}&recordcount="+recordcount+"&random=" + Math.random();
+				window.open(url, null, features);
+				e.preventDefault();
+			});
+			$("#formFilter_${fld:form_id} button[name='pdf_btn']").hide().on("click", function(e){
+				var features = "height=0,width=0,status=no,toolbar=no,menubar=no,location=no,scrollbars=no,resizable=no";
+				var url = "${def:context}${def:actionroot}/pdf?form_id=${fld:form_id}&random=" + Math.random();
+				window.open(url, null, features);
+				e.preventDefault();
+			});
+			
+			//判断加载查询条件之后执行什么操作
+			if(checkSearchAction("2")){//加载后查询
+				searchObj.searchData(1);
+			}
+		}catch(e){
+			$Dialog().alert(e);
+		}
+	}
+	//日期类型字段设置点击事件
+	$("#mainContainer_${fld:form_id} input[data-type='date']").each(function(){
+		$Dialog().date($(this));
+	});
+	$("#mainContainer_${fld:form_id} input[data-type='datetime']").each(function(){
+		$Dialog().datetime($(this));
+	});
+
+	$("#formEditor_${fld:form_id} input[type='checkbox']").unbind().on("click", function(){
+		selectMultiCheckboxValue($(this).attr("name"),$(this).attr("code"),"formEditor_${fld:form_id}");
+	});
+	$("#mainContainer_${fld:form_id} img[data-type='pickopen']").each(function(){
+		$(this).on("click",function(){
+			ccms.dialog.open({"id":$(this).attr("pick-id"),
+				"url":"${def:context}/action/ccms/formgen/template/pick/form?pickup_field="+$(this).attr("pick-field")+"&pick-id="+$(this).attr("pick-id")+"&pick-alias="+$(this).attr("pick-alias"),
+				"width":450,
+				"height":500});
+		});
+	});
+	$("#mainContainer_${fld:form_id} img[data-type='pickclear']").each(function(){
+		$(this).on("click",function(){
+			$("#"+$(this).attr("pick-form")+" #"+$(this).attr("pick-id")).val("");
+			$("#"+$(this).attr("pick-form")+" #"+$(this).attr("pick-alias")).val("");
+		});
+	});
+	/*字段附件*/
+	$("#mainContainer_${fld:form_id} img[data-type='attachment-img']").each(function(){
+		$(this).on("click",function(){
+			crudObj.attachment({"pk_value":document.formEditor_${fld:form_id}.__pk_value__.value,"table_code":"${fld:table_code}","field_value":$("#"+$(this).attr("field_value")).val(),"field_code":$(this).attr("field_code")});
+		});
+	});
+});
+
+</script>
+</body>
+</html>

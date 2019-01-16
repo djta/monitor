@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+
+	<parameter id="rule_name" type="varchar" required="true" label="规则名称"/>
+    <parameter id="rule_order" type="integer" required="false" label="规则顺序"/>
+    <parameter id="remark" type="varchar" required="false" label="备注" maxlen="128"/>
+    <parameter id="version" type="varchar" required="false" label="版本标示符" maxlen="128"/>
+    <parameter id="tab_id" type="integer" required="true" label="tab_id" maxlen="128"/>
+    <parameter id="filter_type" type="integer" required="true" label="filter_type" maxlen="128"/>
+    
+	<custom-validator 	
+	classname="dinamica.validators.DuplicatedKeyValidator" 
+	on-error-label="该规则已经存在，请重新输入."
+	sql="nodup.sql" id="rule_name"/>
+	
+</validator>

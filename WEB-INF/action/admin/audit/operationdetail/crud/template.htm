@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+<body>
+	<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">详细信息</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form id="formFilter" name="formFilter">
+				<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<input id="table_code" name="table_code" value="${fld:table_code}" type="hidden" />
+					<input id="pk_value" name="pk_value" value="${fld:pk_value}" type="hidden" />
+					<input id="op_date" name="op_date" value="${fld:op_date}" type="hidden" />
+					<input id="op_time" name="op_time" value="${fld:op_time}" type="hidden" />
+				</div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th class="sortable" code="field_name">字段名</th>
+						<th class="sortable" code="name">操作人</th>
+						<th>原值</th>
+						<th>新值</th>
+						<th class="sortable" code="created">时间</th>
+						
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr>
+						<td align="center">#field_name#</td>
+						<td align="center">#name#</td>
+						<td align="left">#before_value#</td>
+						<td align="left">#after_value#</td>
+						<td align="center">#created#</td>
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+		</div>
+	</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}"/>
+
+<script language="javascript">
+$(document).ready(function() {
+	$Search({datagrid:"datagrid",formId:"formFilter",success:function(){}}).initSearchBtn().searchData(1);
+});
+</script>
+</body>
+</html>

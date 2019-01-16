@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+${inc:/action/ccms/pub}
+
+<title>选择字段</title>
+
+</head>
+
+<body>
+
+<!--addnew/edit form-->
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog">
+  	  <div class="modal-dialog">
+   	    <div class="modal-content">
+   	      <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="formTitle">新增</h4>
+          </div>
+          <div class="modal-body">
+			<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+			  <input type="hidden" id="tuid" name="tuid" value="">
+				
+			</form>
+		  </div>
+		  <div class="modal-footer">
+		    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 col-lg-offset-2">
+			  <button type="button" id="save_btn" class="btn btn-primary btn-md">确&nbsp;定</button>
+			  <button type="button" id="reset_btn" class="btn btn-primary btn-md">重&nbsp;置</button>
+			  <button type="button" class="btn btn-primary btn-md" data-dismiss="modal">取&nbsp;消</button>
+			  <button type="button" id="btn-del" class="btn btn-primary btn-del" data-dismiss="modal">删&nbsp;除</button>
+		    </div>
+	      </div>
+	    </div>
+      </div>
+    </div>
+
+<div class="panel panel-default col_mainInner">
+		<div class="panel-heading col_main_body_title text-center">
+			<h2 class="panel-title">模板信息</h2>
+		</div>
+		<div class="panel-body col_main_body">
+			<form class="form-horizontal" role="form" method="post" id="searchForm">
+						<input name="sort" type="hidden" value="model_id" preserve="true"/>
+						<input name="order" type="hidden" value="desc" preserve="true" /> 
+						<input name="pageNo" type="hidden" value="" preserve="true" /> 
+						<input name="totalPages" type="hidden" value="" preserve="true" />
+				<div class="form-group">
+                <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 ">
+                    <input id="column_name" name="column_name" type="text" value="" title="名称" maxlength="35" size="20"> 
+			<input type="hidden" name="form_id" id="form_id" value="${fld:form_id}" preserve="true">
+                </div>
+            
+                <div class="col-xs-8 col-sm-4 col-md-4 col-lg-4">
+                    <button class="btn btn-primary btn-md" type="button" id="search_btn">查询</button>
+                    <button class="btn btn-primary btn-md" type="button" id="search_reset_btn">清空</button>
+                </div>
+            </div>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th >
+			                    字段名称
+		                </th>
+		                <th >
+			                    字段代码
+		                </th>							
+					</tr>
+				</thead>
+				<tbody id="datagridTemplate" style="display: none">
+					<tr onclick="selectItem('#field_name#','#field_code#','#domain_namespace#','#field_type#')" >
+						<td>
+			                  #field_name#
+		                 </td>	
+		                 <td>
+			                  #field_code#
+		                 </td>	
+					</tr>
+				</tbody>
+				<tbody id="datagrid">
+				</tbody>
+			</table>
+			<div class="pageDiv">
+				<ul class="pagination">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}">
+<script type="text/javascript">
+$(document).ready(function() {
+var search=null;
+var obj = $Crud({
+    formId:"formEditor",
+    button:"save_btn",
+    insertBack:function(){
+        search.searchData(1);
+    },
+    updateBack:function(){
+        search.searchData(1);
+    },
+    deleteBack:function(){
+        search.searchData(1);
+    },
+    addNewBack:function(){
+    },
+    editBack:function(){
+    },
+    validate:function(){
+        var flag=$("#formEditor").validate({
+            rules: {
+            },
+            messages: {
+            }
+        });
+        return flag;
+    },
+    check:function(){
+        return true;
+    }
+}).init();
+search=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+	
+	
+}}).initSearchBtn().searchData(1);
+	
+});
+function selectItem(n,c,s,t)
+{	
+	parent.selectCode(n, c, s, t);
+	ccms.dialog.close();
+}
+</script>
+
+</body>
+
+</html>

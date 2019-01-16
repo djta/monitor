@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+${inc:/action/ccms/pub}
+
+<title>SQL预览</title>
+
+</head>
+
+<body>
+
+<!-- 查询 -->
+<div class="panel panel-default col_mainInner">
+	<div class="panel-heading col_main_body_title text-center">
+		<h2 class="panel-title">SQL预览</h2>
+	</div>
+	<div class="panel-body col_main_body">
+     	<input name="form_id"  value="${fld:form_id}" type="hidden" preserve="true" />
+       	<input name="job_id"  value="${fld:job_id}" type="hidden" preserve="true" />
+		<table class="table table-bordered">
+			<tbody >
+				<tr>
+					<td align="left" id="preview_sql" style="font-size:12pt;">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+	</div>
+</div>
+<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}">
+<script type="text/javascript">
+$(document).ready(function() {
+    
+	search();
+});
+function search(){
+	 var url="${def:actionroot}/search?form_id="+$("input[name='form_id']").val() + "&job_id="+$("input[name='job_id']").val();
+     ajaxCall(url, {
+		method : "get",
+		progress : true,
+		dataType : "script",
+		success : function(data) {
+		}
+	});
+}
+</script>
+</body>
+
+</html>
+
+    

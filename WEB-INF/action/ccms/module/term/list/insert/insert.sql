@@ -1,0 +1,31 @@
+INSERT	INTO
+	t_term_list
+(
+	tuid
+	,item_id
+	,list_name
+	,list_code
+	,list_score
+	,show_type
+	,is_unspeak
+	,list_score_code
+	,namespace
+	,show_order
+	,remark
+	,namespace_op
+)
+VALUES
+(
+	${seq:nextval@${schema}seq_default}
+	,${fld:item_id}
+	,${fld:list_name}
+	,${fld:list_code} 
+	,${fld:list_score}
+	,${fld:show_type}
+	,${fld:is_unspeak}
+	,${fld:list_score_code}
+	,${fld:namespace}
+	,${fld:show_order}
+	,${fld:remark}
+	,${fld:namespace_op}
+)
