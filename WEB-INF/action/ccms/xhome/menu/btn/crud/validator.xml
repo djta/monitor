@@ -1,6 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<validator>
-
-	<parameter id="menu_id" type="integer" required="false" label="menu_id" />
-
-</validator>

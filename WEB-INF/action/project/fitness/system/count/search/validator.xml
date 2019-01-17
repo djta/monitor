@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="startdate" type="varchar" required="false" label="startdate" />
+	<parameter id="enddate" type="varchar" required="false" label="enddate" />
+	<parameter id="issystem" type="varchar" required="false" label="消息类型" />
+	<parameter id="senduser" type="varchar" required="false" label="发送人" />
+	<parameter id="statusviewtime" type="varchar" required="false" label="状态" />
+	
+</validator>

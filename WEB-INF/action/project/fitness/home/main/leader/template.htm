@@ -8,22 +8,11 @@
 
 <script type="text/javascript" src="${def:context}/js/project/fitness/js/main.js"></script>
 <div class="r-index	">
-	<section class="r-i-1" >
-		<div class="home-a-title">报表1</div>
-		<div id="ptsaleDiv" style="float:left ;width:60%;height:100%;margin-top:-20px;margin-left: 5%"></div>
-		<div class="home-a-right">
-			<div class="divs" id="ptsaleFee"></div>
-			<div class="divs" style="color: rgba(51,143,226,1)" id="ptsaleRate"></div>
-		</div>
-	</section>
+
 	
-	<section class="r-i-1">
-		<div class="home-a-title" >报表2</div>
-		<div id="mcsaleDiv" style="float:left ;width:60%;height:100%;margin-top:-20px;margin-left: 5%"></div>
-		<div class="home-a-right">
-			<div class="divs" id="mcsaleFee"></div>
-			<div class="divs" style="color: rgba(51,143,226,1)" id="mcsaleRate"></div>
-		</div>
+	<section class="r-i-1" style="width:100%">
+		<div id="mcsaleDiv" style="float:left ;width:100%;height:100%;"></div>
+
 	</section>
 
 </div>
@@ -31,10 +20,8 @@
 <script type="text/javaScript">
 
 $(document).ready(function() {
-	// 本月私教销售业绩
-	//getAjaxCall("${def:actionroot}/leader/ptloadtarget", false);
-	// 本月会籍销售业绩
-	//getAjaxCall("${def:actionroot}/leader/mcloadtarget", false);
+	
+	getAjaxCall("${def:actionroot}/leader/report2", false);
 	
 });
 </script>

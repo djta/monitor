@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>信息显示</title>
+<script language="JavaScript" type="text/javascript" src="${def:context}/action/pub/dtree"></script>
+${inc:/action/project/fitness/home/pub}
+<style type="text/css">
+.dtree a{
+color: white  !important;
+}
+</style>
+</head>
+<body >
+	<div class="dialogbg" >
+		<header class="header-default">
+						信息显示
+		</header>
+		<div class="panel-body col_main_body dtree">
+			<form name="treeForm" id="searchForm" class="form-horizontal" ole="form" method="post">
+				<input name="org_code" type="hidden" maxlength="100" value="" />
+			</form>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog" style="display:none;">
+			<div class="modal-dialog basic-information dialogbg" style="background-image:url(/js/project/fitness/image/timg.jpg);background-repeat: no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;">
+			<header>
+				<span id="formTitle"></span>
+				<span class="header-close" onclick="$('.close').click()"></span> <!--关闭按钮无效，调用函数触发旧按钮点击事件-->
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style='display:none;'>&times;</button>
+			</header>
+			
+			
+		</div>
+	</div>
+
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+
+	<script language="javascript">
+		
+		function OrgClass() {
+			var obthis = this;
+
+
+			this.init = function() {
+				$(".org_btn").unbind().on("click", function() {
+					$("#modalAddnew").modal();
+				});
+				
+			};
+		}
+
+		var orgClass = null;
+		var d = null;
+		function webinit() {
+			//初始化树
+			d = new dTree('d');
+			var org_title = "";
+			org_title += "&nbsp;&nbsp;<a href='javascript: d.openAll();'>展开</a> | <a href='javascript: d.closeAll();'>合并</a>";
+			//org_title += "&nbsp;&nbsp;<a href='javascript:void(0)' title='添加' class='add_btn' code='0' path='12' ><span class='glyphicon glyphicon-plus'></span></a>";
+
+			d.add(0, -1, org_title);
+
+			var org_name = "";
+			var buttonAddNode = "";
+			var buttonEdit = "";
+			var buttonDelete = "";
+			var allBtn = "";
+
+			<combo-orgs>
+			org_name = "<a href='javascript:void(0)' class='org_btn' code='${fld:org_id}' >${fld:org_name@js}</a>";
+			allBtn = buttonAddNode + buttonEdit + buttonDelete;
+			d.add("${fld:org_id}", "${fld:pid}", org_name + allBtn);
+			</combo-orgs>
+
+			$("#searchForm").append(d.toString());
+
+			orgClass = new OrgClass();
+			orgClass.init();
+			
+
+		}
+		
+		
+		$(document).ready(function() {
+			webinit();
+			
+		});
+	</script>
+</body>
+</html>
