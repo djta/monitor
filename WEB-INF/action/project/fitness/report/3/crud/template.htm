@@ -5,6 +5,14 @@ ${inc:/action/project/fitness/home/pub}
 <title>消息</title>
 </head>
 <body>
+<div class="dialogbg" >
+		<header class="header-default">
+						客流日报表查询
+		</header>
+		<div class="panel-body col_main_body dtree">
+
+		</div>
+	</div>
 	<!--addnew/edit form-->
 	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog" style="display:none;">
 			<div class="modal-dialog basic-information dialogbg">
@@ -55,9 +63,9 @@ ${inc:/action/project/fitness/home/pub}
 							<li class="dateTime">
 						  		<input id="startdate" name="startdate" style="background-color:transparent!important" type="text" class="input-default"/>
 							</li>
-							<li class="dateTime">
+	<!-- 						<li class="dateTime">
 						  		<input id="enddate" name="enddate" type="text" style="background-color:transparent!important" class="input-default"/>
-							</li>
+							</li> -->
 							<!-- <li style="width: 92px;">
 								 <select name="issystem" id="issystem" style="display: none;">
 								 	<option value="">消息类型</option>
@@ -73,7 +81,31 @@ ${inc:/action/project/fitness/home/pub}
 								 	</senduser-list>
 								 </select>
 							</li> -->
-		
+		<li >
+								 <select name="warning_type" id="warning_type">
+								 	<option value="">COUNT类型</option>
+							   		<option value="0">I-COUNT</option>
+									<option value="1">Q-COUNT</option>
+									<option value="2">Z-COUNT</option>
+									<option value="3">红外热感</option>
+									<option value="4">非客流摄像机</option>
+									<option value="5">CoutWise客流设备</option>
+								 </select>
+							</li>
+							<li >
+								 <select name="org_1" id="org_1" >
+								 	<option value="">建筑名称</option>
+							   		<option value="1">一号线</option>
+
+								 </select>
+							</li>
+							<li >
+								 <select name="org_1" id="org_1" >
+								 	<option value="">楼层名称</option>
+							   		<option value="1">东单站</option>
+
+								 </select>
+							</li>
 							<div>
 								<button type="button" class="r-c-3-btn-1" id="search_btn" title="查询"></button>
 								<button type="button" class="r-c-3-btn-3" id="daochu_list" title="导出"></button>
@@ -95,6 +127,8 @@ ${inc:/action/project/fitness/home/pub}
 							<tr>
 								<th></th>
 							    <th>日期 </th>
+							    <th>报警名称  </th>
+							    <th>报警描述</th>
 							    <th>出客人数</th>
 							    <th>入客人数</th>
 
@@ -112,16 +146,10 @@ ${inc:/action/project/fitness/home/pub}
 							<tr id="list">
 								<td></td>
 								<td>2018-05-01 12:00:00</td>
+								<td>DVR硬盘报警</td>
+								<td>2013-02-04 17:00:24 向客流设备192.168.10.39连接获取数据失败,请检查设备连接或配置是否正常!</td>
 							    <td>103</td>
 							    <td>200</td>
-							</tr>
-						</tbody>
-						<tbody  style="display: ">
-							<tr id="list">
-								<td></td>
-								<td>2018-05-01 13:00:00</td>
-							    <td>80</td>
-							    <td>150</td>
 							</tr>
 						</tbody>
 						<tbody id="datagrid">
@@ -147,9 +175,9 @@ var search=null;
 $(document).ready(function() {
 	selectInit($("#issystem,#senduser,#statusviewtime"));
 	$Dialog().date($('#startdate'));
-	$Dialog().date($('#enddate'));
+	//$Dialog().date($('#enddate'));
 	$("#startdate").val(new Date("${def:date}").format("yyyy-MM-01")); 
-	$("#enddate").val("${def:date}");
+	//$("#enddate").val("${def:date}");
 	this.search=search;
 	/* search=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
 		$("#edit_btn").unbind().on("click", function(){

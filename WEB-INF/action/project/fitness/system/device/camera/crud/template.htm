@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+${inc:/action/project/fitness/home/pub}
+<title>网络摄像机管理</title>
+</head>
+<style>
+.wbf{
+		width:8px;
+		height:8px;
+		background:url('${def:context}/images/haikang/point2.png') no-repeat;
+
+}
+.gzb{
+		width:8px;
+		height:18px;
+		background:url('${def:context}/images/haikang/edit_task.png') no-repeat;
+		
+}
+.bfb{
+		width:8px;
+		height:18px;
+		background:url('${def:context}/images/haikang/deploy.png') no-repeat;
+}
+</style>
+<body>
+	<!--addnew/edit form-->
+	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog" style="display:none;">
+			<div class="modal-dialog basic-information dialogbg">
+			<header class="header-default">
+				<span id="formTitle">查看</span>
+				<span class="header-close" onclick="$('.close').click()"></span> <!--关闭按钮无效，调用函数触发旧按钮点击事件-->
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style='display:none;'>&times;</button>
+			</header>
+			<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
+			<input type="hidden" id="tuid" name="tuid" value="" />
+          		<div class="modal-body b-i-main">
+					<nav>
+						<li>
+							<label style="width: 100px;">设备名称：</label>
+							<input type="text" id="name" name="name"  placeholder=""/>
+						</li>
+						<li>
+							<label style="width: 100px;">设备编号：</label>
+							<input type="text" id="device_num" name="device_num"  placeholder=""/>
+						</li>
+						<li>
+							<label style="width: 100px;">设备类型：</label>
+							 	<select style="width: 100px;" name="c_type" id="c_type">
+							 		<option value=""></option>
+								 	<option value="">固定枪机</option>
+							   		<option value="">固定云台</option>
+									<option value="">可控云台</option>
+									<option value="">高速球机</option>
+								 </select>
+						</li>
+						<li>
+							<label style="width: 100px;">IP：</label>
+							<input type="text" id="ip" name="ip"  placeholder=""/>
+						</li>
+
+						<li>
+							<label style="width: 100px;">网关：</label>
+							<input type="text" id="port" name="port"  placeholder=""/>
+						</li>
+						<li>
+							<label style="width: 100px;">COUNT类型：</label>
+								  <select style="width: 100px;" name="warning_type" id="warning_type">
+								 	<option value=""></option>
+							   		<option value="">I-COUNT</option>
+									<option value="">Q-COUNT</option>
+									<option value="">Z-COUNT</option>
+									<option value="">红外热感</option>
+									<option value="">非客流摄像机</option>
+									<option value="">CoutWise客流设备</option>
+								 </select>
+						</li>
+						<li>
+							<label style="width: 100px;">镜头类型：</label>
+								  <select style="width: 100px;" name="warning_type" id="warning_type">
+								 	<option value=""></option>
+							   		<option value="">内部通道</option>
+									<option value="">扩展通道</option>
+
+								 </select>
+						</li>
+						<li>
+							<label style="width: 100px;">DVR地址：</label>
+							<input type="text" id="ip" name="ip"  placeholder=""/>
+						</li>
+
+						<li>
+							<label style="width: 100px;">DVR通道号：</label>
+							<input type="text" id="port" name="port"  placeholder=""/>
+						</li>
+				<!-- 		<li>
+							<label style="width: 100px;">用户名：</label>
+							<input type="text" id="username" name="username"  placeholder=""/>
+						</li>
+						<li>
+							<label style="width: 100px;">密码：：</label>
+							<input type="text" id="password" name="password"  placeholder=""/>
+						</li> -->
+					</nav>
+				</div>
+				<footer class="footer-default">
+			  <button type="button" id="save_btn">确&nbsp;定</button>
+			</footer>
+			</form>
+		</div>
+	</div>
+
+	<form role="form" method="post" id="searchForm" name="searchForm">
+		<input name="sort" type="hidden" value="" preserve="true"/>
+		<input name="order" type="hidden" value="desc" preserve="true" /> 
+		<input name="pageNo" type="hidden" value="" preserve="true" /> 
+		<input name="totalPages" type="hidden" value="" preserve="true" />
+		<div class="r-tab-cont dialogbg" style="height: 620px;">
+			<div class="c-n-nav-2 am-tab-panel am-in am-active am-fade three-none" >
+				<div class="r-tab-cout-3-t">
+					<div class="r-tab-cout-3-t-t">
+						<nav>
+							<li class="dateTime">
+						  		<input id="startdate" name="startdate" style="background-color:transparent!important" type="text" class="input-default"/>
+							</li>
+							<li class="dateTime">
+						  		<input id="enddate" name="enddate" type="text" style="background-color:transparent!important" class="input-default"/>
+							</li>
+
+								<li >
+								 <select name="warning_type" id="warning_type">
+								 	<option value="">布防状态</option>
+							   		<option value="">未布防</option>
+									<option value="">已布防</option>
+					
+								 </select>
+							</li>
+							<div>
+								<button type="button" class="r-c-3-btn-1" id="search_btn" title="查询"></button>
+								<img src="${def:context}/js/project/fitness/image/SVG/nav/xinzengkecheng.svg" title="新增" alt="" data-toggle="modal" id="addnew_btn">
+								
+							</div>
+						</nav>
+					</div>
+						<div class="tab-cout-nav-b">
+								<nav class="r-c-3-t-b-l">
+								</nav>
+								<nav class="r-c-3-t-b-r">
+									 <li>
+											<img src="${def:context}/js/project/fitness/image/SVG/nav/xiugai.svg" title="修改" alt=""id="edit_btn">
+									</li>
+
+									<li>
+											<img src="${def:context}/js/project/fitness/image/SVG/nav/shanchu.svg" title="删除" alt=""id="delete_btn">
+									</li>	
+								</nav>
+							</div>
+				</div>				
+			</div>
+			<div class="r-tab-cout-3-b">
+				<div class="to-change-background h-43"></div>
+					<table class="">
+						<thead>
+							<tr>
+								<th class="table-checkbox">
+											<label class="am-checkbox">
+												<input id="selectAll"  name="datalist"  type="checkbox" value="" style="display: none;">
+											</label>
+										</th>
+							    <th>设备名</th>
+							    <th>设备编号</th>
+							    <th>类型</th>
+							    <th>ip</th>
+							    <th>网关</th>
+<!-- 							    <th>用户名</th>
+							    <th>密码</th> -->
+							    <th>布防状态</th>
+							    <th>规则设置</th>
+							    <th>布防</th>
+							   <!--  <th>人流监控</th> -->
+<!-- 							     <th>更新人</th>
+								<th>更新时间</th> -->
+							</tr>
+						</thead>
+						<tbody id="datagridTemplate" style="display: none">
+							<tr id="list">
+								<td class="table-checkbox">#application_id#</td> 
+								<td>#name#</td>
+								<td>#device_num#</td>
+								<td>#c_type#</td>
+							    <td>#ip#</td>
+							    <td>#port#</td>
+<!-- 							    <td>#username#</td>
+							    <td>#password#</td> -->
+							    <td><button  disabled=true class="wbf"></button>未布防</td>
+							    <td><input type="button"  onclick="gz()" class="gzb"></td>
+							    <td><input type="button" onclick="bf()" class="bfb"></td>
+							   <!--  <td><input type="button" onclick="rljk()" value="查看曲线图"></td> -->
+<!-- 							    <td>#updatedby#</td>
+							    <td>#updated#</td> -->
+							</tr>
+						</tbody>
+						<tbody id="datagrid">
+						</tbody>
+					</table>
+				<div class="pageDiv">
+					<ul class="pagination">
+					</ul>
+				</div>
+			</div>
+		</div>
+	</form>
+	<form action="${def:context}${def:actionroot}/excel" role="form" method="post" id="daochuForm" target="_blank" style="display: none">
+		<input id="daochu_startdate" name="daochu_startdate" type="hidden" />
+		<input id="daochu_enddate" name="daochu_enddate" type="hidden" />
+		<input id="daochu_issystem" name="daochu_issystem" type="hidden" />
+		<input id="daochu_senduser" name="daochu_senduser" type="hidden" />
+		<input id="daochu_statusviewtime" name="daochu_statusviewtime" type="hidden" />
+	</form>
+	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
+<script language="JavaScript">
+$(document).ready(function() {
+	$Dialog().date($('#startdate'));
+	$Dialog().date($('#enddate'));
+ 	$("#startdate").val("2019-01-01"); 
+	$("#enddate").val("${def:date}"); 
+	var search=null;
+	var obj = $Crud({
+		formId:"formEditor",
+		button:"save_btn",
+		insertBack:function(){
+			search.searchData();
+		},
+		updateBack:function(){
+			search.searchData();
+		},
+		deleteBack:function(){
+			search.searchData();
+		},
+		addNewBack:function(){
+			$("#formTitle").html("新增");
+		},
+		editBack:function(){
+			$("#formTitle").html("修改");
+		},
+		validate:function(){
+			var flag=$("#formEditor").validate({
+				rules: {
+					app_alias: {
+						required: true,
+						rangelength: [1,20]
+					},
+					description: {
+						required: true,
+						rangelength: [1,80]
+					}
+				},
+				messages: {
+					app_alias:{
+						required: "请输入应用名称",
+						rangelength: "应用名称的长度为1到20位"
+					},
+					description:{
+						required: "请输入应用描述",
+						rangelength: "应用描述的长度为1到80位"
+					}
+				}
+			});
+			return flag;
+		},
+		check:function(){
+			
+			return true;
+		}
+	}).init();
+		this.search=search;
+		search=$Search({datagrid:"datagrid",formId:"searchForm",success:function(){
+		ccms.util.renderCheckbox("datalist");
+		$('input[name=datalist]').iCheck('uncheck');  //
+		//全选   取消全选
+	    $("#selectAll").unbind().on("ifChecked",function(){    //点击事件未选中
+			$('input[name=datalist]').iCheck('check');  //
+	    }).on("ifUnchecked",function(){    //点击事件未选中
+			$('input[name=datalist]').iCheck('uncheck');  //
+	    });
+		
+	    $("#edit_btn").unbind().on("click", function(){
+			var obthis = getCheckboxValue("datalist");
+			var len=$('#list input[name=datalist]:checked').length
+			if(obthis!=""&&len==1){
+				obj.edit({id:obthis});
+			}else{
+				ccms.dialog.alert("请选择一条记录！")
+			}
+		});	
+		
+		$("#delete_btn").unbind().on("click", function(){
+			var obthis = getCheckboxValue("datalist");
+			if(obthis!=""){
+				$Dialog().confirm("确定要删除吗？",function(){
+					obj.del({id:obthis});
+				})
+			}else{
+				ccms.dialog.alert("请选择记录！")
+			}
+		});
+		
+	}}).initSearchBtn().searchData(1);
+});
+
+function  gz(){
+	var url = "${def:context}/action/project/fitness/system/device/camera/rule/crud";
+	ccms.dialog.open({url:url,id:"upload__image",width:550,height:450});
+
+}
+function bf(){
+	var url = "${def:context}/action/project/fitness/system/device/camera/rule/detail/crud";
+	ccms.dialog.open({url:url,id:"upload__image",width:550,height:450});
+}
+function rule_detail(){
+	var url = "${def:context}/action/project/fitness/system/device/camera/rule/detail/crud";
+	ccms.dialog.open({url:url,id:"upload__image",width:550,height:450});
+}
+function rljk(){
+	var url = "${def:context}/action/project/fitness/system/device/camera/report";
+	
+	window.open(url,'_blank');
+}
+</script>
+</body>
+</html>

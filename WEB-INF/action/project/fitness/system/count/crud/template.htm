@@ -5,43 +5,14 @@ ${inc:/action/project/fitness/home/pub}
 <title>消息</title>
 </head>
 <body>
-	<!--addnew/edit form-->
-	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog" style="display:none;">
-			<div class="modal-dialog basic-information dialogbg">
-			<header class="header-default">
-				<span id="formTitle">查看</span>
-				<span class="header-close" onclick="$('.close').click()"></span> <!--关闭按钮无效，调用函数触发旧按钮点击事件-->
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style='display:none;'>&times;</button>
-			</header>
-			<form id="formEditor" name="formEditor" class="form-horizontal" role="form" method="post">
-          		<div class="modal-body b-i-main">
-					<nav>
-						<li>
-							<label style="width: 100px;">消息类型：</label>
-							<input type="text" id="issystem" name="issystem" readonly="readonly" placeholder="消息类型"/>
-						</li>
-						<li>
-							<label style="width: 100px;">发送人：</label>
-							<input type="text" id="senduser" name="senduser" readonly="readonly" placeholder="发送人"/>
-						</li>
-						<li>
-							<label style="width: 100px;">发送时间：</label>
-							<input type="text" id="sendtime" name="sendtime" readonly="readonly" placeholder="发送时间"/>
-						</li>
-						<li>
-							<label style="width: 100px;">查看消息时间：</label>
-							<input type="text" id="viewtime" name="viewtime" readonly="readonly" placeholder="查看消息时间"/>
-						</li>
-						<li class="to100w" style="margin-left: 6%">
-							<label>内容：</label>
-				    		<textarea rows="2" placeholder="内容" class="my-textarea" id="content" name="content" readonly="readonly" ></textarea>
-						</li>
-					</nav>
-				</div>
-			</form>
+	<div class="dialogbg" >
+		<header class="header-default">
+						count列表
+		</header>
+		<div class="panel-body col_main_body dtree">
+
 		</div>
 	</div>
-
 	<form role="form" method="post" id="searchForm" name="searchForm">
 		<input name="sort" type="hidden" value="m.sendtime" preserve="true"/>
 		<input name="order" type="hidden" value="desc" preserve="true" /> 
@@ -58,8 +29,12 @@ ${inc:/action/project/fitness/home/pub}
 							<li class="dateTime">
 						  		<input id="enddate" name="enddate" type="text" style="background-color:transparent!important" class="input-default"/>
 							</li>
+							<li >
+						  		<input type="radio" name="optionsRadiosinline" id="optionsRadios1" value="1" > ICOUNT数据列表
+						  		<input type="radio" name="optionsRadiosinline" id="optionsRadios2" value="2" >QCOUNT数据列表
+						  		<input type="radio" name="optionsRadiosinline" id="optionsRadios3" value="3" >ZCOUNT数据列表
+							</li>
 
-							
 							<div>
 								<button type="button" class="r-c-3-btn-1" id="search_btn" title="查询"></button>
 								<button type="button" class="r-c-3-btn-3" id="daochu_list" title="导出"></button>
@@ -75,24 +50,28 @@ ${inc:/action/project/fitness/home/pub}
 					<table class="">
 						<thead>
 							<tr>
-								<th></th>
+								<th>序号</th>
 							    <th>建筑名称</th>
 							    <th>楼层名称</th>
 							    <th>监测点名称</th>
-								  <th>入客人数</th>
-  								<th>出客人数</th>
-								 <th>更新时间</th>
+							    <th>总排队人数</th>
+							    <th>最小总排队人数</th>
+								<th>最大总排队人数</th>
+								<th>平均停留时间</th>
+								<th>平均最大停留时间</th>
 							</tr>
 						</thead>
 						<tbody id="datagridTemplate" style="display: none">
 							<tr id="list">
-							    <td>#checklink#</td>
-							    <td>#checklink#</td>
-							    <td>#checklink#</td>
-  			<td>#checklink#</td>
-							    <td>#checklink#</td>
-							    <td>#checklink#</td>
-
+							    <td>#col1#</td>
+							    <td>#col2#</td>
+							    <td>#col3#</td>
+							    <td>#col4#</td>
+							    <td>#col5#</td>
+ 								<td>#col6#</td>
+							    <td>#col7#</td>
+							    <td>#col8#</td>
+							    <td>#col9#</td>
 							</tr>
 						</tbody>
 						<tbody id="datagrid">
@@ -108,15 +87,12 @@ ${inc:/action/project/fitness/home/pub}
 	<form action="${def:context}${def:actionroot}/excel" role="form" method="post" id="daochuForm" target="_blank" style="display: none">
 		<input id="daochu_startdate" name="daochu_startdate" type="hidden" />
 		<input id="daochu_enddate" name="daochu_enddate" type="hidden" />
-		<input id="daochu_issystem" name="daochu_issystem" type="hidden" />
-		<input id="daochu_senduser" name="daochu_senduser" type="hidden" />
-		<input id="daochu_statusviewtime" name="daochu_statusviewtime" type="hidden" />
+
 	</form>
 	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}" />
 <script language="JavaScript">
 var search=null;
 $(document).ready(function() {
-	selectInit($("#issystem,#senduser,#statusviewtime"));
 	$Dialog().date($('#startdate'));
 	$Dialog().date($('#enddate'));
 	$("#startdate").val(new Date("${def:date}").format("yyyy-MM-01")); 

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <validator>
-	<parameter id="id" type="varchar" required="true" label="流程节点编号"/>
-	<parameter id="node_type" type="varchar" required="true" label="节点类型"/>
-	<parameter id="step_type" type="varchar" required="true" label="步骤类型"/>
+	<parameter id="id" type="varchar" required="false" label="流程节点编号"/>
+	<parameter id="node_type" type="varchar" required="false" label="节点类型"/>
+	<parameter id="step_type" type="varchar" required="false" label="步骤类型"/>
 </validator>

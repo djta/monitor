@@ -1,4 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <validator>
-	<parameter id="wfm_type" type="varchar" required="true" label="wfm_type" maxlen="32"/>
+	<parameter id="wfm_type" type="varchar" required="false" label="wfm_type" maxlen="32"/>
+	<parameter id="org_id" type="varchar" required="true" label="org_id" maxlen="32"/>
+	<parameter id="is_read" type="varchar" required="false" label="is_read" maxlen="32"/>
 </validator>

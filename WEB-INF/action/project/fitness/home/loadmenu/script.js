@@ -48,4 +48,5 @@
 	}
 	$("#menuList").find("dl").not(".first-bar").remove();
 	$("#menuList").append(menuStr);
+
 }

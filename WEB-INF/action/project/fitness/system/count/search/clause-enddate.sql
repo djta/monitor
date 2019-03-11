@@ -1,2 +1,2 @@
 and
-	m.sendtime::date<= ${fld:enddate}
+	1=1

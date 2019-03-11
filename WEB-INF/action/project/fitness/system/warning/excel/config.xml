@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<config>
+
+	<summary>
+		查询系统应用
+	</summary>
+
+	<log>false</log>
+
+	<colname>daochu_startdate,daochu_enddate,daochu_issystem,daochu_senduser,daochu_statusviewtime</colname>
+	<sql-template>query-base.sql</sql-template>
+
+	<transaction>
+		<classname>transactions.project.fitness.SearchData</classname>
+		<validator>true</validator>
+		<transaction>false</transaction>
+		<jdbc-log>false</jdbc-log>
+	</transaction>
+
+	<output>
+		<classname>dinamica.GenericExcelOutput</classname>
+	</output>
+
+	<excel recordset="query-base.sql" sheetname="消息记录" filename="消息记录.xls" header-background="true">
+		<col id="issystem" label="消息类型" /> 
+		<col id="senduser" label="发送人" />
+		<col id="sendtime" label="发送时间" />
+		<col id="content" label="内容" />
+		<col id="viewtime" label="查看消息时间" />
+	</excel>
+</config>

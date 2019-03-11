@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator onerror="/action/ccms/validate">
+<parameter id="name" type="varchar" required="false" label="name" />
+<parameter id="device_num" type="varchar" required="false" label="device_num" />
+	<parameter id="ip" type="varchar" required="true" label="ip" />
+	<parameter id="port" type="varchar" required="true" label="port"/>
+	<parameter id="c_type" type="varchar" required="false" label="c_type" />
+	<parameter id="username" type="varchar" required="true" label="username" />
+	<parameter id="password" type="varchar" required="true" label="password" />
+
+</validator>
+

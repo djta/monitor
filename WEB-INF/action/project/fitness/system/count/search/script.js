@@ -1,12 +1,15 @@
 {"page":{"total":${fld:total},"pageNo":${fld:pageno},"totalPages":${fld:pages}},"rows":[
 	<rows>
 	{
-	    	"checklink":"${fld:checklink@js}",
-		    "issystem":"${fld:issystem@js}",
-		    "senduser":"${fld:senduser@js}",
-		    "content":"${fld:content@js}",
-		    "sendtime" : "${fld:sendtime@yyyy-MM-dd HH:mm:ss}",
-		    "viewtime" : "${fld:viewtime@yyyy-MM-dd HH:mm:ss}"
+	    	"col1":"${fld:col1}",
+		    "col2":"${fld:col2}",
+		    "col3":"${fld:col3}",
+		    "col4":"${fld:col4}",
+		    "col5":"${fld:col5}",
+		    "col6":"${fld:col6}",
+		    "col7":"${fld:col7}",
+		    "col8":"${fld:col8}",
+		    "col9":"${fld:col9}" 	
 	},
 	</rows>
 	{}

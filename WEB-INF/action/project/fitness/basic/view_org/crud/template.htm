@@ -5,14 +5,14 @@
 <script language="JavaScript" type="text/javascript" src="${def:context}/action/pub/dtree"></script>
 ${inc:/action/project/fitness/home/pub}
 <style type="text/css">
-.dtree a{
+.org_btn{
 color: white  !important;
 }
 </style>
 </head>
 <body>
 <div class="container" >
-	<div class="dialogbg col-md-4 column " >
+	<div class="dialogbg col-md-12 column " >
 		<header class="header-default">
 						站点地图分布图
 		</header>
@@ -22,9 +22,9 @@ color: white  !important;
 			</form>
 		</div>
 	</div>
-	<div class="col-md-8 column " style="overflow:hidden;">
-		<img  style="height:480px" src="/js/project/fitness/image/railway.png" />
-	</div>
+<!-- 	<div class="col-md-8 column " style="overflow:hidden;">
+		<img  style="height:480px" src="${def:context}/js/project/fitness/image/railway.png" />
+	</div> -->
 </div>
 	
 	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog" style="display:none;">
@@ -127,7 +127,7 @@ color: white  !important;
 				}).init();
 				$(".org_btn").unbind().on("click", function() {
 					if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
-						obj.edit({id : $(this).attr("code")});
+						//obj.edit({id : $(this).attr("code")});
 					}
 				});
 	
@@ -143,7 +143,7 @@ color: white  !important;
 			//初始化树
 			d = new dTree('d');
 			var org_title = "";
-			org_title += "&nbsp;&nbsp;<a href='javascript: d.openAll();'>展开</a> | <a href='javascript: d.closeAll();'>合并</a>";
+			org_title += "&nbsp;&nbsp;<a class='org_btn' href='javascript: d.openAll();'>展开</a> | <a class='org_btn' href='javascript: d.closeAll();'>合并</a>";
 			//org_title += "&nbsp;&nbsp;<a href='javascript:void(0)' title='添加' class='add_btn' code='0' path='12' ><span class='glyphicon glyphicon-plus'></span></a>";
 
 			d.add(0, -1, org_title);
@@ -155,7 +155,10 @@ color: white  !important;
 			var allBtn = "";
 
 			<combo-orgs>
-			org_name = "<a href='javascript:void(0)' class='org_btn' code='${fld:org_id}' >${fld:org_name@js}</a>";
+			org_name = "<a href='javascript:void(0)' class='org_btn' code='${fld:org_id}' >${fld:org_name@js}</a>&nbsp&nbsp&nbsp&nbsp<a href='javascript:openCamera()' style='text-decoration: none; color:blue; font-family: 微软雅黑;'>打开摄像头</a>";
+			org_name=org_name+"&nbsp&nbsp&nbsp&nbsp<a href='javascript:rljk()' style='text-decoration: none; color:blue; font-family: 微软雅黑;'>查看客流实时曲线</a>";
+			org_name=org_name+"&nbsp&nbsp&nbsp&nbsp<a href='javascript:rlsj()' style='text-decoration: none; color:blue; font-family: 微软雅黑;'>查看客流数据</a>";
+			org_name=org_name+"&nbsp&nbsp&nbsp&nbsp<a href='javascript:openLX()' style='text-decoration: none; color:blue; font-family: 微软雅黑;'>视频录像回放</a>";
 			allBtn = buttonAddNode + buttonEdit + buttonDelete;
 			d.add("${fld:org_id}", "${fld:pid}", org_name + allBtn);
 			</combo-orgs>
@@ -182,6 +185,28 @@ color: white  !important;
 				success: function() {
 				}
 		    });
+		}
+		function canvasImage(org_id){
+			var url="${def:context}${def:actionroot}/show_status?entry_id="+111;
+			ccms.dialog.open({url:url,id:"pickOpen",width:500,height:400});
+		}
+		function rljk(){
+			var url = "${def:context}/action/project/fitness/system/device/camera/report";
+			
+			window.open(url,'_blank');
+		}
+		function rlsj(){
+			var url = "${def:context}/action/project/fitness/basic/view_org/rlsj/crud";
+			
+			window.open(url,'_blank');
+		}
+		function openCamera(){
+			var url = "${def:context}/action/project/fitness/basic/view_org/opencamera";
+			ccms.dialog.open({url:url,id:"upload__image",width:550,height:450});
+		}
+		function openLX(){
+			var url = "${def:context}/action/project/fitness/basic/view_org/lx/crud";
+			ccms.dialog.open({url:url,id:"upload__image",width:550,height:450});
 		}
 		$(document).ready(function() {
 			webinit();

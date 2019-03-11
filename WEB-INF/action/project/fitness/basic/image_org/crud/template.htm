@@ -11,8 +11,8 @@ color: white  !important;
 </style>
 </head>
 <body>
-<div class="container" >
-	<div class="dialogbg col-md-4 column " >
+<div>
+	<div class="dialogbg col-md-12 column " >
 		<header class="header-default">
 						站点地图分布图
 		</header>
@@ -22,9 +22,7 @@ color: white  !important;
 			</form>
 		</div>
 	</div>
-	<div class="col-md-8 column " style="overflow:hidden;">
-		<img  style="height:480px" src="/js/project/fitness/image/railway.png" />
-	</div>
+
 </div>
 	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog" style="display:none;">
 			<div class="modal-dialog basic-information dialogbg">
@@ -126,7 +124,7 @@ color: white  !important;
 				}).init();
 				$(".org_btn").unbind().on("click", function() {
 					if ($(this).attr("code") != undefined && $(this).attr("code") != "") {
-						obj.edit({id : $(this).attr("code")});
+						//obj.edit({id : $(this).attr("code")});
 					}
 				});
 	
@@ -154,7 +152,7 @@ color: white  !important;
 			var allBtn = "";
 
 			<combo-orgs>
-			org_name = "<a href='javascript:void(0)' class='org_btn' code='${fld:org_id}' >${fld:org_name@js}</a>";
+			org_name = "<a  href='javascript:void(0)' class='org_btn' code='${fld:org_id}' >${fld:org_name@js}</a>&nbsp&nbsp&nbsp&nbsp<img style='display:${fld:is_edit}' onclick='canvasImage(${fld:org_id})' src='${def:context}/js/project/fitness/image/SVG/nav/modify.svg' title='绘图' />";
 			allBtn = buttonAddNode + buttonEdit + buttonDelete;
 			d.add("${fld:org_id}", "${fld:pid}", org_name + allBtn);
 			</combo-orgs>
@@ -181,6 +179,11 @@ color: white  !important;
 				success: function() {
 				}
 		    });
+		}
+		function canvasImage(org_id){
+			var features = "fullscreen=yes,status=no,toolbar=no,menubar=no,location=no,scrollbars=yes,resizable=yes";
+
+			window.open("${def:context}/action/ccms/module/workflow/webflow/flowview?org_id="+org_id);
 		}
 		$(document).ready(function() {
 			webinit();

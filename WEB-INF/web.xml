@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
    version="2.5">
 
-  <display-name>ccc</display-name>
+  <display-name>monitor</display-name>
   <description>Manager of Safety framework Dinamica</description>
 	
 	<!--configuracion de conexion LDAP-->
@@ -466,7 +466,10 @@
         <filter-name>UploadFilter</filter-name>
         <url-pattern>/action/ccms/importgen/excel/upload</url-pattern>
     </filter-mapping>
-
+	<filter-mapping>
+        <filter-name>UploadFilter</filter-name>
+        <url-pattern>/action/project/fitness/attachment/insert</url-pattern>
+    </filter-mapping>
 	
 
 	<!--Stuck Thread Mapping-->

@@ -47,7 +47,7 @@ color: white  !important;
 
 						<li>
 							<label style="width: 120px;">Logo图片：</label>
-							<img id="upload_image" src="" onclick="uploadImg()"/>
+							<img style="width: 120px;height:120px;display:none" id="upload_image" src="" onclick="previewImg()"/>
 							<button type="button" id="upload_btn" onclick="uploadImg()">上传</button>
 							<input type="hidden" id="upload_id" name="upload_id" />
 						</li>
@@ -61,7 +61,7 @@ color: white  !important;
 							<label style="width: 120px;">联系电话：</label>
 							<input type="text" id="contact_phone" name="contact_phone" value="" placeholder="电话"/>
 						</li>
-						<li>
+<!-- 						<li>
 							<label style="width: 120px;">地址：</label>
 							<select id="province" name="province">
 								<option value="">请选择省</option>
@@ -70,7 +70,7 @@ color: white  !important;
 							<select id="city" name="city">
 								<option value="">请选择市</option>
 							</select>
-						</li>
+						</li> -->
 	
 						<li>
 							<label style="width: 120px;">顺序：</label>
@@ -150,6 +150,7 @@ color: white  !important;
 					var org_path = $(this).attr("path");
 					var org_type = $(this).attr("type");
 					$("#upload_image").attr("src","");
+					$("#upload_image").hide();
 					obthis.addOrg(org_id, org_path, org_type);
 				});
 				$(".edit_btn").unbind().on("click",function() {
@@ -201,10 +202,12 @@ color: white  !important;
 
 			<combo-orgs>
 			org_name = "<a href='javascript:void(0)' class='org_btn' code='${fld:org_id}' >${fld:org_name@js}</a>";
-			buttonAddNode = "&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' class='add_btn' title='添加' code='${fld:org_id}' path='${fld:org_path@js}' type='${fld:org_type}'>添加</a>&nbsp;&nbsp;&nbsp;";
-			buttonEdit = '<a href="javascript:void(0)" class="edit_btn" title="修改" code="${fld:org_id}"><img src="${def:context}/js/project/fitness/image/SVG/nav/xiugai.svg" title="修改" /></a>&nbsp;&nbsp;&nbsp;';
-			buttonDelete = '<a href="javascript:void(0)" class="delete_btn" title="删除" code="${fld:org_id}"><img src="${def:context}/js/project/fitness/image/SVG/nav/shanchu.svg" title="删除" /></a>';
-			buttonDelete += "&nbsp;&nbsp;&nbsp;&nbsp<a href='javascript:void(0)' title='设备关联'  class='device_btn' code='${fld:org_id}'>设备关联</a>&nbsp;&nbsp;&nbsp;&nbsp<a href='javascript:void(0)' title='帐号管理' class='staff_btn' code='${fld:org_id}'>帐号管理</a>";
+			buttonAddNode = "&nbsp;&nbsp;&nbsp;&nbsp;<a style='display:${fld:is_add}' href='javascript:void(0)' class='add_btn' title='添加' code='${fld:org_id}' path='${fld:org_path@js}' type='${fld:org_type}'>添加</a>&nbsp;&nbsp;&nbsp;";
+			buttonEdit = '<a style="display:${fld:is_edit}" href="javascript:void(0)" class="edit_btn" title="修改" code="${fld:org_id}"><img style="display:${fld:is_edit}" src="${def:context}/js/project/fitness/image/SVG/nav/xiugai.svg" title="修改" /></a>&nbsp;&nbsp;&nbsp;';
+			buttonDelete = '<a style="display:${fld:is_edit}" href="javascript:void(0)" class="delete_btn" title="删除" code="${fld:org_id}"><img style="display:${fld:is_edit}" src="${def:context}/js/project/fitness/image/SVG/nav/shanchu.svg" title="删除" /></a>';
+			buttonDelete += "&nbsp;&nbsp;&nbsp;&nbsp</a>&nbsp;&nbsp;&nbsp;&nbsp";
+			//buttonDelete += "&nbsp;&nbsp;&nbsp;&nbsp</a>&nbsp;&nbsp;&nbsp;&nbsp<a href='javascript:void(0)' title='帐号管理' class='staff_btn' code='${fld:org_id}'>帐号管理</a>";
+
 			allBtn = buttonAddNode + buttonEdit + buttonDelete;
 			d.add("${fld:org_id}", "${fld:pid}", org_name + allBtn);
 			</combo-orgs>
@@ -218,19 +221,20 @@ color: white  !important;
 			ccms.dialog.time($("#business_hours_end"));
 		}
 		function uploadImg(){
-			var url = "${def:context}/action/project/fitness/attachment/crud?table_code=hr_org&pk_value=";
+			var tuid=document.formEditor.tuid.value;
+			var url = "${def:context}/action/project/fitness/attachment/crud?table_code=hr_org&pk_value="+tuid;
 			ccms.dialog.open({url:url,id:"upload__image",width:500,height:500});
 		}
 		function uploadOk(id){
-			var url = "${def:context}${def:actionroot}/setimage";
-			ajaxCall(url,{
-				method: "get",
-				progress: false,
-				form: "formEditor",
-				dataType: "script",
-				success: function() {
-				}
-		    });
+			$("#upload_id").val(id);
+			$("#upload_image").attr("src","${def:context}/action/ccms/attachment/download?id="+id+"&&type=1");
+			$("#upload_image").show();
+			
+		}
+		function previewImg(){
+			var url = "${def:context}/action/project/fitness/attachment/preview_img?id="+$("#upload_id").val();
+			ccms.dialog.open({url:url,id:"upload__image",width:1500,height:500});
+			
 		}
 		$(document).ready(function() {
 			webinit();
@@ -240,6 +244,7 @@ color: white  !important;
 			    getSelectDomain("city", "City", "Province", $(this).val());
 			});
 		});
+		
 	</script>
 </body>
 </html>

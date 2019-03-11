@@ -5,6 +5,14 @@ ${inc:/action/project/fitness/home/pub}
 <title>消息</title>
 </head>
 <body>
+	<div class="dialogbg" >
+		<header class="header-default">
+						设备异常列表
+		</header>
+		<div class="panel-body col_main_body dtree">
+
+		</div>
+	</div>
 	<!--addnew/edit form-->
 	<div class="modal fade" id="modalAddnew" tabindex="-1" role="dialog" style="display:none;">
 			<div class="modal-dialog basic-information dialogbg">
@@ -73,7 +81,20 @@ ${inc:/action/project/fitness/home/pub}
 								 	</senduser-list>
 								 </select>
 							</li> -->
-		
+								<li >
+								 <select name="org_1" id="org_1" >
+								 	<option value="">建筑名称</option>
+							   		<option value="1">一号线</option>
+
+								 </select>
+							</li>
+							<li >
+								 <select name="org_1" id="org_1" >
+								 	<option value="">楼层名称</option>
+							   		<option value="1">东单站</option>
+
+								 </select>
+							</li>
 							<div>
 								<button type="button" class="r-c-3-btn-1" id="search_btn" title="查询"></button>
 								<button type="button" class="r-c-3-btn-3" id="daochu_list" title="导出"></button>

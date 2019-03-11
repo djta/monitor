@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<validator>
+
+	<parameter id="daochu_startdate" type="varchar" required="false" label="startdate" />
+	<parameter id="daochu_enddate" type="varchar" required="false" label="enddate" />
+	<parameter id="daochu_issystem" type="varchar" required="false" label="消息类型" />
+	<parameter id="daochu_senduser" type="varchar" required="false" label="发送人" />
+	<parameter id="daochu_statusviewtime" type="varchar" required="false" label="状态" />
+</validator>

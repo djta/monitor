@@ -4,7 +4,8 @@ select
 	pid,
 	t.org_path,
 	t.org_type,
-	t.org_name 
+	t.org_name ,
+	case when get_txt_count(org_path,';') =2 then '' else  'none' end is_edit
 from hr_org t
 --left join hr_staff f on f.org_id = t.org_id and f.userlogin = '${def:user}'
 where t.is_deleted = '0' 

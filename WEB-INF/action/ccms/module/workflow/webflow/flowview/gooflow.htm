@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
 <head>
-<title>GooFlow</title>
+<title>画面信息</title>
 ${inc:/action/ccms/pub}
 <!--[if lt IE 9]>
 <?import namespace="v" implementation="#default#VML" ?>
@@ -10,202 +10,104 @@ ${inc:/action/ccms/pub}
 <script type="text/javascript" src="${def:context}/js/gooflow/json2.js"></script>
 <script type="text/javascript" src="${def:context}/js/gooflow/GooFunc.js"></script>
 <script type="text/javascript" src="${def:context}/js/gooflow/GooFlow.js"></script>
+<script type="text/javascript" src="${def:context}/js/gooflow/plugin/promise.min.js"></script>
+<script type="text/javascript" src="${def:context}/js/gooflow/plugin/html2canvas.min.js"></script>
+<script type="text/javascript" src="${def:context}/js/gooflow/plugin/canvg.js"></script>
+<script type="text/javascript" src="${def:context}/js/gooflow/plugin/GooFlow.export.js"></script>
 </head>
 <body>
 <div style="overflow-x:hidden;">
-	<div class="row clearfix">
-		<div class="col-lg-4"><select name="flowList" id="flowList" class="form-control" ></select></div>
-		<div class="col-lg-8">
-			<button class="btn btn-primary btn-md loadFromXML" type="button" value="1"  >导入流程</button>
-			<button class="btn btn-primary btn-md loadFromXML" type="button" value="2"   >导入已发布</button>
-			<button class="btn btn-primary btn-md" type="button" id="exportWfmConfig"  >导出流程</button>
-		</div>
-	</div>
-	<div id="gooflowView"></div>
+
+	<div id="gooflowView" style=""></div>
 	<form name="formEditor" id="formEditor">
-		<input type="hidden" name="wfm_id" id="wfm_id" value="" />
+		<input type="hidden" name="wfm_id" id="wfm_id" name="wfm_id" value="${fld:org_id}" />
 		<input type="hidden" name="wfm_name"  id="wfm_name" value=""/>
 		<input type="hidden" name="table_id" id="table_id" value=""/>
 		<input type="hidden" name="xml_value"  id="xml_value" value=""/>
 		<input type="hidden" name="wfm_status" id="wfm_status" value=""/>
 		<input type="hidden" name="is_template" id="is_template" value=""/>
-		<input type="hidden" name="wfm_type" id="wfm_type"  value="${fld:wfm_type}" preserve="true"/>
 		<input type="hidden" name="remark" id="remark" value=""/>
 	</form>
 	<input type="hidden" name="actionroot" id="actionroot" value="${def:actionroot}"/>
 </div>
 
 <script type="text/javascript">
+var haveHead=true;
+var haveTool=true;
+if("${fld:is_read}"=="1"){
+	haveHead=false;
+	haveTool=false;
+}
 function WebflowClass(){
 	this.property={
 			width:700,
+			initLabelText:"${fld:org_name}画面信息",
 			height:380,
-			haveHead:true,
-			headBtns:["new","edit","delete","save","publish"],//如果haveHead=true，则定义HEAD区的按钮
-			haveTool:true,
-			toolBtns:["start","end","task","chat","node","join","fork","blank"],
+			haveHead:haveHead,
+			headBtns:["save","new"],//如果haveHead=true，则定义HEAD区的按钮
+			haveTool:haveTool,
+			toolBtns:["camera"],
 			haveGroup:true,
 			useOperStack:false
 		};
 	this.remark={
-		"new":"新增流程",
-		edit:"修改流程",
-		"delete":"删除流程",
-		save:"保存流程",
-		publish:"发布流程",
+		publish:"导出图片",
+		camera:"摄像头",
 		cursor:"选择指针",
-		direct:"转换连线",
-		start:"开始节点",
-		end:"结束节点",
-		task:"任务节点",
-		node:"子流程节点",
-		chat:"会签节点",
-		state:"状态节点",
-		plug:"附加插件",
-		fork:"分支节点",
-		blank:"暂存节点",
-		"join":"聚合节点",
-		complex:"复合节点",
-		group:"组织划分框编辑开关"
+		save:"保存画面",
+		new:"新建规则",
+		group:"区域"
 	};
 	this.flowObj=null;
 	this.editor=null;
 
-	this.queryFlowList=function(id){
-		var wfm_type = document.formEditor.wfm_type.value;
-		var url="${def:actionroot}/search" + "?id=" + id + "&wfm_type="+wfm_type;
-		ajaxCall(url,{
-			method: "GET",
-			progress: true,
-			dataType: "script",
-			success:function(){}
-		});
-	}
 	this.init=function(){
 		var obthis=this;
-		obthis.queryFlowList("flowList");
-		if($(document).width() < 1300){
-			obthis.property.width = 1300;
-		}else{
-			obthis.property.width = $(document).width();
-		}
-		if(($(document).height()-50) < 700){
-			obthis.property.height = 700;
-		}else{
-			obthis.property.height = $(document).height()-50;
-		}
+		
+		obthis.property.width = $(document).width();
+		obthis.property.height = $(document).height();
 		obthis.flowObj=$.createGooFlow($("#gooflowView"),obthis.property);
-		obthis.flowObj.setNodeRemarks(obthis.remark);
-		obthis.flowObj.onBtnNewClick=function(){
-			ccms.dialog.open({url:"${def:context}${def:actionroot}/gooflow/flow",id:"newForm",width:800,height:490});
-		}
+
+
+		$(".GooFlow_work_inner").css("width",$(document).width()-60);
+		$(".GooFlow_work_inner").css("height",$(document).height()-50);
 		obthis.flowObj.onBtnEditClick=function(){
-			var wfm_id = (obthis.flowObj.$flowData)?obthis.flowObj.$flowData.wfm_id:null;
-			if(typeof(wfm_id) != "undefined" && wfm_id != null && wfm_id != ""){
-				ccms.dialog.open({url:"${def:context}${def:actionroot}/gooflow/flow?id="+wfm_id,id:"newForm",width:800,height:550});
-			}else{
-				$Dialog().alert("当前不存在流程信息，请先创建一个！");
-			}
+			
 		}
 		obthis.flowObj.onBtnDeleteClick=function(){
-			var wfm_id = (obthis.flowObj.$flowData)?obthis.flowObj.$flowData.wfm_id:null;
-			if(typeof(wfm_id) != "undefined" && wfm_id != null && wfm_id != ""){
-				$Dialog().confirm("确定要删除当前的流程信息？",function(){
-					obthis.deleteFromDatabase(wfm_id);
-				});
-			}else{
-				$Dialog().alert("当前不存在流程信息，请先创建一个！");
-			}
+		
 		}
 		obthis.flowObj.onBtnSaveClick=function(){
-			var wfm_id = (obthis.flowObj.$flowData)?obthis.flowObj.$flowData.wfm_id:null;
-			if(typeof(wfm_id) != "undefined" && wfm_id != null && wfm_id != ""){
-				obthis.saveToXML(0);
-			}else{
-				$Dialog().alert("当前不存在流程信息，请先创建一个！");
-			}
+			var wfm_id = "${fld:org_id}";
+			obthis.saveToXML(0);
+		}
+		obthis.flowObj.onBtnNewClick=function(){
+			ccms.dialog.open({url:"${def:context}${def:actionroot}/formula/crud?id=${fld:org_id}",id:"formula",width:800,height:500});
 		}
 		obthis.flowObj.onBtnPublishClick=function(){
-			var wfm_id = (obthis.flowObj.$flowData)?obthis.flowObj.$flowData.wfm_id:null;
-			if(typeof(wfm_id) != "undefined" && wfm_id != null && wfm_id != ""){
-				obthis.saveToXML(1);
-			}else{
-				$Dialog().alert("当前不存在流程信息，请先创建一个！");
-			}
+			obthis.flowObj.exportDiagram("view");
 		}
 		
 		obthis.flowObj.onItemDblClick=function(id,type,jsondata){
 			var t= jsondata.type;
-			if(type == "node"){
-				var node_type = "";
-				var step_type = "";
-				//如果是暂存节点则无需编辑
-				if(t == "blank"){
-					return false;
-				}else if(t == "start"){
-					node_type = "0";
-					step_type = "0";
-				}else if(t == "end"){
-					node_type = "2";
-					step_type = "0";
-				}else{
-					node_type = "1";
-					if(t == "chat"){
-						step_type = "3";
-					}else if(t == "join"){
-						step_type = "2";
-					}else if(t == "fork"){
-						step_type = "1";
-					}else if(t == "node"){//子流程节点
-						step_type = "4";
-					}else{
-						step_type = "0";
-					}
-				}
-				ccms.dialog.open({url:"${def:context}${def:actionroot}/gooflow/node?id="+id+"&node_type="+node_type+"&step_type="+step_type,id:"nodeForm",width:800,height:500});
-			}else if(type == "line"){
-				//失去焦点，否则会出现线的编辑层问题
-				obthis.flowObj.blurItem();
-				//判断如果起始节点是暂存节点的话则无需编辑
-				var lineObj=obthis.getLineConfig(id);
-				var beginNode = obthis.getNodeConfig(lineObj.from);
-				if(beginNode.type == "blank"){
-					return false;
-				}
-				ccms.dialog.open({url:"${def:context}${def:actionroot}/gooflow/line?id="+id+"&node_type="+node_type+"&step_type="+step_type,id:"lineForm",width:800,height:490});
-			}
+			ccms.dialog.open({url:"${def:context}${def:actionroot}/gooflow/node?id="+id,id:"nodeForm",width:800,height:500});
+			
 		}
-
-
-
-		$(".loadFromXML").unbind();
-		$(".loadFromXML").unbind().on("click",function(){
-			var flag=$(this).val();
-			var wfm_id =$("#flowList").val();
-			if (wfm_id==''){
-				$Dialog().alert('请先选择要导入的流程！');
-				return;
-			}
-		  	if(flag == 1){
-			  	var url="${def:actionroot}/view" + "?tuid=" + wfm_id;
-				ajaxCall(url,{
-					method: "GET",
-					progress: true,
-					dataType: "script",
-					success:function(){
-					}
-				});
-		  	}else{
-			  	var url="${def:actionroot}/view_release" + "?tuid=" + wfm_id;
-				ajaxCall(url,{
-					method: "GET",
-					progress: true,
-					dataType: "script",
-					success:function(){
-					}
-				});
-		  	}
-		});
+		if("${fld:is_load}"=="1"){
+			var url="${def:actionroot}/view" + "?tuid=${fld:org_id}";
+			ajaxCall(url,{
+				method: "GET",
+				progress: true,
+				dataType: "script",
+				success:function(){
+					
+					$($(".GooFlow_head label").get(0)).html("${fld:org_name}画面信息");
+					
+				}
+			});
+		}
+		
+	
 
 		$("#exportWfmCon").unbind();
 		$("#exportWfmConfig").unbind().on("click",function(){
@@ -243,184 +145,34 @@ function WebflowClass(){
 		var obthis=this;
 		//从json中取数据赋值
 		var jsondata = obthis.getFlowConfig();
-		var wfm_id = (jsondata)?jsondata.wfm_id:null;
+		var wfm_id = "${fld:org_id}"
 		if(typeof(wfm_id) == "undefined" || wfm_id == null || wfm_id == ""){
-			$Dialog().alert("当前不存在流程信息，请先创建一个！");
+			$Dialog().alert("保存失败");
 			return;
 		}
-		if(flag == 1){
-			var beginNode=0;//开始节点
-			var beginCount=0;//开始节点后面的线
-			var beginNum=0;//开始节点前面的线
-			var endNode=0;//结束节点
-			var endCount=0;//结束节点后面的线
-			var huijuNode=0;//汇聚节点
-			var fenzhiNode=0;//分支节点
-			var fenzhiCount=0;//分支后面的线
-			var huijuCount=0;//汇聚后面的线
-			
-			$Dialog().confirm("确定要发布工作流？",function(){
-				var date=obthis.flowObj.exportData();
-				
-				for(var key in date.nodes){
-					//开始节点数目
-					if(date.nodes[key].node_type==0){
-						beginNode = beginNode+1;
-					}
-					//结束节点数目
-					if(date.nodes[key].node_type==2){
-						endNode = endNode+1;
-					}
-					//分支节点数目
-					if(date.nodes[key].step_type==1){
-						fenzhiNode = fenzhiNode+1;
-					}
-					//汇聚节点数目
-					if(date.nodes[key].step_type==2){
-						huijuNode = huijuNode+1;
-					}
-				}
-				
-				if(beginNode!=1){
-					$Dialog().alert("开始节点只能有一个！");
-					return;
-				}
-				if(endNode<1){
-					$Dialog().alert("必须有一个结束节点！");
-					return;
-				}
-				if(fenzhiNode>0 && huijuNode==0){
-					$Dialog().alert("有分支节点必须有汇聚节点！");
-					return;
-				}
-				if(huijuNode>0 && fenzhiNode==0){
-					$Dialog().alert("有汇聚节点必须有分支节点！");
-					return;
-				}
-				
-				for(var key in date.nodes){
-					var flag1=false;
-					var flag2=false;
-					for(var key1 in date.lines){
-						var val = date.lines[key1];
-						//开始节点后面的线的数目
-						if(date.nodes[key].node_type==0 && key==val.from){
-							beginCount = beginCount+1;
-						}
-						//开始节点前面的线的数目
-						if(date.nodes[key].node_type==0 && key==val.to){
-							beginNum = beginNum+1;
-						}
-						//汇聚节点后面的线的数目
-						if(date.nodes[key].step_type==2 && key==val.from){
-							huijuCount = huijuCount+1;
-						}
-						//结束节点后面的线的数目
-						if(date.nodes[key].node_type==2 && key==val.from){
-							endCount = endCount+1;
-						}
-						//除了开始节点，结束节点，其他节点前后必须有线
-						if(date.nodes[key].node_type!=0 && date.nodes[key].node_type!=2){
-							if(val.to==key){
-								flag1=true;
-							}
-							if(val.from==key){
-								flag2=true;
-							}
-						}
-					}
-					if(date.nodes[key].node_type!=0 && date.nodes[key].node_type!=2){
-						if(flag1==false || flag2==false){
-							$Dialog().alert("除了开始节点、结束节点，其他节点前后必须有线！");
-							return;
-						}
-					}
-				}
-				if(beginCount!=1){
-					$Dialog().alert("开始节点后面必须有一个动作，且只能有一个动作！");
-					return;
-				}
-				if(beginNum>0){
-					$Dialog().alert("开始节点前面不能有动作！");
-					return;
-				}
-				if(huijuCount>1){
-					$Dialog().alert("汇聚节点后面只能有一个动作！");
-					return;
-				}
-				if(endCount>0){
-					$Dialog().alert("结束节点后面不能有动作！");
-					return;
-				}
-				obthis.saveOrUpdate(flag,jsondata);},function(){return;});
-		}else{
-			obthis.saveOrUpdate(flag,jsondata);
-		}
+		
+		obthis.saveOrUpdate(flag,jsondata);
 	}
 	this.saveOrUpdate=function(flag,jsondata){
 		var obthis=this;
 		document.formEditor.wfm_id.value=jsondata.wfm_id;
-		document.formEditor.wfm_name.value=jsondata.wfm_name;
-		document.formEditor.table_id.value=jsondata.table_id;
-		document.formEditor.wfm_status.value=jsondata.wfm_status;
-		document.formEditor.is_template.value=jsondata.is_template;
-		document.formEditor.remark.value=jsondata.remark;
 		//把json数据转化成字符串
-		var date=obthis.flowObj.exportData();
-		for(var key in date.lines){
-			var val=date.lines[key];
-			if(val.action_id==undefined || val.action_id==null){
-				$Dialog().alert("节点("+date.nodes[val.from].name+")到节点("+date.nodes[val.to].name+")连线配置不完整！");
-				return;
-			}
-		}
-		for(var key in date.nodes){
-			var val=date.nodes[key];
-			if(val.node_id==undefined || val.node_id==null){
-				$Dialog().alert("节点："+val.name+"配置不完整！");
-				return;
-			}
-		}
 		document.formEditor.xml_value.value=JSON.stringify(obthis.flowObj.exportData());
-		if(flag == 1){
-			var url="${def:actionroot}/insert";
-			ajaxCall(url,{
-				method: "POST",
-				progress: true,
-				form: "formEditor",
-				dataType: "script",
-				success:function(){
-					obthis.queryFlowList("flowList");
-				}
-			});
-		}else{
-			var url="${def:actionroot}/update";
-			ajaxCall(url,{
-				method: "POST",
-				progress: true,
-				form: "formEditor",
-				dataType: "script",
-				success:function(){
-					obthis.queryFlowList("flowList");
-				}
-			});
-		} 
-	}
-
-	this.deleteFromDatabase=function(id){
-		var obthis=this;
-		var url="${def:actionroot}/delete" + "?id=" + id;
+		console.log(obthis.flowObj.exportData());
+		 document.formEditor.wfm_id.value="${fld:org_id}";
+		var url="${def:actionroot}/insert";
 		ajaxCall(url,{
-			method: "GET",
+			method: "POST",
 			progress: true,
+			form: "formEditor",
 			dataType: "script",
 			success:function(){
-				obthis.queryFlowList("flowList");
-				//清空当前流程界面
-				obthis.flowObj.clearData();
+				
 			}
-		});
-	};
+		}); 
+ 
+	}
+
 
 	this.updateFlowConfig=function(jsondata){
 		this.flowObj.$flowData = jsondata;
@@ -429,10 +181,7 @@ function WebflowClass(){
 	this.updateNodeConfig=function(id,jsondata){
 		this.flowObj.$nodeData[id] = jsondata;
 		this.flowObj.setName(id,jsondata.node_name,"node");
-	}
-	this.updateLineConfig=function(id,jsondata){
-		this.flowObj.$lineData[id] = jsondata;
-		this.flowObj.setName(id,jsondata.action_name,"line");
+		this.saveToXML(0);
 	}
 
 	this.clearData=function(){
@@ -446,11 +195,7 @@ $(document).ready(function(){
 	webflowClass=new WebflowClass();
 	webflowClass.init();
 });
-/*点击左边树节点  */
-function typeOperate(t,n){
-	document.formEditor.wfm_type.value = t;
-	webflowClass.queryFlowList("flowList");
-}
+
 
 </script>
 </body>

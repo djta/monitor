@@ -3,6 +3,8 @@
 <head>
 <title>视频监控</title>
 ${inc:/action/project/fitness/home/pub}
+<script language="JavaScript" type="text/javascript" src="${def:context}/action/pub/dtree"></script>
+
 <style type="text/css">
 
 
@@ -10,39 +12,48 @@ ${inc:/action/project/fitness/home/pub}
 </style>
 </head>
 <body >
-
-<div class="panel panel-primary container" >
+<div class="panel panel-primary col-md-2 column" >
+	<div class="col-md-12 column " style="overflow:hidden;height:500px">
+			<form name="treeForm" id="searchForm"  ole="form" method="post">
+					<input name="org_code" type="hidden" maxlength="100" value="" />
+			</form>
+	</div>
+	<div class="col-md-12 column " style="overflow:hidden;height:165px;background-image:url(${def:context}/images/haikang/ypt.jpg)">
+			
+	</div>
+</div>
+<div class="panel panel-primary col-md-10 column" >
 	<div class="col-md-12 column " style="overflow:hidden;">
 		<div class="panel panel-danger col-md-4 column">
-			<img  style="height:200px" src="/js/project/fitness/image/railway.png" />
+			<img  style="height:200px;width:100%;width:100%" src="${def:context}/images/haikang/camera.jpg" />
 		</div>
 		<div class="panel panel-danger col-md-4 column">
-			<img  style="height:200px" src="/js/project/fitness/image/railway.png" />
+			<img  style="height:200px;width:100%" src="${def:context}/images/haikang/camera.jpg" />
 		</div>
 		<div class="panel panel-danger col-md-4 column">
-			<img  style="height:200px" src="/js/project/fitness/image/railway.png" />
+			<img  style="height:200px;width:100%" src="${def:context}/images/haikang/camera.jpg" />
 		</div>
 	</div>
 	<div class="col-md-12 column " style="overflow:hidden;">
 		<div class="panel panel-danger col-md-4 column">
-			<img  style="height:200px" src="/js/project/fitness/image/railway.png" />
+			<img  style="height:200px;width:100%" src="${def:context}/images/haikang/camera.jpg" />
 		</div>
 		<div class="panel panel-danger col-md-4 column">
-			<img  style="height:200px" src="/js/project/fitness/image/railway.png" />
+			<img  style="height:200px;width:100%" src="${def:context}/images/haikang/camera.jpg" />
 		</div>
 		<div class="panel panel-danger col-md-4 column">
-			<img  style="height:200px" src="/js/project/fitness/image/railway.png" />
+			<img  style="height:200px;width:100%" src="${def:context}/images/haikang/camera.jpg" />
 		</div>
 	</div>
 	<div class="col-md-12 column " style="overflow:hidden;">
 		<div class="panel panel-danger col-md-4 column">
-			<img  style="height:200px" src="/js/project/fitness/image/railway.png" />
+			<img  style="height:200px;width:100%" src="${def:context}/images/haikang/camera.jpg" />
 		</div>
 		<div class="panel panel-danger col-md-4 column">
-			<img  style="height:200px" src="/js/project/fitness/image/railway.png" />
+			<img  style="height:200px;width:100%" src="${def:context}/images/haikang/camera.jpg" />
 		</div>
 		<div class="panel panel-danger col-md-4 column">
-			<img  style="height:200px" src="/js/project/fitness/image/railway.png" />
+			<img  style="height:200px;width:100%" src="${def:context}/images/haikang/camera.jpg" />
 		</div>
 	</div>
 </div>
@@ -56,7 +67,29 @@ ${inc:/action/project/fitness/home/pub}
 
 		$(document).ready(function() {
 	
-			
+			var d = new dTree('d');
+			var org_title = "";
+			org_title += "&nbsp;&nbsp;<a href='javascript: d.openAll();'>展开</a> | <a href='javascript: d.closeAll();'>合并</a> | <a href='javascript: addFirstNode()'>添加</a>";
+			//org_title += "&nbsp;&nbsp;<a href='javascript:void(0)' title='添加' class='add_btn' code='0' path='12' ><span class='glyphicon glyphicon-plus'></span></a>";
+
+			d.add(0, -1, org_title);
+
+			var org_name = "";
+			var buttonAddNode = "";
+			var buttonEdit = "";
+			var buttonDelete = "";
+			var allBtn = "";
+
+			<combo-orgs>
+			org_name = "<a href='javascript:void(0)' class='org_btn' code='${fld:org_id}' >${fld:org_name@js}</a>";
+
+			//buttonDelete += "&nbsp;&nbsp;&nbsp;&nbsp</a>&nbsp;&nbsp;&nbsp;&nbsp<a href='javascript:void(0)' title='帐号管理' class='staff_btn' code='${fld:org_id}'>帐号管理</a>";
+
+			allBtn = buttonAddNode + buttonEdit + buttonDelete;
+			d.add("${fld:org_id}", "${fld:pid}", org_name + allBtn);
+			</combo-orgs>
+
+			$("#searchForm").append(d.toString());
 		});
 	</script>
 </body>

@@ -1,84 +1,81 @@
-﻿var dom = document.getElementById("mcsaleDiv");
+﻿var dom = document.getElementById("mcsaleDiv2");
 var myChart = echarts.init(dom);
 var app = {};
 option = null;
 option = {
-    title: {
-        text: '人流量统计',
-        backgroundColor: '#d23232'
-    },
-    tooltip : {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'cross',
-            label: {
-                backgroundColor: '#00000'
-            }
-        }
-    },
-    legend: {
-    	backgroundColor: '#237d4f',
-        data:['出站','入站']
-    },
-    toolbox: {
-        feature: {
-            saveAsImage: {}
-        }
-    },
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    xAxis : [
-        {
-            type : 'category',
-            boundaryGap : false,
-            data : ['0点','6点','12点','18点','24点'],
-            axisLabel: {
-                show: true,
-                textStyle: {
-                    color: '#7d2340'
-                }
-            }
-        }
-    ],
-    yAxis : [
-        {
-            type : 'value',
-            	axisLabel : {
-                    formatter: '{value}',
-                    textStyle: {
-                        color: '#7d6624'
-                    }
-                }
-        }
-    ],
-    series : [
-        {
-            name:'出站',
-            type:'line',
-            stack: '总量',
-            areaStyle: {},
-            data:[1200, 1320, 1010, 1340, 900]
-        },
-        {
-            name:'入站',
-            type:'line',
-            stack: '总量',
-            label: {
-                normal: {
-                    show: true,
-                    position: 'top'
-                }
-            },
-            areaStyle: {normal: {}},
-            data:[820, 932, 901, 934, 1290]
-        }
-    ]
-};
-;
+	    title: {
+	        text: '设备运行监控',
+	        backgroundColor: '#04c'
+	    },
+	    tooltip : {
+	        trigger: 'item',
+	        formatter: "{a} <br/>{b} : {c} ({d}%)"
+	    },
+	    legend: {
+	    	backgroundColor: '#237d4f',	        data:['正常运行','异常报警']
+	    },
+	    toolbox: {
+	        show : true,
+	        feature : {
+	            mark : {show: true},
+	            dataView : {show: true, readOnly: false},
+	            magicType : {
+	                show: true, 
+	                type: ['pie', 'funnel'],
+	                option: {
+	                    funnel: {
+	                        x: '25%',
+	                        width: '50%',
+	                        funnelAlign: 'center',
+	                        max: 1548
+	                    }
+	                }
+	            },
+	            restore : {show: true},
+	            saveAsImage : {show: true}
+	        }
+	    },
+	    calculable : true,
+	    series : [
+	        {
+	            name:'',
+	            type:'pie',
+	            itemStyle : {
+	                normal : {
+	                    label : {
+	                        show : true
+	                    },
+	                    labelLine : {
+	                        show : true
+	                    }
+	                    ,color: function(params) {
+                            // build a color map as your need.
+                            var colorList = [
+                              '#5eb95e','#dd514c'
+                            ];
+                            return colorList[params.dataIndex]
+                        }
+	                },
+	                emphasis : {
+	                    label : {
+	                        show : true,
+	                        position : 'center',
+	                        textStyle : {
+	                            fontSize : '30',
+	                            fontWeight : 'bold'
+	                        }
+	                    }
+	                }
+	            },
+	            data:[
+	                {value:100, name:'正常运行'},
+	                {value:2, name:'异常报警'}
+	            ]
+	        }
+	    ]
+	};
+	                    
+	                    
 if (option && typeof option === "object") {
     myChart.setOption(option, true);
 }

@@ -5,7 +5,7 @@
 
 	</summary>
 
-	<log>false</log>
+	<log>true</log>
 
 	<transaction>
 		<classname>dinamica.GenericTransaction</classname>

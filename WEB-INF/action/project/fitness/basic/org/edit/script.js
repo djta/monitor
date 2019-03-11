@@ -20,4 +20,7 @@ document.formEditor.business_hours_end.value = "${fld:business_hours_end}";
 $("#upload_id").val("${fld:upload_id}");
 if( "" != "${fld:upload_id}" ){
 	$("#upload_image").attr("src","${def:context}/action/ccms/attachment/download?id=${fld:upload_id}&&type=1");
+	$("#upload_image").show();
+}else{
+	$("#upload_image").hide();
 }

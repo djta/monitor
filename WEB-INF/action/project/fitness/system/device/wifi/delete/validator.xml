@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+   Configuration file for request validation
+
+   Optional attributes for param elements:
+     * min and max attributes available for numbers (double or integer)
+     * maxlen attribute available for varchar and numbers
+     * regexp and regexp-error-label attributes available for varchar
+-->
+
+<validator>
+
+	<parameter id="id" type="varchar" required="true" label="ID"/>
+
+</validator>

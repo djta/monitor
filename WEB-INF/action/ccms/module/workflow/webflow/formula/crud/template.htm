@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+${inc:/action/ccms/pub}
+<title>count公式配置</title>
+
+</head>
+<body>
+
+<div class="container">
+	<form id="formEditor" name="formEditor" role="form" method="post">
+		<div class="row">count公式配置
+	    	<input type="text" style="height:50px" class="col-xs-12" id="formula_context" name="formula_context">
+	    	<input type="text" style="height:50px" class="col-xs-12" id="formula_value" name="formula_value">
+	    </div>
+	    <div class="row">
+		    <button class="col-xs-3 btn btn-info" code='('  type="button"><span color="red">(</span></button>
+		    <button class="col-xs-3 btn btn-info" code=')' type="button">)</button>
+		    <button class="col-xs-3 btn btn-info" code='%' type="button">%</button>
+	     	<button class="col-xs-3 btn btn-info" code='C' type="button">C</button>
+	    </div>
+	          <div class="row">
+	          	<button class="col-xs-3 btn btn-success" code='7' type="button">7</button>
+			    <button class="col-xs-3 btn btn-success" code='8' type="button">8</button>
+			    <button class="col-xs-3 btn btn-success" code='9' type="button">9</button>
+	        	<button class="col-xs-3 btn btn-info" code='/' type="button">/</button>
+	    </div>
+	
+	  	<div class="row">
+	         	<button class="col-xs-3 btn btn-success" code='4' type="button">4</button>
+			    <button class="col-xs-3 btn btn-success" code='5' type="button">5</button>
+			    <button class="col-xs-3 btn btn-success" code='6' type="button">6</button>
+	        	<button class="col-xs-3 btn btn-info" code='*' type="button">*</button>
+	    </div>
+	    <div class="row">
+		    <button class="col-xs-3 btn btn-success" code='1' type="button">1</button>
+		    <button class="col-xs-3 btn btn-success" code='2' type="button">2</button>
+		    <button class="col-xs-3 btn btn-success" code='3' type="button">3</button>
+	     	<button class="col-xs-3 btn btn-info" code='-' type="button">-</button>
+	    </div>
+	    
+	    <div class="row">
+	    	<button class="col-xs-3 btn btn-success" code='0' type="button">0</button>
+	    	<button class="col-xs-3 btn btn-success" code='.' type="button">.</button>
+	    	<button class="col-xs-3 btn btn-warning" code='=' type="button">校验</button>
+	        <button class="col-xs-3 btn btn-info" code='+' type="button">+</button>
+	    </div>
+	    <div class="row">
+	    	<label class="btn-danger col-xs-3 " style="height:30px;text-align:center">设备选择:</label>
+	    	<select class="col-xs-9 col-sm-9 col-md-9 col-lg-9" id="node_id" name="node_id"  class="form-control" style="height:30px" onchange="setNode(this)">
+				<option value="" selected="selected"></option>
+				<rows-device>
+					<option value="${fld:tuid}" >${fld:node_name}</option>
+				</rows-device>
+	  		</select>
+			
+	    </div>
+	</form>
+</div>
+
+</body>
+<script>
+$(document).ready(function() {
+	$(".btn").unbind().on("click", function(){
+		 var code=$(this).attr("code");
+		if(code=="C"){
+			$("#formula_context").val("");
+			$("#formula_value").val("");
+		}else if(code=="="){
+			var formula_value=$("#formula_value").val();
+			if(formula_value==""){
+				$Dialog().alert("count公式不能为空");
+			}else{
+				var url="${def:context}/action/ccms/module/workflow/webflow/formula/check?formula_value="+encodeURIComponent(formula_value);
+				$.ajax({ url: url, success: function(){
+			       
+			      }});
+			}
+			
+		}else{
+			$("#formula_context").val($("#formula_context").val()+code);
+			$("#formula_value").val($("#formula_value").val()+code);
+		} 
+	});
+
+});
+
+function setNode(obj){
+	var id=$(obj).val();
+	var name=$(obj).find("option:selected").text();
+	$("#formula_context").val($("#formula_context").val()+name);
+	$("#formula_value").val($("#formula_value").val()+id);
+}
+</script>
+</html>

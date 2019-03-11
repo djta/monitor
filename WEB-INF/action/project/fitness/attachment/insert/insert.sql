@@ -9,8 +9,7 @@ insert into t_attachment_files
     createdby,
     pk_value,
     table_code,
-    tenantry_id,
-    org_id
+    tenantry_id
 )
 values
 (
@@ -23,6 +22,5 @@ values
     '${def:user}',
     ${fld:pk_value},
     ${fld:table_code},
-    ${def:tenantry},
-    ${def:org}
+    ${def:tenantry}
 )
