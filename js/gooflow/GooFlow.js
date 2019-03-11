@@ -33,9 +33,9 @@ function GooFlow(bgDiv,property){
 	var headHeight=0;
 	var tmp="";
 	if(property.haveHead){
-		tmp="<div class='GooFlow_head'><label title='"+(property.initLabelText||"newFlow_1")+"'>"+(property.initLabelText||"newFlow_1")+"</label>";
+		tmp="<div class='GooFlow_head'><label title='"+(property.initLabelText||"")+"'>"+(property.initLabelText||"")+"</label>";
 		for(var x=0;x<property.headBtns.length;++x){
-			tmp+="<a href='javascript:void(0)' id='"+this.$id+"_btn_"+property.headBtns[x]+"' class='GooFlow_head_btn'><b class='ico_"+property.headBtns[x]+"'></b></a>"
+			tmp+="<a href='javascript:void(0)' id='"+this.$id+"_btn_"+property.headBtns[x]+"' class='GooFlow_head_btn'><b class='ico_"+property.headBtns[x]+"'></b></a>&nbsp&nbsp&nbsp&nbsp"
 		}
 		tmp+="</div>";
 		this.$head=$(tmp);
@@ -77,7 +77,7 @@ function GooFlow(bgDiv,property){
 		this.$bgDiv.append("<div class='GooFlow_tool'"+(property.haveHead? "":" style='margin-top:3px'")+"><div style='height:"+(height-headHeight-(property.haveHead? 7:10))+"px' class='GooFlow_tool_div'></div></div>");
 		this.$tool=this.$bgDiv.find(".GooFlow_tool div");
 		//未加代码：加入绘图工具按钮
-		this.$tool.append("<a href='javascript:void(0)' type='cursor' class='GooFlow_tool_btndown' id='"+this.$id+"_btn_cursor'><b class='ico_cursor'/></a><a href='javascript:void(0)' type='direct' class='GooFlow_tool_btn' id='"+this.$id+"_btn_direct'><b class='ico_direct'/></a>");
+		this.$tool.append("<a href='javascript:void(0)' type='cursor' class='GooFlow_tool_btndown' id='"+this.$id+"_btn_cursor'><b class='ico_cursor'/></a>");
 		if(property.toolBtns&&property.toolBtns.length>0){
 			tmp="<span/>";
 			for(var i=0;i<property.toolBtns.length;++i){

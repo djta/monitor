@@ -229,6 +229,7 @@ $Util = {
 	setFormErrorMsg : function(formElementId, text) {
 		ccms.util.clearErrorMessages();
 		var obj = $("#" + formElementId);
+		alert(obj);
 		if (obj.length > 0) {
 			if (obj.attr("type") == "radio"
 					|| obj.attr("type") == "checkbox") {/* iCheck样式需特殊处理 */

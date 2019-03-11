@@ -458,7 +458,7 @@ function getCheckboxValue(name){
 		var i;
 		if(obj.length){
 			for(i=0;i<obj.length;i++){
-				if(obj[i].checked){
+				if(obj[i].checked&&obj[i].value!=""){
 					str += obj[i].value+",";
 				}
 			}

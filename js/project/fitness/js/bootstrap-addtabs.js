@@ -46,7 +46,6 @@ $.fn.addtabs = function (options) {
     
     });
     $(options.monitor).on(clickType, '[addtabs]', function () {
-   
     	if($("#tab_content",obj).length > 0){
     		
     		var url = "";
@@ -123,6 +122,11 @@ $.fn.addtabs = function (options) {
             if (opts.content) {
                 content.append(opts.content);
             } else if (options.iframeUse && !opts.ajax) {//没有内容，使用IFRAME打开链接
+            	if(opts.url.indexOf("?")!=-1){
+            		opts.url=opts.url+"&&random_num="+new Date().getTime();
+            	}else{
+            		opts.url=opts.url+"?random_num="+new Date().getTime();
+            	}
                 var iframe = $('<iframe></iframe>')
                     .addClass('iframeClass')
                     .attr('height', options.iframeHeight)

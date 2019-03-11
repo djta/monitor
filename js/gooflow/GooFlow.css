@@ -3,13 +3,13 @@ v\:group,v\:rect,v\:imagedata,v\:oval,v\:line,v\:polyline,v\:stroke,v\:textbox {
 	background:#D2E1F0 url(img/gooflow_bg.png) repeat-x;border:#99BBE8 1px solid;font: 12px Arial, Helvetica, sans-serif;
 	-moz-user-select:none;-webkit-user-select:none;
 }
-.GooFlow_head{clear:both;height:22px;padding:1px}
+.GooFlow_head{clear:both;height:27px;padding:1px}
 .GooFlow_head label{
-	font-weight:bold;display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;height:15px;margin:2px;border:#B7C8D7 1px solid;border-right:#E9F4FA 1px solid;border-bottom:#E9F4FA 1px solid;padding:1px 1px 1px 12px;width:160px;text-align:center;
+	font-weight:bold;display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;height:21px;margin:2px;border:#B7C8D7 1px solid;border-right:#E9F4FA 1px solid;border-bottom:#E9F4FA 1px solid;padding:1px 1px 1px 12px;width:160px;text-align:center;
 	background: url(img/gooflow_icon.png) no-repeat -137px 1px;float:left;color:#15428B;border-radius:3px;overflow:hidden;
 }
 .GooFlow_head span{float:left;height:22px;width:0px;overflow:hidden;border-left:#9AC6FF 1px solid;border-right:#FFFFFF 1px solid;margin:0px 1px;}
-.GooFlow_head_btn{display:block;border:0px;height:18px;width:18px;cursor:default;padding:2px;margin:0px 1px;float:left;outline:none;blr:expression(this.onFocus=this.blur());}
+.GooFlow_head_btn{display:block;border:0px;height:18px;width:18px;cursor:default;padding:2px;margin:0px 15px;float:left;outline:none;blr:expression(this.onFocus=this.blur());}
 .GooFlow_head_btn b{display:inline-block;overflow:hidden;width:18px;height:18px;border:0px;}
 .GooFlow_head_btn:hover{
 	border-radius:2px;width:20px;height:20px;
@@ -35,8 +35,11 @@ v\:group,v\:rect,v\:imagedata,v\:oval,v\:line,v\:polyline,v\:stroke,v\:textbox {
 	border-top-color:#B1905D;margin:0px;border-radius:2px;
 }
 
-.GooFlow_work{float:right;margin:0px 3px 3px 0px;border:#99B1CE 1px solid;position:relative;overflow:scroll}
-.GooFlow_work .GooFlow_work_inner{background-image:url(img/gooflow_blank.gif);position:relative;overflow:hidden}
+.GooFlow_work{background-color:#fff;float:right;margin:0px 3px 3px 0px;border:#99B1CE 1px solid;position:relative;overflow:scroll}
+.GooFlow_work .GooFlow_work_inner{background:url(img/railway.png);position:relative;overflow:hidden;
+    background-size: 1300px 600px;
+    background-repeat:no-repeat;
+	position:relative;overflow:hidden;}
 .GooFlow_work .GooFlow_work_group{position:absolute;overflow:hidden;top:0px;left:0px}
 
 .GooFlow_area{position:absolute;overflow:hidden;}
@@ -132,9 +135,9 @@ v\:group,v\:rect,v\:imagedata,v\:oval,v\:line,v\:polyline,v\:stroke,v\:textbox {
 .GooFlow .ico_delete{background:url(img/delete.png) no-repeat}
 .GooFlow .ico_publish{background:url(img/ok.gif) no-repeat}
 .GooFlow .ico_blank{background:url(img/blank.gif) no-repeat}
-
+.GooFlow .ico_camera{background:url(img/camera.png) no-repeat}
 /***** CSS Reset *****/
-/**½â¾öËùÓÐä¯ÀÀÆ÷¼æÈÝÐÔµÄÖØÖÃÑùÊ½´úÂë**/
+/**ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½**/
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,

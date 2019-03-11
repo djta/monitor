@@ -68,11 +68,11 @@ $(document).ready(function() {
 		$("#homepage").click();
 	});
 	// tab操作
-	$("#tabManage").find(".open-tabmanage,.taboperate").unbind().on("mouseover",function(){
+	/*$("#tabManage").find(".open-tabmanage,.taboperate").unbind().on("mouseover",function(){
 		$("#tabManage .taboperate").show();
 	}).on("mouseout",function(){
 		$("#tabManage .taboperate").hide();
-	});
+	});*/
 	// 顶部下拉菜单
 	$("#avatarsimg").mouseover(function(){
 		$(".head-show").removeClass("disNone");
@@ -93,9 +93,9 @@ $(document).ready(function() {
 		ccms.dialog.open({ url : contextPath+"/action/project/fitness/newname/form", height : 200,width:500});
 	});
 	// 加载提醒消息数
-	setInterval(function(){	// 60秒执行一次
+/*	setInterval(function(){	// 60秒执行一次
 		loadRemindnum();
-	},60*1000);
+	},60*1000);*/
 });
 
 $(window).on("hashchange",function(){
